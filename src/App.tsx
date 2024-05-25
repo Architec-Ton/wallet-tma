@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import './App.css'
-
+import './App.css';
+import { RouterProvider } from 'react-router-dom';
+import router from './Routes';
 function App() {
   return (
     <>
-     <h1>Architec.TON</h1>
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
