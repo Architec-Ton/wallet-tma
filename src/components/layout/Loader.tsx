@@ -1,12 +1,21 @@
-import { useTranslation } from 'react-i18next';
+import Lottie from 'react-lottie';
+import loaderAnimationData from '../../loties/Loading_animation.json'
 import './Loader.styles.css';
 
 function Loader() {
-  const { t } = useTranslation();
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderAnimationData
+  };
 
   return (
     <>
-      <div className="loader">{t('Loading')}....</div>
+      <div className="loader">
+        <Lottie
+          options={defaultOptions}
+        />
+      </div>
     </>
   );
 }
