@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
 import Page from '../../components/containers/Page';
 import useLanguage from '../../hooks/useLanguage';
 import Title from '../../components/typography/Title';
@@ -16,7 +15,7 @@ import TileButton from '../../components/buttons/TileButton';
 function AddWallet() {
   const t = useLanguage('AddWallet');
   //   const { tg } = useTelegram();
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   //   useEffect(() => {
   //     tg.MainButton.hide();
@@ -41,6 +40,7 @@ function AddWallet() {
             title={t(`${btn.name}-title`)}
             description={t(`${btn.name}-description`)}
             iconAction={iconPageAddWalletNextPage}
+            onClick={() => navigate(btn.page)}
           />
         ))}
       </Column>
