@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { CSSProperties, ReactNode } from 'react';
-import './Container.styles.css';
+import './Block.styles.css';
 
 type Props = {
   children: ReactNode;
@@ -9,19 +9,14 @@ type Props = {
   className?: string;
 };
 
-function Container({
-  children,
-  style,
-  className,
-  direction = 'column',
-}: Props) {
+function Block({ children, style, className, direction = 'column' }: Props) {
   return (
     <div
       style={style}
-      className={classNames('container', `container-${direction}`, className)}>
+      className={classNames('block', `block-${direction}`, className)}>
       {children}
     </div>
   );
 }
 
-export default Container;
+export default Block;

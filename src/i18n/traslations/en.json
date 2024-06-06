@@ -1,3 +1,21 @@
 {
-    "Loading": "Loading"
+    "loading": "Loading",
+    "welcome-welcome-to": "Welcome to",
+    "welcome-0-title": "Low Transaction Fees",
+    "welcome-0-description": "Our wallet has some of the lowest transaction levels on the TON blockchain network in the world. We are working to make sure that you pay even less.",
+    "welcome-1-title": "Combining Game Projects",
+    "welcome-1-description": "Massive support for tokens of a large number of game projects created on the basis of the TON blockchain. Tokenization of everyday products.",
+    "welcome-2-title": "Data Security Level",
+    "welcome-2-description": "High level of personal data security. Full responsibility for the decentralization of all information.",
+
+    "addwallet-addwallet": "Add Wallet",
+    "addwallet-create-title": "New Wallet",
+    "addwallet-create-description": "Create a new custom wallet in two clicks",
+    "addwallet-existing-title": "An Existing Wallet",
+    "addwallet-existing-description": "Add an existing wallet using a 24-word secret key.",
+    "addwallet-import-title": "Import wallet",
+    "addwallet-import-description": "Import Wallet, Ton Space,Tonkeeper, MyTonWallet and etc."
+
+
+
 }

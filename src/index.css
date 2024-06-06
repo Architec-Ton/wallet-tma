@@ -38,19 +38,24 @@
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
 
-  /* Отступы и поля */
+  /* Отступы и поля */  
   --spacing-2: 0.125rem;
   --spacing-4: 0.25rem;
   --spacing-8: 0.5rem;
+  --spacing-12: 0.75rem;
   --spacing-16: 1rem;
   --spacing-24: 1.5rem;
   --spacing-32: 2rem;
 
   /* Размеры шрифтов */
-  --font-size-small: 12px;
-  --font-size-medium: 16px;
+  --font-size-small: 13px;
+  --font-size-medium: 15px;
   --font-size-large: 24px;
   --font-size-xlarge: 32px;
+
+  --font-regular: 400;
+  --font-medium:  500;
+  --font-bold: 600;
 
   /* Высота строки */
   --line-height-small: 1.2;
@@ -60,6 +65,7 @@
   /* Радиусы скруглений */
   --border-radius-4: 0.25rem;
   --border-radius-8: 0.5rem;
+  --border-radius-12: 0.75rem;
   --border-radius-16: 1rem;
 
   /* Прозрачность */
