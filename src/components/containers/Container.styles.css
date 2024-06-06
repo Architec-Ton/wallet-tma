@@ -1,0 +1,13 @@
+
+.container{
+    background-color: #f1f32f;
+    display: flex;
+}
+
+.container-column{
+    flex-direction: column;
+}
+
+.container-row {
+    flex-direction: column;
+}
