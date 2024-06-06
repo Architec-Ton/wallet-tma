@@ -1,0 +1,7 @@
+.main-button-active {
+    opacity: 1;
+}
+
+.main-button-inactive {
+    opacity: 0.48;
+}
