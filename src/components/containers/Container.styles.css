@@ -1,7 +1,7 @@
 
 .container{
-    background-color: #f1f32f;
     display: flex;
+    padding: var(--spacing-12);
 }
 
 .container-column{

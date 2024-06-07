@@ -10,20 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "classnames": "^2.5.1",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
+    "lottie-react": "^2.4.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.2",
-    "react-lottie": "^1.2.4",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "@tma.js/sdk": "^1.5.3",
+    "@tma.js/sdk-react": "^2.0.3",
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
-    "@types/react-lottie": "^1.2.10",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
