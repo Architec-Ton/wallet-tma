@@ -1,0 +1,5 @@
+.block{
+    border-radius: var(--border-radius-16);
+    background-color: var(--background-selected-color);
+    padding: var(--spacing-12);
+}

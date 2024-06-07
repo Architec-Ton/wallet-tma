@@ -1,9 +1,13 @@
-import Loader from '../components/layout/Loader';
+import Container from '../components/containers/Container';
+// import Loader from '../components/layout/Loader';
 
 function PlayGround() {
   return (
     <>
-      <Loader></Loader>
+      <Container>
+        <p>dfsdsdfdsfdsf</p>
+        <p>sddfsfsd sdvvsdvsdvdd sdvsdvds sdvsdvs sdvsdvdv sdvsdv</p>
+      </Container>
     </>
   );
 }
