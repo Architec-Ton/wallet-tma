@@ -6,7 +6,7 @@ html, body{
 
 h1 {
     font-size: var(--font-size-large);
-    margin: var(--spacing-8) 0;
+    margin: var(--spacing-12) 0;
     font-weight: var(--font-medium);
 }
 
@@ -24,5 +24,37 @@ p {
 
 span {
     color: var(--primary-color);
+}
+
+button{
+    border-style: solid;
+}
+
+.primary-btn{
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: var(--border-radius-16);
+    font-size: var(--font-size-medium);
+    padding: var(--spacing-12);
+}
+
+.mainbutton-container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-16);
+}
+
+.mainbutton-container button{
+    width: 100%;
+}
+
+.mainbutton-container button:hover{
+    cursor: pointer;
+}
+
+.mainbutton-container button:active {
+    background-color: var(--selected-color);
 }
 

@@ -8,9 +8,11 @@ import {
 } from '../../assets/icons/pages/start';
 import Column from '../../components/containers/Column';
 import useLanguage from '../../hooks/useLanguage';
+import { useNavigate } from 'react-router-dom';
 
 function Welcome() {
   const t = useLanguage('Welcome');
+  const navigate = useNavigate();
 
   const welcomeIcons = [
     iconPageStartCoin,
@@ -19,7 +21,10 @@ function Welcome() {
   ];
 
   return (
-    <Page title={<Title title={t('welcome-to')} titleAccent="Architec.TON" />}>
+    <Page
+      title={<Title title={t('welcome-to')} titleAccent="Architec.TON" />}
+      actionTitle={t('next')}
+      onAction={() => navigate('/add-wallet')}>
       <Column>
         {welcomeIcons.map((icon, index: number) => (
           <Tile
