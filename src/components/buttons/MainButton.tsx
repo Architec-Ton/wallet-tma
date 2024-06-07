@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  isTMA,
-  useInitData,
-  useMainButton,
-  useMiniApp,
-  useViewport,
-} from '@tma.js/sdk-react';
+import { isTMA, useMainButton, useViewport } from '@tma.js/sdk-react';
 
 type Props = {
   title?: string;
