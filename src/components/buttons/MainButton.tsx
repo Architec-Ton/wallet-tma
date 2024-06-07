@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { isTMA, useMainButton } from '@tma.js/sdk-react';
+import {
+  isTMA,
+  useInitData,
+  useMainButton,
+  useMiniApp,
+  useViewport,
+} from '@tma.js/sdk-react';
 
 type Props = {
   title?: string;
@@ -8,6 +14,7 @@ type Props = {
 
 function MainButtonTMA({ title, onClick }: Props) {
   const mb = useMainButton();
+  const tma = useViewport();
   if (title) {
     mb.setText(title);
     mb.setBgColor('#07ACFF');
@@ -21,6 +28,7 @@ function MainButtonTMA({ title, onClick }: Props) {
       });
       mb.enable();
       mb.show();
+      tma?.expand();
     }
   } else {
     mb.hide();
