@@ -7,12 +7,14 @@ type Props = {
   title?: ReactElement;
   style?: CSSProperties;
   className?: string;
+  description?: ReactNode;
 };
 
-function Page({ children, style, className, title }: Props) {
+function Page({ children, style, className, title, description }: Props) {
   return (
     <Container style={style} className={className}>
       {title}
+      {description}
       {children}
     </Container>
   );
