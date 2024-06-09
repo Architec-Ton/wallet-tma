@@ -13,7 +13,7 @@ function Main() {
   const t = useLanguage('Main');
 
   useEffect(() => {
-    // navigate('/registration/welcome');
+    navigate('/registration/welcome');
     // page.setIsLoading(true);
   }, []);
 
