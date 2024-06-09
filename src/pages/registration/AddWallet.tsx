@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Page from '../../components/containers/Page';
 import useLanguage from '../../hooks/useLanguage';
-import Title from '../../components/typography/Title';
 import {
   iconPageAddWalletCircle,
   iconPageAddWalletImport,
@@ -31,12 +30,12 @@ function AddWallet() {
       icon: iconPageAddWalletKey,
       page: '/registration/existing',
     },
-    { name: 'import', icon: iconPageAddWalletImport, page: '/aaaa' },
+    { name: 'import', icon: iconPageAddWalletImport, page: '/' },
   ];
 
   useEffect(() => {
     page.setTitle({ title: t('AddWallet') });
-  });
+  }, []);
 
   return (
     <Page>

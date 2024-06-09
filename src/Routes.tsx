@@ -9,15 +9,20 @@ import AddWallet from './pages/registration/AddWallet.tsx';
 import SecretKey from './pages/registration/SecretKey.tsx';
 import RegistrationIsCompleted from './pages/registration/RegistrationIsCompleted.tsx';
 import Existing from './pages/registration/Existing.tsx';
+import Main from './pages/Main.tsx';
 
 const router = createBrowserRouter(
   [
+    {
+      path: '/',
+      element: <Main />,
+    },
     {
       path: '/playground',
       element: <PlayGround />,
     },
     {
-      path: '/',
+      path: '/registration/welcome',
       element: <Welcome />,
     },
     {

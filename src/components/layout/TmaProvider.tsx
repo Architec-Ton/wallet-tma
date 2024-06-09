@@ -18,9 +18,16 @@ export function TmaProvider({ children }: Props) {
   });
 
   useEffect(() => {
+    setIsTmaLoading(true);
     isTMA()
       .then((tma) => setIsTma(tma))
-      .finally(() => setIsTmaLoading(false));
+      .finally(() => {
+        setTimeout(() => {
+          console.log('loading false');
+          setIsTmaLoading(false);
+        }, 2000);
+        // setIsTmaLoading(false)
+      });
   }, []);
 
   return (

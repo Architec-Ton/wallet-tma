@@ -21,10 +21,13 @@ function Tile({
   iconAction,
   style,
   className,
-  children
+  children,
 }: Props) {
   return (
-    <Block style={style} className={classNames('tile', className)}>
+    <Block
+      style={style}
+      direction="row"
+      className={classNames('tile', className)}>
       <Row>
         {icon && <img src={icon} />}
         <div>

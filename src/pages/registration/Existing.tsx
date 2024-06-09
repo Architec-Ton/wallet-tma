@@ -27,7 +27,7 @@ const Existing: React.FC = () => {
     page.setTitle({
       title: t('enter-key'),
     });
-  });
+  }, []);
 
   return (
     <Page>

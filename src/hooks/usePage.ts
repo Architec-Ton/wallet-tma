@@ -8,18 +8,23 @@ export interface PageTitle {
 }
 
 export const PageStateContext = createContext<{
+  isLoading: boolean;
   title: PageTitle;
-  setTitle: React.Dispatch<React.SetStateAction<PageTitle>>; //(title: PageTitle) => void;
+  setTitle: React.Dispatch<React.SetStateAction<PageTitle>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
-  title: { title: 'aaaaaa' },
+  isLoading: true,
+  title: { title: 'Ok' },
   setTitle: () => {},
+  setIsLoading: () => {},
 });
 
 export const usePageState = () => useContext(PageStateContext);
 
 export function usePage() {
-  const { setTitle } = usePageState();
+  const { setTitle, setIsLoading } = usePageState();
   return {
     setTitle: setTitle,
+    setIsLoading: setIsLoading,
   };
 }

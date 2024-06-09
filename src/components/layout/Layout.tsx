@@ -9,8 +9,10 @@ type Props = {
 
 function Layout({ children, style }: Props) {
   const [title, setTitle] = useState<PageTitle>({});
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   return (
-    <PageStateContext.Provider value={{ title, setTitle }}>
+    <PageStateContext.Provider
+      value={{ isLoading, title, setTitle, setIsLoading }}>
       <TmaProvider>
         <main style={style}>{children}</main>
       </TmaProvider>
