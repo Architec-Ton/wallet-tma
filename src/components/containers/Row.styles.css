@@ -1,5 +1,5 @@
 .row {
     display: flex;
     flex-direction: row;
-    column-gap: var(--spacing-8);
+    column-gap: var(--spacing-12);
 }

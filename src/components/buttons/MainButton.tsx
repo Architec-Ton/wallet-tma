@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react';
-import { isTMA, useMainButton, useViewport } from '@tma.js/sdk-react';
+import { useMainButton, useViewport } from '@tma.js/sdk-react';
+import { EventHandler, TmaMainButton, useTmaState } from '../../hooks/useTma';
 
 type Props = {
   title?: string;
-  onClick?: () => void;
+  onClick?: EventHandler;
+  visible: boolean;
 };
 
-function MainButtonTMA({ title, onClick }: Props) {
+type PropsBtn = {
+  mainButton: TmaMainButton;
+};
+
+function MainButtonTMA({ title, onClick, visible }: Props) {
   const mb = useMainButton();
   const tma = useViewport();
-  if (title) {
+  if (visible && title) {
     mb.setText(title);
     mb.setBgColor('#07ACFF');
     mb.setTextColor('#FFFFFF');
@@ -30,26 +35,24 @@ function MainButtonTMA({ title, onClick }: Props) {
   return <></>;
 }
 
-function MainButton({ title, onClick }: Props) {
-  const [isTma, setIsTma] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    isTMA()
-      .then((tma) => setIsTma(tma))
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  if (isLoading) return <></>;
-  if (isTma) return <MainButtonTMA title={title} onClick={onClick} />;
-
+function MainButton({ mainButton }: PropsBtn) {
+  const { isTmaLoading, isTma } = useTmaState();
+  if (isTmaLoading) return <></>;
+  if (isTma)
+    return (
+      <MainButtonTMA
+        title={mainButton.title}
+        onClick={mainButton.onClick}
+        visible={mainButton.visible}
+      />
+    );
   return (
     <>
-      {onClick && (
+      {mainButton.visible && (
         <div className="mainbutton-container">
           {!isTma && (
-            <button onClick={onClick} className="primary-btn">
-              {title}
+            <button onClick={mainButton.onClick} className="primary-btn">
+              {mainButton.title}
             </button>
           )}
         </div>
