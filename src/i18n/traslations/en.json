@@ -14,8 +14,8 @@
     "addwallet-create-description": "Create a new custom wallet in two clicks",
     "addwallet-existing-title": "An Existing Wallet",
     "addwallet-existing-description": "Add an existing wallet using a 24-word secret key.",
-    "addwallet-import-title": "Import wallet",
-    "addwallet-import-description": "Import Wallet, Ton Space,Tonkeeper, MyTonWallet and etc."
+    "addwallet-import-title": "Use TonConnect",
+    "addwallet-import-description": "Connect via Wallet, Ton Space,Tonkeeper, MyTonWallet and etc."
 
 
 
