@@ -1,0 +1,19 @@
+.balance-block{
+    /* aspect-ratio: 365/205; */
+    min-height: 12.5rem;
+    background-image: url('/wallet/images/balance-bg.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: var(--spacing-24);
+    color: var(--text-secondary-color);
+}
+
+.balance-block-value{
+    font-size: var(--font-size-xlarge);
+    font-weight: var(--font-bold);
+}
+
+.balance-block .address{
+    margin: var(--spacing-12) 0;
+}

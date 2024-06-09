@@ -1,68 +1,81 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    color-scheme: light dark;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Основные цвета */
+  --primary-color: #07ACFF;
+  --secondary-color: #65656A;
+  --background-color: light-dark(#ffffff, var(--tg-theme-bg-color)); 
+    /* #2c2c2c); */
+  --background-selected-color: light-dark(#F7F9FB, #232328);
+  --selected-color: #6ACDFF;
+  --text-color: #232328;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Цвета для текста */
+  --text-secondary-color: var(--secondary-color);
+  --link-color: var(--primary-color);
+  --link-hover-color: var(--selected-color);
+
+  /* Цвета для кнопок */
+  --button-bg-color: var(--primary-color);
+  --button-text-color: var(--background-color);
+  --button-border-color: var(--primary-color);;
+  --button-hover-bg-color: var(--selected-color);
+  --button-hover-text-color: var(--background-color);
+  --button-hover-border-color: var(--selected-color);
+
+  /* Цвета для форм */
+  --input-bg-color: var(--background-selected-color);
+  --input-text-color: var(--text-secondary-color);
+  --input-border-color: var(--background-selected-color);;
+  --input-focus-bg-color: var(--background-selected-color);
+  --input-focus-text-color: var(--text-color);;
+  --input-focus-border-color: var(--primary-color);
+
+  /* Цвета для уведомлений */
+  --success-color: #28a745;
+  --error-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+
+  /* Цвета для тени и границ */
+  --box-shadow-color: rgba(0, 0, 0, 0.1);
+  --border-color: var(--primary-color);
+
+  /* Отступы и поля */  
+  --spacing-2: 0.125rem;
+  --spacing-4: 0.25rem;
+  --spacing-8: 0.5rem;
+  --spacing-12: 0.75rem;
+  --spacing-16: 1rem;
+  --spacing-24: 1.5rem;
+  --spacing-32: 2rem;
+
+  /* Размеры шрифтов */
+  --font-size-small: 13px;
+  --font-size-medium: 15px;
+  --font-size-large: 24px;
+  --font-size-xlarge: 32px;
+
+  --font-regular: 400;
+  --font-medium:  500;
+  --font-bold: 600;
+
+  /* Высота строки */
+  --line-height-small: 1.2;
+  --line-height-medium: 1.5;
+  --line-height-large: 1.8;
+
+  /* Радиусы скруглений */
+  --border-radius-4: 0.25rem;
+  --border-radius-8: 0.5rem;
+  --border-radius-12: 0.75rem;
+  --border-radius-16: 1rem;
+
+  /* Прозрачность */
+  --opacity-disabled: 0.6;
+
+  /* Шрифты */
+  --font-family-sans-serif: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-family-monospace: 'Courier New', Courier, monospace;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}

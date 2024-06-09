@@ -1,0 +1,6 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--spacing-12);
+    align-items: center;
+}

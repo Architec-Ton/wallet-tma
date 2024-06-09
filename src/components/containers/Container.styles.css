@@ -1,0 +1,13 @@
+
+.container{
+    display: flex;
+    padding: var(--spacing-12);
+}
+
+.container-column{
+    flex-direction: column;
+}
+
+.container-row {
+    flex-direction: column;
+}
