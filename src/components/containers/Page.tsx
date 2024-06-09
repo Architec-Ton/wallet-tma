@@ -8,6 +8,7 @@ type Props = {
   title?: ReactElement;
   style?: CSSProperties;
   className?: string;
+<<<<<<< HEAD
   onAction?: () => void;
   actionTitle?: string;
 };
@@ -28,6 +29,18 @@ function Page({
       </Container>
       <MainButton title={actionTitle} onClick={onAction} />
     </>
+=======
+  description?: ReactNode;
+};
+
+function Page({ children, style, className, title, description }: Props) {
+  return (
+    <Container style={style} className={className}>
+      {title}
+      {description}
+      {children}
+    </Container>
+>>>>>>> remotes/origin/start-page-changes-finish
   );
 }
 

@@ -26,6 +26,7 @@ span {
     color: var(--primary-color);
 }
 
+<<<<<<< HEAD
 button{
     border-style: solid;
 }
@@ -56,5 +57,24 @@ button{
 
 .mainbutton-container button:active {
     background-color: var(--selected-color);
+=======
+input {
+    border: none;
+    background: none;
+    font-size: 16px;
+    width: 100%;
+    caret-color: transparent;
+}
+
+input:focus {
+    outline: none;
+}
+
+
+.number {
+    margin-right: 7.5px;
+    color: #65656A;
+    font-size: 16px;
+>>>>>>> remotes/origin/start-page-changes-finish
 }
 
