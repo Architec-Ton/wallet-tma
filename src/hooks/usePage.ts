@@ -4,6 +4,7 @@ export interface PageTitle {
   title?: string;
   titleAccent?: string;
   hintMessage?: string;
+  description?: string;
 }
 
 export const PageStateContext = createContext<{

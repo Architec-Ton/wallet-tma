@@ -10,28 +10,36 @@ import {
 } from '../../assets/icons/pages/add-wallet';
 import Column from '../../components/containers/Column';
 import TileButton from '../../components/buttons/TileButton';
-// import LinkToSupport from "../../link-to-support/linkToSupport.tsx";
+import { useEffect } from 'react';
+import { usePage } from '../../hooks/usePage';
 
 function AddWallet() {
   const t = useLanguage('AddWallet');
-  //   const { tg } = useTelegram();
+
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     tg.MainButton.hide();
-  //   }, [tg]);
+  const page = usePage();
 
-  //   const goNext = (nav: string) => {
-  //     navigate(nav);
-  //   };
   const addWalletButtons = [
-    { name: 'create', icon: iconPageAddWalletCircle, page: '/aaaa' },
-    { name: 'existing', icon: iconPageAddWalletKey, page: '/aaaa' },
+    {
+      name: 'create',
+      icon: iconPageAddWalletCircle,
+      page: '/registration/secret-key',
+    },
+    {
+      name: 'existing',
+      icon: iconPageAddWalletKey,
+      page: '/registration/existing',
+    },
     { name: 'import', icon: iconPageAddWalletImport, page: '/aaaa' },
   ];
 
+  useEffect(() => {
+    page.setTitle({ title: t('AddWallet') });
+  });
+
   return (
-    <Page title={<Title title={t('AddWallet')} />}>
+    <Page>
       <Column>
         {addWalletButtons.map((btn) => (
           <TileButton
@@ -45,20 +53,6 @@ function AddWallet() {
         ))}
       </Column>
     </Page>
-
-    // <div>
-    //   <h1>Add a Wallet</h1>
-    //   {WalletButtons.map((buttonProps: WalletButtonProps, index: number) => (
-    //     <div key={index} onClick={() => goNext(buttonProps.path)}>
-    //       <img src={buttonProps.icon} alt={buttonProps.title} />
-    //       <h2>{buttonProps.title}</h2>
-    //       <p>{buttonProps.message}</p>
-    //       <img src={NEXT_PAGE} alt={'go'} />
-    //     </div>
-    //   ))}
-    //   <LinkToSupport />
-    //   <BackButton />
-    // </div>
   );
 }
 

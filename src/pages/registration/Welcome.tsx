@@ -25,7 +25,7 @@ function Welcome() {
   ];
 
   useEffect(() => {
-    btn.init(t('next'), () => navigate('/add-wallet'), true);
+    btn.init(t('next'), () => navigate('/registration/add-wallet'), true);
     page.setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' });
   }, []);
 
