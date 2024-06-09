@@ -4,7 +4,8 @@
   /* Основные цвета */
   --primary-color: #07ACFF;
   --secondary-color: #65656A;
-  --background-color: light-dark(#ffffff,#2c2c2c);
+  --background-color: light-dark(#ffffff, var(--tg-theme-bg-color)); 
+    /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);
   --selected-color: #6ACDFF;
   --text-color: #232328;

@@ -1,16 +1,17 @@
 import classNames from 'classnames';
-import { CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import './Tile.styles.css';
 import Block from './Block';
 import Row from '../containers/Row';
 
 type Props = {
   icon?: string;
-  title: string;
+  title?: string;
   description?: string;
   iconAction?: string;
   style?: CSSProperties;
   className?: string;
+  children?: React.ReactNode;
 };
 
 function Tile({
@@ -20,14 +21,19 @@ function Tile({
   iconAction,
   style,
   className,
+  children,
 }: Props) {
   return (
-    <Block style={style} className={classNames('tile', className)}>
+    <Block
+      style={style}
+      direction="row"
+      className={classNames('tile', className)}>
       <Row>
         {icon && <img src={icon} />}
         <div>
           <h2>{title}</h2>
           <p>{description}</p>
+          {children}
         </div>
       </Row>
       {iconAction && (

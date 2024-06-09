@@ -1,0 +1,30 @@
+.paste-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+
+
+}
+
+.paste-button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid var(--primary-color);
+    border-radius: 18px;
+    padding: 10px 25px;
+    cursor: pointer;
+    outline: none;
+
+}
+
+.paste-icon {
+    margin-right: 8px;
+}
+
+.paste-button span {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: 500;
+}

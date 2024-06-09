@@ -1,0 +1,28 @@
+.copy-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.copy-button {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 18px;
+    padding: 10px 25px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+.copy-icon {
+    margin-right: 8px;
+}
+
+.copy-button span {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: 500;
+}

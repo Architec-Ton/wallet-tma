@@ -8,15 +8,22 @@
     "welcome-1-description": "Massive support for tokens of a large number of game projects created on the basis of the TON blockchain. Tokenization of everyday products.",
     "welcome-2-title": "Data Security Level",
     "welcome-2-description": "High level of personal data security. Full responsibility for the decentralization of all information.",
+    "key-your-secret-key": "Your secret key",
+    "copy-copy": "Copy to clipboard",
+    "confirm-confirm-the-key": "Confirm the key",
+    "confirm-description": "To make sure that you have written down the words, fill in the fields by entering the words ",
+    "registration-registration-completed": "Registration is сompleted",
+    "registration-1-description": "Congratulations, you have completed the wallet registration process. ",
+    "registration-2-description": "Architec.TON ",
+    "registration-3-description": "will do everything to make you feel comfortable!",
+    "existing-enter-key": "Enter secret key",
+    "paste-paste": "Paste from clipboard",
 
     "addwallet-addwallet": "Add Wallet",
     "addwallet-create-title": "New Wallet",
     "addwallet-create-description": "Create a new custom wallet in two clicks",
     "addwallet-existing-title": "An Existing Wallet",
     "addwallet-existing-description": "Add an existing wallet using a 24-word secret key.",
-    "addwallet-import-title": "Import wallet",
-    "addwallet-import-description": "Import Wallet, Ton Space,Tonkeeper, MyTonWallet and etc."
-
-
-
+    "addwallet-import-title": "Use TonConnect",
+    "addwallet-import-description": "Connect via Wallet, Ton Space,Tonkeeper, MyTonWallet and etc."
 }

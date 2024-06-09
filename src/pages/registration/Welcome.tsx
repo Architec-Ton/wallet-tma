@@ -1,5 +1,4 @@
 import Page from '../../components/containers/Page';
-import Title from '../../components/typography/Title';
 import Tile from '../../components/typography/Tile';
 import {
   iconPageStartCoin,
@@ -9,10 +8,15 @@ import {
 import Column from '../../components/containers/Column';
 import useLanguage from '../../hooks/useLanguage';
 import { useNavigate } from 'react-router-dom';
+import { useTmaMainButton } from '../../hooks/useTma';
+import { useEffect } from 'react';
+import { usePage } from '../../hooks/usePage';
 
 function Welcome() {
-  const t = useLanguage('Welcome');
   const navigate = useNavigate();
+  const btn = useTmaMainButton();
+  const page = usePage();
+  const t = useLanguage('Welcome');
 
   const welcomeIcons = [
     iconPageStartCoin,
@@ -20,11 +24,13 @@ function Welcome() {
     iconPageStartShieldTick,
   ];
 
+  useEffect(() => {
+    btn.init(t('next'), () => navigate('/registration/add-wallet'), true);
+    page.setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' });
+  }, []);
+
   return (
-    <Page
-      title={<Title title={t('welcome-to')} titleAccent="Architec.TON" />}
-      actionTitle={t('next')}
-      onAction={() => navigate('/add-wallet')}>
+    <Page>
       <Column>
         {welcomeIcons.map((icon, index: number) => (
           <Tile
@@ -35,8 +41,6 @@ function Welcome() {
           />
         ))}
       </Column>
-      {/* <LinkToSupport />
-      <MainButton text={'Further'} onClick={clickFurther} /> */}
     </Page>
   );
 }
