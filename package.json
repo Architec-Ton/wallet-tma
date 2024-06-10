@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.5",
     "@tma.js/sdk": "^1.5.3",
     "@tma.js/sdk-react": "^2.0.3",
     "@vitejs/plugin-basic-ssl": "^1.1.0",

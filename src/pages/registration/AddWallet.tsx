@@ -10,14 +10,14 @@ import {
 import Column from '../../components/containers/Column';
 import TileButton from '../../components/buttons/TileButton';
 import { useEffect } from 'react';
-import { usePage } from '../../hooks/usePage';
+import { setTitle } from '../../features/page/pageSlice';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 function AddWallet() {
   const t = useLanguage('AddWallet');
 
   const navigate = useNavigate();
-
-  const page = usePage();
+  const dispatch = useAppDispatch();
 
   const addWalletButtons = [
     {
@@ -34,7 +34,7 @@ function AddWallet() {
   ];
 
   useEffect(() => {
-    page.setTitle({ title: t('AddWallet') });
+    dispatch(setTitle({ title: t('AddWallet') }));
   }, []);
 
   return (

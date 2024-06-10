@@ -4,15 +4,19 @@ import router from './Routes';
 import './i18n';
 import { SDKProvider } from '@tma.js/sdk-react';
 import Layout from './components/layout/Layout';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 function App() {
   return (
     <>
-      <SDKProvider acceptCustomStyles debug>
-        <Layout>
-          <RouterProvider router={router} />
-        </Layout>
-      </SDKProvider>
+      <Provider store={store}>
+        <SDKProvider acceptCustomStyles debug>
+          <Layout>
+            <RouterProvider router={router} />
+          </Layout>
+        </SDKProvider>
+      </Provider>
     </>
   );
 }

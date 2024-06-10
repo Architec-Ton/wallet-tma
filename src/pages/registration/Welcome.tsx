@@ -10,12 +10,13 @@ import useLanguage from '../../hooks/useLanguage';
 import { useNavigate } from 'react-router-dom';
 import { useTmaMainButton } from '../../hooks/useTma';
 import { useEffect } from 'react';
-import { usePage } from '../../hooks/usePage';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setTitle } from '../../features/page/pageSlice';
 
 function Welcome() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const btn = useTmaMainButton();
-  const page = usePage();
   const t = useLanguage('Welcome');
 
   const welcomeIcons = [
@@ -26,7 +27,7 @@ function Welcome() {
 
   useEffect(() => {
     btn.init(t('next'), () => navigate('/registration/add-wallet'), true);
-    page.setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' });
+    dispatch(setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' }));
   }, []);
 
   return (
