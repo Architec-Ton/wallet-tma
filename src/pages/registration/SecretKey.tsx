@@ -3,21 +3,53 @@ import useLanguage from '../../hooks/useLanguage.ts';
 import Column from '../../components/containers/Column.tsx';
 import CopyButton from '../../components/buttons/CopyButton.tsx';
 import { useEffect } from 'react';
-import key_to_wallet from '../../components/secret-words/Secret24Words.tsx';
 import './SecretKey.styles.css';
 import Block from '../../components/typography/Block.tsx';
 // import INFO_CIRCLE from '../../assets/icons/pages/secret-key/info-circle.svg';
 import { usePage } from '../../hooks/usePage.ts';
+import {useNavigate} from "react-router-dom";
+import {useTmaMainButton} from "../../hooks/useTma.ts";
 // import { iconPageSecretKeyCircle } from '../../assets/icons/pages/secret-key/index.ts';
+
+const key_to_wallet =[
+  'test1',
+  'test2',
+  'test3',
+  'test4',
+  'test5',
+  'test6',
+  'test7',
+  'test8',
+  'test9',
+  'test10',
+  'test11',
+  'test12',
+  'test13',
+  'test14',
+  'test15',
+  'test16',
+  'test17',
+  'test18',
+  'test19',
+  'test20',
+  'test21',
+  'test22',
+  'test23',
+  'test24'
+]
+
 
 const SecretKey = () => {
   const t = useLanguage('Key');
   const page = usePage();
+  const navigate = useNavigate();
+  const btn = useTmaMainButton();
 
   useEffect(() => {
     // localStorage.setItem('secretWords', JSON.stringify(key_to_wallet));
+    btn.init(t('next'), () => navigate('/registration/confirm-secret-key'), true);
     page.setTitle({
-      title: t('your-secret-key'),
+      title: t('your_secret_key'),
       hintMessage: 'here hint message',
     });
   }, []);

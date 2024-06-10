@@ -62,7 +62,7 @@ button{
 input {
     border: none;
     background: none;
-    font-size: 16px;
+    font-size: var(--font-size-medium);
     width: 100%;
     caret-color: transparent;
 }
@@ -73,7 +73,11 @@ input:focus {
 
 
 .number {
-    margin-right: 7.5px;
-    color: #65656A;
-    font-size: 16px;
+    margin-right: var(--spacing-8);
+    color: var(--secondary-color);
+    font-size: var(--font-size-medium);
+}
+
+.hint-message {
+    font-size: var(--font-size-small);
 }
