@@ -8,7 +8,7 @@ interface InputProps {
 
 const Input: React.FC<InputProps>  = ({number}) => {
     return (
-        <Block style={{margin: '8px'}}>
+        <Block className='blockContainer'>
             <div className='inputContainer'>
                 <h2 className='number'>{number}.</h2>
                 <input type="text" placeholder="" />

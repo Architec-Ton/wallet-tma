@@ -4,6 +4,9 @@
     padding-bottom: 10px;
 
 }
+.blockContainer {
+    margin: var(--spacing-8);
+}
 
 .inputContainer {
     display: flex;
