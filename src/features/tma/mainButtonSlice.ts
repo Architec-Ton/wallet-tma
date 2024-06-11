@@ -3,37 +3,35 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface MainButtonState {
   title: string;
   isLoading: boolean;
-  isLibraryInitialized: boolean;
-  isApiLoading: boolean;
+  isVisible: boolean;
 }
 
 const initialState: MainButtonState = {
   title: 'Default Title',
   isLoading: false,
-  isLibraryInitialized: false,
-  isApiLoading: false,
+  isVisible: false,
 };
 
 const mainButtonSlice = createSlice({
-  name: 'page',
+  name: 'btn',
   initialState,
   reducers: {
-    setTitle(state, action: PayloadAction<string>) {
+    setMainButtonTitle(state, action: PayloadAction<string>) {
       state.title = action.payload;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
+    setMainButtonLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
-    setLibraryInitialized(state, action: PayloadAction<boolean>) {
-      state.isLibraryInitialized = action.payload;
-    },
-    setApiLoading(state, action: PayloadAction<boolean>) {
-      state.isApiLoading = action.payload;
+    setMainButtonVisible(state, action: PayloadAction<boolean>) {
+      state.isVisible = action.payload;
     },
   },
 });
 
-export const { setTitle, setLoading, setLibraryInitialized, setApiLoading } =
-  mainButtonSlice.actions;
+export const {
+  setMainButtonTitle,
+  setMainButtonLoading,
+  setMainButtonVisible,
+} = mainButtonSlice.actions;
 
 export default mainButtonSlice.reducer;

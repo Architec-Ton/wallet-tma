@@ -1,36 +1,42 @@
+import { useAppDispatch } from './useAppDispatch';
+import {
+  setMainButtonTitle,
+  setMainButtonVisible,
+} from '../features/tma/mainButtonSlice';
 import { createContext, useContext } from 'react';
 
 export interface TmaMainButton {
   title?: string;
-  visible: boolean;
+  visible?: boolean;
   onClick?: () => void;
 }
 
 export type EventHandler = () => void;
 
-export interface TmaState {
-  isTmaLoading: boolean;
-  isTma: boolean;
-  mainButton: TmaMainButton;
-}
-
 export const TmaStateContext = createContext<{
-  isTmaLoading: boolean;
-  isTma: boolean;
-  setMainButton: (btn: TmaMainButton) => void;
+  setMainButtonHandler: (p: TmaMainButton) => void;
 }>({
-  isTmaLoading: true,
-  isTma: true,
-  setMainButton: () => {},
+  setMainButtonHandler: () => {},
 });
 
 export const useTmaState = () => useContext(TmaStateContext);
 
 export function useTmaMainButton() {
-  const { setMainButton } = useTmaState();
+  //const { setMainButton } = useTmaState();
+  const dispatch = useAppDispatch();
+  const { setMainButtonHandler } = useTmaState();
+
   return {
-    init: (title: string, onClick: () => void, visible: boolean) => {
-      setMainButton({ title: title, onClick: onClick, visible: visible });
+    init: (title: string, onClick: () => void, visible: boolean = true) => {
+      setMainButtonHandler({
+        onClick: onClick,
+      });
+      dispatch(setMainButtonTitle(title));
+      dispatch(setMainButtonVisible(visible));
+
+      //console.log('call init', visible);
+
+      //setMainButton({ title: title, onClick: onClick, visible: visible });
     },
   };
 }

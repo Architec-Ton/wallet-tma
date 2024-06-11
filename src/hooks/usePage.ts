@@ -16,7 +16,7 @@ export const PageStateContext = createContext<{
   isLoading: true,
   title: { title: 'Ok' },
   setTitle: () => {},
-  setIsLoading: () => {},
+  setIsLoading: () => {}, 
 });
 
 export const usePageState = () => useContext(PageStateContext);

@@ -7,18 +7,17 @@ import {
 } from '../../assets/icons/pages/start';
 import Column from '../../components/containers/Column';
 import useLanguage from '../../hooks/useLanguage';
-import { useNavigate } from 'react-router-dom';
 import { useTmaMainButton } from '../../hooks/useTma';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setTitle } from '../../features/page/pageSlice';
+import useRouter from '../../hooks/useRouter';
 
 function Welcome() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const dispatch = useAppDispatch();
   const btn = useTmaMainButton();
   const t = useLanguage('Welcome');
-
   const welcomeIcons = [
     iconPageStartCoin,
     iconPageStartGameboy,
@@ -26,7 +25,14 @@ function Welcome() {
   ];
 
   useEffect(() => {
-    btn.init(t('next'), () => navigate('/registration/add-wallet'), true);
+    btn.init(
+      t('next'),
+      () => {
+        console.log('call btn');
+        navigate('/registration/add-wallet');
+      },
+      true
+    );
     dispatch(setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' }));
   }, []);
 

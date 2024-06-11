@@ -20,16 +20,18 @@ function Page({ children, style, className }: Props) {
   const title = useAppSelector(selectTitle);
   if (isLoading) return <Loader />;
   return (
-    <Container style={style} className={className}>
-      {title && (
-        <Title
-          title={title.title}
-          titleAccent={title.titleAccent}
-          hintMessage={title.hintMessage}
-        />
-      )}
-      {children}
-    </Container>
+    <>
+      <Container style={style} className={className}>
+        {title && (
+          <Title
+            title={title.title}
+            titleAccent={title.titleAccent}
+            hintMessage={title.hintMessage}
+          />
+        )}
+        {children}
+      </Container>
+    </>
   );
 }
 
