@@ -1,5 +1,6 @@
 .form-input input{
    flex: 1;
+   width: 100%;
 }
 
 .form-input.input-error {
