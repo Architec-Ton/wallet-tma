@@ -14,7 +14,7 @@ function Column({ children, style, className, columns }: Props) {
     style = {
       ...style,
       display: 'grid',
-      gridTemplateColumns: `repeat(${columns}, 1fr)`,
+      gridTemplateColumns: '1fr 1fr', //`repeat(${columns}, 0.5fr)`,
     };
   }
 
