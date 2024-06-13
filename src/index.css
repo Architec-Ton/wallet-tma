@@ -1,5 +1,5 @@
 :root {
-    color-scheme: light dark;
+  color-scheme: light;
 
   /* Основные цвета */
   --primary-color: #07ACFF;
@@ -13,6 +13,7 @@
 
   /* Цвета для текста */
   --text-secondary-color: var(--secondary-color);
+  --text-primary-color: #F7F9FB;
   --link-color: var(--primary-color);
   --link-hover-color: var(--selected-color);
 

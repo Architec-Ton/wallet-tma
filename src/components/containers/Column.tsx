@@ -6,9 +6,18 @@ type Props = {
   children: ReactNode;
   style?: CSSProperties;
   className?: string;
+  columns?: number;
 };
 
-function Column({ children, style, className }: Props) {
+function Column({ children, style, className, columns }: Props) {
+  if (columns) {
+    style = {
+      ...style,
+      display: 'grid',
+      gridTemplateColumns: `repeat(${columns}, 1fr)`,
+    };
+  }
+
   return (
     <div style={style} className={classNames('column', className)}>
       {children}

@@ -1,20 +1,38 @@
-import Block from "../typography/Block.tsx";
-import './Input.styles.css'
-import React from "react";
+import classNames from 'classnames';
+import './Input.styles.css';
+import { CSSProperties, ChangeEventHandler } from 'react';
+import Block from '../typography/Block';
 
 interface InputProps {
-    number: number;
+  prefix?: string;
+  placeholder?: string;
+  onChange?: ChangeEventHandler<HTMLElement>;
+  style?: CSSProperties;
+  className?: string;
+  value?: string;
 }
 
-const Input: React.FC<InputProps>  = ({number}) => {
-    return (
-        <Block className='blockContainer'>
-            <div className='inputContainer'>
-                <h2 className='number'>{number}.</h2>
-                <input type="text" placeholder="" />
-            </div>
-        </Block>
-    );
-};
+function Input({
+  prefix,
+  placeholder,
+  onChange,
+  style,
+  className,
+  value,
+}: InputProps) {
+  return (
+    // <div className={classNames('form-input', className)}>
+    <Block direction="row" className={classNames('form-input', className)}>
+      {prefix && <span>{prefix}</span>}
+      <input
+        type="text"
+        placeholder={placeholder}
+        onChange={onChange}
+        style={style}
+        value={value}
+      />
+    </Block>
+  );
+}
 
 export default Input;

@@ -1,10 +1,9 @@
-import {useState} from "react";
-import INFO_ICON from '../../assets/icons/pages/secret-key/info-circle.svg'
+import { useState } from 'react';
+import INFO_ICON from '../../assets/icons/pages/secret-key/info-circle.svg';
 interface Props {
   title?: string;
   titleAccent?: string;
   hintMessage?: string;
-
 }
 
 function Title({ title, titleAccent, hintMessage }: Props) {
@@ -18,41 +17,41 @@ function Title({ title, titleAccent, hintMessage }: Props) {
   };
 
   return (
-    <h1>
+    <h1 className="center">
       {title}
       {titleAccent && <span> {titleAccent}</span>}
       {hintMessage && (
-          <div style={{ display: 'inline-block', position: 'relative' }}>
-            <img
-                src={INFO_ICON}
-                alt="icon"
-                className="icon"
-                style={{
-                  display: 'inline-block',
-                  verticalAlign: 'middle',
-                  marginLeft: 'var(--spacing-8)',
-                  cursor: 'pointer'
-                }}
-                onClick={handleIconClick}
-            />
-            {showHint && (
-                <div
-                    style={{
-                      position: 'absolute',
-                      top: '100%',
-                      left: '50%',
-                      backgroundColor: 'var(--hint-message-back-background-color)',
-                      color: 'white',
-                      padding: 'var(--spacing-4) var(--spacing-8)',
-                      borderRadius: 'var(--border-radius-8)',
-                      marginTop: 'var(--spacing-4)',
-                      whiteSpace: 'nowrap',
-                      fontSize: 'var(--font-size-small)'
-                    }}>
-                  {hintMessage}
-                </div>
-            )}
-          </div>
+        <div style={{ display: 'inline-block', position: 'relative' }}>
+          <img
+            src={INFO_ICON}
+            alt="icon"
+            className="icon"
+            style={{
+              display: 'inline-block',
+              verticalAlign: 'middle',
+              marginLeft: 'var(--spacing-8)',
+              cursor: 'pointer',
+            }}
+            onClick={handleIconClick}
+          />
+          {showHint && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: '50%',
+                backgroundColor: 'var(--hint-message-back-background-color)',
+                color: 'white',
+                padding: 'var(--spacing-4) var(--spacing-8)',
+                borderRadius: 'var(--border-radius-8)',
+                marginTop: 'var(--spacing-4)',
+                whiteSpace: 'nowrap',
+                fontSize: 'var(--font-size-small)',
+              }}>
+              {hintMessage}
+            </div>
+          )}
+        </div>
       )}
     </h1>
   );

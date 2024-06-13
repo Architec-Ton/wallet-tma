@@ -1,7 +1,6 @@
 {
     "loading": "Loading",
     "welcome-welcome-to": "Welcome to",
-    "welcome-next": "Next",
     "welcome-0-title": "Low Transaction Fees",
     "welcome-0-description": "Our wallet has some of the lowest transaction levels on the TON blockchain network in the world. We are working to make sure that you pay even less.",
     "welcome-1-title": "Combining Game Projects",
@@ -9,20 +8,14 @@
     "welcome-2-title": "Data Security Level",
     "welcome-2-description": "High level of personal data security. Full responsibility for the decentralization of all information.",
     "key-your_secret_key": "Your secret key",
-    "key-next": "Next",
     "copy-copy": "Copy to clipboard",
-    "copy-next": "Next",
     "confirm-confirm_the_key": "Confirm the key",
-    "confirm-next": "Next",
     "confirm-description": "To make sure that you have written down the words, fill in the fields by entering the words ",
     "registration-registration_completed": "Registration is сompleted",
     "registration-1-description": "Congratulations, you have completed the wallet registration process. ",
     "registration-2-description": "Architec.TON ",
     "registration-3-description": "will do everything to make you feel comfortable!",
-    "registration-next": "Next",
-    "existing-enter_key": "Enter secret key",
-    "existing-next": "Next",
-    "paste-paste": "Paste from clipboard",
+    "existing-enter-key": "Enter secret key",
 
     "addwallet-addwallet": "Add Wallet",
     "addwallet-create-title": "New Wallet",
@@ -30,5 +23,10 @@
     "addwallet-existing-title": "An Existing Wallet",
     "addwallet-existing-description": "Add an existing wallet using a 24-word secret key.",
     "addwallet-import-title": "Use TonConnect",
-    "addwallet-import-description": "Connect via Wallet, Ton Space,Tonkeeper, MyTonWallet and etc."
+    "addwallet-import-description": "Connect via Wallet, Ton Space,Tonkeeper, MyTonWallet and etc.",
+
+
+    "button-paste": "Paste from clipboard",
+    "button-copy": "Copy to clipboard",
+    "button-next": "Next"
 }
