@@ -9,6 +9,7 @@
   --background-selected-color: light-dark(#F7F9FB, #232328);
   --selected-color: #6ACDFF;
   --text-color: #232328;
+  --hint-message-back-background-color: var(--secondary-color);
 
   /* Цвета для текста */
   --text-secondary-color: var(--secondary-color);

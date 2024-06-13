@@ -10,9 +10,9 @@ const CopyButton = ({key_to_wallet}: Props) => {
 
         const t = useLanguage('Copy');
         const copyToClipboard = () => {
-        const textToCopy = key_to_wallet.map((word, index) => `${index + 1}. ${word}`).join(' ');
+        const textToCopy = key_to_wallet.map((word, index) => `${index + 1}. ${word}`).join('');
         navigator.clipboard.writeText(textToCopy)
-            .then(() => alert('Words copied to clipboard'))
+            //toDO алерт для тг .then(() => alert('Words copied to clipboard'))
             .catch(err => console.error('Failed to copy text: ', err));
     };
 
