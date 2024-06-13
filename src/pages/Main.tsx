@@ -1,10 +1,10 @@
-import Page from '../components/containers/Page';
-import Column from '../components/containers/Column';
 import { useEffect } from 'react';
-import Balance from '../components/ui/balance/Balance';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../hooks/useAppDispatch';
+import Column from '../components/containers/Column';
+import Page from '../components/containers/Page';
+import Balance from '../components/ui/balance/Balance';
 import { setLoading, setTitle } from '../features/page/pageSlice';
+import { useAppDispatch } from '../hooks/useAppDispatch';
 
 function Main() {
   const navigate = useNavigate();
