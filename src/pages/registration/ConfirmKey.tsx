@@ -1,11 +1,11 @@
-import Page from '../../components/containers/Page.tsx';
-import useLanguage from '../../hooks/useLanguage.ts';
-import Column from '../../components/containers/Column.tsx';
-import './ConfirmKey.styles.css';
-import Input from '../../components/inputs/Input.tsx';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Column from '../../components/containers/Column.tsx';
+import Page from '../../components/containers/Page.tsx';
+import Input from '../../components/inputs/Input.tsx';
+import useLanguage from '../../hooks/useLanguage.ts';
 import { useTmaMainButton } from '../../hooks/useTma.ts';
+import './ConfirmKey.styles.css';
 // import { usePage } from '../../hooks/usePage.ts';
 
 const ConfirmKey: React.FC = () => {
@@ -33,8 +33,8 @@ const ConfirmKey: React.FC = () => {
       {description}
       <Column>
         <div className="container">
-          {numbersOfWords.map((number, index) => (
-            <Input prefix={`${index + 1}.`} key={index} />
+          {numbersOfWords.map((number) => (
+            <Input prefix={`${number + 1}.`} key={number} />
           ))}
         </div>
       </Column>
