@@ -1,17 +1,15 @@
-import Page from '../../components/containers/Page.tsx';
-import useLanguage from '../../hooks/useLanguage.ts';
-import Column from '../../components/containers/Column.tsx';
-import CopyButton from '../../components/buttons/CopyButton.tsx';
 import { useEffect } from 'react';
-import './SecretKey.styles.css';
+import { useNavigate } from 'react-router-dom';
+import { iconButtonCopy } from '../../assets/icons/buttons/index.ts';
+import Button from '../../components/buttons/Button.tsx';
+import Column from '../../components/containers/Column.tsx';
+import Page from '../../components/containers/Page.tsx';
 import Block from '../../components/typography/Block.tsx';
-// import INFO_CIRCLE from '../../assets/icons/pages/secret-key/info-circle.svg';
-import { usePage } from '../../hooks/usePage.ts';
-import {useNavigate} from "react-router-dom";
-import {useTmaMainButton} from "../../hooks/useTma.ts";
-// import { iconPageSecretKeyCircle } from '../../assets/icons/pages/secret-key/index.ts';
+import useLanguage from '../../hooks/useLanguage.ts';
+import { useTmaMainButton } from '../../hooks/useTma.ts';
+import './SecretKey.styles.css';
 
-const key_to_wallet =[
+const key_to_wallet = [
   'test1',
   'test2',
   'test3',
@@ -35,52 +33,55 @@ const key_to_wallet =[
   'test21',
   'test22',
   'test23',
-  'test24'
-]
-
+  'test24',
+];
 
 const SecretKey = () => {
   const t = useLanguage('Key');
-  const page = usePage();
   const navigate = useNavigate();
   const btn = useTmaMainButton();
 
   useEffect(() => {
-    // localStorage.setItem('secretWords', JSON.stringify(key_to_wallet));
-    btn.init(t('next'), () => navigate('/registration/confirm-secret-key'), true);
-    page.setTitle({
-      title: t('your_secret_key'),
-      hintMessage: 'here hint message',
-    });
+    btn.init(
+      t('next', 'button'),
+      () => navigate('/registration/confirm-secret-key'),
+      true
+    );
   }, []);
 
-  const half = Math.ceil(key_to_wallet.length / 2);
+  const copyToClipboard = () => {
+    const textToCopy = key_to_wallet.join(' ');
+    navigator.clipboard
+      .writeText(textToCopy)
+      //toDO алерт для тг .then(() => alert('Words copied to clipboard'))
+      .catch((err) => console.error('Failed to copy text: ', err));
+  };
 
   return (
-    <Page>
+    <Page title={t('your-secret-key')} hintMessage={'here hint message'}>
       <Column>
-        <Block>
-          <div className="flex-container">
-            <div className="secret-words-column">
-              {key_to_wallet.slice(0, half).map((word, index) => (
-                <div key={index} className="secret-words-item">
-                  <h2 className="number">{index + 1}. </h2>
-                  <h2 className="secret-words-word">{word}</h2>
-                </div>
-              ))}
-            </div>
-
-            <div className="secret-words-column">
-              {key_to_wallet.slice(half).map((word, index) => (
-                <div key={index + half} className="secret-words-item">
-                  <h2 className="number">{index + 1 + half}. </h2>
-                  <h2 className="secret-words-word">{word}</h2>
-                </div>
-              ))}
-            </div>
-          </div>
+        <Block
+          style={{
+            display: 'block',
+          }}>
+          <Column columns={2} className="center">
+            {key_to_wallet.map((word, index) => (
+              <div className="registration-mnemonic-word" key={index}>
+                <h2>
+                  {index + 1}. {word}
+                </h2>
+              </div>
+            ))}
+          </Column>
         </Block>
-        <CopyButton key_to_wallet={key_to_wallet} />
+        <div className="center p-1">
+          <Button
+            icon={iconButtonCopy}
+            title={t('Copy', 'button')}
+            primary={false}
+            onClick={copyToClipboard}
+          />
+        </div>
       </Column>
     </Page>
   );

@@ -52,16 +52,16 @@ const Existing: React.FC = () => {
     );
   };
 
-  const getWords = () => {
-    if (isButtonEnabled) {
-      console.log(inputs);
-    }
-  };
-
   useEffect(() => {
-    btn.init(t('next', 'button'), getWords, isButtonEnabled);
+    btn.init(
+      t('next', 'button'),
+      () => {
+        console.log(inputs);
+      },
+      isButtonEnabled
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [btn, isButtonEnabled]);
+  }, [inputs, isButtonEnabled]);
 
   return (
     <Page title={t('enter-key')}>

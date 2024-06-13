@@ -10,6 +10,8 @@ interface InputProps {
   style?: CSSProperties;
   className?: string;
   value?: string;
+  type?: string;
+  disabled?: boolean;
 }
 
 function Input({
@@ -19,17 +21,20 @@ function Input({
   style,
   className,
   value,
+  type,
+  disabled,
 }: InputProps) {
   return (
     // <div className={classNames('form-input', className)}>
     <Block direction="row" className={classNames('form-input', className)}>
       {prefix && <span>{prefix}</span>}
       <input
-        type="text"
+        type={type}
         placeholder={placeholder}
         onChange={onChange}
         style={style}
         value={value}
+        disabled={disabled}
       />
     </Block>
   );

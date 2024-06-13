@@ -17,7 +17,7 @@ function Title({ title, titleAccent, hintMessage }: Props) {
   };
 
   return (
-    <h1 className="center">
+    <h1 className="title">
       {title}
       {titleAccent && <span> {titleAccent}</span>}
       {hintMessage && (

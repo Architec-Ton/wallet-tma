@@ -53,15 +53,19 @@ function MainButton({ title, onClick, visible }: Props) {
     return <MainButtonTMA title={title} onClick={onClick} visible={visible} />;
   return (
     <>
-      {
-        <div className="mainbutton-container">
-          {visible && (
+      {visible && (
+        <>
+          <div
+            style={{
+              height: '5rem',
+            }}></div>
+          <div className="mainbutton-container">
             <button onClick={onClick} className="primary-btn">
               {title}
             </button>
-          )}
-        </div>
-      }
+          </div>
+        </>
+      )}
     </>
   );
 }

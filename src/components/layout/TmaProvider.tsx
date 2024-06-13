@@ -30,9 +30,10 @@ export function TmaProvider({ children }: Props) {
     isTMA()
       .then((tma) => dispatch(setTma(tma)))
       .finally(() => {
-        setTimeout(() => {
-          dispatch(setTmaLoading(false));
-        }, 2000);
+        dispatch(setTmaLoading(false));
+        // setTimeout(() => {
+        //   dispatch(setTmaLoading(false));
+        // }, 2000);
       });
   }, []);
   return (

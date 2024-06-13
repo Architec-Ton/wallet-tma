@@ -6,13 +6,13 @@ import Input from '../../components/inputs/Input.tsx';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTmaMainButton } from '../../hooks/useTma.ts';
-import { usePage } from '../../hooks/usePage.ts';
+// import { usePage } from '../../hooks/usePage.ts';
 
 const ConfirmKey: React.FC = () => {
   const t = useLanguage('Confirm');
   const navigate = useNavigate();
   const btn = useTmaMainButton();
-  const page = usePage();
+  // const page = usePage();
   const numbersOfWords = [1, 2, 3];
 
   const description = (
@@ -21,17 +21,20 @@ const ConfirmKey: React.FC = () => {
     </p>
   );
   useEffect(() => {
-    btn.init(t('next'), () => navigate('/registration/completed'), true);
-    page.setTitle({ title: t('confirm_the_key') });
+    btn.init(
+      t('next', 'button'),
+      () => navigate('/registration/completed'),
+      true
+    );
   }, []);
 
   return (
-    <Page>
+    <Page title={t('confirm-mnemonics')}>
       {description}
       <Column>
         <div className="container">
           {numbersOfWords.map((number, index) => (
-            <Input number={number} key={index} />
+            <Input prefix={`${index + 1}.`} key={index} />
           ))}
         </div>
       </Column>
