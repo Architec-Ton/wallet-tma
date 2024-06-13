@@ -10,7 +10,7 @@ import {
 import Column from '../../components/containers/Column';
 import TileButton from '../../components/buttons/TileButton';
 import { useEffect } from 'react';
-import { setLoading, setTitle } from '../../features/page/pageSlice';
+import { setLoading } from '../../features/page/pageSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 function AddWallet() {
@@ -34,12 +34,11 @@ function AddWallet() {
   ];
 
   useEffect(() => {
-    dispatch(setTitle({ title: t('AddWallet') }));
     dispatch(setLoading(false));
   }, []);
 
   return (
-    <Page>
+    <Page title={t('AddWallet')}>
       <Column>
         {addWalletButtons.map((btn) => (
           <TileButton

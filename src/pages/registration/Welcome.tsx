@@ -9,13 +9,10 @@ import Column from '../../components/containers/Column';
 import useLanguage from '../../hooks/useLanguage';
 import { useTmaMainButton } from '../../hooks/useTma';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setTitle } from '../../features/page/pageSlice';
 import useRouter from '../../hooks/useRouter';
 
 function Welcome() {
   const navigate = useRouter();
-  const dispatch = useAppDispatch();
   const btn = useTmaMainButton();
   const t = useLanguage('Welcome');
   const welcomeIcons = [
@@ -26,18 +23,17 @@ function Welcome() {
 
   useEffect(() => {
     btn.init(
-      t('next'),
+      t('next', 'button'),
       () => {
         console.log('call btn');
         navigate('/registration/add-wallet');
       },
       true
     );
-    dispatch(setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' }));
   }, []);
 
   return (
-    <Page>
+    <Page title={t('welcome-to')} titleAccent={'Architec.TON'}>
       <Column>
         {welcomeIcons.map((icon, index: number) => (
           <Tile
