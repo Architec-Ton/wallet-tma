@@ -12,12 +12,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
 import { selectGames, selectGamesStatus } from '../../features/gaming/gamingSelectors.ts';
 import { fetchGames } from '../../features/gaming/actions.ts';
 import { setLoading } from '../../features/page/pageSlice.ts';
+import { useTranslation } from 'react-i18next';
 
 const imageSliderData = [cardImage,cardImage,cardImage,cardImage,cardImage,cardImage]
 
 const SearchIconComponent = () => <img src={SearchIcon} alt="" />
 
 function PlayGround () {
+  const { t } = useTranslation()
   const [searchValue, setSearchValue] = useState<string>('')
   const games = useAppSelector(selectGames)
   const { isLoading } = useAppSelector(selectGamesStatus)
@@ -40,7 +42,7 @@ function PlayGround () {
   return (
     <Page>
       <Column>
-        <Input type="text" value={searchValue} placeholder="Search" onChange={searchHandler} prefix={<SearchIconComponent />} />
+        <Input type="text" value={searchValue} placeholder={t("search")} onChange={searchHandler} prefix={<SearchIconComponent />} />
         <Row className="w-screen">
           <Slider settings={{
             slidesPerView: "auto",

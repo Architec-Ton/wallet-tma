@@ -9,6 +9,7 @@ import Slider from '../../slider';
 import GameListItemGroup from '../listItemGroup';
 
 import './index.css'
+import { useTranslation } from 'react-i18next';
 
 type OwnPropsType = {
   games: GameListType<GameListItemType[]>
@@ -24,7 +25,7 @@ function slideMatrix(arr: GameListItemType[], size: number) {
 }
 
 const GameList = ({ games }: OwnPropsType) => {
-
+  const { t } = useTranslation()
   const [gameList, setGameList] = useState<GameListType<GameListItemType[][]>>([])
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const GameList = ({ games }: OwnPropsType) => {
         <Column key={category.id}>
           <Row className="category-header">
             <div className="category-header__title">{category.title}</div>
-            <Link to="" className="category-header__all">All</Link>
+            <Link to="" className="category-header__all">{t("all")}</Link>
           </Row>
           <Column>
             <Slider settings={{

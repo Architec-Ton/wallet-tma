@@ -15,8 +15,9 @@
 }
 
 .category-game__icon {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: var(--thumbnail-medium-width);
+  height: var(--thumbnail-medium-height);
+  border-radius: var(--round-medium);
 }
 
 .category-game__description {

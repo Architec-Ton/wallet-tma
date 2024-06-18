@@ -14,7 +14,7 @@ export type GameCategoryType<T> = {
 export type GameListType<G> = GameCategoryType<G>[]
 
 export interface IGame {
-  id: number
+  id: number | string
   title: string
   description: string
   thumbnail: string

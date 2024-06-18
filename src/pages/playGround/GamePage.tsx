@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Page from "../../components/containers/Page"
 import { useGetGameLeadersQuery, useGetGameQuery } from "../../features/gaming/gamingApi"
 import { useCallback, useEffect, useState } from "react"
@@ -19,6 +19,8 @@ import Grid from "../../components/containers/Grid"
 import GameLeaderRow from "./GameLeaderRow"
 
 import './GamePage.style.css'
+import { useTranslation } from "react-i18next"
+import useLocalStorage from "../../hooks/useLocalStorage"
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -27,22 +29,27 @@ const typedIcons = {
 }
 
 const GamePage = () => {
+  const { t } = useTranslation()
   const { id } = useParams()
+  const [favorites, setFavorites] = useLocalStorage<(number | string)[]>("game_favorites", [])
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const {data: game, isLoading} = useGetGameQuery(id as string)
   const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
   
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false)
+  const [isFavorite, setIsFavorite] = useState<boolean>(false)
 
   useEffect(() => {
     dispatch(setLoading(isLoading || leadersIsLoading))
   }, [isLoading, leadersIsLoading])
 
-  const starClickHandler = () => {
-    // TODO: уточнить действие и поменять функционал
-    console.log("star click")
-  }
+  useEffect(() => {
+    if (game) {
+      const isInFavorites = favorites.includes(game.id as never)
+      setIsFavorite(isInFavorites)
+    }
+  }, [game, favorites])
 
   const readMoreHandler = () => {
     setReacMoreDescription(!readMoreDescription)
@@ -63,6 +70,19 @@ const GamePage = () => {
     }
   }, [game])
 
+  const addToFavorites = () => {
+    if (!game) {
+      return
+    }
+    if (isFavorite) {
+      const filterdFavorites = favorites.filter(favorite => favorite !== game.id)
+      setFavorites(filterdFavorites)
+    } else {
+      const newFavorites = [...favorites, game.id]
+      setFavorites(newFavorites)
+    }
+  }
+
   return (
     <Page>
       <Tile
@@ -72,8 +92,8 @@ const GamePage = () => {
         className="game-page__header"
       >
         <div className="game-controls">
-          <Link to="" className="rounded-button">Play</Link>
-          <img src={iconButtonMedalStars} alt="" onClick={starClickHandler} />
+          <button className="rounded-button primary-button">{t("play")}</button>
+          <img src={iconButtonMedalStars} alt="" onClick={addToFavorites} />
         </div>
       </Tile>
       <Row className="w-screen">
@@ -85,24 +105,22 @@ const GamePage = () => {
           {game?.album.map((url, index) => {
             return (
               <SwiperSlide key={`${url}-${index}`} className="album-slide">
-                <img src={url} alt="" />
+                <img src={url} alt="" className="round-large" />
               </SwiperSlide>
             )
           })}
         </Slider>
       </Row>
-      <Section title="Description" readMore="Read All" readMoreHandle={readMoreHandler} >
-          <Block className={classNames("game-description__section", { "all": readMoreDescription })}>
-            {game?.description}
-            Punk City introduces players to the CyberArena
-            for intense PvP battles. With options for friendly
-            duels or token-based confrontations, it features
-            an advanced inventory system and a competitive weekly League. Beyond combat, the app offers daily token giveaways through tasks asdal asdd...
+      <Section title={t("description")} readMore={t("read-more")} readMoreHandle={readMoreHandler} >
+          <Block>
+            <div className={classNames("game-description__section", { "all": readMoreDescription })}>
+              {game?.description}
+            </div>
           </Block>
       </Section>
-      <Section title="Leaderboard" readMore="See All" readMoreHandle={seeAllHandler} className="leaders-section">
+      <Section title={t("leaderbord")} readMore={t("see-all")} readMoreHandle={seeAllHandler} className="leaders-section">
         <Grid columns={12} gap={2} className="game-leader__head" isOrderedList>
-          <GameLeaderRow num="#" name="Name" totalCoins="Total coins" asset="Asset" time="Time" isHeader />
+          <GameLeaderRow num="#" name={t("leader-name")} totalCoins={t("leader-total-coins")} asset={t("leader-asset")} time={t("leader-time")} isHeader />
         </Grid>
         {leaders && leaders.map((leader, index) => {
           return (
@@ -115,7 +133,7 @@ const GamePage = () => {
           <GameLeaderRow num={12458} name="You" totalCoins="45678" asset="$PNK" time="12 H" />
         </Grid>
       </Section>
-      <Section title="Project Resources">
+      <Section title={t("project-resources")}>
         {game?.resources.map(resource => {
           return (
             <TypedTile

@@ -8,7 +8,7 @@
     /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);
   --selected-color: #6ACDFF;
-  --text-color: #232328;
+  --text-color: light-dark(#232328, #F7F9FB);
   --hint-message-back-background-color: var(--secondary-color);
 
   /* Цвета для текста */
@@ -43,7 +43,7 @@
   /* Цвета для тени и границ */
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
-  --border-color-light: rgba(0, 0, 0, 0.05);
+  --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
 
   /* Отступы и поля */  
   --spacing-2: 0.125rem;
@@ -86,6 +86,14 @@
 
   /* Ширина */
   --w-full: 100%;
-  --w-screen: calc(100% + 2 * var(--spacing-12))
+  --w-screen: calc(100% + 2 * var(--spacing-12));
+
+  /* Размеры аватарок */
+  --thumbnail-with: 114px;
+  --thumbnail-height: 114px;
+  --thumbnail-medium-with: 56px;
+  --thumbnail-medium-height: 56px;
+
+  --swiper-pagination-bullet-inactive-color: light-dark(#000000, #ffffff);
 }
 

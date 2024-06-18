@@ -7,7 +7,6 @@
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
   width: calc(100% - 24px);
   display: flex;
   justify-content: center;
@@ -26,6 +25,11 @@
   width: 4px;
   height: 4px;
   border-radius: var(--border-radius-full);
+  background-color: var(--swiper-pagination-bullet-inactive-color);
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color);
 }
 
 .swiper.list-swipe .swiper-slide:first-child {

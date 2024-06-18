@@ -7,8 +7,10 @@ import Section from "../../components/containers/Section"
 import Grid from "../../components/containers/Grid"
 import GameLeaderRow from "./GameLeaderRow"
 import Page from "../../components/containers/Page"
+import { useTranslation } from "react-i18next"
 
 const LeaderBoard = () => {
+  const { t } = useTranslation()
   const { id } = useParams()
   const dispatch = useAppDispatch()
   const { data, isLoading } = useGetGameLeadersQuery({id: id as string})
@@ -19,9 +21,9 @@ const LeaderBoard = () => {
 
   return (
     <Page>
-      <Section title="Leaderboard" className="leaders-section">
+      <Section title={t("leaderboard")} className="leaders-section">
         <Grid columns={12} gap={2} className="game-leader__head" isOrderedList>
-          <GameLeaderRow num="#" name="Name" totalCoins="Total coins" asset="Asset" time="Time" isHeader />
+          <GameLeaderRow num="#" name={t("leader-name")} totalCoins={t("leader-total-coins")} asset={t("leader-asset")} time={t("leader-time")} isHeader />
         </Grid>
         {data && data.map((leader, index) => {
           return (

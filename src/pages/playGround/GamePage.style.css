@@ -3,9 +3,9 @@
 }
 
 .game-page__header .tile-icon {
-  width: 114px;
-  height: 114px;
-  border-radius: 19px;
+  width: var(--thumbnail-width);
+  height: var(--thumbnail-height);
+  border-radius: var(--spacing-16);
 }
 
 .game-page__header .tile-body {
@@ -39,13 +39,6 @@
   justify-content: space-between;
 }
 
-.rounded-button {
-  border-radius: var(--border-radius-16);
-  background-color: var(--primary-color);
-  color: var(--text-primary-color);
-  padding: var(--spacing-4) var(--spacing-12);
-}
-
 .swiper-slide.album-slide {
   width: fit-content;
   padding-left: var(--spacing-12);
@@ -53,27 +46,14 @@
 
 .game-description__section {
   position: relative;
-  height: 3rem;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .game-description__section.all {
-  height: fit-content;
-}
-
-.game-description__section::after {
-  content: "";
-  display: block;
-  height: 3rem;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  background-image:linear-gradient(0deg, var(--background-selected-color), transparent) ;
-  opacity: 1;
-}
-
-.game-description__section.all::after {
-  opacity: 0;
+  -webkit-box-orient: unset;
 }
 
 .game-resource__block {
