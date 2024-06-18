@@ -14,6 +14,7 @@
   /* Цвета для текста */
   --text-secondary-color: var(--secondary-color);
   --text-primary-color: #F7F9FB;
+  --text-secondary-light-color: #8E8E93;
   --link-color: var(--primary-color);
   --link-hover-color: var(--selected-color);
 
@@ -42,6 +43,7 @@
   /* Цвета для тени и границ */
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
+  --border-color-light: rgba(0, 0, 0, 0.05);
 
   /* Отступы и поля */  
   --spacing-2: 0.125rem;
@@ -55,6 +57,7 @@
   /* Размеры шрифтов */
   --font-size-small: 13px;
   --font-size-medium: 15px;
+  --font-size-base: 16px;
   --font-size-large: 24px;
   --font-size-xlarge: 32px;
 
@@ -72,6 +75,7 @@
   --border-radius-8: 0.5rem;
   --border-radius-12: 0.75rem;
   --border-radius-16: 1rem;
+  --border-radius-full: 50%;
 
   /* Прозрачность */
   --opacity-disabled: 0.6;
@@ -79,5 +83,9 @@
   /* Шрифты */
   --font-family-sans-serif: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   --font-family-monospace: 'Courier New', Courier, monospace;
+
+  /* Ширина */
+  --w-full: 100%;
+  --w-screen: calc(100% + 2 * var(--spacing-12))
 }
 

@@ -43,6 +43,14 @@ a {
 }
 
 /**
+ * Remove text decoration on all links.
+ */
+
+a {
+    text-decoration: none;
+}
+
+/**
  * 1. Remove the bottom border in Chrome 57-
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
@@ -334,4 +342,17 @@ template {
 
 [hidden] {
     display: none;
+}
+
+.w-screen {
+  width: var(--w-screen);
+  margin-left: calc(-1 * var(--spacing-12));
+}
+
+.w-full {
+  width: var(--w-full);
+}
+
+.grow {
+  flex-grow: 1;
 }
