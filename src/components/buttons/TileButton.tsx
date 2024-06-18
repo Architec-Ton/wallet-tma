@@ -27,7 +27,8 @@ function TileButton({
     <button
       onClick={onClick}
       className={classNames('tile-button', className)}
-      style={style}>
+      style={style}
+    >
       <Tile
         icon={icon}
         title={title}

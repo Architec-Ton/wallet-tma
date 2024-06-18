@@ -1,0 +1,35 @@
+.circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: var(--spacing-8);
+}
+
+.success-animation {
+    animation: pulse 0.5s infinite alternate;
+}
+
+.error-animation {
+    animation: shake 0.5s ease-in-out 2;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}

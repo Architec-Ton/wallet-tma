@@ -10,6 +10,8 @@ import SecretKey from './pages/registration/SecretKey.tsx';
 import RegistrationIsCompleted from './pages/registration/RegistrationIsCompleted.tsx';
 import Existing from './pages/registration/Existing.tsx';
 import Main from './pages/Main.tsx';
+import PinCode from "./pages/pin-code/PinCode.tsx";
+
 
 const router = createBrowserRouter(
   [
@@ -44,6 +46,10 @@ const router = createBrowserRouter(
     {
       path: '/registration/existing',
       element: <Existing />,
+    },
+    {
+      path: '/pin-code',
+      element: <PinCode/>,
     },
   ],
   { basename: '/wallet' }
