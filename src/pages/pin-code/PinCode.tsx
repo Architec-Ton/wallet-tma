@@ -20,7 +20,7 @@ interface PinInputProps {
 
 const PinCode:
     React.FC<PinInputProps> = ({
-                                  mode = 'registration',
+                                  mode = 'confirmation',
                                   onSuccess,
                                   onFailure
 }) => {
