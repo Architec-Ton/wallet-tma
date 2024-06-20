@@ -1,30 +1,32 @@
 export type GameListItemType = {
-  thumbnail: string
+  thumb: string
   title: string
   description: string
-  id: number
+  id: string
+  rate: number
 }
 
 export type GameCategoryType<T> = {
   title: string
-  id: number
+  id: string
   items: T
 }
 
 export type GameListType<G> = GameCategoryType<G>[]
 
 export interface IGame {
-  id: number | string
+  id: string
   title: string
   description: string
-  thumbnail: string
+  thumb: string
   album: string[]
   category: number
   resources: GameResource[]
+  rate: number
 }
 
 export interface GameResource {
-  thumbnail: string
+  thumb: string
   title: string
   description: string
   link: string
@@ -34,7 +36,7 @@ export interface GameResource {
 export type TGameLeader = {
   name: string
   asset: string
-  gameId: number
+  gameId: string
   time: string
   totalCoins: string
 }

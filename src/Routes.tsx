@@ -12,6 +12,7 @@ import Existing from './pages/registration/Existing.tsx';
 import Main from './pages/Main.tsx';
 import GamePage from './pages/playGround/GamePage.tsx';
 import LeaderBoard from './pages/playGround/LeaderBoard.tsx';
+import CategoryGames from './pages/playGround/CategoryGames.tsx';
 
 const router = createBrowserRouter(
   [
@@ -30,6 +31,10 @@ const router = createBrowserRouter(
     {
       path: '/playground/:id/leaders',
       element: <LeaderBoard />
+    },
+    {
+      path: '/playground/category/:id',
+      element: <CategoryGames />
     },
     {
       path: '/registration/welcome',

@@ -15,12 +15,10 @@ import Block from "../../components/typography/Block"
 import classNames from "classnames"
 import TypedTile from "../../components/typography/TypedTile"
 import { GameResource } from "../../types/gameTypes"
-import Grid from "../../components/containers/Grid"
-import GameLeaderRow from "./GameLeaderRow"
+import useLocalStorage from "../../hooks/useLocalStorage"
+import useLanguage from "../../hooks/useLanguage"
 
 import './GamePage.style.css'
-import { useTranslation } from "react-i18next"
-import useLocalStorage from "../../hooks/useLocalStorage"
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -29,7 +27,7 @@ const typedIcons = {
 }
 
 const GamePage = () => {
-  const { t } = useTranslation()
+  const t = useLanguage("game")
   const { id } = useParams()
   const [favorites, setFavorites] = useLocalStorage<(number | string)[]>("game_favorites", [])
   const dispatch = useAppDispatch()
@@ -88,7 +86,7 @@ const GamePage = () => {
       <Tile
         title={game?.title}
         description={game?.description}
-        icon={game?.thumbnail}
+        icon={game?.thumb}
         className="game-page__header"
       >
         <div className="game-controls">
@@ -118,7 +116,8 @@ const GamePage = () => {
             </div>
           </Block>
       </Section>
-      <Section title={t("leaderbord")} readMore={t("see-all")} readMoreHandle={seeAllHandler} className="leaders-section">
+      {/* TODO: раскомментировать после определения бекенда */}
+      {/* <Section title={t("leaderbord")} readMore={t("see-all")} readMoreHandle={seeAllHandler} className="leaders-section">
         <Grid columns={12} gap={2} className="game-leader__head" isOrderedList>
           <GameLeaderRow num="#" name={t("leader-name")} totalCoins={t("leader-total-coins")} asset={t("leader-asset")} time={t("leader-time")} isHeader />
         </Grid>
@@ -132,13 +131,13 @@ const GamePage = () => {
         <Grid columns={12} gap={2} className="block game-leader__row primary-block" isOrderedList>
           <GameLeaderRow num={12458} name="You" totalCoins="45678" asset="$PNK" time="12 H" />
         </Grid>
-      </Section>
+      </Section> */}
       <Section title={t("project-resources")}>
         {game?.resources.map(resource => {
           return (
             <TypedTile
               key={`${resource.type}-${game.id}`}
-              icon={resource.thumbnail}
+              icon={resource.thumb}
               typeIcon={typedIcons[resource.type]}
               title={resource.title}
               description={resource.description}

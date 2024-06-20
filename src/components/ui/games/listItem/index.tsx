@@ -19,7 +19,7 @@ const GameListItem = ({ game }: OwnPropsType) => {
 
   return (
     <Row className="category-game" onClick={clickHandler}>
-      <img src={game.thumbnail} alt="" className="category-game__icon" />
+      <img src={game.thumb} alt="" className="category-game__icon" />
       <Column className="category-game__info">
         <div className="category-game__title">{game.title}</div>
         <div className="category-game__description">{game.description}</div>

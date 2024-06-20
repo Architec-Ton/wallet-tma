@@ -7,10 +7,10 @@ import Section from "../../components/containers/Section"
 import Grid from "../../components/containers/Grid"
 import GameLeaderRow from "./GameLeaderRow"
 import Page from "../../components/containers/Page"
-import { useTranslation } from "react-i18next"
+import useLanguage from "../../hooks/useLanguage"
 
 const LeaderBoard = () => {
-  const { t } = useTranslation()
+  const t = useLanguage("game")
   const { id } = useParams()
   const dispatch = useAppDispatch()
   const { data, isLoading } = useGetGameLeadersQuery({id: id as string})

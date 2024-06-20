@@ -4,7 +4,9 @@ import iconButtonArraw from './icon-array.svg';
 import iconButtonMedalStars from './medal-star.svg';
 import iconSendButton from './send-2.svg';
 import iconGlobalButton from './global.svg';
-import iconCoinButton from './coin.svg'
+import iconCoinButton from './coin.svg';
+import iconSortButton from './sort.svg';
+import iconFilterSquareButton from './filter-square.svg';
 
 export {
   iconButtonCopy,
@@ -14,4 +16,6 @@ export {
   iconSendButton,
   iconGlobalButton,
   iconCoinButton,
+  iconSortButton,
+  iconFilterSquareButton
 };

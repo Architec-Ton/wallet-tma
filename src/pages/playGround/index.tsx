@@ -1,8 +1,6 @@
 import Column from '../../components/containers/Column.tsx';
 import Page from '../../components/containers/Page.tsx';
-import Input from '../../components/inputs/Input.tsx';
-import { SearchIcon } from '../../assets/icons/inputs/index.ts'
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Row from '../../components/containers/Row.tsx';
 import Slider from '../../components/ui/slider/index.tsx';
 import cardImage from '../../assets/images/card.png'
@@ -12,23 +10,19 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
 import { selectGames, selectGamesStatus } from '../../features/gaming/gamingSelectors.ts';
 import { fetchGames } from '../../features/gaming/actions.ts';
 import { setLoading } from '../../features/page/pageSlice.ts';
-import { useTranslation } from 'react-i18next';
+import SearchBar from '../../components/ui/searchBar/index.tsx';
 
 const imageSliderData = [cardImage,cardImage,cardImage,cardImage,cardImage,cardImage]
 
-const SearchIconComponent = () => <img src={SearchIcon} alt="" />
-
 function PlayGround () {
-  const { t } = useTranslation()
-  const [searchValue, setSearchValue] = useState<string>('')
   const games = useAppSelector(selectGames)
   const { isLoading } = useAppSelector(selectGamesStatus)
 
 
-  const searchHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value
-    setSearchValue(value)
+  const searchHandler = (value: string) => {
+    console.log("value", value)
   }
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -42,7 +36,7 @@ function PlayGround () {
   return (
     <Page>
       <Column>
-        <Input type="text" value={searchValue} placeholder={t("search")} onChange={searchHandler} prefix={<SearchIconComponent />} />
+        <SearchBar onChange={searchHandler} />
         <Row className="w-screen">
           <Slider settings={{
             slidesPerView: "auto",

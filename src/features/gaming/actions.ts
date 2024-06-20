@@ -5,7 +5,7 @@ export const fetchGames = createAsyncThunk<GameListType<GameListItemType[]>, und
     'gaming/fetchGames',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch("https://my-json-server.typicode.com/vardanter/architec_games/categories")
+            const response = await fetch("/api/v2/wallet/games")
 
             if (!response.ok) {
                 throw new Error("Server error!!!")
