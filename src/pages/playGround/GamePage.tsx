@@ -31,16 +31,16 @@ const GamePage = () => {
   const { id } = useParams()
   const [favorites, setFavorites] = useLocalStorage<(number | string)[]>("game_favorites", [])
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const {data: game, isLoading} = useGetGameQuery(id as string)
-  const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
+  // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
   
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false)
   const [isFavorite, setIsFavorite] = useState<boolean>(false)
 
   useEffect(() => {
-    dispatch(setLoading(isLoading || leadersIsLoading))
-  }, [isLoading, leadersIsLoading])
+    dispatch(setLoading(isLoading))
+  }, [isLoading])
 
   useEffect(() => {
     if (game) {
@@ -52,10 +52,10 @@ const GamePage = () => {
   const readMoreHandler = () => {
     setReacMoreDescription(!readMoreDescription)
   }
-
-  const seeAllHandler = () => {
-    navigate(`/playground/${id}/leaders`)
-  }
+  /* TODO: раскомментировать после определения бекенда */
+  // const seeAllHandler = () => {
+  //   navigate(`/playground/${id}/leaders`)
+  // }
 
   const resourceHandler = useCallback((resource: GameResource) => {
     return () => {
