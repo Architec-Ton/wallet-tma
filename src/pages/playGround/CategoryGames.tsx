@@ -18,7 +18,7 @@ import { GameCategoryType, GameListItemType } from "../../types/gameTypes"
 export type FilterType = {
   name?: boolean
   rate?: boolean
-  news?: boolean
+  date?: boolean
 }
 
 type FilterKeys = keyof FilterType;
@@ -26,13 +26,13 @@ type FilterKeys = keyof FilterType;
 const initialFilter: FilterType = {
   name: false,
   rate: false,
-  news: false
+  date: false
 }
 
 type SearchParamsType = {
-  order_by?: 'asc' | 'desc'
-  sort?: string
-  query?: string
+  direction?: 'asc' | 'desc'
+  order?: string
+  search?: string
 }
 type SerchParamsKeys = keyof SearchParamsType
 
@@ -77,22 +77,21 @@ const CategoryGames = () => {
             param && params.append(key, param)
           })
         }
-        console.log("params", params.toString(), searchParams)
         searchGames({ id: `${id}`, params })
       }, 500)
     }
   }, [isSearchParamsChanged])
 
   const searchHandler = (value: string) => {
-    setSearchParams(params => ({ ...params, query: value }))
+    setSearchParams(params => ({ ...params, search: value }))
     setIsSearchParamsChanged(true)
   }
 
   const sortHandler = () => {
     setSearchParams(params => {
-      const prevOrderBy = params?.order_by ?? "desc"
-      const orderBy = prevOrderBy === "desc" ? "asc": "desc"
-      return { ...params, order_by: orderBy }
+      const prevDirection = params?.direction ?? "desc"
+      const direction = prevDirection === "desc" ? "asc": "desc"
+      return { ...params, direction }
     })
     setIsSearchParamsChanged(true)
   }
@@ -107,14 +106,14 @@ const CategoryGames = () => {
     const updatedFilter = { ...filter, [name]: !!checked }
     const filterParams: string[] = Object.keys(updatedFilter).filter((f: string) => updatedFilter[f as FilterKeys] === true)
     setFilter(updatedFilter)
-    setSearchParams({ ...searchParams, sort: filterParams.join(',') })
+    setSearchParams({ ...searchParams, order: filterParams.join(',') })
     setIsSearchParamsChanged(true)
   }
 
   const clearFilter = () => {
     setFilter(initialFilter)
     setSearchParams(params => {
-      const { sort, ...otherParams } = params as SearchParamsType
+      const { order, ...otherParams } = params as SearchParamsType
       return { ...otherParams  }
     })
     setIsSearchParamsChanged(true)
