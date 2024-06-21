@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import Page from "../../components/containers/Page"
-import { useGetGameLeadersQuery, useGetGameQuery } from "../../features/gaming/gamingApi"
+import { useGetGameQuery } from "../../features/gaming/gamingApi"
 import { useCallback, useEffect, useState } from "react"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { setLoading } from "../../features/page/pageSlice"
