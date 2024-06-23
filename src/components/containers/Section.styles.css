@@ -1,0 +1,23 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-16);
+}
+
+.section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section__body {
+  color: var(--text-color);
+}
+
+.section__header h2 {
+  font-size: var(--font-size-large);
+}
+
+.section__read-more {
+  font-size: var(--font-size-base);
+}

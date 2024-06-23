@@ -1,0 +1,21 @@
+.category-header {
+  justify-content: space-between;
+  padding: var(--spacing-12);
+  font-size: var(--font-size-base);
+  padding-bottom: 0;
+}
+
+.category-header__title {
+  font-weight: var(--font-medium);
+}
+
+.category-header__all {
+  color: var(--link-color);
+  margin-right: var(--spacing-12);
+  text-decoration: none;
+}
+
+.swiper-slide.list-slide {
+  width: 85%;
+  padding-left: var(--spacing-12);
+}

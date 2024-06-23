@@ -33,5 +33,20 @@
 
     "button-paste": "Paste from clipboard",
     "button-copy": "Copy to clipboard",
-    "button-next": "Next"
+    "button-next": "Next",
+
+    "game-all": "All",
+    "game-description": "Description",
+    "game-search": "Search",
+    "game-play": "Play",
+    "game-read-more": "Read All",
+    "game-see-all": "See All",
+    "game-leader-name": "Name",
+    "game-leader-total-coins": "Total coins",
+    "game-leader-asset": "Asset",
+    "game-leader-time": "Time",
+    "game-leaderboard": "Leaderboard",
+    "game-project-resources": "Project Resources",
+    "game-filter-on": "On",
+    "game-filter-off": "Off"
 }
