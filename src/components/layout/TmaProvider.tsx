@@ -52,7 +52,6 @@ export function TmaProvider({ children }: Props) {
       console.log(JSON.stringify(initDataRaw.result))
       console.log('initDataRaw :', initDataRaw)
       console.log(initDataRaw.error)
-      console.log(InitData.initData)
             //console.log(launchParams.initDataRaw)
     } else {
       console.log('isTMA;', isTma)

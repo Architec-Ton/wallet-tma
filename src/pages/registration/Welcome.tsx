@@ -10,9 +10,11 @@ import Tile from '../../components/typography/Tile';
 import useLanguage from '../../hooks/useLanguage';
 import useRouter from '../../hooks/useRouter';
 import { useTmaMainButton } from '../../hooks/useTma';
+import { usePage } from '../../hooks/usePage';
 
 function Welcome() {
   const navigate = useRouter();
+  const page = usePage()
   const btn = useTmaMainButton();
   const t = useLanguage('Welcome');
   const welcomeIcons = [
@@ -22,6 +24,7 @@ function Welcome() {
   ];
 
   useEffect(() => {
+    page.setLoading(false)
     btn.init(
       t('next', 'button'),
       () => {

@@ -17,10 +17,10 @@
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
 
-    "pin_code-normal": "Enter PIN code",
-    "pin_code-success": "Enter PIN code",
-    "pin_code-error": "Invalid PIN code",
-    "pin_code-confirm": "Confirm PIN code",
+    "pincode-normal": "Enter PIN code",
+    "pincode-success": "Enter PIN code",
+    "pincode-error": "Invalid PIN code",
+    "pincode-confirm": "Confirm PIN code",
 
     "addwallet-addwallet": "Add Wallet",
     "addwallet-create-title": "New Wallet",

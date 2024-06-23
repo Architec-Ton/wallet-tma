@@ -10,7 +10,7 @@ import SecretKey from './pages/registration/SecretKey.tsx';
 import RegistrationIsCompleted from './pages/registration/RegistrationIsCompleted.tsx';
 import Existing from './pages/registration/Existing.tsx';
 import Main from './pages/Main.tsx';
-import PinCode from "./pages/pin-code/PinCode.tsx";
+import PinCode from "./pages/pincode/PinCode.tsx";
 
 
 const router = createBrowserRouter(

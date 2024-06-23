@@ -1,4 +1,10 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
+import { useAppDispatch } from "./useAppDispatch";
+import {
+  PageTitleState,
+  setLoading,
+  setTitle,
+} from "../features/page/pageSlice";
 
 export interface PageTitle {
   title?: string;
@@ -14,17 +20,24 @@ export const PageStateContext = createContext<{
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isLoading: true,
-  title: { title: 'Ok' },
+  title: { title: "Ok" },
   setTitle: () => {},
-  setIsLoading: () => {}, 
+  setIsLoading: () => {},
 });
 
 export const usePageState = () => useContext(PageStateContext);
 
 export function usePage() {
-  const { setTitle, setIsLoading } = usePageState();
+  const dispatch = useAppDispatch();
   return {
-    setTitle: setTitle,
-    setIsLoading: setIsLoading,
+    setTitle: (title?: string, titleAccent?: string, hintMessage?: string) =>
+      dispatch(
+        setTitle({
+          title: title,
+          titleAccent: titleAccent,
+          hintMessage: hintMessage,
+        })
+      ),
+    setLoading: (state: boolean) => dispatch(setLoading(state)),
   };
 }
