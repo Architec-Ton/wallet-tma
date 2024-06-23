@@ -5,6 +5,7 @@ import Page from '../components/containers/Page';
 import Balance from '../components/ui/balance/Balance';
 import { setLoading, setTitle } from '../features/page/pageSlice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useInitDataRaw } from '@tma.js/sdk-react';
 
 function Main() {
   const navigate = useNavigate();

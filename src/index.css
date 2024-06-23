@@ -1,9 +1,10 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light ;
 
   /* Основные цвета */
   --primary-color: #07ACFF;
   --secondary-color: #65656A;
+  --third-colour: #e5e5e5;
   --background-color: light-dark(#ffffff, var(--tg-theme-bg-color)); 
     /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);
@@ -54,6 +55,8 @@
   --spacing-16: 1rem;
   --spacing-24: 1.5rem;
   --spacing-32: 2rem;
+  --spacing-64: 4rem;
+  --spacing-80: 5rem;
 
   /* Размеры шрифтов */
   --font-size-small: 13px;

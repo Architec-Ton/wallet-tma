@@ -13,6 +13,7 @@ import Main from './pages/Main.tsx';
 import GamePage from './pages/playGround/GamePage.tsx';
 import LeaderBoard from './pages/playGround/LeaderBoard.tsx';
 import CategoryGames from './pages/playGround/CategoryGames.tsx';
+import PinCode from "./pages/pincode/PinCode.tsx";
 
 const router = createBrowserRouter(
   [
@@ -59,6 +60,10 @@ const router = createBrowserRouter(
     {
       path: '/registration/existing',
       element: <Existing />,
+    },
+    {
+      path: '/pin-code',
+      element: <PinCode/>,
     },
   ],
   { basename: '/wallet' }

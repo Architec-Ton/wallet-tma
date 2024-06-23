@@ -38,7 +38,7 @@ function Page({
         {children}
       </Container>
     </>
-  );
+  )
 }
 
 export default Page;
