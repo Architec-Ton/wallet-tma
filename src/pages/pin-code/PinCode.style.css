@@ -1,0 +1,29 @@
+.pin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 95vh;
+}
+
+
+.pin-title {
+    margin-top: 10vh;
+}
+
+.pin-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-12);
+    place-items: center;
+    position: sticky;
+}
+
+
