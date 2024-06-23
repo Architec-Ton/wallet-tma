@@ -25,7 +25,7 @@ const PinCode:
                                   onFailure
 }) => {
 
-    const t = useLanguage('Pin_code');
+    const t = useLanguage('Pincode');
     const [pin, setPin] = useState<string>('')
     const [status, setStatus] =useState<'normal'|'error'|'success'>('normal')
     const regPin = useRef('')
