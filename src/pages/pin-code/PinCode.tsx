@@ -2,12 +2,12 @@ import React, {useState, useEffect, useRef} from 'react';
 import './PinCode.style.css'
 import Page from "../../components/containers/Page.tsx";
 import Block from "../../components/typography/Block.tsx";
-import {
-    keyTabs,
-    zeroButtonKeybord,
-    bioButtonKeybord,
-    delButtonKeybord
-} from '../../assets/icons/pincode/index.ts'
+// import {
+//     keyTabs,
+//     zeroButtonKeybord,
+//     bioButtonKeybord,
+//     delButtonKeybord
+// } from '../../assets/icons/pincode/index.ts'
 import useLanguage from "../../hooks/useLanguage.ts";
 import Circle from "../../components/pin-page/Circle.tsx";
 
@@ -127,9 +127,8 @@ const PinCode:
     const title = regPin.current && status !== 'error' ? 'confirm' : status
 
     return (
-        <Page>
+        <Page title={ t(title)}>
             <div className='pin-container'>
-                <h1 className='pin-title' >{t(title)}</h1>
                 <div className="pin-input">
                     <Block direction='row'>
                             {[...Array(4)].map((_, index) => (
@@ -139,17 +138,22 @@ const PinCode:
                 </div>
 
                 <div className="pin-keypad">
-                    {[...Array(9)].map((_, index) => {
-                        return <img
-                            src={keyTabs[index]}
-                            alt={`${index+1}`}
-                            key={index}
-                            onClick={() => handleClick(index + 1)}
-                        />
-                    })}
-                    <img src={bioButtonKeybord}  onClick={handleBiometry}  alt='biometr'/>
-                    <img src={zeroButtonKeybord} onClick={() => handleClick(0)}  alt='0'  />
-                    <img  src={delButtonKeybord} onClick={handleDelete}  alt='del'  />
+                    {[...Array(9)].map((_, index) => <button key={index}
+                        onClick={() => handleClick(index + 1)}
+                        className='pin-button'>{index + 1}</button>)}
+                    
+
+                    <button 
+                        onClick={handleBiometry}
+                        className='pin-button'>B</button>
+                    
+                    <button
+                        onClick={() => handleClick(0)}
+                        className='pin-button'>0</button>
+                    
+                    <button
+                        onClick={handleDelete}
+                        className='pin-button'>D</button>
                 </div>
             </div>
         </Page>

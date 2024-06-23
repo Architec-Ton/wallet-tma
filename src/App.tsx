@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <SDKProvider acceptCustomStyles debug>
+        <SDKProvider acceptCustomStyles>
           <Layout>
             <RouterProvider router={router} />
           </Layout>

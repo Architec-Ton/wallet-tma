@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 95vh;
+    /* height: 95vh; */
+    height: 100%;
 }
 
 
 .pin-title {
-    margin-top: 10vh;
+    /* margin-top: 10vh; */
 }
 
 .pin-input {
@@ -15,15 +16,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: var(--spacing-32) 0;
 }
 
 
 .pin-keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-12);
+    gap: var(--spacing-32);
     place-items: center;
-    position: sticky;
+    justify-content: space-between;
+    align-content: space-between;
+    margin: var(--spacing-32) 0;
+    /* position: sticky; */
+}
+
+.pin-button{
+    width: var(--spacing-80);
+    height: var(--spacing-80);
+    font-size: var(--font-size-xlarge);
+    font-weight: var(--font-bold);
+    border-radius: var(--spacing-64);
+    border-color: rgba(0,0,0,0.04);
+    background-color: transparent;
 }
 
 
