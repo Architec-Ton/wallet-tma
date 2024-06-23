@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import PlayGround from './pages/PlayGround';
+import PlayGround from './pages/playGround/index.tsx';
 // import AddWallet from './components/start-page/AddWallet/AddWallet.tsx';
 // import YourSecretKey from './components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx';
 
@@ -10,8 +10,10 @@ import SecretKey from './pages/registration/SecretKey.tsx';
 import RegistrationIsCompleted from './pages/registration/RegistrationIsCompleted.tsx';
 import Existing from './pages/registration/Existing.tsx';
 import Main from './pages/Main.tsx';
+import GamePage from './pages/playGround/GamePage.tsx';
+import LeaderBoard from './pages/playGround/LeaderBoard.tsx';
+import CategoryGames from './pages/playGround/CategoryGames.tsx';
 import PinCode from "./pages/pincode/PinCode.tsx";
-
 
 const router = createBrowserRouter(
   [
@@ -22,6 +24,18 @@ const router = createBrowserRouter(
     {
       path: '/playground',
       element: <PlayGround />,
+    },
+    {
+      path: '/playground/:id',
+      element: <GamePage />
+    },
+    {
+      path: '/playground/:id/leaders',
+      element: <LeaderBoard />
+    },
+    {
+      path: '/playground/category/:id',
+      element: <CategoryGames />
     },
     {
       path: '/registration/welcome',
