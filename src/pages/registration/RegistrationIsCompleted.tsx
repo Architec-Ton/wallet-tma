@@ -5,10 +5,14 @@ import './RegistrationCompleted.style.css';
 // import {useNavigate} from "react-router-dom";
 // import {useTmaMainButton} from "../../hooks/useTma.ts";
 import { useEffect } from 'react';
+import { usePage } from '../../hooks/usePage.ts';
+import { useTmaMainButton } from '../../hooks/useTma.ts';
+import useRouter from '../../hooks/useRouter.ts';
 
 const RegistrationIsCompleted = () => {
-  // const navigate = useNavigate();
-  // const btn = useTmaMainButton();
+  const navigate = useRouter();
+  const btn = useTmaMainButton();
+  const page = usePage()
   const t = useLanguage('Registration');
   const description = (
     <p>
@@ -19,7 +23,8 @@ const RegistrationIsCompleted = () => {
   );
 
   useEffect(() => {
-    // btn.init(t('next'), () => navigate('/registration/completed'), true);
+    page.setLoading(false)
+    btn.init(t('next','button'), () => navigate('/registration/completed'), true);
   }, []);
 
   return (

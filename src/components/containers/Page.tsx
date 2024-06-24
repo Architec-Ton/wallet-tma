@@ -64,7 +64,7 @@ function Page({
         {isNavbarVisible && <BottomNavBar navItems={navItems}/>}
       </Container >
     </>
-  );
+  )
 }
 
 export default Page;

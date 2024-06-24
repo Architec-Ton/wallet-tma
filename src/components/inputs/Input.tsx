@@ -4,7 +4,7 @@ import { CSSProperties, ChangeEventHandler } from 'react';
 import Block from '../typography/Block';
 
 interface InputProps {
-  prefix?: string;
+  prefix?: string | React.ReactNode;
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLElement>;
   style?: CSSProperties;
@@ -24,6 +24,7 @@ function Input({
   type,
   disabled,
 }: InputProps) {
+
   return (
     // <div className={classNames('form-input', className)}>
     <Block direction="row" className={classNames('form-input', className)}>

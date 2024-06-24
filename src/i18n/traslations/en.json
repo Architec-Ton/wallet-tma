@@ -23,6 +23,11 @@
     "bot-nav-bar-wallet": "Wallet",
 
 
+    "pincode-normal": "Enter PIN code",
+    "pincode-success": "Enter PIN code",
+    "pincode-error": "Invalid PIN code",
+    "pincode-confirm": "Confirm PIN code",
+
     "addwallet-addwallet": "Add Wallet",
     "addwallet-create-title": "New Wallet",
     "addwallet-create-description": "Create a new custom wallet in two clicks",

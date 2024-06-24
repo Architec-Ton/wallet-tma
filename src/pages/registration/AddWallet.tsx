@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import Page from '../../components/containers/Page';
 import useLanguage from '../../hooks/useLanguage';
 import {
@@ -12,25 +11,26 @@ import TileButton from '../../components/buttons/TileButton';
 import { useEffect } from 'react';
 import { setLoading } from '../../features/page/pageSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import useRouter from '../../hooks/useRouter';
 
 function AddWallet() {
   const t = useLanguage('AddWallet');
 
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const dispatch = useAppDispatch();
 
   const addWalletButtons = [
     {
       name: 'create',
       icon: iconPageAddWalletCircle,
-      page: '/registration/secret-key',
+      onClick: () => navigate('/registration/secret-key'),
     },
     {
       name: 'existing',
       icon: iconPageAddWalletKey,
-      page: '/registration/existing',
+      onClick: () => navigate('/registration/existing'),
     },
-    { name: 'import', icon: iconPageAddWalletImport, page: '/' },
+    { name: 'import', icon: iconPageAddWalletImport, onClick: () => { } },
   ];
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function AddWallet() {
             title={t(`${btn.name}-title`)}
             description={t(`${btn.name}-description`)}
             iconAction={iconPageAddWalletNextPage}
-            onClick={() => navigate(btn.page)}
+            onClick={btn.onClick}
           />
         ))}
       </Column>

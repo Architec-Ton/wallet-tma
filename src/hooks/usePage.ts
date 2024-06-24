@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react';
 
-
 export interface PageTitle {
   title?: string;
   titleAccent?: string;
@@ -13,25 +12,26 @@ export const PageStateContext = createContext<{
   title: PageTitle;
   setTitle: React.Dispatch<React.SetStateAction<PageTitle>>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setNavbarVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isNavbarVisible: boolean;
 }>({
   isLoading: true,
   title: { title: 'Ok' },
-  isNavbarVisible: true,
   setTitle: () => {},
-  setIsLoading: () => {},
-  setNavbarVisible: () => {},
+  setIsLoading: () => {}, 
 });
 
 export const usePageState = () => useContext(PageStateContext);
 
 export function usePage() {
-  const { setTitle, setIsLoading , setNavbarVisible} = usePageState();
-
+  const dispatch = useAppDispatch();
   return {
-    setTitle: setTitle,
-    setIsLoading: setIsLoading,
-    setNavbarVisible: setNavbarVisible,
+    setTitle: (title?: string, titleAccent?: string, hintMessage?: string) =>
+      dispatch(
+        setTitle({
+          title: title,
+          titleAccent: titleAccent,
+          hintMessage: hintMessage,
+        })
+      ),
+    setLoading: (state: boolean) => dispatch(setLoading(state)),
   };
 }

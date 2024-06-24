@@ -1,0 +1,10 @@
+.category-game__block{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.category-game__block .category-game:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}

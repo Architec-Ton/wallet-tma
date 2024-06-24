@@ -29,8 +29,8 @@ function Tile({
       direction="row"
       className={classNames('tile', className)}>
       <Row>
-        {icon && <img src={icon} />}
-        <div>
+        {icon && <img src={icon} className="tile-icon" />}
+        <div className="tile-body">
           <h2>{title}</h2>
           <p>{description}</p>
           {children}
@@ -42,6 +42,7 @@ function Tile({
           style={{
             justifySelf: 'end',
           }}
+          className="tile-iconaction"
         />
       )}
     </Block>

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { iconButtonCopy } from '../../assets/icons/buttons/index.ts';
 import Button from '../../components/buttons/Button.tsx';
 import Column from '../../components/containers/Column.tsx';
@@ -8,6 +7,8 @@ import Block from '../../components/typography/Block.tsx';
 import useLanguage from '../../hooks/useLanguage.ts';
 import { useTmaMainButton } from '../../hooks/useTma.ts';
 import './SecretKey.styles.css';
+import { usePage } from '../../hooks/usePage.ts';
+import useRouter from '../../hooks/useRouter.ts';
 
 const key_to_wallet = [
   'test1',
@@ -38,10 +39,12 @@ const key_to_wallet = [
 
 const SecretKey = () => {
   const t = useLanguage('Key');
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const btn = useTmaMainButton();
+  const page = usePage();
 
   useEffect(() => {
+    page.setLoading(false)
     btn.init(
       t('next', 'button'),
       () => navigate('/registration/confirm-secret-key'),

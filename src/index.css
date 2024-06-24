@@ -1,19 +1,21 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light ;
 
   /* Основные цвета */
   --primary-color: #07ACFF;
   --secondary-color: #65656A;
+  --third-colour: #e5e5e5;
   --background-color: light-dark(#ffffff, var(--tg-theme-bg-color)); 
     /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);
   --selected-color: #6ACDFF;
-  --text-color: #232328;
+  --text-color: light-dark(#232328, #F7F9FB);
   --hint-message-back-background-color: var(--secondary-color);
 
   /* Цвета для текста */
   --text-secondary-color: var(--secondary-color);
   --text-primary-color: #F7F9FB;
+  --text-secondary-light-color: #8E8E93;
   --link-color: var(--primary-color);
   --link-hover-color: var(--selected-color);
 
@@ -42,6 +44,8 @@
   /* Цвета для тени и границ */
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
+  --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
+  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
 
   /* Отступы и поля */  
   --spacing-2: 0.125rem;
@@ -51,10 +55,13 @@
   --spacing-16: 1rem;
   --spacing-24: 1.5rem;
   --spacing-32: 2rem;
+  --spacing-64: 4rem;
+  --spacing-80: 5rem;
 
   /* Размеры шрифтов */
   --font-size-small: 13px;
   --font-size-medium: 15px;
+  --font-size-base: 16px;
   --font-size-large: 24px;
   --font-size-xlarge: 32px;
 
@@ -72,6 +79,7 @@
   --border-radius-8: 0.5rem;
   --border-radius-12: 0.75rem;
   --border-radius-16: 1rem;
+  --border-radius-full: 50%;
 
   /* Прозрачность */
   --opacity-disabled: 0.6;
@@ -79,5 +87,17 @@
   /* Шрифты */
   --font-family-sans-serif: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   --font-family-monospace: 'Courier New', Courier, monospace;
+
+  /* Ширина */
+  --w-full: 100%;
+  --w-screen: calc(100% + 2 * var(--spacing-12));
+
+  /* Размеры аватарок */
+  --thumbnail-with: 114px;
+  --thumbnail-height: 114px;
+  --thumbnail-medium-with: 56px;
+  --thumbnail-medium-height: 56px;
+
+  --swiper-pagination-bullet-inactive-color: light-dark(#000000, #ffffff);
 }
 

@@ -1,0 +1,25 @@
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+.grid-columns {
+  grid-template-columns: repeat(var(--grid-cols), 1fr)
+}
+
+.grid-columns.grid-ordered-list {
+  grid-template-columns: auto repeat(calc(var(--grid-cols) - 1), 1fr)
+}
+
+.grid-rows {
+  grid-template-rows: repeat(var(--grid-rows), minmax(0, 1fr))
+}
+
+.column-subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.row-subgrid {
+  grid-template-rows: subgrid;
+}

@@ -1,0 +1,37 @@
+.category-game {
+  width: var(--w-full);
+  justify-content: space-between;
+  padding-bottom: var(--spacing-12);
+  padding-left: var(--spacing-12);
+  padding-right: var(--spacing-12);
+  margin-bottom: var(--spacing-12);
+  border-bottom: 1px solid var(--border-color-light);
+  box-sizing: border-box;
+}
+
+
+.category-game__title {
+  font-size: var(--font-size-medium);
+}
+
+.category-game__icon {
+  width: var(--thumbnail-medium-width);
+  height: var(--thumbnail-medium-height);
+  border-radius: var(--round-medium);
+}
+
+.category-game__description {
+  color: var(--text-secondary-color);
+  font-size: var(--font-size-small);
+}
+
+.category-game__info {
+  flex-grow: 1;
+  align-items: start;
+  gap: 0;
+}
+
+.category-game__button {
+  width: 6px;
+  fill: gray;
+}

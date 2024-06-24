@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Column from '../components/containers/Column';
 import Page from '../components/containers/Page';
 import Balance from '../components/ui/balance/Balance';
 import { setLoading, setTitle } from '../features/page/pageSlice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
+import useRouter from '../hooks/useRouter';
 
 function Main() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(setLoading(true));
@@ -15,9 +15,10 @@ function Main() {
 
     setTimeout(() => {
       dispatch(setLoading(false));
+      navigate('/registration/welcome');
     }, 2000);
 
-    navigate('/registration/welcome');
+    
   }, []);
 
   return (
