@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useEffect, useState } from 'react';
-import { isTMA, useInitData, useInitDataRaw, useLaunchParams } from '@tma.js/sdk-react';
+import { isTMA, useInitDataRaw } from '@tma.js/sdk-react';
 import MainButton from '../buttons/MainButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { setTma, setTmaLoading } from '../../features/tma/tmaSlice';
@@ -8,7 +8,6 @@ import {
   selectMainButtonIsVisible,
   selectMainButtonTitle,
 } from '../../features/tma/mainButtonSelector';
-import { InitData } from "@tma.js/sdk";
 import { TmaMainButton, TmaStateContext } from '../../hooks/useTma';
 import { selectIsTma, selectIsTmaLoading } from '../../features/tma/tmaSelector';
 

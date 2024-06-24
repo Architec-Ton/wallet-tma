@@ -1,10 +1,6 @@
 import { createContext, useContext } from "react";
 import { useAppDispatch } from "./useAppDispatch";
-import {
-  PageTitleState,
-  setLoading,
-  setTitle,
-} from "../features/page/pageSlice";
+import { setLoading, setTitle } from "../features/page/pageSlice";
 
 export interface PageTitle {
   title?: string;

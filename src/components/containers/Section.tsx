@@ -1,7 +1,7 @@
 import classNames from "classnames"
 
 import "./Section.styles.css"
-import { LegacyRef, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 
 type SectionProps = {
   children: React.ReactNode

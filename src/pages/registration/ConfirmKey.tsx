@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Column from '../../components/containers/Column.tsx';
 import Page from '../../components/containers/Page.tsx';
 import Input from '../../components/inputs/Input.tsx';
 import useLanguage from '../../hooks/useLanguage.ts';
 import { useTmaMainButton } from '../../hooks/useTma.ts';
 import './ConfirmKey.styles.css';
+import { usePage } from '../../hooks/usePage.ts';
+import useRouter from '../../hooks/useRouter.ts';
 // import { usePage } from '../../hooks/usePage.ts';
 
 const ConfirmKey: React.FC = () => {
   const t = useLanguage('Confirm');
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const btn = useTmaMainButton();
-  // const page = usePage();
+  const page = usePage();
   const numbersOfWords = [1, 2, 3];
 
   const description = (
@@ -21,6 +22,7 @@ const ConfirmKey: React.FC = () => {
     </p>
   );
   useEffect(() => {
+    page.setLoading(false)
     btn.init(
       t('next', 'button'),
       () => navigate('/registration/completed'),

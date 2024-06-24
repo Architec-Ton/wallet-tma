@@ -7,9 +7,11 @@ import Input from '../../components/inputs/Input.tsx';
 import useLanguage from '../../hooks/useLanguage.ts';
 import { useTmaMainButton } from '../../hooks/useTma.ts';
 import './Existing.styles.css';
+import { usePage } from '../../hooks/usePage.ts';
 
 const Existing: React.FC = () => {
   const t = useLanguage('Existing');
+  const page = usePage();
   const btn = useTmaMainButton();
   const [inputs, setInputs] = useState<string[]>(Array(24).fill(''));
   const [errors, setErrors] = useState<boolean[]>(Array(24).fill(false));
@@ -51,6 +53,10 @@ const Existing: React.FC = () => {
         !newErrors.some((error) => error)
     );
   };
+
+  useEffect(() => {
+    page.setLoading(false);
+  },[])
 
   useEffect(() => {
     btn.init(
