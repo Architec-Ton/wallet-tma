@@ -12,12 +12,23 @@ import { useEffect } from 'react';
 import { setLoading } from '../../features/page/pageSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import useRouter from '../../hooks/useRouter';
+import { TonConnectButton, useTonConnectModal } from '@tonconnect/ui-react';
 
 function AddWallet() {
   const t = useLanguage('AddWallet');
 
   const navigate = useRouter();
   const dispatch = useAppDispatch();
+
+  const { state, open, close } = useTonConnectModal();
+
+  const handleTonConnect = async () => {
+
+    console.log('sassadsdsad', state);
+    open();
+    console.log('sassadsdsad2', state);
+
+  }
 
   const addWalletButtons = [
     {
@@ -30,7 +41,7 @@ function AddWallet() {
       icon: iconPageAddWalletKey,
       onClick: () => navigate('/registration/existing'),
     },
-    { name: 'import', icon: iconPageAddWalletImport, onClick: () => { } },
+    { name: 'import', icon: iconPageAddWalletImport, onClick: () => {handleTonConnect()} },
   ];
 
   useEffect(() => {
@@ -50,6 +61,7 @@ function AddWallet() {
             onClick={btn.onClick}
           />
         ))}
+         <TonConnectButton />
       </Column>
     </Page>
   );

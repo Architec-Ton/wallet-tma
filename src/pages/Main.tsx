@@ -2,21 +2,26 @@ import { useEffect } from 'react';
 import Column from '../components/containers/Column';
 import Page from '../components/containers/Page';
 import Balance from '../components/ui/balance/Balance';
-import { setLoading, setTitle } from '../features/page/pageSlice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import useRouter from '../hooks/useRouter';
+import { useTon } from '../hooks/useTon';
+import { usePage } from '../hooks/usePage';
 
 function Main() {
   const navigate = useRouter();
   const dispatch = useAppDispatch();
+  const ton = useTon();
+  const page = usePage();
   useEffect(() => {
-    dispatch(setLoading(true));
-    dispatch(setTitle({ title: 'Main', titleAccent: 'Page' }));
+    page.setLoading(false);
+    page.setTitle('Main', 'Page')
+    //page.setLoading(false);
 
-    setTimeout(() => {
-      dispatch(setLoading(false));
-      navigate('/registration/welcome');
-    }, 2000);
+
+    //  setTimeout(() => {
+    //   page.setLoading(false);
+    //    navigate('/registration/welcome');
+    // }, 2000);
 
     
   }, []);
