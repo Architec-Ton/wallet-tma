@@ -48,5 +48,13 @@
     "game-leaderboard": "Leaderboard",
     "game-project-resources": "Project Resources",
     "game-filter-on": "On",
-    "game-filter-off": "Off"
+    "game-filter-off": "Off",
+
+    "add-crypto-your-coin-address": "Your {{coin}} Address",
+    "add-crypto-description": "Send only <strong>{{coinInfo}}</strong> to this address. Sending other assets, such as jettons or NFTs will result in permanent loss.",
+    "add-crypto-qr-hint": "Scan QR with camera to send {{title}} to your wallet",
+    "add-crypto-coin-address": "Your {{coin}} adress",
+    "add-crypto-copy": "Copy Address",
+    "add-crypto-choose-asset": "Choose asset to receive",
+    "add-crypto-receive-description": "One-way transaction with automatic rounding. Working <l>conditions</l> of banks."
 }

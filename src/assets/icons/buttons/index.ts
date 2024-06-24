@@ -7,6 +7,7 @@ import iconGlobalButton from './global.svg';
 import iconCoinButton from './coin.svg';
 import iconSortButton from './sort.svg';
 import iconFilterSquareButton from './filter-square.svg';
+import iconInfoButton from './info-circle.svg';
 
 export {
   iconButtonCopy,
@@ -17,5 +18,6 @@ export {
   iconGlobalButton,
   iconCoinButton,
   iconSortButton,
-  iconFilterSquareButton
+  iconFilterSquareButton,
+  iconInfoButton
 };
