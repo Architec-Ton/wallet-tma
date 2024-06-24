@@ -12,7 +12,6 @@ const ConfirmKey: React.FC = () => {
   const t = useLanguage('Confirm');
   const navigate = useNavigate();
   const btn = useTmaMainButton();
-  // const page = usePage();
   const numbersOfWords = [1, 2, 3];
 
   const description = (
@@ -34,7 +33,7 @@ const ConfirmKey: React.FC = () => {
       <Column>
         <div className="container">
           {numbersOfWords.map((number) => (
-            <Input prefix={`${number + 1}.`} key={number} />
+            <Input prefix={`${number}.`} key={number} />
           ))}
         </div>
       </Column>

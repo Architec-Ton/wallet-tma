@@ -11,9 +11,11 @@ import useLanguage from '../../hooks/useLanguage';
 import useRouter from '../../hooks/useRouter';
 import { useTmaMainButton } from '../../hooks/useTma';
 
+
 function Welcome() {
   const navigate = useRouter();
   const btn = useTmaMainButton();
+
   const t = useLanguage('Welcome');
   const welcomeIcons = [
     iconPageStartCoin,
@@ -25,12 +27,12 @@ function Welcome() {
     btn.init(
       t('next', 'button'),
       () => {
-        console.log('call btn');
         navigate('/registration/add-wallet');
       },
       true
     );
   }, []);
+
 
   return (
     <Page title={t('welcome-to')} titleAccent={'Architec.TON'}>

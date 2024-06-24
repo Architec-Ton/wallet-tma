@@ -17,6 +17,12 @@
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
 
+    "bot-nav-bar-news": "News",
+    "bot-nav-bar-account": "Account",
+    "bot-nav-bar-apps": "Apps",
+    "bot-nav-bar-wallet": "Wallet",
+
+
     "addwallet-addwallet": "Add Wallet",
     "addwallet-create-title": "New Wallet",
     "addwallet-create-description": "Create a new custom wallet in two clicks",

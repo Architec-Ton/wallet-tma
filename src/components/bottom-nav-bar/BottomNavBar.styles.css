@@ -1,0 +1,27 @@
+.bottom-nav-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--background-color);
+    border-top: 1px solid var(--secondary-color);
+    /*padding: 10px 0;*/
+}
+
+.bottom-nav-bar .icon {
+    fill: var(--secondary-color);
+}
+
+.bottom-nav-bar .active .icon {
+    filter:
+            brightness(0)
+            saturate(100%)
+            invert(33%)
+            sepia(80%)
+            saturate(7495%)
+            hue-rotate(191deg)
+            brightness(97%)
+            contrast(107%);
+}
