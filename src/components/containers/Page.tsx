@@ -39,10 +39,10 @@ function Page({
 
     const t =  useLanguage('Bot-nav-bar')
     const navItems: NavItem[] = [
-        { to: '/aaa', icon: walletIcon, label: t('wallet') },
-        { to: '/aaa', icon: appsIcon, label: t('apps') },
-        { to: '/aaa', icon: newsIcon, label: t('news') },
-        { to: '/aaa', icon: accountIcon, label: t('account') },
+        { to: '/test1', icon: walletIcon, label: t('wallet') },
+        { to: '/test2', icon: appsIcon, label: t('apps') },
+        { to: '/test3', icon: newsIcon, label: t('news') },
+        { to: '/test4', icon: accountIcon, label: t('account') },
     ]
 
 

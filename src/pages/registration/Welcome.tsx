@@ -27,12 +27,13 @@ function Welcome() {
 
   useEffect(() => {
     page.setLoading(false)
+    page.setNavbarVisible(true)
     btn.init(
       t('next', 'button'),
       () => {
         navigate('/registration/add-wallet');
       },
-      true
+      false
     );
   }, []);
 

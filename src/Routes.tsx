@@ -15,6 +15,7 @@ import LeaderBoard from './pages/playGround/LeaderBoard.tsx';
 import CategoryGames from './pages/playGround/CategoryGames.tsx';
 import PinCode from "./pages/pincode/PinCode.tsx";
 
+
 const router = createBrowserRouter(
   [
     {

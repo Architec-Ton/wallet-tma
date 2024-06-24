@@ -7,21 +7,21 @@
     width: 100%;
     background-color: var(--background-color);
     border-top: 1px solid var(--secondary-color);
-    /*padding: 10px 0;*/
+    transition: bottom 0.3s ease-in-out;
+    padding: 0;
 }
 
-.bottom-nav-bar .icon {
-    fill: var(--secondary-color);
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-8) var(--spacing-4);
 }
 
-.bottom-nav-bar .active .icon {
-    filter:
-            brightness(0)
-            saturate(100%)
-            invert(33%)
-            sepia(80%)
-            saturate(7495%)
-            hue-rotate(191deg)
-            brightness(97%)
-            contrast(107%);
+.active{
+    filter: brightness(0) saturate(100%) invert(73%) sepia(9%) saturate(2841%) hue-rotate(171deg) brightness(101%) contrast(101%);
 }
+
+
+
