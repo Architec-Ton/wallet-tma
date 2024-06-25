@@ -31,4 +31,4 @@ jobs:
           platforms: linux/amd64
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: architecton/wallet-tma:${{ GITHUB_REF_NAME }}
+          tags: architecton/wallet-tma:latest
