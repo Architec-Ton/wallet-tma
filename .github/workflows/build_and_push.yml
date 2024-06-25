@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
-        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -38,4 +38,4 @@ jobs:
           file: ./Dockerfile
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/architecton/wallet-tma:latest
+          tags: architecton/wallet-tma:latest
