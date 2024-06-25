@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react"
 
 type SectionProps = {
   children: React.ReactNode
-  title: string
+  title?: string
   className?: string
   readMore?: string | React.ReactNode
   readMoreHandle?: () => void
@@ -32,10 +32,12 @@ const Section = ({ children, title, readMore, className, readMoreHandle }: Secti
 
   return (
     <section className={classNames("section", className)}>
-      <div className="section__header"> 
-        <h2>{title}</h2>
-        {readMore && <span ref={ref} className="section__read-more">{readMore}</span>}
-      </div>
+      {(title || readMore) && (
+        <div className="section__header"> 
+          {title && <h2>{title}</h2>}
+          {readMore && <span ref={ref} className="section__read-more">{readMore}</span>}
+        </div>
+      )}
       <div className="section__body">
         {children}
       </div>

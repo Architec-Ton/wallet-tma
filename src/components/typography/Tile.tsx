@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, HTMLAttributes } from 'react';
 import './Tile.styles.css';
 import Block from './Block';
 import Row from '../containers/Row';
 
-type Props = {
+interface OwnProps<T> extends HTMLAttributes<T> {
   icon?: string;
   title?: string;
   description?: string;
@@ -22,12 +22,15 @@ function Tile({
   style,
   className,
   children,
-}: Props) {
+  ...divProps
+}: OwnProps<HTMLDivElement>) {
   return (
     <Block
       style={style}
       direction="row"
-      className={classNames('tile', className)}>
+      className={classNames('tile', className)}
+      {...divProps}
+    >
       <Row>
         {icon && <img src={icon} className="tile-icon" />}
         <div className="tile-body">

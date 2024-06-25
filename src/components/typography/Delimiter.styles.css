@@ -1,0 +1,7 @@
+.delimiter-line {
+  line-height: 0;
+  height: 1px;
+  background-color: var(--background-selected-color);
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-8);
+}
