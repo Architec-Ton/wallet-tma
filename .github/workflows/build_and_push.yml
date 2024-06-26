@@ -39,4 +39,4 @@ jobs:
           file: ./Dockerfile
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/architec-ton/wallet-tma:$env.GITHUB_SHA
+          tags: ghcr.io/architec-ton/wallet-tma:${{ github.sha }}
