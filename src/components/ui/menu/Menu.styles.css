@@ -1,0 +1,10 @@
+.menu {
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+}
+
+.menu a{
+    text-align: center;
+}

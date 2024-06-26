@@ -20,6 +20,7 @@ export function TonProvider({ children }: Props) {
     mode: "disconnect",
   });
   useEffect(() => {
+    console.log(bcData);
     if (bcData.mode == "tonconnect") {
       tonConnectUI.onStatusChange((wallet) => {
         console.log("TonProvider onStatusChange", wallet);

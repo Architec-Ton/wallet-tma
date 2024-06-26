@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import pageReducer from "../features/page/pageSlice";
 import tonReducer from "../features/ton/tonSlice";
 import mainButtonReducer from "../features/tma/mainButtonSlice";
+import backButtonReducer from "../features/tma/backButtonSlice";
 import tmaReducer from "../features/tma/tmaSlice";
 import gamingSlice from "../features/gaming/gamingSlice";
 import { gamingApi } from "../features/gaming/gamingApi";
@@ -10,6 +11,7 @@ export const store = configureStore({
   reducer: {
     page: pageReducer,
     btn: mainButtonReducer,
+    backBtn: backButtonReducer,
     tma: tmaReducer,
     ton: tonReducer,
     gaming: gamingSlice,

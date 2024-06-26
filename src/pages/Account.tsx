@@ -7,15 +7,15 @@ import useRouter from "../hooks/useRouter";
 import { usePage } from "../hooks/usePage";
 import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
 import { TonConnectionMode } from "../features/ton/tonSlice";
-import WalletMenu from "../components/ui/menu/WalletMenu";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
-function Main() {
+function Account() {
   const navigate = useRouter();
   const isTonLoading = useAppSelector(selectIsTonLoading);
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
   useEffect(() => {
-    page.setTitle("Main", "Page");
+    page.setTitle("Account", "Page");
     console.log("isTonLoading", isTonLoading);
     if (!isTonLoading) {
       console.log("Call ", isTonLoading, tonMode);
@@ -32,11 +32,10 @@ function Main() {
   return (
     <Page>
       <Column>
-        <Balance></Balance>
-        <WalletMenu />
+        {tonMode == TonConnectionMode.tonconnect && <TonConnectButton />}
       </Column>
     </Page>
   );
 }
 
-export default Main;
+export default Account;

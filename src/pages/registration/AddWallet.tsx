@@ -12,11 +12,7 @@ import { useEffect } from "react";
 import { setLoading } from "../../features/page/pageSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import useRouter from "../../hooks/useRouter";
-import {
-  TonConnectButton,
-  useTonAddress,
-  useTonConnectModal,
-} from "@tonconnect/ui-react";
+import { useTonAddress, useTonConnectModal } from "@tonconnect/ui-react";
 import { useTon } from "../../hooks/useTon";
 
 function AddWallet() {
@@ -77,7 +73,6 @@ function AddWallet() {
             onClick={btn.onClick}
           />
         ))}
-        <TonConnectButton />
       </Column>
     </Page>
   );

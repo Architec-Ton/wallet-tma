@@ -1,0 +1,4 @@
+.wallet-menu a p{
+    color: var(--primary-color);
+    font-weight: var(--font-medium);
+}

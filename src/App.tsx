@@ -10,6 +10,9 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { FE_URL, MANIFEST_URL } from "./constants";
 import { TonProvider } from "./components/layout/TonProvider";
 
+// import { Buffer } from "buffer/";
+// window.Buffer = Buffer;
+
 function App() {
   return (
     <>
