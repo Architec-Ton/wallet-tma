@@ -2,7 +2,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
 import MainButton from "../buttons/MainButton";
-import BackButton from "../buttons/BackButton";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
 import {

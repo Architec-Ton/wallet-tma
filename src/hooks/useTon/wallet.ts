@@ -1,7 +1,7 @@
 import { selectAddress, selectTonMode } from "../../features/ton/tonSelector";
 import { TonConnectionMode } from "../../features/ton/tonSlice";
 import { useAppSelector } from "../useAppDispatch";
-import { Address, OpenedContract, toNano } from "@ton/core";
+import { Address } from "@ton/core";
 
 type BlockchainNetwork = "ton" | "undefined";
 

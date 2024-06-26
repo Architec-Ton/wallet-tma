@@ -12,7 +12,7 @@ function WalletMenu() {
   const t = useLanguage("menu-wallet");
 
   const menuItems: MenuItem[] = [
-    { to: "/wallet/add", icon: iconMenuWalletAdd, label: t("add") },
+    { to: "/add-crypto", icon: iconMenuWalletAdd, label: t("add") },
     { to: "/wallet/send", icon: iconMenuWalletSend, label: t("send") },
     { to: "/wallet/swap", icon: iconMenuWalletSwap, label: t("swap") },
     { to: "/bank", icon: iconMenuWalletBank, label: t("bank") },

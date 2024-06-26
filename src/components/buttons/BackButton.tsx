@@ -1,12 +1,12 @@
 import { useBackButton } from "@tma.js/sdk-react";
 
-import { useAppSelector } from "../../hooks/useAppDispatch";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   selectIsTma,
   selectIsTmaLoading,
 } from "../../features/tma/tmaSelector";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   visible: boolean;
@@ -33,15 +33,7 @@ function BackButton({ visible }: Props) {
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
   if (isTmaLoading) return <></>;
   if (isTma) return <BackButtonTMA visible={visible} />;
-  return (
-    <>
-      {visible && (
-        <>
-          <div>BACK</div>
-        </>
-      )}
-    </>
-  );
+  return <>{visible && <></>}</>;
 }
 
 export default BackButton;

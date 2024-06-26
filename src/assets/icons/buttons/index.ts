@@ -1,23 +1,26 @@
-import iconButtonCopy from './copy.svg';
-import iconButtonPaste from './paste-icon.svg';
-import iconButtonArraw from './icon-array.svg';
-import iconButtonMedalStars from './medal-star.svg';
-import iconSendButton from './send-2.svg';
-import iconGlobalButton from './global.svg';
-import iconCoinButton from './coin.svg';
-import iconSortButton from './sort.svg';
-import iconFilterSquareButton from './filter-square.svg';
-import iconInfoButton from './info-circle.svg';
+import iconCoinButton from "./coin.svg";
+import iconButtonCopy from "./copy.svg";
+import iconFilterSquareButton from "./filter-square.svg";
+import iconGlobalButton from "./global.svg";
+import iconButtonArraw from "./icon-array.svg";
+import iconInfoButton from "./info-circle.svg";
+import iconButtonMedalStars from "./medal-star.svg";
+import iconButtonPaste from "./paste-icon.svg";
+import iconSendButton from "./send-2.svg";
+import iconSortButton from "./sort.svg";
 
 export {
-  iconButtonCopy,
-  iconButtonPaste,
   iconButtonArraw,
+  iconButtonCopy,
+  iconButtonCopyColor,
   iconButtonMedalStars,
-  iconSendButton,
-  iconGlobalButton,
+  iconButtonPaste,
   iconCoinButton,
-  iconSortButton,
   iconFilterSquareButton,
-  iconInfoButton
+  iconGlobalButton,
+  iconInfoButton,
+  iconSendButton,
+  iconSortButton,
 };
+
+import iconButtonCopyColor from "./copy.svg";

@@ -8,6 +8,8 @@ import { usePage } from "../hooks/usePage";
 import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
 import { TonConnectionMode } from "../features/ton/tonSlice";
 import WalletMenu from "../components/ui/menu/WalletMenu";
+import Assets from "../components/ui/balance/Assets";
+import History from "../components/ui/balance/History";
 
 function Main() {
   const navigate = useRouter();
@@ -34,6 +36,8 @@ function Main() {
       <Column>
         <Balance></Balance>
         <WalletMenu />
+        <Assets />
+        <History />
       </Column>
     </Page>
   );

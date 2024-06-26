@@ -1,14 +1,3 @@
-import { useAppDispatch } from "../useAppDispatch";
-import {
-  setMainButtonTitle,
-  setMainButtonVisible,
-} from "../../features/tma/mainButtonSlice";
-import {
-  useIsConnectionRestored,
-  useTonConnectModal,
-  useTonConnectUI,
-} from "@tonconnect/ui-react";
-import { useEffect } from "react";
 // import { createContext, useContext } from 'react';
 
 // export interface TmaMainButton {

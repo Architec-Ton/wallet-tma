@@ -67,5 +67,9 @@
     "menu-main-news": "News",
     "menu-main-account": "Account",
     "menu-main-apps": "Apps",
-    "menu-main-wallet": "Wallet"
+    "menu-main-wallet": "Wallet",
+
+
+    "assets-title": "Assets",
+    "history-title": "History"
 }
