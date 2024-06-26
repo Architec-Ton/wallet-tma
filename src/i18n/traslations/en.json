@@ -49,6 +49,9 @@
     "game-project-resources": "Project Resources",
     "game-filter-on": "On",
     "game-filter-off": "Off",
+    "game-top-rated-title": "Top Rated",
+    "game-tab-top": "Top",
+    "game-tab-categories": "Categories",
 
     "add-crypto-your-coin-address": "Your {{coin}} Address",
     "add-crypto-description": "Send only <strong>{{coinInfo}}</strong> to this address. Sending other assets, such as jettons or NFTs will result in permanent loss.",

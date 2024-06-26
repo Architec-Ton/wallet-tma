@@ -39,7 +39,7 @@
   justify-content: space-between;
 }
 
-.swiper-slide.album-slide {
+.swiper-slide.gallery-slide {
   width: fit-content;
   padding-left: var(--spacing-12);
 }

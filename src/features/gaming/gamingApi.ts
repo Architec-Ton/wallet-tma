@@ -2,15 +2,29 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   GameCategoryType,
   GameListItemType,
+  GameListType,
   IGame,
   TGameLeader,
 } from "../../types/gameTypes";
 import { BE_URL } from "../../constants";
+import { setCategories } from "./gamingSlice";
 
 export const gamingApi = createApi({
   reducerPath: "gamingApi",
   baseQuery: fetchBaseQuery({ baseUrl: BE_URL }),
   endpoints: (builder) => ({
+    getCategories: builder.mutation<GameListType<GameListItemType[]>, string | undefined>({
+      query: (search) => ({
+        url: !!search ? `games?search=${search}` : "games",
+        method: "GET"
+      }),
+      async onCacheEntryAdded(_, { dispatch, cacheDataLoaded }) {
+        const cacheData = await cacheDataLoaded
+        if (cacheData) {
+          dispatch(setCategories(cacheData.data))
+        }
+      }
+    }),
     getGame: builder.query<IGame, string>({
       query: (id) => `game/${id}`,
     }),
@@ -36,6 +50,9 @@ export const gamingApi = createApi({
         method: "GET",
       }),
     }),
+    getTopRateGames: builder.mutation<GameListItemType[], URLSearchParams | undefined>({
+      query: (params) => !params ? 'top' : `top?${params.toString()}`
+    })
   }),
 });
 
@@ -44,4 +61,6 @@ export const {
   useGetGameLeadersQuery,
   useGetCategoryGamesQuery,
   useSearchGamesMutation,
+  useGetCategoriesMutation,
+  useGetTopRateGamesMutation
 } = gamingApi;

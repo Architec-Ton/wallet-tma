@@ -1,24 +1,24 @@
 import { useParams } from "react-router-dom"
-import Page from "../../components/containers/Page"
-import { useGetGameQuery } from "../../features/gaming/gamingApi"
+import Page from "../../../components/containers/Page"
+import { useGetGameQuery } from "../../../features/gaming/gamingApi"
 import { useCallback, useEffect, useState } from "react"
-import { useAppDispatch } from "../../hooks/useAppDispatch"
-import { setLoading } from "../../features/page/pageSlice"
-import Tile from "../../components/typography/Tile"
-import { iconButtonMedalStars, iconCoinButton, iconGlobalButton, iconSendButton } from "../../assets/icons/buttons"
+import { useAppDispatch } from "../../../hooks/useAppDispatch"
+import { setLoading } from "../../../features/page/pageSlice"
+import Tile from "../../../components/typography/Tile"
+import { iconButtonMedalStars, iconCoinButton, iconGlobalButton, iconSendButton } from "../../../assets/icons/buttons"
 
-import Slider from "../../components/ui/slider"
+import Slider from "../../../components/ui/slider"
 import { SwiperSlide } from "swiper/react"
-import Row from "../../components/containers/Row"
-import Section from "../../components/containers/Section"
-import Block from "../../components/typography/Block"
+import Row from "../../../components/containers/Row"
+import Section from "../../../components/containers/Section"
+import Block from "../../../components/typography/Block"
 import classNames from "classnames"
-import TypedTile from "../../components/typography/TypedTile"
-import { GameResource } from "../../types/gameTypes"
-import useLocalStorage from "../../hooks/useLocalStorage"
-import useLanguage from "../../hooks/useLanguage"
+import TypedTile from "../../../components/typography/TypedTile"
+import { GameResource } from "../../../types/gameTypes"
+import useLocalStorage from "../../../hooks/useLocalStorage"
+import useLanguage from "../../../hooks/useLanguage"
 
-import './GamePage.style.css'
+import './index.css'
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -100,9 +100,9 @@ const GamePage = () => {
           centeredSlides: false,
           spaceBetween: 0
         }} className="list-swipe">
-          {game?.album.map((url, index) => {
+          {game?.gallery.map((url, index) => {
             return (
-              <SwiperSlide key={`${url}-${index}`} className="album-slide">
+              <SwiperSlide key={`${url}-${index}`} className="gallery-slide">
                 <img src={url} alt="" className="round-large" />
               </SwiperSlide>
             )
