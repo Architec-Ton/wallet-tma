@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom"
+import { iconButtonArraw } from "../../../../assets/icons/buttons"
 import { GameListItemType } from "../../../../types/gameTypes"
-import Block from "../../../typography/Block"
-import GameListItem from "../listItem"
+import ListBlock from "../../listBlock"
+import ListBlockItem from "../../listBlock/ListBlockItem"
+import { useClosure } from "../../../../hooks/useClosure"
 
 import './index.css'
 
@@ -9,12 +12,27 @@ type OwnPropsType = {
 }
 
 const GameListItemGroup = ({ group }: OwnPropsType) => {
+  const navigate = useNavigate()
+
+  const clickHandler = useClosure((id) => {
+    navigate(`/playground/${id}`)
+  }, group)
+
   return (
-    <Block className="w-full category-game__block">
+    <ListBlock>
       {group.map((item: GameListItemType) => {
-        return <GameListItem key={item.id} game={item} />
+        return (
+          <ListBlockItem
+            key={item.id}
+            thumb={item.thumb}
+            title={item.title}
+            iconAction={iconButtonArraw}
+            description={item.description}
+            onClick={clickHandler(item.id)}
+          />
+        )
       })}
-    </Block>
+    </ListBlock>
   )
 }
 

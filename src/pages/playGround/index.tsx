@@ -1,52 +1,114 @@
-import Column from "../../components/containers/Column.tsx";
-import Page from "../../components/containers/Page.tsx";
-import { useEffect } from "react";
-import Row from "../../components/containers/Row.tsx";
-import Slider from "../../components/ui/slider/index.tsx";
-import cardImage from "../../assets/images/card.png";
-import { SwiperSlide } from "swiper/react";
-import GameList from "../../components/ui/games/list/index.tsx";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch.ts";
-import {
-  selectGames,
-  selectGamesStatus,
-} from "../../features/gaming/gamingSelectors.ts";
-import { fetchGames } from "../../features/gaming/actions.ts";
-import SearchBar from "../../components/ui/searchBar/index.tsx";
-import { usePage } from "../../hooks/usePage.ts";
+import Column from '../../components/containers/Column.tsx';
+import Page from '../../components/containers/Page.tsx';
+import { useEffect, useState } from 'react';
+import Row from '../../components/containers/Row.tsx';
+import Slider from '../../components/ui/slider';
+import cardImage from '../../assets/images/card.png'
+import { SwiperSlide } from 'swiper/react';
+import GameList from '../../components/ui/games/list';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
+import { selectGames, selectGamesFilter } from '../../features/gaming/gamingSelectors.ts';
+import { setLoading } from '../../features/page/pageSlice.ts';
+import SearchBar from '../../components/ui/searchBar';
+import Tabs from '../../components/ui/tabs';
+import Tab from '../../components/ui/tabs/Tab.tsx';
+import { useGetCategoriesMutation, useGetTopRateGamesMutation } from '../../features/gaming/gamingApi.ts';
+import TopRate from '../../components/ui/games/topRate';
+import useDebounce from '../../hooks/useDebounce.ts';
+import { GameFilterType } from '../../types/gameTypes.ts';
+import { clearFilter } from '../../features/gaming/gamingSlice.ts';
 
-const imageSliderData = [
-  cardImage,
-  cardImage,
-  cardImage,
-  cardImage,
-  cardImage,
-  cardImage,
-];
+import "./index.css"
+import useLanguage from '../../hooks/useLanguage.ts';
 
-function PlayGround() {
-  const games = useAppSelector(selectGames);
-  const page = usePage();
-  const { isLoading } = useAppSelector(selectGamesStatus);
+const imageSliderData = [cardImage,cardImage,cardImage,cardImage,cardImage,cardImage]
+
+
+type SearchParamsType = {
+  direction?: string
+  order?: string
+  search?: string
+}
+type SerchParamsKeys = keyof SearchParamsType
+type FilterKeys = keyof GameFilterType;
+
+function PlayGround () {
+  const dispatch = useAppDispatch()
+  const debounce = useDebounce()
+  const t = useLanguage("game")
+  const games = useAppSelector(selectGames)
+  const filter = useAppSelector(selectGamesFilter)
+  const [isTopView, setIsTopView] = useState<boolean>(false)
+  const [isCategoryView, setIsCategoryView] = useState<boolean>(true)
+  const [ getCategories, { isLoading } ] = useGetCategoriesMutation()
+  const [getTopGames, {data: topGames, isLoading: isTopGamesLoading}] = useGetTopRateGamesMutation()
+  const [searchParams, setSearchParams] = useState<SearchParamsType>()
+  const [isSearchParamsChanged, setIsSearchParamsChanged] = useState<boolean>(false)
+
+  useEffect(() => {
+    getCategories(undefined)
+    getTopGames(undefined)
+
+    return () => {
+      dispatch(clearFilter())
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (isSearchParamsChanged) {
+      setIsSearchParamsChanged(false)
+      debounce(() => {
+        if (isTopView) {
+          const params = new URLSearchParams()
+          if (searchParams) {
+            Object.keys(searchParams).forEach((key: string) => {
+              const param = searchParams[key as SerchParamsKeys]
+              param && params.append(key, param)
+            })
+          }
+          getTopGames(params)
+         } else {
+          getCategories(searchParams?.search as string)
+         }
+      }, 500)
+    }
+  }, [isSearchParamsChanged])
+
+  useEffect(() => {
+    const isSearchParams = !!searchParams
+    const filterParams: string[] = Object.keys(filter).filter((f: string) => filter[f as FilterKeys] === true)
+    setSearchParams({ ...searchParams, order: filterParams.join(','), direction: filter.direction as string })
+    setIsSearchParamsChanged(isSearchParams)
+  }, [filter])
+  
+  useEffect(() => {
+    dispatch(setLoading(isLoading || isTopGamesLoading))
+  }, [isLoading, isTopGamesLoading])
+    
+  const topViewHandler = () => {
+    setIsCategoryView(false)
+    setIsTopView(true)
+  }
+
+  const categoryViewHandler = () => {
+    setIsTopView(false)
+    setIsCategoryView(true)
+  }
 
   const searchHandler = (value: string) => {
-    console.log("value", value);
-  };
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGames());
-  }, []);
-
-  useEffect(() => {
-    page.setLoading(isLoading, true);
-  }, [isLoading]);
-
+    setSearchParams((params) => ({ ...params, search: value }))
+    setIsSearchParamsChanged(true)
+  }
+  
   return (
     <Page>
       <Column>
-        <SearchBar onChange={searchHandler} />
+        <SearchBar onChange={searchHandler} value={searchParams?.search || ''} />
+        <Tabs className="grid-columns w-full game-tabs">
+          <Tab onClick={topViewHandler} isActive={isTopView}>{t("tab-top")}</Tab>
+          <Tab onClick={categoryViewHandler} isActive={isCategoryView}>{t("tab-categories")}</Tab>
+        </Tabs>
         <Row className="w-screen">
           <Slider
             settings={{
@@ -65,7 +127,8 @@ function PlayGround() {
             ))}
           </Slider>
         </Row>
-        <GameList games={games} />
+        {isCategoryView && <GameList games={games} />}
+        {isTopView && <TopRate games={topGames} />}
       </Column>
     </Page>
   );

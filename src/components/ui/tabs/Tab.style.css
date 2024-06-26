@@ -1,0 +1,8 @@
+.tab.active {
+  background-color: var(--background-color);
+  color: var(--selected-color);
+}
+.tab {
+  padding: var(--spacing-12);
+  color: var(--text-secondary-color);
+}
