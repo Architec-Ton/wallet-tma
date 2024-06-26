@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
+# Wallet TMA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Wallet TMA is a non-custodial wallet based on the TON blockchain, focused on combining all Telegram gaming Mini Apps in one place.
 
-Currently, two official plugins are available:
+A large team of developers and marketers is working on the development of a large ecosystem tied around the TON and P2E sectors. We are working on developing a user-friendly, understandable and secure system for all gamers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Clone this repository to set up the project locally. Be sure to install `docker`, then proceed to the next instructions:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+docker build . -t <container_name>
+docker run <container_name>
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+---
+
+### Project Structure
+
+```bash
+	    └── src/
+        ├── assets       # all the static files like images, json-files for lottie, etc.
+        ├── components   # reusable UI components
+        ├── features     # states and actions for business features
+        ├── hooks        # reusable state hooks
+        ├── i18n         # translation provider and files
+        ├── pages        # project pages
+        ├── store        # project store configuration
+        └── utils        # utility modules
+```
+
+---
+
+### Project Resources
+
+[Russian Telegram channel](https://t.me/architecton_tech)
+
+[English Telegram channel](https://t.me/architecton_eu)
+
+[Chat for dicsussions](https://t.me/architec_ton)
