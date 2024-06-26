@@ -27,8 +27,10 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: instinctd
+          username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
+      - name: check env 
+        run: env
       -
         name: Build and push
         uses: docker/build-push-action@v6
@@ -37,4 +39,4 @@ jobs:
           file: ./Dockerfile
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/architec-ton/wallet-tma:latest
+          tags: ghcr.io/architec-ton/wallet-tma:$env.GITHUB_SHA
