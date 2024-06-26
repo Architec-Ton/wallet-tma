@@ -1,6 +1,7 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 import { useAppDispatch } from "./useAppDispatch";
-import { setLoading, setTitle } from "../features/page/pageSlice";
+import {setLoading, setNavbarVisible, setTitle} from "../features/page/pageSlice";
+
 
 export interface PageTitle {
   title?: string;
@@ -16,9 +17,9 @@ export const PageStateContext = createContext<{
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isLoading: true,
-  title: { title: "Ok" },
+  title: { title: 'Ok' },
   setTitle: () => {},
-  setIsLoading: () => {},
+  setIsLoading: () => {}, 
 });
 
 export const usePageState = () => useContext(PageStateContext);
@@ -32,8 +33,9 @@ export function usePage() {
           title: title,
           titleAccent: titleAccent,
           hintMessage: hintMessage,
-        })
+        }),
       ),
+    setNavbarVisible: (visible: boolean) => dispatch(setNavbarVisible(visible)),
     setLoading: (state: boolean) => dispatch(setLoading(state)),
   };
 }
