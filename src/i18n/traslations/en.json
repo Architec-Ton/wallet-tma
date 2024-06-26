@@ -17,6 +17,12 @@
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
 
+    "bot-nav-bar-news": "News",
+    "bot-nav-bar-account": "Account",
+    "bot-nav-bar-apps": "Apps",
+    "bot-nav-bar-wallet": "Wallet",
+
+
     "pincode-normal": "Enter PIN code",
     "pincode-success": "Enter PIN code",
     "pincode-error": "Invalid PIN code",
