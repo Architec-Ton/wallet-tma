@@ -15,9 +15,9 @@ interface PageState {
 
 const initialState: PageState = {
   title: {},
-  isLoading: false,
+  isLoading: true,
   isLibraryInitialized: false,
-  isApiLoading: false,
+  isApiLoading: true,
 };
 
 const pageSlice = createSlice({

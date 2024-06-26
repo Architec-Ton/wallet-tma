@@ -1,10 +1,10 @@
-import { CSSProperties, ReactNode } from 'react';
-import './Page.styles.css';
-import Container from './Container';
-import Title from '../typography/Title';
-import Loader from '../layout/Loader';
-import { useAppSelector } from '../../hooks/useAppDispatch';
-import { selectIsLoading } from '../../features/page/pageSelectors';
+import { CSSProperties, ReactNode } from "react";
+import "./Page.styles.css";
+import Container from "./Container";
+import Title from "../typography/Title";
+import Loader from "../layout/Loader";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import { selectIsLoading } from "../../features/page/pageSelectors";
 
 type Props = {
   children: ReactNode;
@@ -38,7 +38,7 @@ function Page({
         {children}
       </Container>
     </>
-  )
+  );
 }
 
 export default Page;

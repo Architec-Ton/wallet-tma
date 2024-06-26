@@ -1,15 +1,18 @@
-import { ReactNode } from 'react';
-import './Balance.styles.css';
-import Block from '../../typography/Block';
-import Row from '../../containers/Row';
-import Address from './Address';
-import Column from '../../containers/Column';
+import { ReactNode } from "react";
+import "./Balance.styles.css";
+import Block from "../../typography/Block";
+import Row from "../../containers/Row";
+import Address from "./Address";
+import Column from "../../containers/Column";
+import { useTon } from "../../../hooks/useTon";
 
 type Props = {
   children?: ReactNode;
 };
 
 function Balance({ children }: Props) {
+  const ton = useTon();
+
   return (
     <Block className="balance-block space-between">
       <Column className="w-100">
@@ -22,7 +25,12 @@ function Balance({ children }: Props) {
         <div className="balance-block-value">$59 232,68</div>
         {children}
       </Column>
-      <Address address="UQAN0l6iey...RZ9xwQPH72S" />
+      <Address
+        address={ton.wallet.address?.toString({
+          bounceable: true,
+          testOnly: true,
+        })}
+      />
     </Block>
   );
 }

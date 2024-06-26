@@ -8,12 +8,14 @@ export enum TonConnectionMode {
 
 interface TonState {
   address?: string;
+  publicKey?: string;
   mode: TonConnectionMode;
   isTonLoading: boolean;
 }
 
 interface TonAddressProp {
   address?: string;
+  publicKey?: string;
   mode: TonConnectionMode;
 }
 
@@ -28,9 +30,11 @@ const tonSlice = createSlice({
   reducers: {
     setAddress(state, action: PayloadAction<TonAddressProp>) {
       state.address = action.payload.address;
+      state.publicKey = action.payload.publicKey;
       state.mode = action.payload.mode;
       if (action.payload.mode == TonConnectionMode.disconnect) {
         state.address = undefined;
+        state.publicKey = undefined;
       }
       state.isTonLoading = false;
     },
