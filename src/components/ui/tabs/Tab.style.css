@@ -1,4 +1,4 @@
-.tab.active {
+.tab.active-tab {
   background-color: var(--background-color);
   color: var(--selected-color);
 }

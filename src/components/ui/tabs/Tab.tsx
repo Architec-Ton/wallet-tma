@@ -10,7 +10,7 @@ type TabPropsType = {
 const Tab = ({ children, isActive, onClick }: TabPropsType) => {
   return (
     <div 
-      className={classNames("tab round-medium", {"active": isActive})}
+      className={classNames("tab round-medium", {"active-tab": isActive})}
       onClick={onClick}
     >{children}</div>
   )
