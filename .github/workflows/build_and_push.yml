@@ -30,21 +30,24 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          # list of Docker images to use as base name for tags
-          images: |
-            ghcr.io/architec-ton/wallet-tma:${{ github.sha }}
-            ghcr.io/architec-ton/wallet-tma:latest
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       -
-        name: Build and push
+        name: Build and push sha
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
           file: ./Dockerfile
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/architec-ton/wallet-tma:${{ github.sha }}
+
+      -
+        name: Build and push latest
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64
+          file: ./Dockerfile
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/architec-ton/wallet-tma:latest
