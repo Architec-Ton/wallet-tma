@@ -14,6 +14,10 @@ import GamePage from './pages/playGround/GamePage.tsx';
 import LeaderBoard from './pages/playGround/LeaderBoard.tsx';
 import CategoryGames from './pages/playGround/CategoryGames.tsx';
 import PinCode from "./pages/pincode/PinCode.tsx";
+import AddCrypto from './pages/addCrypto/index.tsx';
+import ReceiveAsset from './pages/addCrypto/ReceiveAsset.tsx';
+import ChooseAddMethod from './pages/addCrypto/AddCrypto.tsx';
+import AddCryptoAddress from './pages/addCrypto/Address.tsx';
 
 
 const router = createBrowserRouter(
@@ -66,6 +70,24 @@ const router = createBrowserRouter(
       path: '/pin-code',
       element: <PinCode/>,
     },
+    {
+      path: '/add-crypto',
+      element: <AddCrypto />,
+      children: [
+        {
+          index: true,
+          element: <ChooseAddMethod />,
+        },
+        {
+          path: 'receive',
+          element: <ReceiveAsset />,
+        },
+        {
+          path: 'address',
+          element: <AddCryptoAddress />
+        }
+      ]
+    }
   ],
   { basename: '/wallet' }
 );
