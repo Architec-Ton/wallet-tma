@@ -1,21 +1,16 @@
-import { CSSProperties, ReactNode } from 'react';
-import './Page.styles.css';
-import Container from './Container';
-import Title from '../typography/Title';
-import Loader from '../layout/Loader';
-import { useAppSelector } from '../../hooks/useAppDispatch';
-import {selectIsLoading, selectIsNavbarVisible} from '../../features/page/pageSelectors';
-import BottomNavBar from "../bottom-nav-bar/BottomNavBar.tsx";
-import {walletIcon, accountIcon, newsIcon, appsIcon} from '../../assets/icons/bottom-navbar/index.ts'
-import useLanguage from "../../hooks/useLanguage.ts";
-
-
-interface NavItem {
-  to: string;
-  icon: string;
-  label: string;
-}
-
+import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  selectIsLoading,
+  selectIsNavbarVisible,
+} from "../../features/page/pageSelectors";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import BackButton from "../buttons/BackButton.tsx";
+import Loader from "../layout/Loader";
+import Title from "../typography/Title";
+import MainMenu from "../ui/menu/MainMenu.tsx";
+import Container from "./Container";
+import "./Page.styles.css";
 
 type Props = {
   children: ReactNode;
@@ -24,8 +19,15 @@ type Props = {
   title?: string;
   titleAccent?: string;
   hintMessage?: string;
-
 };
+
+const backButtonExclude: string[] = [
+  "/",
+  "/playground",
+  "/news",
+  "/account",
+  "/registration/welcome",
+];
 
 function Page({
   children,
@@ -35,23 +37,21 @@ function Page({
   titleAccent,
   hintMessage,
 }: Props) {
-
-
-    const t =  useLanguage('Bot-nav-bar')
-    const navItems: NavItem[] = [
-        { to: '/test1', icon: walletIcon, label: t('wallet') },
-        { to: '/test2', icon: appsIcon, label: t('apps') },
-        { to: '/test3', icon: newsIcon, label: t('news') },
-        { to: '/test4', icon: accountIcon, label: t('account') },
-    ]
-
-
+  const location = useLocation();
+  const [backButtonIsVisible, setBackButtonIsVisible] =
+    useState<boolean>(false);
   const isLoading = useAppSelector(selectIsLoading);
-  const isNavbarVisible =  useAppSelector(selectIsNavbarVisible)
-  if (isLoading) return <Loader />;
+  const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
 
+  useEffect(() => {
+    setBackButtonIsVisible(
+      !backButtonExclude.includes(location.pathname) && !isLoading
+    );
+  }, [location, isLoading]);
+  if (isLoading) return <Loader />;
   return (
     <>
+      <BackButton visible={backButtonIsVisible} />
       <Container style={style} className={className}>
         {title && (
           <Title
@@ -61,10 +61,10 @@ function Page({
           />
         )}
         {children}
-        {isNavbarVisible && <BottomNavBar navItems={navItems}/>}
-      </Container >
+      </Container>
+      {isNavbarVisible && <MainMenu />}
     </>
-  )
+  );
 }
 
 export default Page;

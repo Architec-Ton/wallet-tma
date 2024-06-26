@@ -30,6 +30,11 @@ button {
     border-style: solid;
 }
 
+main{
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
 .primary-btn {
     background-color: var(--primary-color);
     border-color: var(--primary-color);

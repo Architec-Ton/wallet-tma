@@ -17,12 +17,6 @@
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
 
-    "bot-nav-bar-news": "News",
-    "bot-nav-bar-account": "Account",
-    "bot-nav-bar-apps": "Apps",
-    "bot-nav-bar-wallet": "Wallet",
-
-
     "pincode-normal": "Enter PIN code",
     "pincode-success": "Enter PIN code",
     "pincode-error": "Invalid PIN code",
@@ -62,5 +56,20 @@
     "add-crypto-coin-address": "Your {{coin}} adress",
     "add-crypto-copy": "Copy Address",
     "add-crypto-choose-asset": "Choose asset to receive",
-    "add-crypto-receive-description": "One-way transaction with automatic rounding. Working <l>conditions</l> of banks."
+    "add-crypto-receive-description": "One-way transaction with automatic rounding. Working <l>conditions</l> of banks.",
+
+
+    "menu-wallet-add": "Add crypto",
+    "menu-wallet-send": "Send",
+    "menu-wallet-swap": "Swap",
+    "menu-wallet-bank": "Bank",
+
+    "menu-main-news": "News",
+    "menu-main-account": "Account",
+    "menu-main-apps": "Apps",
+    "menu-main-wallet": "Wallet",
+
+
+    "assets-title": "Assets",
+    "history-title": "History"
 }

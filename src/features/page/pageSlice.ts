@@ -16,9 +16,9 @@ interface PageState {
 
 const initialState: PageState = {
   title: {},
-  isLoading: false,
+  isLoading: true,
   isLibraryInitialized: false,
-  isApiLoading: false,
+  isApiLoading: true,
   isNavbarVisible: false,
 };
 
