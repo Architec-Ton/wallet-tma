@@ -26,6 +26,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { selectIsTma } from "../../features/tma/tmaSelector.ts";
 import BackButton from "../buttons/BackButton.tsx";
 import useRouter from "../../hooks/useRouter.ts";
+import MainMenu from "../ui/menu/MainMenu.tsx";
 
 interface NavItem {
   to: string;
@@ -65,13 +66,6 @@ function Page({
   const isLoading = useAppSelector(selectIsLoading);
   const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
 
-  const navItems: NavItem[] = [
-    { to: "/", icon: walletIcon, label: t("wallet") },
-    { to: "/playground", icon: appsIcon, label: t("apps") },
-    { to: "/news", icon: newsIcon, label: t("news") },
-    { to: "/account", icon: accountIcon, label: t("account") },
-  ];
-
   useEffect(() => {
     setBackButtonIsVisible(
       !backButtonExclude.includes(location.pathname) && !isLoading
@@ -91,7 +85,7 @@ function Page({
         )}
         {children}
       </Container>
-      {isNavbarVisible && <BottomNavBar navItems={navItems} />}
+      {isNavbarVisible && <MainMenu />}
     </>
   );
 }

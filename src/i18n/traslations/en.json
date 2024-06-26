@@ -17,12 +17,6 @@
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
 
-    "bot-nav-bar-news": "News",
-    "bot-nav-bar-account": "Account",
-    "bot-nav-bar-apps": "Apps",
-    "bot-nav-bar-wallet": "Wallet",
-
-
     "pincode-normal": "Enter PIN code",
     "pincode-success": "Enter PIN code",
     "pincode-error": "Invalid PIN code",
@@ -68,5 +62,10 @@
     "menu-wallet-add": "Add crypto",
     "menu-wallet-send": "Send",
     "menu-wallet-swap": "Swap",
-    "menu-wallet-bank": "Bank"
+    "menu-wallet-bank": "Bank",
+
+    "menu-main-news": "News",
+    "menu-main-account": "Account",
+    "menu-main-apps": "Apps",
+    "menu-main-wallet": "Wallet"
 }

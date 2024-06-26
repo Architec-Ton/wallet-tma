@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Column from "../components/containers/Column";
 import Page from "../components/containers/Page";
-import Balance from "../components/ui/balance/Balance";
 import { useAppSelector } from "../hooks/useAppDispatch";
 import useRouter from "../hooks/useRouter";
 import { usePage } from "../hooks/usePage";

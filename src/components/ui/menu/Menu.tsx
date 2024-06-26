@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
-import "./Menu.styles.css";
 import classNames from "classnames";
 import { CSSProperties } from "react";
+import { NavLink } from "react-router-dom";
+import "./Menu.styles.css";
 
 export interface MenuItem {
   to: string;

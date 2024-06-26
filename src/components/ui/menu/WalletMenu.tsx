@@ -1,14 +1,12 @@
-import "./WalletMenu.styles.css";
-import Menu, { MenuItem } from "./Menu";
-import useLanguage from "../../../hooks/useLanguage";
-import {} from "../../../assets/icons/bottom-navbar/index.ts";
 import {
   iconMenuWalletAdd,
   iconMenuWalletBank,
   iconMenuWalletSend,
   iconMenuWalletSwap,
 } from "../../../assets/icons/menus/wallet/index.ts";
-import Block from "../../typography/Block.tsx";
+import useLanguage from "../../../hooks/useLanguage";
+import Menu, { MenuItem } from "./Menu";
+import "./WalletMenu.styles.css";
 
 function WalletMenu() {
   const t = useLanguage("menu-wallet");
