@@ -19,7 +19,7 @@ export interface IGame {
   title: string
   description: string
   thumb: string
-  album: string[]
+  gallery: string[]
   category: number
   resources: GameResource[]
   rate: number
@@ -39,4 +39,11 @@ export type TGameLeader = {
   gameId: string
   time: string
   totalCoins: string
+}
+
+export type GameFilterType = {
+  name?: boolean
+  rate?: boolean
+  date?: boolean
+  direction?: string
 }

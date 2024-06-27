@@ -1,4 +1,4 @@
-import { bigNumberFormatter } from "../../utils/formatter"
+import { bigNumberFormatter } from "../../../utils/formatter"
 import "./GameLeaderRow.styles.css"
 
 type OwnProps = {

@@ -5,7 +5,7 @@
   --primary-color: #07ACFF;
   --secondary-color: #65656A;
   --third-colour: #e5e5e5;
-  --background-color: light-dark(#ffffff, #2c2c2c );  
+  --background-color: light-dark(#ffffff, #2c2c2c);  
   /* # var(--tg-theme-bg-color) */
     /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);

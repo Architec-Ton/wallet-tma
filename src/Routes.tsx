@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import PlayGround from "./pages/playGround/index.tsx";
-// import AddWallet from './components/start-page/AddWallet/AddWallet.tsx';
-// import YourSecretKey from './components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx';
+import PlayGround from "./pages/playGround";
+// import AddWallet from "./components/start-page/AddWallet/AddWallet.tsx";
+// import YourSecretKey from "./components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx";
 
 import Welcome from "./pages/registration/Welcome.tsx";
 import ConfirmKey from "./pages/registration/ConfirmKey.tsx";
@@ -10,11 +10,11 @@ import SecretKey from "./pages/registration/SecretKey.tsx";
 import RegistrationIsCompleted from "./pages/registration/RegistrationIsCompleted.tsx";
 import Existing from "./pages/registration/Existing.tsx";
 import Main from "./pages/Main.tsx";
-import GamePage from "./pages/playGround/GamePage.tsx";
-import LeaderBoard from "./pages/playGround/LeaderBoard.tsx";
-import CategoryGames from "./pages/playGround/CategoryGames.tsx";
+import GamePage from "./pages/playGround/gamePage";
+import LeaderBoard from "./pages/playGround/leaderBoard";
+import CategoryGames from "./pages/playGround/categoryGames";
 import PinCode from "./pages/pincode/PinCode.tsx";
-import AddCrypto from "./pages/addCrypto/index.tsx";
+import AddCrypto from "./pages/addCrypto";
 import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
 import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
 import AddCryptoAddress from "./pages/addCrypto/Address.tsx";

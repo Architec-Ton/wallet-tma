@@ -1,0 +1,7 @@
+.tabs-block{
+  padding: var(--spacing-8);
+}
+
+.tabs {
+  text-align: center;
+}
