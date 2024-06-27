@@ -1,0 +1,17 @@
+.git*
+*.md
+.helm
+.docker
+.dockerignore
+ansible*
+*.log
+# dotenv environment variables file
+.env*
+
+# docker-compose files						# docker-compose files
+docker-compose*
+docker-sync*
+Makefile
+### VisualStudioCode template
+.vscode/*
+
