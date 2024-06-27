@@ -20,9 +20,9 @@ function Main() {
     page.setTitle("Main", "Page");
     console.log("isTonLoading", isTonLoading);
     if (!isTonLoading) {
-      console.log("Call ", isTonLoading, tonMode);
+      // console.log("Call ", isTonLoading, tonMode);
       if (tonMode == TonConnectionMode.disconnect) {
-        console.log("mode disconnect");
+        // console.log("mode disconnect");
         navigate("/registration/welcome");
       } else {
         // TODO: Get Balance data

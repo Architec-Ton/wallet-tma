@@ -39,7 +39,7 @@ export function TmaProvider({ children }: Props) {
       .then((tma) => dispatch(setTma(tma)))
       .finally(() => {
         dispatch(setTmaLoading(false));
-        console.log("setTmaLoading", false);
+        // console.log("setTmaLoading", false);
         // setTimeout(() => {
         //   dispatch(setTmaLoading(false));
         // }, 2000);
