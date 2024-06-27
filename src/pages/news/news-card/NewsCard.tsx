@@ -19,7 +19,6 @@ const NewsCard = () => {
     return (
         <Block>
             <div>
-
             </div>
         </Block>
     );
