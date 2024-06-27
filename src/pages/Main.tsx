@@ -10,14 +10,12 @@ import { TonConnectionMode } from "../features/ton/tonSlice";
 import WalletMenu from "../components/ui/menu/WalletMenu";
 import Assets from "../components/ui/balance/Assets";
 import History from "../components/ui/balance/History";
-import { useTon } from "../hooks/useTon";
 
 function Main() {
   const navigate = useRouter();
   const isTonLoading = useAppSelector(selectIsTonLoading);
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
-  const ton = useTon();
   useEffect(() => {
     page.setTitle("Main", "Page");
     console.log("isTonLoading", isTonLoading);
@@ -31,7 +29,6 @@ function Main() {
         page.setLoading(false, true);
       }
     }
-    ton.setDisconnect();
   }, [isTonLoading, tonMode]);
 
   return (
