@@ -18,6 +18,7 @@ import AddCrypto from './pages/addCrypto/index.tsx';
 import ReceiveAsset from './pages/addCrypto/ReceiveAsset.tsx';
 import ChooseAddMethod from './pages/addCrypto/AddCrypto.tsx';
 import AddCryptoAddress from './pages/addCrypto/Address.tsx';
+import News from "./pages/news/News.tsx";
 
 const router = createBrowserRouter(
   [
@@ -86,6 +87,10 @@ const router = createBrowserRouter(
           element: <AddCryptoAddress />
         }
       ]
+    },
+    {
+       path: '/news',
+       element: <News/>
     }
   ],
   { basename: '/wallet' }
