@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useEffect } from "react";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTon } from "../../hooks/useTon";
 import { setAddress, TonConnectionMode } from "../../features/ton/tonSlice";
-import { selectTonMode } from "../../features/ton/tonSelector";
+// import { selectTonMode } from "../../features/ton/tonSelector";
 
 type Props = {
   children: ReactNode;
@@ -17,7 +17,7 @@ export function TonProvider({ children }: Props) {
   const dispatch = useAppDispatch();
   const ton = useTon();
 
-  const tonMode = useAppSelector(selectTonMode);
+  // const tonMode = useAppSelector(selectTonMode);
   const [bcData] = useLocalStorage("bcData", {
     network: "ton",
     mode: "disconnect",

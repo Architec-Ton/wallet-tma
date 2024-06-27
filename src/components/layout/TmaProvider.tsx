@@ -48,14 +48,14 @@ export function TmaProvider({ children }: Props) {
 
   useEffect(() => {
     if (isTma) {
-      console.log("isTMA;", isTma);
+      // console.log("isTMA;", isTma);
       console.log("init result:", initDataRaw.result);
       console.log(JSON.stringify(initDataRaw.result));
       console.log("initDataRaw :", initDataRaw);
       console.log(initDataRaw.error);
       //console.log(launchParams.initDataRaw)
     } else {
-      console.log("isTMA;", isTma);
+      // console.log("isTMA;", isTma);
     }
   }, [isTma, initDataRaw]);
 
