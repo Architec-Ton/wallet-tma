@@ -1,22 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import {
   iconPageStartCoin,
   iconPageStartGameboy,
   iconPageStartShieldTick,
-} from '../../assets/icons/pages/start';
-import Column from '../../components/containers/Column';
-import Page from '../../components/containers/Page';
-import Tile from '../../components/typography/Tile';
-import useLanguage from '../../hooks/useLanguage';
-import useRouter from '../../hooks/useRouter';
-import { useTmaMainButton } from '../../hooks/useTma';
-import { usePage } from '../../hooks/usePage';
+} from "../../assets/icons/pages/start";
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
+import Tile from "../../components/typography/Tile";
+import useLanguage from "../../hooks/useLanguage";
+import useRouter from "../../hooks/useRouter";
+import { useTmaMainButton } from "../../hooks/useTma";
+import { usePage } from "../../hooks/usePage";
 
 function Welcome() {
   const navigate = useRouter();
-  const page = usePage()
+  const page = usePage();
   const btn = useTmaMainButton();
-  const t = useLanguage('Welcome');
+
+  const t = useLanguage("Welcome");
   const welcomeIcons = [
     iconPageStartCoin,
     iconPageStartGameboy,
@@ -24,19 +25,18 @@ function Welcome() {
   ];
 
   useEffect(() => {
-    page.setLoading(false)
+    page.setLoading(false);
     btn.init(
-      t('next', 'button'),
+      t("next", "button"),
       () => {
-        console.log('call btn');
-        navigate('/registration/add-wallet');
+        navigate("/registration/add-wallet");
       },
       true
     );
   }, []);
 
   return (
-    <Page title={t('welcome-to')} titleAccent={'Architec.TON'}>
+    <Page title={t("welcome-to")} titleAccent={"Architec.TON"}>
       <Column>
         {welcomeIcons.map((icon, index: number) => (
           <Tile

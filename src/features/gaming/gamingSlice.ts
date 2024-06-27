@@ -1,46 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { GameListItemType, GameListType } from "../../types/gameTypes";
-import { fetchGames } from "./actions";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { GameFilterType, GameListItemType, GameListType } from "../../types/gameTypes";
 
 export interface GamingState {
   games: GameListType<GameListItemType[]>
-  status: {
-    isLoading: boolean
-    isError: boolean
-    error: string 
-  }
+  filter: GameFilterType
+}
+
+const initialFilter: GameFilterType = {
+  name: false,
+  rate: false,
+  date: false,
+  direction: undefined
 }
 
 const initialState: GamingState = {
   games: [],
-  status: {
-    isLoading: false,
-    isError: false,
-    error: ''
-  }
+  filter: initialFilter
 } satisfies GamingState
 
 const gamingSlice = createSlice({
   name: "gaming",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchGames.pending, (state: GamingState) => {
-      state.status.isLoading = true
-    })
-    builder.addCase(fetchGames.fulfilled, (state: GamingState, action) => {
-      state.status.isLoading = false
-      state.status.isError = false
-      state.status.error = ''
+  reducers: {
+    setCategories(state: GamingState, action: PayloadAction<GameListType<GameListItemType[]>>) {
       state.games = action.payload
-    })
-    builder.addCase(fetchGames.rejected, (state: GamingState, action) => {
-      state.status.isLoading = false
-      state.status.isError = true
-      state.status.error = action.payload as string
-    })
-    
+    },
+    setFilter(state: GamingState, action: PayloadAction<GameFilterType>) {
+      state.filter = action.payload
+    },
+    clearFilter(state: GamingState) {
+      state.filter = initialFilter
+    }
   }
 })
+
+export const { setCategories, setFilter, clearFilter } = gamingSlice.actions
 
 export default gamingSlice.reducer

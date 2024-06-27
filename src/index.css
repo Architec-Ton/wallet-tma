@@ -1,11 +1,12 @@
 :root {
-  color-scheme: light ;
+  color-scheme: light dark;
 
   /* Основные цвета */
   --primary-color: #07ACFF;
   --secondary-color: #65656A;
   --third-colour: #e5e5e5;
-  --background-color: light-dark(#ffffff, var(--tg-theme-bg-color)); 
+  --background-color: light-dark(#ffffff, #2c2c2c);  
+  /* # var(--tg-theme-bg-color) */
     /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);
   --selected-color: #6ACDFF;
@@ -53,6 +54,8 @@
   --spacing-8: 0.5rem;
   --spacing-12: 0.75rem;
   --spacing-16: 1rem;
+  --spacing-20: 1.25rem;
+  --spacing-22: 1.375rem;
   --spacing-24: 1.5rem;
   --spacing-32: 2rem;
   --spacing-64: 4rem;
@@ -93,10 +96,10 @@
   --w-screen: calc(100% + 2 * var(--spacing-12));
 
   /* Размеры аватарок */
-  --thumbnail-with: 114px;
+  --thumbnail-width: 114px;
   --thumbnail-height: 114px;
-  --thumbnail-medium-with: 56px;
-  --thumbnail-medium-height: 56px;
+  --thumbnail-medium-width: 46px;
+  --thumbnail-medium-height: 46px;
 
   --swiper-pagination-bullet-inactive-color: light-dark(#000000, #ffffff);
 }

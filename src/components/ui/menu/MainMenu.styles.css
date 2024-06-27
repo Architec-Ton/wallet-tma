@@ -1,0 +1,14 @@
+.main-menu{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--border-color-light);
+    padding: 12px 0;
+    background-color: var(--background-selected-color);
+    z-index: 999;
+}
+
+.active{
+    filter: brightness(0) saturate(100%) invert(73%) sepia(9%) saturate(2841%) hue-rotate(171deg) brightness(101%) contrast(101%);
+}

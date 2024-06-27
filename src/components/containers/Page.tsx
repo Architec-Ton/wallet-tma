@@ -1,10 +1,16 @@
-import { CSSProperties, ReactNode } from 'react';
-import './Page.styles.css';
-import Container from './Container';
-import Title from '../typography/Title';
-import Loader from '../layout/Loader';
-import { useAppSelector } from '../../hooks/useAppDispatch';
-import { selectIsLoading } from '../../features/page/pageSelectors';
+import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  selectIsLoading,
+  selectIsNavbarVisible,
+} from "../../features/page/pageSelectors";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import BackButton from "../buttons/BackButton.tsx";
+import Loader from "../layout/Loader";
+import Title from "../typography/Title";
+import MainMenu from "../ui/menu/MainMenu.tsx";
+import Container from "./Container";
+import "./Page.styles.css";
 
 type Props = {
   children: ReactNode;
@@ -15,6 +21,14 @@ type Props = {
   hintMessage?: string;
 };
 
+const backButtonExclude: string[] = [
+  "/",
+  "/playground",
+  "/news",
+  "/account",
+  "/registration/welcome",
+];
+
 function Page({
   children,
   style,
@@ -23,10 +37,21 @@ function Page({
   titleAccent,
   hintMessage,
 }: Props) {
+  const location = useLocation();
+  const [backButtonIsVisible, setBackButtonIsVisible] =
+    useState<boolean>(false);
   const isLoading = useAppSelector(selectIsLoading);
+  const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
+
+  useEffect(() => {
+    setBackButtonIsVisible(
+      !backButtonExclude.includes(location.pathname) && !isLoading
+    );
+  }, [location, isLoading]);
   if (isLoading) return <Loader />;
   return (
     <>
+      <BackButton visible={backButtonIsVisible} />
       <Container style={style} className={className}>
         {title && (
           <Title
@@ -37,8 +62,9 @@ function Page({
         )}
         {children}
       </Container>
+      {isNavbarVisible && <MainMenu />}
     </>
-  )
+  );
 }
 
 export default Page;

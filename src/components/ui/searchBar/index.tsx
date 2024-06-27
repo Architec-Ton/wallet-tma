@@ -6,13 +6,14 @@ import { useTranslation } from "react-i18next"
 
 type OwnPropsType = {
   onChange: (value: string) => void
+  value?: string
 }
 
 const SearchIconComponent = () => <img src={SearchIcon} alt="" />
 
-const SearchBar = ({ onChange }: OwnPropsType) => {
+const SearchBar = ({ onChange, value }: OwnPropsType) => {
   const { t } = useTranslation()
-  const [searchValue, setSearchValue] = useState<string>('')
+  const [searchValue, setSearchValue] = useState<string>(value as string)
 
   const searchHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.currentTarget.value

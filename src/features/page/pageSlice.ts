@@ -11,13 +11,15 @@ interface PageState {
   isLoading: boolean;
   isLibraryInitialized: boolean;
   isApiLoading: boolean;
+  isNavbarVisible: boolean;
 }
 
 const initialState: PageState = {
   title: {},
-  isLoading: false,
+  isLoading: true,
   isLibraryInitialized: false,
-  isApiLoading: false,
+  isApiLoading: true,
+  isNavbarVisible: false,
 };
 
 const pageSlice = createSlice({
@@ -36,10 +38,13 @@ const pageSlice = createSlice({
     setApiLoading(state, action: PayloadAction<boolean>) {
       state.isApiLoading = action.payload;
     },
+    setNavbarVisible(state, action: PayloadAction<boolean>) {
+      state.isNavbarVisible = action.payload;
+    }
   },
 });
 
-export const { setTitle, setLoading, setLibraryInitialized, setApiLoading } =
+export const { setTitle, setLoading, setLibraryInitialized, setApiLoading , setNavbarVisible} =
   pageSlice.actions;
 
 export default pageSlice.reducer;

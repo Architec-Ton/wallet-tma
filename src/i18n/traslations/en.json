@@ -51,6 +51,9 @@
     "game-project-resources": "Project Resources",
     "game-filter-on": "On",
     "game-filter-off": "Off",
+    "game-top-rated-title": "Top Rated",
+    "game-tab-top": "Top",
+    "game-tab-categories": "Categories",
 
     "add-crypto-your-coin-address": "Your {{coin}} Address",
     "add-crypto-description": "Send only <strong>{{coinInfo}}</strong> to this address. Sending other assets, such as jettons or NFTs will result in permanent loss.",
@@ -58,5 +61,20 @@
     "add-crypto-coin-address": "Your {{coin}} adress",
     "add-crypto-copy": "Copy Address",
     "add-crypto-choose-asset": "Choose asset to receive",
-    "add-crypto-receive-description": "One-way transaction with automatic rounding. Working <l>conditions</l> of banks."
+    "add-crypto-receive-description": "One-way transaction with automatic rounding. Working <l>conditions</l> of banks.",
+
+
+    "menu-wallet-add": "Add crypto",
+    "menu-wallet-send": "Send",
+    "menu-wallet-swap": "Swap",
+    "menu-wallet-bank": "Bank",
+
+    "menu-main-news": "News",
+    "menu-main-account": "Account",
+    "menu-main-apps": "Apps",
+    "menu-main-wallet": "Wallet",
+
+
+    "assets-title": "Assets",
+    "history-title": "History"
 }

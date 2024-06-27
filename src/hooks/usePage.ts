@@ -1,6 +1,10 @@
 import { createContext, useContext } from "react";
 import { useAppDispatch } from "./useAppDispatch";
-import { setLoading, setTitle } from "../features/page/pageSlice";
+import {
+  setLoading,
+  setNavbarVisible,
+  setTitle,
+} from "../features/page/pageSlice";
 
 export interface PageTitle {
   title?: string;
@@ -34,6 +38,10 @@ export function usePage() {
           hintMessage: hintMessage,
         })
       ),
-    setLoading: (state: boolean) => dispatch(setLoading(state)),
+    setNavbarVisible: (visible: boolean) => dispatch(setNavbarVisible(visible)),
+    setLoading: (state: boolean, navbar: boolean = false) => {
+      dispatch(setLoading(state));
+      dispatch(setNavbarVisible(navbar));
+    },
   };
 }
