@@ -37,6 +37,7 @@ function Page({
   titleAccent,
   hintMessage,
 }: Props) {
+
   const location = useLocation();
   const [backButtonIsVisible, setBackButtonIsVisible] =
     useState<boolean>(false);
@@ -49,6 +50,7 @@ function Page({
     );
   }, [location, isLoading]);
   if (isLoading) return <Loader />;
+
   return (
     <>
       <BackButton visible={backButtonIsVisible} />
