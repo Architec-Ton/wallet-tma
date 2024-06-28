@@ -18,6 +18,8 @@ function Main() {
   const page = usePage();
   useEffect(() => {
     page.setTitle("Main", "Page");
+  }, []);
+  useEffect(() => {
     console.log("isTonLoading", isTonLoading);
     if (!isTonLoading) {
       // console.log("Call ", isTonLoading, tonMode);

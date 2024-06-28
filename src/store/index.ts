@@ -6,6 +6,8 @@ import backButtonReducer from "../features/tma/backButtonSlice";
 import tmaReducer from "../features/tma/tmaSlice";
 import gamingSlice from "../features/gaming/gamingSlice";
 import { gamingApi } from "../features/gaming/gamingApi";
+import authSlice from "../features/auth/authSlice";
+import { authApi } from "../features/auth/authApi";
 
 export const store = configureStore({
   reducer: {
@@ -15,10 +17,12 @@ export const store = configureStore({
     tma: tmaReducer,
     ton: tonReducer,
     gaming: gamingSlice,
+    auth: authSlice,
     [gamingApi.reducerPath]: gamingApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(gamingApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, gamingApi.middleware),
 });
 
 export const storeDispatch = store.dispatch;
