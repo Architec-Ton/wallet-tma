@@ -6,6 +6,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTon } from "../../hooks/useTon";
 import { setAddress, TonConnectionMode } from "../../features/ton/tonSlice";
+import { setIsTonReady } from "../../features/auth/authSlice";
 // import { selectTonMode } from "../../features/ton/tonSelector";
 
 type Props = {
@@ -40,12 +41,14 @@ export function TonProvider({ children }: Props) {
         } else {
           ton.setDisconnect();
         }
+        dispatch(setIsTonReady(true));
       });
       const timer = setTimeout(() => {
         // console.log("still tonconnect", ton.mode, tonMode, resetTonConnect);
         if (resetTonConnect) {
           // console.log(resetTonConnect);
           ton.setDisconnect();
+          dispatch(setIsTonReady(true));
         }
       }, 20000);
       return () => clearTimeout(timer);
@@ -56,6 +59,7 @@ export function TonProvider({ children }: Props) {
           mode: TonConnectionMode.disconnect,
         })
       );
+      dispatch(setIsTonReady(true));
     }
   }, []);
 

@@ -4,10 +4,12 @@ import Section from "../../containers/Section";
 import ListBlock from "../listBlock";
 import { iconTon, iconUsdt } from "../../../assets/icons/jettons";
 import { AssetType } from "../../../pages/addCrypto/ReceiveAsset";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useClosure } from "../../../hooks/useClosure";
 import ListBlockItem from "../listBlock/ListBlockItem";
 import useLanguage from "../../../hooks/useLanguage";
+import ListBaseItem from "../listBlock/ListBaseItem";
+import ListTileItem from "../listBlock/ListTileItem";
 
 type Props = {
   children?: ReactNode;
@@ -49,15 +51,23 @@ function History({ children }: Props) {
       <ListBlock>
         {assets.map((asset, index) => {
           return (
-            <ListBlockItem
+            <ListTileItem
               key={`${asset.title}-${index}`}
-              thumb={asset.thumb}
+              icon={asset.thumb}
               title={asset.title}
               description={asset.description}
               onClick={assetClickHandler(asset)}
-            />
+            >
+              <div className="list-block__right">
+                <div className="list-block__title">{" $"}</div>
+                <div className="list-block__description"> data here</div>
+              </div>
+            </ListTileItem>
           );
         })}
+        <ListBaseItem className="center">
+          <NavLink to="#">See more</NavLink>
+        </ListBaseItem>
       </ListBlock>
       {children}
     </Section>

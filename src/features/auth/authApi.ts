@@ -1,7 +1,7 @@
 // authApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "../api/api";
-import { AuthInitData, TAuthType } from "../../types/auth";
+import { AuthInitData, AuthInitTon, TAuthType } from "../../types/auth";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -9,7 +9,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     apiAuth: builder.mutation<
       any,
-      { initDataRaw?: AuthInitData; authType: TAuthType }
+      { initDataRaw?: AuthInitData; authType: TAuthType; initTon?: AuthInitTon }
     >({
       query: (credentials: any) => ({
         url: "/auth",

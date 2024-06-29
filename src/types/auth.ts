@@ -5,8 +5,14 @@ export type TAuthType = "telegram" | "web";
 export interface WalletInfo {
   network: string;
   address: string;
-  lastName?: string;
-  isPremium: boolean;
+  publicKey?: string;
+}
+
+export interface AuthInitTon {
+  network: string;
+  address: string;
+  publicKey?: string;
+  signature?: string;
 }
 
 export interface AuthInitData {
