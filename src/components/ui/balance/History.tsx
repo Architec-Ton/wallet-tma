@@ -6,7 +6,6 @@ import { iconTon, iconUsdt } from "../../../assets/icons/jettons";
 import { AssetType } from "../../../pages/addCrypto/ReceiveAsset";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useClosure } from "../../../hooks/useClosure";
-import ListBlockItem from "../listBlock/ListBlockItem";
 import useLanguage from "../../../hooks/useLanguage";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import ListTileItem from "../listBlock/ListTileItem";

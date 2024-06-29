@@ -1,35 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode, useEffect, useState } from "react";
 import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
-import MainButton from "../buttons/MainButton";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
-import {
-  selectMainButtonIsVisible,
-  selectMainButtonTitle,
-} from "../../features/tma/mainButtonSelector";
-import { TmaMainButton, TmaStateContext } from "../../hooks/useTma";
-import {
-  selectIsTma,
-  selectIsTmaLoading,
-} from "../../features/tma/tmaSelector";
-import {
-  AccountState,
-  setAccessToken,
-  setAccount,
-  setIsTmaReady,
-  setUser,
-} from "../../features/auth/authSlice";
+import { ReactNode, useEffect, useState } from "react";
+import { useApiAuthMutation } from "../../features/auth/authApi";
 import {
   selectAuth,
   selectAuthIsTmaReady,
   selectAuthIsTonReady,
 } from "../../features/auth/authSelector";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { useApiAuthMutation } from "../../features/auth/authApi";
-import { AuthInitData, AuthInitTon } from "../../types/auth";
+import {
+  AccountState,
+  setAccessToken,
+  setAccount,
+  setIsTmaReady,
+} from "../../features/auth/authSlice";
+import {
+  selectMainButtonIsVisible,
+  selectMainButtonTitle,
+} from "../../features/tma/mainButtonSelector";
+import {
+  selectIsTma,
+  selectIsTmaLoading,
+} from "../../features/tma/tmaSelector";
+import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { TmaMainButton, TmaStateContext } from "../../hooks/useTma";
 import { useTon } from "../../hooks/useTon";
-import { Address } from "@ton/core";
+import { AuthInitData, AuthInitTon } from "../../types/auth";
+import MainButton from "../buttons/MainButton";
 
 type Props = {
   children: ReactNode;
@@ -51,10 +48,6 @@ export function TmaProvider({ children }: Props) {
 
   const isTmaReady = useAppSelector(selectAuthIsTmaReady);
   const isTonReady = useAppSelector(selectAuthIsTonReady);
-
-  const [authData, setAuthData] = useLocalStorage("auth", {
-    accessToken: null,
-  });
 
   //const launchParams = useLaunchParams()
 

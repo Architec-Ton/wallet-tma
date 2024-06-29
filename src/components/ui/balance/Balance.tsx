@@ -1,12 +1,10 @@
 import { ReactNode } from "react";
-import { useTon } from "../../../hooks/useTon";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";
 import Block from "../../typography/Block";
 
 import "./Balance.styles.css";
 import { WalletInfoData } from "../../../types/wallet";
-import { Address as TonAddress } from "@ton/core";
 import Address from "./Address";
 
 type Props = {
@@ -15,8 +13,6 @@ type Props = {
 };
 
 function Balance({ children, walletInfoData }: Props) {
-  const ton = useTon();
-
   return (
     <Block className="balance-block space-between">
       <Column className="w-100">
