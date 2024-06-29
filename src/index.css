@@ -37,8 +37,8 @@
   --input-focus-border-color: var(--primary-color);
 
   /* Цвета для уведомлений */
-  --success-color: #28a745;
-  --error-color: #dc3545;
+  --success-color: #4ECC5E;
+  --error-color: #CC2929;
   --warning-color: #ffc107;
   --info-color: #17a2b8;
 

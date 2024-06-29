@@ -125,4 +125,7 @@ input:focus, input:focus-visible,input:active, input:visited {
     display: grid;
     place-items: center;
     margin: auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Column from "../components/containers/Column";
 import Page from "../components/containers/Page";
 import Balance from "../components/ui/balance/Balance";
@@ -10,14 +10,47 @@ import { TonConnectionMode } from "../features/ton/tonSlice";
 import WalletMenu from "../components/ui/menu/WalletMenu";
 import Assets from "../components/ui/balance/Assets";
 import History from "../components/ui/balance/History";
+import { useApiWalletInfoMutation } from "../features/wallet/walletApi";
+import {
+  selectAuthIsReady,
+  selectAuthIsTmaReady,
+} from "../features/auth/authSelector";
+import { WalletInfoData } from "../types/wallet";
 
 function Main() {
   const navigate = useRouter();
+
+  const [walletInfoData, setWalletInfoData] = useState<WalletInfoData | null>(
+    null
+  );
   const isTonLoading = useAppSelector(selectIsTonLoading);
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
+  const [walletInfoApi] = useApiWalletInfoMutation();
+  const isReady = useAppSelector(selectAuthIsReady);
+  //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
+
+  const handleInfo = async () => {
+    try {
+      const result = await walletInfoApi(null).unwrap();
+      console.log("Wallet result:", result);
+      setWalletInfoData(result);
+    } catch (err) {
+      console.error("Failed to get info: ", err);
+    } finally {
+      page.setLoading(false, true);
+    }
+  };
+
   useEffect(() => {
     page.setTitle("Main", "Page");
+  }, []);
+
+  useEffect(() => {
+    console.log("walletInfoData", walletInfoData);
+  }, [walletInfoData]);
+
+  useEffect(() => {
     console.log("isTonLoading", isTonLoading);
     if (!isTonLoading) {
       // console.log("Call ", isTonLoading, tonMode);
@@ -26,17 +59,23 @@ function Main() {
         navigate("/registration/welcome");
       } else {
         // TODO: Get Balance data
-        page.setLoading(false, true);
+        if (isReady) handleInfo();
       }
     }
-  }, [isTonLoading, tonMode]);
+  }, [isTonLoading, tonMode, isReady]);
 
   return (
     <Page>
       <Column>
-        <Balance></Balance>
+        <Balance walletInfoData={walletInfoData}></Balance>
         <WalletMenu />
-        <Assets />
+        <Assets
+          assets={
+            walletInfoData
+              ? walletInfoData.wallets[walletInfoData.currentWallet].assets
+              : []
+          }
+        />
         <History />
       </Column>
     </Page>
