@@ -16,6 +16,10 @@ h2 {
     margin: var(--spacing-8) 0;
 }
 
+h3 {
+
+}
+
 p {
     color: var(--text-secondary-color);
     font-size: var(--font-size-small);

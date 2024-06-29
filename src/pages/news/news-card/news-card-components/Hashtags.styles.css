@@ -1,0 +1,17 @@
+.news-top-bar {
+
+}
+
+.news-top-bar-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.news-card {
+
+}
+
+.news-card-container {
+    display: flex;
+
+}

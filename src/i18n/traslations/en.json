@@ -22,6 +22,13 @@
     "pincode-error": "Invalid PIN code",
     "pincode-confirm": "Confirm PIN code",
 
+    "news-title": "News Feed",
+
+    "timeSinceCreation-h": "h",
+    "timeSinceCreation-m": "m",
+    "timeSinceCreation-just-now": "h",
+
+
     "addwallet-addwallet": "Add Wallet",
     "addwallet-create-title": "New Wallet",
     "addwallet-create-description": "Create a new custom wallet in two clicks",

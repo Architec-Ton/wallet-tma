@@ -19,6 +19,7 @@ import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
 import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
 import AddCryptoAddress from "./pages/addCrypto/Address.tsx";
 import Account from "./pages/Account.tsx";
+import News from "./pages/news/News.tsx";
 
 const router = createBrowserRouter(
   [
@@ -92,6 +93,10 @@ const router = createBrowserRouter(
         },
       ],
     },
+    {
+      path: "/news",
+      element: <News/>
+    }
   ],
   { basename: "/wallet" }
 );
