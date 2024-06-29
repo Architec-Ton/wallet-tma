@@ -1,19 +1,13 @@
 import { ReactNode } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { iconTon, iconUsdt } from "../../../assets/icons/jettons";
-import { useClosure } from "../../../hooks/useClosure";
+import { NavLink } from "react-router-dom";
 import useLanguage from "../../../hooks/useLanguage";
-import { AssetType } from "../../../pages/addCrypto/ReceiveAsset";
 import Section from "../../containers/Section";
 import ListBlock from "../listBlock";
-import ListBlockItem from "../listBlock/ListBlockItem";
 import "./Balance.styles.css";
 import { CoinDto } from "../../../types/assest";
 import ListTileItem from "../listBlock/ListTileItem";
-import Column from "../../containers/Column";
 import PriceChanges from "../../typography/PriceChanges";
 import ListBaseItem from "../listBlock/ListBaseItem";
-import classNames from "classnames";
 
 type Props = {
   children?: ReactNode;

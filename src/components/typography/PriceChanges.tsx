@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, HTMLAttributes } from "react";
 import "./PriceChanges.styles.css";
 
 interface Props<T> extends HTMLAttributes<T> {
@@ -9,7 +9,6 @@ interface Props<T> extends HTMLAttributes<T> {
 }
 
 function PriceChanges({
-  children,
   style,
   className,
   changePrice,

@@ -1,6 +1,5 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import Column from "../../containers/Column";
-import Row from "../../containers/Row";
 import ListBaseItem from "./ListBaseItem";
 
 type OwnPropsType = {

@@ -11,7 +11,6 @@ import {
   selectGames,
   selectGamesFilter,
 } from "../../features/gaming/gamingSelectors.ts";
-import { setLoading } from "../../features/page/pageSlice.ts";
 import SearchBar from "../../components/ui/searchBar";
 import Tabs from "../../components/ui/tabs";
 import Tab from "../../components/ui/tabs/Tab.tsx";
