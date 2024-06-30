@@ -1,30 +1,34 @@
-import {useMemo, useEffect, useState, ChangeEventHandler, useCallback} from "react"
-
+import {useMemo, useEffect, useState, ChangeEventHandler} from "react"
 import Page from "../../components/containers/Page"
 import Section from "../../components/containers/Section"
 import Delimiter from "../../components/typography/Delimiter"
 import Row from "../../components/containers/Row"
-import { iconOpenButton, iconReverseButton, iconSettingsButton } from "../../assets/icons/buttons"
-import {useAppDispatch} from "../../hooks/useAppDispatch"
-import {setLoading} from "../../features/page/pageSlice"
-
-import "./index.css"
-import { iconPepe, iconUsdt } from "../../assets/icons/jettons"
+import { iconReverseButton } from "../../assets/icons/buttons"
+import { iconPepe, iconTon, iconUsdt } from "../../assets/icons/jettons"
 import SendAsset from "./sendAsset"
 import ReceiveAsset from "./receiveAsset"
-import AssetsList from "../../components/ui/swap/AssetsList"
-import { AssetInfo, StonApiClient } from "@ston-fi/api"
-import { useTonAddress, useTonWallet } from "@tonconnect/ui-react"
+import AssetsList from "./assetsList"
+import { AddressType, DEX, pTON } from "@ston-fi/sdk";
+import { useTonAddress, useTonConnectUI } from "@tonconnect/ui-react"
 import { useClosure } from "../../hooks/useClosure"
 import ModalPinCode from "../../components/ui/modals/modalPinCode"
 import TransactionModal from "../../components/ui/modals/transactionModal"
-import { setAssets } from "../../features/swap/swapSlice"
+import { useApiWalletInfoMutation } from "../../features/wallet/walletApi"
+import { WalletInfoData } from "../../types/wallet"
+import TransactionCompleteModal from "../../components/ui/modals/transactionCompleteModal"
+import { CoinDto } from "../../types/assest"
+import { useTonClient } from "../../hooks/useTonClient"
+import { toNano } from "@ton/core"
+
+import "./index.css"
+import useLanguage from "../../hooks/useLanguage"
 
 export type AssetDataType = {
   title: string
   icon: string
   balance: number
   value?: string
+  address?: string
 }
 
 export type JetonWalletType = {
@@ -44,78 +48,112 @@ type SwapDataType = {
 
 const swapData: SwapDataType = {
   send: {
-    title: "USDT",
-    icon: iconUsdt,
-    balance: 120,
+    title: '',
+    balance: 0,
+    icon: '',
+    address: '',
     value: ''
-  } satisfies AssetDataType,
+  },
   receive: {
-    title: "PEPE",
-    icon: iconPepe,
-    balance: 1100000,
+    title: '',
+    balance: 0,
+    icon: '',
+    address: '',
     value: ''
   } satisfies AssetDataType
 }
 
-const client = new StonApiClient();
+const initialAssets: CoinDto[] = [
+  {
+    type: '',
+    amount: 100000,
+    usdPrice: 7.7,
+    changePrice: 1.2,
+    meta: {
+      name: 'Toncoin',
+      description: '',
+      address: 'Elkdfgj98098dfg098-dfgkjlkj-dfgkj',
+      image: iconTon,
+      decimals: 9,
+      symbol: 'TON',
+    }
+  },
+  {
+    type: '',
+    amount: 0,
+    usdPrice: 0.0001,
+    changePrice: 0.02,
+    meta: {
+      name: 'PEPE',
+      description: '',
+      address: 'Elkdfert8098dfg098-dfgkjlkj-dfgkj',
+      image: iconPepe,
+      decimals: 9,
+      symbol: 'PEPE',
+    }
+  },
+  {
+    type: '',
+    amount: 1000,
+    usdPrice: 1,
+    changePrice: 0.01,
+    meta: {
+      name: 'USDT',
+      description: '',
+      address: 'Elkdfert8098dfg098-dfgkjlkj-jklkj',
+      image: iconUsdt,
+      decimals: 6,
+      symbol: 'USDT',
+    }
+  }
+]
 
 const Swap = () => {
   const [swapAssets, setSwappAssets] = useState(swapData)
-  const [tokenAssets, setTokenAssets] = useState<AssetInfo[]>()
   const [showAssetsList, setShowAssetsList] = useState(false)
-  const [jettonWallets, setJettonWallets] = useState<any>()
   const [swappingTokenMode, setSwappingTokenMode] = useState<'send' | 'receive' | null>(null)
   const [showPinCode, setShowPinCode] = useState<boolean>(false)
   const [showTransaction, setShowTransaction] = useState<boolean>(false)
   const [showTransactionComplete, setShowTransactionComplete] = useState<boolean>(false)
+  const [assets, setAssets] = useState<CoinDto[] | null>(null);
+
+  const [tonConnectUI] = useTonConnectUI()
+  const { client: tonClient } = useTonClient()
   const wallet = useTonAddress();
-  const dispatch = useAppDispatch()
+  const [walletInfoApi] = useApiWalletInfoMutation();
+  const t = useLanguage("swap")
 
   useEffect(() => {
-    client.getAssets().then(response => {
-      const filteredAssets = response.filter(asset => asset.defaultSymbol === true)
-      dispatch(setAssets(filteredAssets))
-    }).catch(e => {
-        console.error(e)
-    })
-    dispatch(setLoading(false))
+    walletInfoApi(null).unwrap().then((result: WalletInfoData) => {
+      const {assets} = result.wallets[result.currentWallet]
+      setAssets(assets)
+    }).catch(() => {
+      setAssets(initialAssets)
+    });
+      
   }, [])
 
-  useEffect(() => {
-    if (wallet) {
-        fetch(`https://toncenter.com/api/v3/jetton/wallets?owner_address=${wallet}&limit=128&offset=0`, {
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const { jetton_wallets } = data
-            const jettonBalances = {};
-            jetton_wallets.reduce(
-                (accumulator: any, currentJetton: JetonWalletType) => {
-                    const jetton = currentJetton.jetton
-                    const address = currentJetton.address
-                    accumulator[jetton] = {balance: currentJetton.balance, address: address}
-                },
-                jettonBalances,
-            );
-            console.log("jettonBalances", jettonBalances)
-            setJettonWallets(jettonBalances)
-        }).catch(e => {
-            console.error(e)
-        })
+  const sendingAsset = useMemo(() => {
+    if (assets) {
+      return assets.find(asset => asset.meta?.address === swapAssets.send.address)
     }
-}, [wallet])
+  }, [swapAssets.send.address])
 
-  const pageControlHandler = () => {
-    console.log("pageControlHandler")
+  const receivingAsset = useMemo(() => {
+    if (assets) {
+      return assets.find(asset => asset.meta?.address === swapAssets.receive.address)
+    }
+  }, [swapAssets.receive.address])
+
+  const calculateSwappValues = (value: number | string, mode: 'send' | 'receive') => {
+    const _value = Number(value)
+    if (mode === 'send') {
+      return receivingAsset ? Number(sendingAsset?.usdPrice) * _value / Number(receivingAsset?.usdPrice) : undefined
+    }
+    if (mode === 'receive') {
+      return sendingAsset ? Number(receivingAsset?.usdPrice) * _value / Number(sendingAsset?.usdPrice) : undefined
+    }
   }
-
-  const pageControl = useMemo(() => {
-    return <img src={iconSettingsButton} onClick={pageControlHandler} alt="" />
-  }, [])
 
   const reverseSwaping = () => {
     setSwappAssets(prevData => {
@@ -124,24 +162,32 @@ const Swap = () => {
     })
   }
 
-  const changeReceiveHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value
+  const changeReceiveValue = (value: string) => {
     setSwappAssets(({ send, receive }) => {
+      const sendedValue = calculateSwappValues(value, 'receive') || ''
       return {
-        send,
+        send: { ...send, value: sendedValue?.toString() },
         receive: {...receive, value}
       } satisfies SwapDataType
     })
   }
 
-  const changeSendHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value
+  const changeReceiveHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+    changeReceiveValue(e.currentTarget.value)
+  }
+
+  const changeSendValue = (value: string) => {
+    const receivedValue = calculateSwappValues(value, 'send') || ''
     setSwappAssets(({ send, receive }) => {
       return {
         send: {...send, value},
-        receive
+        receive: {...receive, value: receivedValue?.toString()}
       } satisfies SwapDataType
     })
+  }
+
+  const changeSendHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+    changeSendValue(e.currentTarget.value)
   }
 
   const chooseAssetHandler = useClosure((mode: 'send' | 'receive') => {
@@ -153,34 +199,35 @@ const Swap = () => {
     setSwappingTokenMode(null)
     setShowAssetsList(false)
   }
-
-  const setJeton = (asset: AssetInfo) => {
-      // setIsBuyStep(false)
-      // setJetonValue(null)
-      // setTonValue(null)
-      setSwappAssets(({ send, receive }) => {
-        if (swappingTokenMode === 'send') {
-          return {
-            send: {
-              title: asset.displayName as string,
-              balance: asset.balance ? Number(asset.balance) : 0,
-              icon: asset.imageUrl as string,
-              value: ''
-            },
-            receive
-          } satisfies SwapDataType
-        } else {
-          return {
-            send,
-            receive: {
-              title: asset.displayName as string,
-              balance: asset.balance ? Number(asset.balance) : 0,
-              icon: asset.imageUrl as string,
-              value: ''
-            }
-          } satisfies SwapDataType
-        }
-      })
+  
+  const setJeton = (asset: CoinDto) => {
+    setSwappAssets(({ send, receive }) => {
+      if (swappingTokenMode === 'send') {
+        const sendedValue = Number(receivingAsset?.usdPrice) * Number(receive.value) / asset.usdPrice || ''
+        return {
+          send: {
+            title: asset.meta?.symbol as string,
+            balance: asset.amount ?? 0,
+            icon: asset.meta?.image as string,
+            address: asset.meta?.address,
+            value: sendedValue.toString()
+          },
+          receive
+        } satisfies SwapDataType
+      } else {
+        const receivedValue = Number(sendingAsset?.usdPrice) * Number(send.value) / asset.usdPrice || ''
+        return {
+          send,
+          receive: {
+            title: asset.meta?.symbol as string,
+            balance: asset.amount ?? 0,
+            icon: asset.meta?.image as string,
+            address: asset.meta?.address,
+            value: receivedValue.toString()
+          }
+        } satisfies SwapDataType
+      }
+    })
       setShowAssetsList(false)
   }
 
@@ -188,38 +235,186 @@ const Swap = () => {
     setShowPinCode(true)
   }
 
-  const onPinSuccess = () => {
-    setShowPinCode(false)
-    setShowTransaction(true)
+  const delay = () => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true)
+      }, 10000)
+    })
   }
 
+  const onPinSuccess = async () => {
+    setShowPinCode(false)
+    setShowTransaction(true)
+    const symbols = [sendingAsset?.meta?.symbol?.toLowerCase(), receivingAsset?.meta?.symbol?.toLowerCase()]
+     
+    if (symbols.includes("ton") ) {
+      symbols[0] === "ton" ? await tonToJettonTransaction() : await jettonToTonTransaction()
+    } else {
+      await jettonToJettonTransaction()
+    }
+    await delay()
+    transactionSuccessHandler()
+  }
+
+  const transactionSuccessHandler = () => {
+    setShowTransaction(false)
+    setShowTransactionComplete(true)
+  }
+
+  const jettonToTonTransaction = async () => {
+    if (!tonClient) {
+      throw new Error("TonClient doesn't exists")
+    }
+    const router = tonClient.open(new DEX.v1.Router());
+    
+    const swapTxParams = await router.getSwapJettonToTonTxParams({
+        userWalletAddress: wallet,
+        offerJettonAddress: sendingAsset?.meta?.address as AddressType,
+        offerAmount: toNano(Number(swapAssets.send.value) * Math.pow(10, sendingAsset?.meta?.decimals as number)),
+        proxyTon: new pTON.v1(),
+        minAskAmount: toNano(Math.round((Number(swapAssets.receive.value) + 0.17) * -1e9))
+    });
+
+    await tonConnectUI.sendTransaction({
+        validUntil: Date.now() + 1000000,
+        messages: [
+            {
+                address: swapTxParams.to.toString(),
+                amount: swapTxParams.value.toString(),
+                payload: swapTxParams.body?.toBoc().toString("base64")
+            },
+        ],
+    });
+  }
+
+  const jettonToJettonTransaction = async () => {
+    if (!tonClient) {
+      throw new Error("TonClient doesn't exists")
+    }
+    const router = tonClient.open(new DEX.v1.Router());
+    
+    const swapTxParams = await router.getSwapJettonToJettonTxParams({
+        userWalletAddress: wallet,
+        offerJettonAddress: sendingAsset?.meta?.address as AddressType,
+        offerAmount: toNano(Number(swapAssets.send.value) * Math.pow(10, sendingAsset?.meta?.decimals as number)),
+        askJettonAddress: receivingAsset?.meta?.address as AddressType,
+        minAskAmount: toNano(Math.round((Number(swapAssets.receive.value) + 0.22) * -1e9))
+    });
+
+    await tonConnectUI.sendTransaction({
+        validUntil: Date.now() + 1000000,
+        messages: [
+            {
+                address: swapTxParams.to.toString(),
+                amount: swapTxParams.value.toString(),
+                payload: swapTxParams.body?.toBoc().toString("base64")
+            },
+        ],
+    });
+  }
+
+  const tonToJettonTransaction = async () => {
+    if (!tonClient) {
+      throw new Error("TonClient doesn't exists")
+    }
+    const router = tonClient.open(new DEX.v1.Router());
+    
+    const swapTxParams = await router.getSwapTonToJettonTxParams({
+        userWalletAddress: wallet,
+        askJettonAddress: receivingAsset?.meta?.address as AddressType,
+        offerAmount: toNano(Number(swapAssets.send.value) * Math.pow(10, sendingAsset?.meta?.decimals as number)),
+        proxyTon: new pTON.v1(),
+        minAskAmount: toNano(Math.round((Number(swapAssets.receive.value) + 0.185) * -1e9))
+    });
+
+    await tonConnectUI.sendTransaction({
+        validUntil: Date.now() + 1000000,
+        messages: [
+            {
+                address: swapTxParams.to.toString(),
+                amount: swapTxParams.value.toString(),
+                payload: swapTxParams.body?.toBoc().toString("base64")
+            },
+        ],
+    });
+  }
+
+  const isValidSwapp = useMemo(() => {
+    const isValid = (
+      sendingAsset &&
+      receivingAsset &&
+      sendingAsset.amount > 0 &&
+      sendingAsset.amount - Number(swapAssets.send.value) > 0 &&
+      swapAssets.send.value &&
+      swapAssets.receive.value
+    )
+    return isValid
+  }, [sendingAsset, receivingAsset, swapAssets])
+
   return (
-    <Page title="Swap" pageControl={pageControl} className="swap">
+    <Page title={t("page-title")} className="swap">
       <Delimiter />
-      <SendAsset asset={swapAssets.send} onChange={changeSendHandler} onClick={chooseAssetHandler('send')} value={swapAssets.send.value || ''} />
+      <SendAsset
+        asset={swapAssets.send}
+        onChange={changeSendHandler}
+        forceChange={changeSendValue}
+        onClick={chooseAssetHandler('send')}
+        value={swapAssets.send.value || ''}
+        coin={sendingAsset}
+        disabled={!sendingAsset || !receivingAsset || sendingAsset.amount <= 0}
+      />
       <Delimiter>
         <img src={iconReverseButton} alt="" onClick={reverseSwaping} />
       </Delimiter>
-      <ReceiveAsset asset={swapAssets.receive} onChange={changeReceiveHandler} onClick={chooseAssetHandler('receive')} value={swapAssets.receive.value || ''} />
+      <ReceiveAsset
+        asset={swapAssets.receive}
+        onChange={changeReceiveHandler}
+        onClick={chooseAssetHandler('receive')}
+        value={swapAssets.receive.value || ''}
+        coin={receivingAsset}
+        sendedCoin={sendingAsset}
+        disabled={!sendingAsset || !receivingAsset || sendingAsset.amount <= 0}
+      />
 
       <Section>
         <Delimiter />
         <Row className="justify-between swap-info-row">
-          <div>You receive (icnl. fee)</div>
-          <div>$100.01</div>
+          <div>{t("receive-value-title")}</div>
+          <div>
+            {
+              sendingAsset && receivingAsset &&
+             ((Number(swapAssets.send.value) - 0.17) * sendingAsset.usdPrice)
+             .toLocaleString(undefined, { style: 'currency', currency: 'USD'})
+            }
+          </div>
         </Row>
         <Delimiter />
         <Row className="justify-between swap-info-row">
-          <div>Route</div>
-          <div>TON {'>>'} PEPE</div>
+          <div>{t("route")}</div>
+          {sendingAsset && receivingAsset && <div>{sendingAsset?.meta?.symbol} {'»'} {receivingAsset?.meta?.symbol}</div>}
         </Row>
         <Delimiter />
       </Section>
-      <button className="primary-button rounded-button large-button" onClick={swapHanler}>Swap</button>
-      {showAssetsList && <AssetsList onClose={closeAssetsList} onJetonSelect={setJeton} jettonWallets={jettonWallets} />}
+      <button className="primary-button rounded-button large-button" onClick={swapHanler} disabled={!isValidSwapp}>{t("page-title")}</button>
+      {showAssetsList && <AssetsList onClose={closeAssetsList} onJetonSelect={setJeton} assets={assets} />}
       {showPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="registration" />}
-      {showTransaction && <TransactionModal onClose={() => setShowTransaction(false)} />}
-      {showTransactionComplete}
+      {showTransaction && (
+        <TransactionModal
+          from={sendingAsset}
+          to={receivingAsset}
+          sendedValue={swapAssets.send.value as string}
+          receivedValue={swapAssets.receive.value as string}
+          commission={0.17}
+          returnValue={0.125}
+          address={swapAssets.receive.address as string}
+          transactionData={new Date()}
+          transactionType={t("page-title")}
+          onClose={() => setShowTransaction(false)}
+          onSuccess={transactionSuccessHandler}
+        />
+      )}
+      {showTransactionComplete && <TransactionCompleteModal onClose={() => setShowTransactionComplete(false)} />}
     </Page>
   )
 }

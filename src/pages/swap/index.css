@@ -61,6 +61,10 @@
   color: unset;
 }
 
+.asset-input.error {
+  color: var(--error-color);
+}
+
 .swap-info-row {
   padding: 0 0 var(--spacing-8) 0;
 }

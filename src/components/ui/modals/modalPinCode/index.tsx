@@ -3,7 +3,7 @@ import Modal from "../../modal"
 
 const ModalPinCode = (props: PinInputProps) => {
   return (
-    <Modal allowAnimation={false} fullScreenMode>
+    <Modal fullScreenMode>
       <PinCode {...props} />
     </Modal>
   )

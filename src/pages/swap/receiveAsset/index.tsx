@@ -1,30 +1,39 @@
-import { ChangeEvent, ChangeEventHandler, useState } from "react"
+import { ChangeEvent } from "react"
 import { AssetDataType } from ".."
 import { iconOpenButton } from "../../../assets/icons/buttons"
-import { iconPepe, iconUsdt } from "../../../assets/icons/jettons"
 import Row from "../../../components/containers/Row"
 import Section from "../../../components/containers/Section"
+import { CoinDto } from "../../../types/assest"
+import useLanguage from "../../../hooks/useLanguage"
 
 type OwnPropsType = {
   asset: AssetDataType
+  coin: CoinDto | undefined
+  sendedCoin: CoinDto | undefined
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onClick: () => void
   value: string
+  disabled: boolean
 }
 
-const ReceiveAsset = ({ asset, onChange, onClick, value }: OwnPropsType) => {
+const ReceiveAsset = ({ asset, coin, sendedCoin, disabled, onChange, onClick, value }: OwnPropsType) => {
+  const t = useLanguage("swap")
+
+  const receivedCoinPrice = sendedCoin && coin && sendedCoin.usdPrice / coin.usdPrice
   return (
-    <Section title="Receive" readMore="1 USDT = 120000000 PEPE">
+    <Section title={t("receive")} readMore={sendedCoin && coin && `1 ${sendedCoin.meta?.symbol} = ${receivedCoinPrice} ${coin.meta?.symbol}`}>
       <Row className="justify-between asset-row">
         <Row className="asset-button asset-receive-button" onClick={onClick}>
-          <img src={asset.icon} alt="" className="asset-icon" />
-          <div className="asset-title">{asset.title}</div>
+          {asset.icon && <img src={asset.icon} alt="" className="asset-icon" />}
+          <div className="asset-title">{asset.title || t("select")}</div>
           <img src={iconOpenButton} alt="" className="asset-open-icon" />
         </Row>
       </Row>
       <Row className="justify-between asset-data-row">
-        <input type="number" value={value} className="asset-input" onChange={onChange} placeholder="0" />
-        <div className="asset-feat-value">$100.1</div>
+        <input type="number" value={value} className="asset-input" onChange={onChange} placeholder="0" disabled={disabled} />
+        <div className="asset-feat-value">
+          {coin && (coin.usdPrice * Number(value)).toLocaleString(undefined, { style: 'currency', currency: 'USD' })}
+        </div>
       </Row>
     </Section>
   )

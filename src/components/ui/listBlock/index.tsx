@@ -1,14 +1,16 @@
+import classNames from 'classnames'
 import Block from '../../typography/Block'
 
 import './index.css'
 
 type OwnPropsType = {
   children: React.ReactNode
+  className?: string
 }
 
-const ListBlock = ({ children }: OwnPropsType) => {
+const ListBlock = ({ children, className }: OwnPropsType) => {
   return (
-    <Block className="w-full list-block__block">
+    <Block className={classNames("w-full list-block__block", className)}>
       {children}
     </Block>
   )

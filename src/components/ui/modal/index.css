@@ -11,7 +11,7 @@
     box-sizing: border-box;
     background-color: var(--background-transparent-color);
     overscroll-behavior: contain;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .modal__container.animated {

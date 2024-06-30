@@ -83,5 +83,25 @@
     "assets-title": "Assets",
     "history-title": "History",
 
-    "swap-select-token": "Select Token"
+    "swap-page-title": "Swap",
+    "swap-receive-value-title": "You receive (icnl. fee)",
+    "swap-select-token": "Select Token",
+    "swap-route": "Route",
+    "swap-send": "Send",
+    "swap-balance": "Balance",
+    "swap-select": "Select",
+    "swap-clear": "Clear",
+    "swap-max": "Max",
+    "swap-receive": "Receive",
+
+    "transaction-loading": "Transaction is proceed...",
+    "transaction-receiver-address": "Receiver address",
+    "transaction-commission": "Commission",
+    "transaction-return": "Return",
+    "transaction-comment": "Comment",
+    "transaction-finish": "finish",
+    "transaction-page-title": "Transaction",
+    "transaction-complete-text": "The transaction is completed! Thanks for choosing and believing us",
+    "transaction-wallet-button": "Wallet",
+    "transaction-congratulation": "Congratulations!"
 }
