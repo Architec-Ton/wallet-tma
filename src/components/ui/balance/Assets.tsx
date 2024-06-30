@@ -84,6 +84,32 @@ function Assets({ children, assets }: Props) {
       </Section>
     );
   }
+  // const assetClickHandler = useClosure(
+  //   (asset: AssetType) => {
+  //     navigate("/add-crypto/address", {
+  //       state: asset,
+  //     });
+  //   }
+  // );
+
+  // return (
+  //   <Section title={t("title")} className="add-crypto__container">
+  //     <ListBlock>
+  //       {assets.map((asset, index) => {
+  //         return (
+  //           <ListBlockItem
+  //             key={`${asset.title}-${index}`}
+  //             thumb={asset.thumb}
+  //             title={asset.title}
+  //             description={asset.description}
+  //             onClick={assetClickHandler(asset)}
+  //           />
+  //         );
+  //       })}
+  //     </ListBlock>
+  //     {children}
+  //   </Section>
+  // );
 }
 
 export default Assets;

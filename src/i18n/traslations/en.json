@@ -81,5 +81,7 @@
 
 
     "assets-title": "Assets",
-    "history-title": "History"
+    "history-title": "History",
+
+    "swap-select-token": "Select Token"
 }

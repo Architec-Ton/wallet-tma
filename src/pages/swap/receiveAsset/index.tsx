@@ -8,14 +8,15 @@ import Section from "../../../components/containers/Section"
 type OwnPropsType = {
   asset: AssetDataType
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onClick: () => void
   value: string
 }
 
-const ReceiveAsset = ({ asset, onChange, value }: OwnPropsType) => {
+const ReceiveAsset = ({ asset, onChange, onClick, value }: OwnPropsType) => {
   return (
     <Section title="Receive" readMore="1 USDT = 120000000 PEPE">
       <Row className="justify-between asset-row">
-        <Row className="asset-button asset-receive-button">
+        <Row className="asset-button asset-receive-button" onClick={onClick}>
           <img src={asset.icon} alt="" className="asset-icon" />
           <div className="asset-title">{asset.title}</div>
           <img src={iconOpenButton} alt="" className="asset-open-icon" />

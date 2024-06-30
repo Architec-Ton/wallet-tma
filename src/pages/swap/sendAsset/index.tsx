@@ -8,10 +8,11 @@ import Section from "../../../components/containers/Section"
 type OwnPropsType = {
   asset: AssetDataType
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onClick: () => void
   value: string
 }
 
-const SendAsset = ({ asset, onChange, value }: OwnPropsType) => {
+const SendAsset = ({ asset, onChange, onClick, value }: OwnPropsType) => {
   const [assetValue, setAssetValue] = useState<string>(value)
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const SendAsset = ({ asset, onChange, value }: OwnPropsType) => {
   return (
     <Section title="Send" readMore="Balance: 200000">
       <Row className="justify-between asset-row">
-        <Row className="asset-button asset-send-button">
+        <Row className="asset-button asset-send-button" onClick={onClick}>
           <img src={asset.icon} alt="" className="asset-icon" />
           <div className="asset-title">{asset.title}</div>
           <img src={iconOpenButton} alt="" className="asset-open-icon" />

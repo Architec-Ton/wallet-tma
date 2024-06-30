@@ -1,0 +1,4 @@
+.modal__content {
+  min-height: 65svh;
+  height: fit-content;
+}

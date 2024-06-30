@@ -19,7 +19,7 @@ import useLanguage from "../../../hooks/useLanguage"
 
 import './index.css'
 import VoteModal from "../../../components/ui/games/voteModal"
-import GamePinCode from "../../../components/ui/games/pinCode"
+import ModalPinCode from "../../../components/ui/modals/modalPinCode"
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -143,7 +143,7 @@ const GamePage = () => {
           
       </Section>
       {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
-      {isPinCode && <GamePinCode />}
+      {isPinCode && <ModalPinCode />}
     </Page>
   )
 }

@@ -41,8 +41,7 @@ function History({ children }: Props) {
       navigate("/add-crypto/address", {
         state: asset,
       });
-    },
-    [assets]
+    }
   );
 
   return (

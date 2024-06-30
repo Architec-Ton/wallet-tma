@@ -105,6 +105,7 @@
 
   /* Размеры ассетов */
   --asset-icon-sm: 24px;
+  --asset-icon-large: 46px;
   --asset-send-bg-color: rgba(61, 176, 138, 0.12);
   --asset-receive-bg-color: rgba(248, 186, 0, 0.12);
 }
