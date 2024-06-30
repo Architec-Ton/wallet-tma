@@ -24,7 +24,7 @@ const cardData: CARD_DATA= {
     title: 'Новая игровая платформа',
     description: ['Проект Architec.ton запустил MVP игрового лаунчера, созданного на базе блокчейна TON. Основной функционал тестовой версии включает в себя четыре раздела: Wallet, Apps, News и Account.', ' В ближайшее время команда проекта планирует создать и добавить первую в истории блокчейна TON торговую площадку игровых предметов. — Абсолютно каждый пользователь сможет обменять, купить или продавать айтемы различных игр, заключивших партнёрство с Architec.ton.'],
     images: [NewsPicture],
-    hashtags: ['new','games','architecton','hashtag4','crypto'],
+    hashtags: ['new','games','architecton','crypto'],
     likesDislikes: {
         likes: 0,
         dislikes: 0,
