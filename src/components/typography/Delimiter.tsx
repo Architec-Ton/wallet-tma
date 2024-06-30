@@ -1,8 +1,10 @@
 import "./Delimiter.styles.css"
 
-const Delimiter = () => {
+const Delimiter = ({ children }: { children?: React.ReactNode}) => {
   return (
-    <div className="w-screen delimiter-line" />
+    <div className="w-screen delimiter-line">
+      {children}
+    </div>
   )
 }
 

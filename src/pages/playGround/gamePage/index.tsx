@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useAppDispatch } from "../../../hooks/useAppDispatch"
 import { setLoading } from "../../../features/page/pageSlice"
 import Tile from "../../../components/typography/Tile"
-import { iconButtonMedalStars, iconCoinButton, iconGlobalButton, iconSendButton } from "../../../assets/icons/buttons"
+import { iconCoinButton, iconGlobalButton, iconLogoButton, iconSendButton } from "../../../assets/icons/buttons"
 
 import Slider from "../../../components/ui/slider"
 import { SwiperSlide } from "swiper/react"
@@ -15,10 +15,11 @@ import Block from "../../../components/typography/Block"
 import classNames from "classnames"
 import TypedTile from "../../../components/typography/TypedTile"
 import { GameResource } from "../../../types/gameTypes"
-import useLocalStorage from "../../../hooks/useLocalStorage"
 import useLanguage from "../../../hooks/useLanguage"
 
 import './index.css'
+import VoteModal from "../../../components/ui/games/voteModal"
+import GamePinCode from "../../../components/ui/games/pinCode"
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -29,25 +30,18 @@ const typedIcons = {
 const GamePage = () => {
   const t = useLanguage("game")
   const { id } = useParams()
-  const [favorites, setFavorites] = useLocalStorage<(number | string)[]>("game_favorites", [])
   const dispatch = useAppDispatch()
   // const navigate = useNavigate()
   const {data: game, isLoading} = useGetGameQuery(id as string)
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
   
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false)
-  const [isFavorite, setIsFavorite] = useState<boolean>(false)
+  const [isPinCode, setIsPinCode] = useState<boolean>(false)
+  const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
 
   useEffect(() => {
     dispatch(setLoading(isLoading))
   }, [isLoading])
-
-  useEffect(() => {
-    if (game) {
-      const isInFavorites = favorites.includes(game.id as never)
-      setIsFavorite(isInFavorites)
-    }
-  }, [game, favorites])
 
   const readMoreHandler = () => {
     setReacMoreDescription(!readMoreDescription)
@@ -68,17 +62,13 @@ const GamePage = () => {
     }
   }, [game])
 
-  const addToFavorites = () => {
-    if (!game) {
-      return
-    }
-    if (isFavorite) {
-      const filterdFavorites = favorites.filter(favorite => favorite !== game.id)
-      setFavorites(filterdFavorites)
-    } else {
-      const newFavorites = [...favorites, game.id]
-      setFavorites(newFavorites)
-    }
+  const voteGameHandler = () => {
+    setIsPinCode(true)
+    setIsVoteModal(false)
+  }
+
+  const modalHandler = () => {
+    setIsVoteModal(!isVoteModal)
   }
 
   return (
@@ -91,7 +81,10 @@ const GamePage = () => {
       >
         <div className="game-controls">
           <button className="rounded-button primary-button">{t("play")}</button>
-          <img src={iconButtonMedalStars} alt="" onClick={addToFavorites} />
+          <button className="rounded-button vote-button" onClick={modalHandler}>
+            <img src={iconLogoButton} alt="" />
+            <span>350k+</span>
+          </button>
         </div>
       </Tile>
       <Row className="w-screen">
@@ -149,6 +142,8 @@ const GamePage = () => {
         })}
           
       </Section>
+      {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
+      {isPinCode && <GamePinCode />}
     </Page>
   )
 }

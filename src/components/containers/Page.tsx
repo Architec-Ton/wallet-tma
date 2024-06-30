@@ -19,6 +19,7 @@ type Props = {
   title?: string;
   titleAccent?: string;
   hintMessage?: string;
+  pageControl?: ReactNode
 };
 
 const backButtonExclude: string[] = [
@@ -36,6 +37,7 @@ function Page({
   title,
   titleAccent,
   hintMessage,
+  pageControl,
 }: Props) {
 
   const location = useLocation();
@@ -55,13 +57,19 @@ function Page({
     <>
       <BackButton visible={backButtonIsVisible} />
       <Container style={style} className={className}>
-        {title && (
-          <Title
-            title={title}
-            titleAccent={titleAccent}
-            hintMessage={hintMessage}
-          />
+        {(title || pageControl) && (
+          <div className="page-header">
+            {title && (
+              <Title
+                title={title}
+                titleAccent={titleAccent}
+                hintMessage={hintMessage}
+              />
+            )}
+            {pageControl}
+          </div>
         )}
+
         {children}
       </Container>
       {isNavbarVisible && <MainMenu />}

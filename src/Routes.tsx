@@ -20,6 +20,7 @@ import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
 import AddCryptoAddress from "./pages/addCrypto/Address.tsx";
 import Account from "./pages/Account.tsx";
 import News from "./pages/news/News.tsx";
+import Swap from "./pages/swap";
 
 const router = createBrowserRouter(
   [
@@ -96,7 +97,11 @@ const router = createBrowserRouter(
     {
       path: "/news",
       element: <News/>
-    }
+    },
+    {
+      path: "/swap",
+      element: <Swap />,
+    },
   ],
   { basename: "/wallet" }
 );
