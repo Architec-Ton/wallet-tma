@@ -4,9 +4,11 @@ import useLanguage from "../../../../hooks/useLanguage"
 import { CoinDto } from "../../../../types/assest"
 import Column from "../../../containers/Column"
 import Row from "../../../containers/Row"
+import InlineLoader from "../../inlineLoader"
 import ListBlock from "../../listBlock"
 import ListBaseItem from "../../listBlock/ListBaseItem"
 import Modal from "../../modal"
+
 
 import "./index.css"
 
@@ -22,6 +24,7 @@ type TransactionModalPropsType = {
   address: string
   transactionType: string
   transactionData: Date
+  inProgress?: boolean
 }
 
 const TransactionModal = ({ 
@@ -35,7 +38,8 @@ const TransactionModal = ({
   returnValue,
   address,
   transactionType,
-  transactionData
+  transactionData,
+  inProgress
 }: TransactionModalPropsType) => {
   const t = useLanguage("transaction")
 
@@ -50,10 +54,12 @@ const TransactionModal = ({
         <div className="">+{receivedValue} {to?.meta?.symbol}</div>
         <div className="secondary-data">{Number(receivedValue) * Number(to?.usdPrice)} $</div>
         <div className="secondary-data">{transactionType} {transactionData?.toLocaleString()}</div>
-        <div className="process">
-          <img src="" alt="" className="inline-loader" />
-          <div>{t("loading")}</div>
-        </div>
+        {inProgress && (
+          <Row className="process">
+            <InlineLoader />
+            <div>{t("loading")}</div>
+          </Row>
+        )}
       </Column>
       <ListBlock className="transaction-info__list">
         <ListBaseItem>

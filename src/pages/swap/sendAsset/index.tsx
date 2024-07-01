@@ -27,7 +27,7 @@ const SendAsset = ({ asset, coin, disabled, onChange, onClick, forceChange, valu
   }, [value])
 
   const isInsuffucientBalance = useMemo(() => {
-    return coin && (coin.amount - Number(assetValue) <= 0)
+    return coin && (coin.amount - Number(assetValue) < 0)
   }, [coin, assetValue])
 
   const clearHandler = () => {

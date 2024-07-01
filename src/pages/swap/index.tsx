@@ -65,7 +65,7 @@ const swapData: SwapDataType = {
 
 const initialAssets: CoinDto[] = [
   {
-    type: '',
+    type: 'ton',
     amount: 100000,
     usdPrice: 7.7,
     changePrice: 1.2,
@@ -79,7 +79,7 @@ const initialAssets: CoinDto[] = [
     }
   },
   {
-    type: '',
+    type: 'pepe',
     amount: 0,
     usdPrice: 0.0001,
     changePrice: 0.02,
@@ -93,7 +93,7 @@ const initialAssets: CoinDto[] = [
     }
   },
   {
-    type: '',
+    type: 'usdt',
     amount: 1000,
     usdPrice: 1,
     changePrice: 0.01,
@@ -115,6 +115,7 @@ const Swap = () => {
   const [showPinCode, setShowPinCode] = useState<boolean>(false)
   const [showTransaction, setShowTransaction] = useState<boolean>(false)
   const [showTransactionComplete, setShowTransactionComplete] = useState<boolean>(false)
+  const [isTransactionInProgress, setIsTransactionInProgress] = useState<boolean>(false)
   const [assets, setAssets] = useState<CoinDto[] | null>(null);
 
   const [tonConnectUI] = useTonConnectUI()
@@ -228,7 +229,7 @@ const Swap = () => {
         } satisfies SwapDataType
       }
     })
-      setShowAssetsList(false)
+    setShowAssetsList(false)
   }
 
   const swapHanler = () => {
@@ -243,23 +244,30 @@ const Swap = () => {
     })
   }
 
-  const onPinSuccess = async () => {
+  const onPinSuccess = () => {
     setShowPinCode(false)
     setShowTransaction(true)
-    const symbols = [sendingAsset?.meta?.symbol?.toLowerCase(), receivingAsset?.meta?.symbol?.toLowerCase()]
-     
-    if (symbols.includes("ton") ) {
-      symbols[0] === "ton" ? await tonToJettonTransaction() : await jettonToTonTransaction()
-    } else {
-      await jettonToJettonTransaction()
-    }
-    await delay()
-    transactionSuccessHandler()
   }
 
-  const transactionSuccessHandler = () => {
-    setShowTransaction(false)
-    setShowTransactionComplete(true)
+  const transactionSuccessHandler = async () => {
+    setIsTransactionInProgress(true)
+    const types = [sendingAsset?.type, receivingAsset?.type]
+    try {
+      if (types.includes("ton") ) {
+        types[0] === "ton" ? await tonToJettonTransaction() : await jettonToTonTransaction()
+      } else {
+        await jettonToJettonTransaction()
+      }
+      await delay()
+      setIsTransactionInProgress(false)
+      setShowTransaction(false)
+      setShowTransactionComplete(true)
+    } catch (e) {
+      console.error(e)
+      await delay()
+      setIsTransactionInProgress(false)
+      setShowTransaction(false)
+    }
   }
 
   const jettonToTonTransaction = async () => {
@@ -397,8 +405,17 @@ const Swap = () => {
         <Delimiter />
       </Section>
       <button className="primary-button rounded-button large-button" onClick={swapHanler} disabled={!isValidSwapp}>{t("page-title")}</button>
-      {showAssetsList && <AssetsList onClose={closeAssetsList} onJetonSelect={setJeton} assets={assets} />}
-      {showPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="registration" />}
+      {showAssetsList && (
+        <AssetsList
+          onClose={closeAssetsList}
+          onJetonSelect={setJeton}
+          assets={assets}
+          excludeAssets={
+            {send: sendingAsset, receive: receivingAsset}
+          }
+        />
+      )}
+      {showPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="confirmation" />}
       {showTransaction && (
         <TransactionModal
           from={sendingAsset}
@@ -412,6 +429,7 @@ const Swap = () => {
           transactionType={t("page-title")}
           onClose={() => setShowTransaction(false)}
           onSuccess={transactionSuccessHandler}
+          inProgress={isTransactionInProgress}
         />
       )}
       {showTransactionComplete && <TransactionCompleteModal onClose={() => setShowTransactionComplete(false)} />}

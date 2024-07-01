@@ -18,8 +18,8 @@ type OwnPropsType = {
 
 const ReceiveAsset = ({ asset, coin, sendedCoin, disabled, onChange, onClick, value }: OwnPropsType) => {
   const t = useLanguage("swap")
-
-  const receivedCoinPrice = sendedCoin && coin && sendedCoin.usdPrice / coin.usdPrice
+  const decimals = Math.pow(10, coin?.meta?.decimals)
+  const receivedCoinPrice = sendedCoin && coin && Math.round(sendedCoin.usdPrice / coin.usdPrice * decimals) / decimals
   return (
     <Section title={t("receive")} readMore={sendedCoin && coin && `1 ${sendedCoin.meta?.symbol} = ${receivedCoinPrice} ${coin.meta?.symbol}`}>
       <Row className="justify-between asset-row">

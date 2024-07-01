@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Modal from "../../../components/ui/modal"
 import Column from "../../../components/containers/Column"
 import useLanguage from "../../../hooks/useLanguage"
@@ -16,16 +16,34 @@ type OwnPropsType = {
     assets: CoinDto[] | null | undefined
     onJetonSelect: (asset: CoinDto) => void
     onClose?: () => void
+    excludeAssets?: {
+        send?: CoinDto
+        receive?: CoinDto
+    }
 }
 
-export default function AssetsList({ assets, onJetonSelect, onClose }: OwnPropsType) {
+export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, onClose }: OwnPropsType) {
     const t = useLanguage("swap")
     const debounce = useDebounce()
     const [filteredAssets, setFilterdAssets] = useState<typeof assets>(assets)
 
+    useEffect(() => {
+        if (assets) {
+            const { send, receive } = excludeAssets
+            const filteredAssets = assets.filter(asset => asset.type !== send?.type && asset.type !== receive?.type)
+            setFilterdAssets(filteredAssets)
+        }
+    }, [assets])
+
     const searchHandler = (value: string) => {
         debounce(() => {
-            const _assets = assets?.filter(asset => asset.meta?.name?.toLowerCase().includes(value.toLowerCase()) )
+            const { send, receive } = excludeAssets
+            const _assets = assets?.filter(asset => {
+                return (
+                    asset.meta?.name?.toLowerCase().includes(value.toLowerCase())
+                    && asset.type !== send?.type && asset.type !== receive?.type
+                )
+            } )
             setFilterdAssets(_assets)
         }, 300)
     }

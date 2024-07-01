@@ -3,6 +3,10 @@
   height: fit-content;
 }
 
+.process {
+  line-height: var(--font-size-large);
+}
+
 .transaction-data {
   align-items: center;
   font-size: var(--font-size-base);
