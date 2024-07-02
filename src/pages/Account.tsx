@@ -7,10 +7,12 @@ import { usePage } from "../hooks/usePage";
 import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
 import { TonConnectionMode } from "../features/ton/tonSlice";
 import { useTon } from "../hooks/useTon";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 function Account() {
   const navigate = useRouter();
   const isTonLoading = useAppSelector(selectIsTonLoading);
+  const [tonConnectUI] = useTonConnectUI();
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
   const ton = useTon();
@@ -32,7 +34,13 @@ function Account() {
   return (
     <Page>
       <Column>
-        <button onClick={() => ton.setDisconnect()} className="btn">
+        <button
+          onClick={() => {
+            ton.setDisconnect();
+            tonConnectUI.disconnect();
+          }}
+          className="btn"
+        >
           Disconnect
         </button>
         {/* {tonMode == TonConnectionMode.tonconnect && <TonConnectButton />} */}

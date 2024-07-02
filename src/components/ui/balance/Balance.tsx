@@ -1,23 +1,31 @@
 import { ReactNode } from "react";
-import { useTon } from "../../../hooks/useTon";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";
 import Block from "../../typography/Block";
-import Address from "./Address";
+
 import "./Balance.styles.css";
+import { WalletInfoData } from "../../../types/wallet";
+import Address from "./Address";
 
 type Props = {
+  walletInfoData: WalletInfoData | null;
   children?: ReactNode;
 };
 
-function Balance({ children }: Props) {
-  const ton = useTon();
-
+function Balance({ children, walletInfoData }: Props) {
   return (
     <Block className="balance-block space-between">
       <Column className="w-100">
         <Row className="space-between">
-          <div className="balance-block-value">$59 232,68</div>
+          <div className="balance-block-value">
+            {walletInfoData &&
+              `$ ${walletInfoData.wallets[
+                walletInfoData.currentWallet
+              ].usdPrice.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}`}
+          </div>
           <div> Control </div>
           {/* <h1>
             <span>Wallet</span> Architec.TON
@@ -27,7 +35,15 @@ function Balance({ children }: Props) {
 
         {children}
       </Column>
-      <Address address={ton.wallet.address?.toString({ bounceable: false })} />
+      <Address
+        address={
+          walletInfoData
+            ? walletInfoData.wallets[
+                walletInfoData.currentWallet
+              ].address.toString()
+            : undefined
+        }
+      />
     </Block>
   );
 }

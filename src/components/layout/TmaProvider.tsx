@@ -1,18 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode, useEffect, useState } from "react";
 import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
-import MainButton from "../buttons/MainButton";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
+import { ReactNode, useEffect, useState } from "react";
+import { useApiAuthMutation } from "../../features/auth/authApi";
+import {
+  selectAuth,
+  selectAuthIsTmaReady,
+  selectAuthIsTonReady,
+} from "../../features/auth/authSelector";
+import {
+  AccountState,
+  setAccessToken,
+  setAccount,
+  setIsTmaReady,
+} from "../../features/auth/authSlice";
 import {
   selectMainButtonIsVisible,
   selectMainButtonTitle,
 } from "../../features/tma/mainButtonSelector";
-import { TmaMainButton, TmaStateContext } from "../../hooks/useTma";
 import {
   selectIsTma,
   selectIsTmaLoading,
 } from "../../features/tma/tmaSelector";
+import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { TmaMainButton, TmaStateContext } from "../../hooks/useTma";
+import { useTon } from "../../hooks/useTon";
+import { AuthInitData, AuthInitTon } from "../../types/auth";
+import MainButton from "../buttons/MainButton";
 
 type Props = {
   children: ReactNode;
@@ -25,9 +39,15 @@ export function TmaProvider({ children }: Props) {
   const mainButtonTitle = useAppSelector(selectMainButtonTitle);
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
   const isTma = useAppSelector(selectIsTma);
+  const ton = useTon();
+  const auth = useAppSelector(selectAuth);
+  const [authApi] = useApiAuthMutation();
   const [mainButtonHandler, setMainButtonHandler] = useState<TmaMainButton>({
     onClick: () => {},
   });
+
+  const isTmaReady = useAppSelector(selectAuthIsTmaReady);
+  const isTonReady = useAppSelector(selectAuthIsTonReady);
 
   //const launchParams = useLaunchParams()
 
@@ -38,26 +58,89 @@ export function TmaProvider({ children }: Props) {
     isTMA()
       .then((tma) => dispatch(setTma(tma)))
       .finally(() => {
+        console.log("setTmaLoading", isTmaLoading);
         dispatch(setTmaLoading(false));
-        // console.log("setTmaLoading", false);
+        console.log("setTmaLoading", isTmaLoading);
+        console.log("setTmaLoisTmaading isTma", isTma);
         // setTimeout(() => {
         //   dispatch(setTmaLoading(false));
         // }, 2000);
       });
   }, []);
 
-  useEffect(() => {
-    if (isTma) {
-      // console.log("isTMA;", isTma);
-      console.log("init result:", initDataRaw.result);
-      console.log(JSON.stringify(initDataRaw.result));
-      console.log("initDataRaw :", initDataRaw);
-      console.log(initDataRaw.error);
-      //console.log(launchParams.initDataRaw)
-    } else {
-      // console.log("isTMA;", isTma);
+  const handleAuth = async (auth?: AccountState, initTon?: AuthInitTon) => {
+    try {
+      const result = await authApi({
+        authType: auth ? "telegram" : "web",
+        initDataRaw: auth?.account,
+        initTon: initTon,
+      }).unwrap();
+      console.log("Auth result:", result);
+      dispatch(setAccessToken(result.access_token));
+    } catch (err) {
+      console.error("Failed to login: ", err);
     }
-  }, [isTma, initDataRaw]);
+  };
+
+  useEffect(() => {
+    if (!isTmaLoading) {
+      if (isTma) {
+        if (initDataRaw && initDataRaw.result && initDataRaw.result.user) {
+          const u = initDataRaw.result.user;
+          const userData = {
+            allowsWriteToPm: u.allowsWriteToPm,
+            firstName: u.firstName,
+            id: u.id,
+            isPremium: u.isPremium,
+            languageCode: u.languageCode,
+            lastName: u.lastName,
+            username: u.username,
+          };
+          const accountData = {
+            authDate: initDataRaw.result.authDate.toISOString(),
+            hash: initDataRaw.result.hash,
+            queryId: initDataRaw.result.queryId,
+            user: userData,
+          } as AuthInitData;
+          // const initTon = ton.wallet
+          //   ? ({
+          //       network: ton.wallet.network,
+          //       address: ton.wallet.address?.toString(),
+          //       //publicKey: ton.wall
+          //     } as AuthInitTon)
+          //   : undefined;
+          dispatch(setAccount(accountData));
+
+          //handleAuth(auth, initTon);
+        }
+      } else {
+        // Add login by web
+        // const initTon = ton.wallet
+        //   ? ({
+        //       network: ton.wallet.network,
+        //       address: ton.wallet.address?.toString(),
+        //       //publicKey: ton.wall
+        //     } as AuthInitTon)
+        //   : undefined;
+        // handleAuth(undefined, initTon);
+      }
+      dispatch(setIsTmaReady(true));
+    }
+  }, [isTma, isTmaLoading, initDataRaw]);
+
+  useEffect(() => {
+    if (isTmaReady && isTonReady) {
+      console.log("final auth request:", auth, ton.wallet);
+      const initTon = ton.wallet
+        ? ({
+            network: ton.wallet.network,
+            address: ton.wallet.address?.toString(),
+            //publicKey: ton.wall
+          } as AuthInitTon)
+        : undefined;
+      handleAuth(auth, initTon);
+    }
+  }, [isTmaReady, isTonReady]);
 
   return (
     <TmaStateContext.Provider value={{ setMainButtonHandler }}>

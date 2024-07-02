@@ -28,7 +28,7 @@
 .list-block__icon {
   width: var(--thumbnail-medium-width);
   height: var(--thumbnail-medium-height);
-  border-radius: var(--round-medium);
+  border-radius: var(--thumbnail-medium-width);
 }
 
 .list-block__description {
@@ -45,4 +45,9 @@
 .list-block__button {
   width: 6px;
   fill: gray;
+}
+
+.list-block__right{
+  text-align: right;
+  font-weight: var(--font-medium);
 }
