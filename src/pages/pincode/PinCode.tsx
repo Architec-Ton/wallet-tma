@@ -12,7 +12,7 @@ import useLanguage from "../../hooks/useLanguage.ts";
 import Circle from "../../components/pin-page/Circle.tsx";
 
 
-interface PinInputProps {
+export interface PinInputProps {
     mode?: 'registration' | 'confirmation';
     onSuccess?: () => void;
     onFailure?: () => void;

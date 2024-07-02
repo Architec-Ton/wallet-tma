@@ -1,0 +1,68 @@
+.modal__content {
+  min-height: 65svh;
+  height: fit-content;
+}
+
+.process {
+  line-height: var(--font-size-large);
+}
+
+.transaction-data {
+  align-items: center;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-medium);
+  margin-bottom: var(--spacing-12);
+}
+
+.transaction-assets {
+  position: relative;
+  justify-content: center;
+  gap: 0;
+}
+
+.transaction-assets img {
+  border: var(--spacing-4) solid white;
+  border-radius: var(--border-radius-full);
+  width: var(--asset-icon-large);
+}
+
+.transaction-assets img:first-child {
+  margin-right: calc(-1 * var(--spacing-8));
+}
+
+.transaction-assets img:last-child {
+  margin-left: calc(-1 * var(--spacing-8));
+}
+
+.secondary-data {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-regular);
+  color: var(--text-secondary-color);
+}
+
+.secondary-info {
+  color: var(--text-secondary-color);
+}
+
+.receiver-address {
+  gap: var(--spacing-4);
+}
+
+.transaction-info__list {
+  margin-bottom: var(--spacing-12);
+}
+
+.transaction-info {
+  align-items: end;
+  gap: var(--spacing-4);
+}
+
+.transaction-button {
+  width: fit-content;
+  padding: var(--spacing-4) var(--spacing-12);
+  margin: var(--spacing-12) auto;
+}
+
+.transaction-button img {
+  width: var(--font-size-large);
+}

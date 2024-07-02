@@ -16,7 +16,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
 
   const clickHandler = useClosure((id) => {
     navigate(`/playground/${id}`)
-  }, group)
+  })
 
   return (
     <ListBlock>

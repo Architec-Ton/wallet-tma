@@ -1,4 +1,8 @@
 .delimiter-line {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 0;
   height: 1px;
   background-color: var(--background-selected-color);

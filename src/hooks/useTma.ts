@@ -38,5 +38,8 @@ export function useTmaMainButton() {
 
       //setMainButton({ title: title, onClick: onClick, visible: visible });
     },
+    setVisible: (visible: boolean) => {
+      dispatch(setMainButtonVisible(visible));
+    },
   };
 }

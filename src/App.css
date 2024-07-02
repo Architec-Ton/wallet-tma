@@ -387,8 +387,25 @@ template {
 }
 
 .primary-button:hover,
-.primary-button:active {
+.primary-button:active,
+.primary-button:disabled {
   background-color: var(--button-hover-bg-color);
   border-color: var(--button-hover-border-color);
   color: var(--button-hover-text-color);
+}
+
+.control-button {
+  border-color: var(--primary-color);
+  background-color: var(--background-color);
+  color: var(--primary-color);
+}
+
+.control-button:disabled {
+    opacity: var(--opacity-disabled);
+}
+
+.large-button {
+  padding-top: var(--spacing-12);
+  padding-bottom: var(--spacing-12);
+  line-height: var(--spacing-20);
 }
