@@ -1,33 +1,32 @@
-import { iconGlobalButton } from "../../../../assets/icons/buttons"
-import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
-import useLanguage from "../../../../hooks/useLanguage"
-import { CoinDto } from "../../../../types/assest"
-import Column from "../../../containers/Column"
-import Row from "../../../containers/Row"
-import InlineLoader from "../../inlineLoader"
-import ListBlock from "../../listBlock"
-import ListBaseItem from "../../listBlock/ListBaseItem"
-import Modal from "../../modal"
+import { iconGlobalButton } from '../../../../assets/icons/buttons';
+// import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
+import useLanguage from '../../../../hooks/useLanguage';
+import { CoinDto } from '../../../../types/assest';
+import Column from '../../../containers/Column';
+import Row from '../../../containers/Row';
+import InlineLoader from '../../inlineLoader';
+import ListBlock from '../../listBlock';
+import ListBaseItem from '../../listBlock/ListBaseItem';
+import Modal from '../../modal';
 
-
-import "./index.css"
+import './index.css';
 
 type TransactionModalPropsType = {
-  onClose: () => void
-  onSuccess: () => void
-  from: CoinDto | undefined
-  to: CoinDto | undefined
-  sendedValue: string 
-  receivedValue: string
-  commission: number
-  returnValue: number
-  address: string
-  transactionType: string
-  transactionData: Date
-  inProgress?: boolean
-}
+  onClose: () => void;
+  onSuccess: () => void;
+  from: CoinDto | undefined;
+  to: CoinDto | undefined;
+  sendedValue: string;
+  receivedValue: string;
+  commission: number;
+  returnValue: number;
+  address: string;
+  transactionType: string;
+  transactionData: Date;
+  inProgress?: boolean;
+};
 
-const TransactionModal = ({ 
+const TransactionModal = ({
   onClose,
   onSuccess,
   from,
@@ -39,9 +38,9 @@ const TransactionModal = ({
   address,
   transactionType,
   transactionData,
-  inProgress
+  inProgress,
 }: TransactionModalPropsType) => {
-  const t = useLanguage("transaction")
+  const t = useLanguage('transaction');
 
   return (
     <Modal onClose={onClose}>
@@ -50,51 +49,65 @@ const TransactionModal = ({
           <img src={from?.meta?.image} alt="" />
           <img src={to?.meta?.image} alt="" />
         </Row>
-        <div className="">-{sendedValue} {from?.meta?.symbol}</div>
-        <div className="">+{receivedValue} {to?.meta?.symbol}</div>
-        <div className="secondary-data">{Number(receivedValue) * Number(to?.usdPrice)} $</div>
-        <div className="secondary-data">{transactionType} {transactionData?.toLocaleString()}</div>
+        <div className="">
+          -{sendedValue} {from?.meta?.symbol}
+        </div>
+        <div className="">
+          +{receivedValue} {to?.meta?.symbol}
+        </div>
+        <div className="secondary-data">
+          {Number(receivedValue) * Number(to?.usdPrice)} $
+        </div>
+        <div className="secondary-data">
+          {transactionType} {transactionData?.toLocaleString()}
+        </div>
         {inProgress && (
           <Row className="process">
             <InlineLoader />
-            <div>{t("loading")}</div>
+            <div>{t('loading')}</div>
           </Row>
         )}
       </Column>
       <ListBlock className="transaction-info__list">
         <ListBaseItem>
           <Column className="receiver-address">
-            <div>{t("receiver-address")}</div>
+            <div>{t('receiver-address')}</div>
             <span>{address}</span>
           </Column>
         </ListBaseItem>
         <ListBaseItem>
-          <div>{t("commission")}</div>
+          <div>{t('commission')}</div>
           <Column className="transaction-info">
             <div>{commission} TON</div>
-            <div className="secondary-info">$ {commission * Number(from?.usdPrice)}</div>
+            <div className="secondary-info">
+              $ {commission * Number(from?.usdPrice)}
+            </div>
           </Column>
         </ListBaseItem>
         <ListBaseItem>
-          <div>{t("return")}</div>
+          <div>{t('return')}</div>
           <Column className="transaction-info">
             <div>{returnValue} TON</div>
-            <div className="secondary-info">$ {returnValue * Number(from?.usdPrice)}</div>
+            <div className="secondary-info">
+              $ {returnValue * Number(from?.usdPrice)}
+            </div>
           </Column>
         </ListBaseItem>
         <ListBaseItem>
-          <div>{t("comment")}</div>
-          <div>{t("finish")}</div>
+          <div>{t('comment')}</div>
+          <div>{t('finish')}</div>
         </ListBaseItem>
       </ListBlock>
-      <button className="rounded-button control-button transaction-button" onClick={onSuccess}>
+      <button
+        className="rounded-button control-button transaction-button"
+        onClick={onSuccess}>
         <Row>
           <img src={iconGlobalButton} alt="" />
-          <span>{t("page-title")}</span>
+          <span>{t('page-title')}</span>
         </Row>
       </button>
     </Modal>
-  )
-}
+  );
+};
 
-export default TransactionModal
+export default TransactionModal;

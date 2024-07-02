@@ -1,83 +1,85 @@
-import { createBrowserRouter } from "react-router-dom";
-import PlayGround from "./pages/playGround";
+import { createBrowserRouter } from 'react-router-dom';
+import PlayGround from './pages/playGround';
 // import AddWallet from "./components/start-page/AddWallet/AddWallet.tsx";
 // import YourSecretKey from "./components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx";
-
-import Welcome from "./pages/registration/Welcome.tsx";
-import ConfirmKey from "./pages/registration/ConfirmKey.tsx";
-import AddWallet from "./pages/registration/AddWallet.tsx";
-import SecretKey from "./pages/registration/SecretKey.tsx";
-import RegistrationIsCompleted from "./pages/registration/RegistrationIsCompleted.tsx";
-import Existing from "./pages/registration/Existing.tsx";
-import Main from "./pages/Main.tsx";
-import GamePage from "./pages/playGround/gamePage";
-import LeaderBoard from "./pages/playGround/leaderBoard";
-import CategoryGames from "./pages/playGround/categoryGames";
-import PinCode from "./pages/pincode/PinCode.tsx";
-import AddCrypto from "./pages/addCrypto";
-import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
-import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
-import AddCryptoAddress from "./pages/addCrypto/Address.tsx";
-import Account from "./pages/Account.tsx";
-import News from "./pages/news/News.tsx";
-import Swap from "./pages/swap";
+import BankMain from './pages/banks/BankMain.tsx';
+import BankingTasks from './pages/banks/BankingTasks.tsx';
+import BankStaking from './pages/banks/BankStaking.tsx';
+import Welcome from './pages/registration/Welcome.tsx';
+import ConfirmKey from './pages/registration/ConfirmKey.tsx';
+import AddWallet from './pages/registration/AddWallet.tsx';
+import SecretKey from './pages/registration/SecretKey.tsx';
+import RegistrationIsCompleted from './pages/registration/RegistrationIsCompleted.tsx';
+import Existing from './pages/registration/Existing.tsx';
+import Main from './pages/Main.tsx';
+import GamePage from './pages/playGround/gamePage';
+import LeaderBoard from './pages/playGround/leaderBoard';
+import CategoryGames from './pages/playGround/categoryGames';
+import PinCode from './pages/pincode/PinCode.tsx';
+import AddCrypto from './pages/addCrypto';
+import ReceiveAsset from './pages/addCrypto/ReceiveAsset.tsx';
+import ChooseAddMethod from './pages/addCrypto/AddCrypto.tsx';
+import AddCryptoAddress from './pages/addCrypto/Address.tsx';
+import Account from './pages/Account.tsx';
+import News from './pages/news/News.tsx';
+import Swap from './pages/swap';
 
 const router = createBrowserRouter(
   [
     {
-      path: "/",
+      path: '/',
       element: <Main />,
     },
     {
-      path: "/playground",
+      path: '/playground',
       element: <PlayGround />,
     },
     {
-      path: "/playground/:id",
+      path: '/playground/:id',
       element: <GamePage />,
     },
     {
-      path: "/playground/:id/leaders",
+      path: '/playground/:id/leaders',
       element: <LeaderBoard />,
     },
     {
-      path: "/playground/category/:id",
+      path: '/playground/category/:id',
       element: <CategoryGames />,
     },
     {
-      path: "/registration/welcome",
+      path: '/registration/welcome',
       element: <Welcome />,
     },
     {
-      path: "/registration/add-wallet",
+      path: '/registration/add-wallet',
       element: <AddWallet />,
     },
     {
-      path: "/registration/secret-key",
+      path: '/registration/secret-key',
       element: <SecretKey />,
     },
     {
-      path: "/registration/confirm-secret-key",
+      path: '/registration/confirm-secret-key',
       element: <ConfirmKey />,
     },
     {
-      path: "/registration/completed",
+      path: '/registration/completed',
       element: <RegistrationIsCompleted />,
     },
     {
-      path: "/registration/existing",
+      path: '/registration/existing',
       element: <Existing />,
     },
     {
-      path: "/pin-code",
+      path: '/pin-code',
       element: <PinCode />,
     },
     {
-      path: "/account",
+      path: '/account',
       element: <Account />,
     },
     {
-      path: "/add-crypto",
+      path: '/add-crypto',
       element: <AddCrypto />,
       children: [
         {
@@ -85,25 +87,38 @@ const router = createBrowserRouter(
           element: <ChooseAddMethod />,
         },
         {
-          path: "receive",
+          path: 'receive',
           element: <ReceiveAsset />,
         },
         {
-          path: "address",
+          path: 'address',
           element: <AddCryptoAddress />,
         },
       ],
     },
     {
-      path: "/news",
-      element: <News/>
+      path: '/news',
+      element: <News />,
     },
     {
-      path: "/swap",
+      path: '/bank',
+      element: <BankMain />,
+    },
+    {
+      path: '/bank/tasks',
+      element: <BankingTasks />,
+    },
+    {
+      path: '/bank/stake',
+      element: <BankStaking />,
+    },
+    {
+      path: '/swap',
       element: <Swap />,
     },
   ],
-  { basename: "/wallet" }
+
+  { basename: '/wallet' }
 );
 
 export default router;
