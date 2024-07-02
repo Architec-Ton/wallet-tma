@@ -1,5 +1,4 @@
-import SearchIcon from './search.svg'
+import iconInputScan from './scan.svg';
+import SearchIcon from './search.svg';
 
-export {
-    SearchIcon
-}
+export { SearchIcon, iconInputScan };
