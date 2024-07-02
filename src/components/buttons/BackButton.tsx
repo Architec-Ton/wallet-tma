@@ -1,12 +1,12 @@
-import { useBackButton } from "@tma.js/sdk-react";
+import { useBackButton } from '@tma.js/sdk-react';
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 import {
   selectIsTma,
   selectIsTmaLoading,
-} from "../../features/tma/tmaSelector";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+} from '../../features/tma/tmaSelector';
+import { useAppSelector } from '../../hooks/useAppDispatch';
+import useRouter from '../../hooks/useRouter';
 
 type Props = {
   visible: boolean;
@@ -14,10 +14,10 @@ type Props = {
 
 function BackButtonTMA({ visible }: Props) {
   const bb = useBackButton();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   useEffect(() => {
     if (visible) {
-      bb.on("click", () => {
+      bb.on('click', () => {
         navigate(-1);
       });
       bb.show();

@@ -82,6 +82,10 @@ input {
     outline: none;
 }
 
+a{
+    color: var(--primary-color);
+}
+
 input:focus, input:focus-visible,input:active, input:visited {
     border-color: var(--background-selected-color);
     /* var(--primary-color);  */

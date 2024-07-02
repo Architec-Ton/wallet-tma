@@ -42,6 +42,7 @@
     "button-copy": "Copy to clipboard",
     "button-next": "Next",
     "button-stake": "Stake",
+    "button-continue": "Continue",
 
     "game-all": "All",
     "game-description": "Description",
@@ -123,5 +124,11 @@
     "transaction-page-title": "Transaction",
     "transaction-complete-text": "The transaction is completed! Thanks for choosing and believing us",
     "transaction-wallet-button": "Wallet",
-    "transaction-congratulation": "Congratulations!"
+    "transaction-congratulation": "Congratulations!",
+
+
+    "send-select-title": "Choose asset to send",
+
+    "input-address": "Address",
+    "input-paste": "Paste"
 }

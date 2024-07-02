@@ -56,7 +56,7 @@ const Existing: React.FC = () => {
 
   useEffect(() => {
     page.setLoading(false);
-  },[])
+  }, []);
 
   useEffect(() => {
     btn.init(

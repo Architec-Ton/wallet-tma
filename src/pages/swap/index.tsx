@@ -143,6 +143,7 @@ const Swap = () => {
       })
       .catch(() => {
         setAssets(initialAssets);
+        page.setLoading(false);
       });
   }, []);
 
