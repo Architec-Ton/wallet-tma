@@ -18,8 +18,13 @@ import AddCrypto from "./pages/addCrypto";
 import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
 import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
 import AddCryptoAddress from "./pages/addCrypto/Address.tsx";
-import Account from "./pages/Account.tsx";
+import Account from "./pages/account/Account.tsx";
 import News from "./pages/news/News.tsx";
+import WalletLanguage from "./pages/account/account-settings-pages/WalletLanguage.tsx";
+import MainCurrency from "./pages/account/account-settings-pages/MainCurrency.tsx";
+import ApplicationSubmit from "./pages/account/account-settings-pages/ApplicationSubmit.tsx";
+import WalletSafety from "./pages/account/account-settings-pages/WalletSafety.tsx";
+import Notifications from "./pages/account/account-settings-pages/Notifications.tsx";
 
 const router = createBrowserRouter(
   [
@@ -73,7 +78,30 @@ const router = createBrowserRouter(
     },
     {
       path: "/account",
-      element: <Account />,
+      element: <Account/>,
+    },
+    {
+      path: "/wallet-language",
+      element: <WalletLanguage/>
+    },
+    {
+       path: "/main-currency",
+       element: <MainCurrency/>
+    },
+    {
+       path: "/application-submit",
+       element: <ApplicationSubmit/>
+    },
+    {
+       path: "/wallet-safety",
+       element: <WalletSafety/>
+    },
+    {
+       path: "/notifications",
+       element: <Notifications/>
+    },
+    {
+        path: "/dev-menu",
     },
     {
       path: "/add-crypto",

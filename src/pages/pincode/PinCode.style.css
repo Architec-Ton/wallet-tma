@@ -41,4 +41,8 @@
     background-color: transparent;
 }
 
+.pin-title {
+    margin:  var(--spacing-12) auto;;
+}
+
 

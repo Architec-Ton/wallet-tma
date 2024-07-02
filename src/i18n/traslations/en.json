@@ -24,9 +24,14 @@
 
     "news-title": "News Feed",
 
-    "timeSinceCreation-h": "h",
-    "timeSinceCreation-m": "m",
-    "timeSinceCreation-just-now": "h",
+    "account-account": "Account",
+    "account-settings": "Settings",
+    "account-wallet-language": "Wallet Language",
+    "account-main-currency": "Main Currency",
+    "account-application-submit": "Application submit",
+    "account-wallet-safety": "Wallet Safety",
+    "account-notifications": "Notifications",
+    "account-dev-menu": "Dev Menu",
 
 
     "addwallet-addwallet": "Add Wallet",

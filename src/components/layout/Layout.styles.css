@@ -6,7 +6,8 @@ body {
 
 h1 {
     font-size: var(--font-size-large);
-    margin: var(--spacing-12) auto;
+    /*margin: var(--spacing-12) auto;*/
+    margin: var(--spacing-12) 0;
     font-weight: var(--font-medium);
 }
 
