@@ -45,7 +45,9 @@ const NewsCard: React.FC<NewsCardProps>  = ({cardData,style, className }) => {
                     {cardData.description[1]}
                 </Column>
 
-                {cardData.hashtags && <Hashtags hashtags={cardData.hashtags} className={'news-card'}/>}
+                <div>
+                    {cardData.hashtags && <Hashtags hashtags={cardData.hashtags} className={'news-card'}/>}
+                </div>
 
                 {/*    {cardData.likesDislikes && <LikeDislike likesDislikes={cardData.likesDislikes}  className={'news-card'}/>}*/}
                 {/*    {cardData.link && <LinkToPost  className={'news-card'}/>}*/}

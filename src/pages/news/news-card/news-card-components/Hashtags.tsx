@@ -8,10 +8,10 @@ interface HashtagsProps {
 const Hashtags: React.FC<HashtagsProps>  = ({hashtags, className}) => {
 
     return (
-        <div className={`${className}-container`}>
+        <div className={`${className}-container__hashtag`}>
             {hashtags.map((hashtag, index) =>{
                 return (
-                    <div className={className} key={index}>
+                    <div className={`${className}__hashtag`} key={index}>
                         #{hashtag}
                     </div>
                 )

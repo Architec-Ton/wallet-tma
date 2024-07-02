@@ -27,6 +27,11 @@
   --button-hover-bg-color: var(--selected-color);
   --button-hover-text-color: var(--background-color);
   --button-hover-border-color: var(--selected-color);
+  --hashtags-text-color: var(--text-secondary-light-color);
+  --hashtags-bg-color: var(--background-selected-color);
+  --hashtags-text-color-active: var(--primary-color);
+  --hashtags-bg-color-active: rgba(7,172,255,0.12);
+
 
   /* Цвета для форм */
   --input-bg-color: var(--background-selected-color);
