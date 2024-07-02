@@ -41,6 +41,7 @@
     "button-paste": "Paste from clipboard",
     "button-copy": "Copy to clipboard",
     "button-next": "Next",
+    "button-stake": "Stake",
 
     "game-all": "All",
     "game-description": "Description",
@@ -81,5 +82,24 @@
 
 
     "assets-title": "Assets",
-    "history-title": "History"
+    "history-title": "History",
+
+    "bank-staking": "Staking",
+    "bank-staking-hint": "Staking banks",
+    "bank-stake": "Stake",
+
+    "bank-quests": "Quests",
+    "bank-quests-hints": "Quests banks",
+    "bank-tasks": "Tasks",
+    "bank-refferals": "Refferals",
+    "bank-refferals-hint": "Refferals",
+    "bank-bankers": "Bankers",
+    "bank-bankers-hint": "Bankers",
+
+    "banking-tasks-title": "Banking Tasks",
+    "banking-tasks-comment": "* You can receive rewards for completing a number of tasks in our quests",
+    "banking-tasks-partners": "Partners",
+
+    "bank-stake-title": "Staking Bank"
+
 }
