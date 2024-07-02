@@ -8,6 +8,11 @@ import iconButtonMedalStars from "./medal-star.svg";
 import iconButtonPaste from "./paste-icon.svg";
 import iconSendButton from "./send-2.svg";
 import iconSortButton from "./sort.svg";
+import iconLogoButton from "./logo.svg";
+import iconCloseButton from "./close-square.svg";
+import iconSettingsButton from "./setting-2.svg";
+import iconOpenButton from "./icon-open.svg";
+import iconReverseButton from "./Icon-reverse.svg"
 
 export {
   iconButtonArraw,
@@ -21,6 +26,11 @@ export {
   iconInfoButton,
   iconSendButton,
   iconSortButton,
+  iconLogoButton,
+  iconCloseButton,
+  iconSettingsButton,
+  iconOpenButton,
+  iconReverseButton,
 };
 
 import iconButtonCopyColor from "./copy.svg";

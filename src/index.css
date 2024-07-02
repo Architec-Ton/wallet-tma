@@ -51,7 +51,7 @@
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
   --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
-  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
+  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.32), rgba(255,255,255,0.05));
 
   /* Отступы и поля */  
   --spacing-2: 0.125rem;
@@ -107,5 +107,11 @@
   --thumbnail-medium-height: 46px;
 
   --swiper-pagination-bullet-inactive-color: light-dark(#000000, #ffffff);
+
+  /* Размеры ассетов */
+  --asset-icon-sm: 24px;
+  --asset-icon-large: 46px;
+  --asset-send-bg-color: rgba(61, 176, 138, 0.12);
+  --asset-receive-bg-color: rgba(248, 186, 0, 0.12);
 }
 

@@ -9,6 +9,7 @@ import { gamingApi } from "../features/gaming/gamingApi";
 import authSlice from "../features/auth/authSlice";
 import { authApi } from "../features/auth/authApi";
 import { walletApi } from "../features/wallet/walletApi";
+import swapSlice from "../features/swap/swapSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     ton: tonReducer,
     gaming: gamingSlice,
     auth: authSlice,
+    swap: swapSlice,
     [authApi.reducerPath]: authApi.reducer,
     [gamingApi.reducerPath]: gamingApi.reducer,
     [walletApi.reducerPath]: walletApi.reducer,

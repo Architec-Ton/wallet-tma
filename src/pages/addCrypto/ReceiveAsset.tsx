@@ -41,7 +41,7 @@ const ReceiveAsset = () => {
     navigate("/add-crypto/address", {
       state: asset
     })
-  }, [assets])
+  })
 
   return (
     <>

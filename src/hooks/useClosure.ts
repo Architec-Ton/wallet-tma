@@ -1,10 +1,8 @@
-import { DependencyList, useCallback } from "react"
-
-export const useClosure = <T, R>(func: (...args: T[]) => R | void, dependencys: DependencyList = []): (...args: T[]) => CallableFunction => {
+export const useClosure = <T, R>(func: (...args: T[]) => R | void) => {
   return (...args: T[]) => {
-    const result = useCallback(() => {
+    const result = () => {
       func(...args)
-    }, dependencys)
+    }
     return result
   }
 }
