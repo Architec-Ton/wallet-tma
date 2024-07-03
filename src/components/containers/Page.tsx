@@ -46,6 +46,7 @@ function Page({
   const isLoading = useAppSelector(selectIsLoading);
   const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
 
+
   useEffect(() => {
     setBackButtonIsVisible(
       !backButtonExclude.includes(location.pathname) && !isLoading
@@ -72,6 +73,7 @@ function Page({
 
         {children}
       </Container>
+      {isNavbarVisible && <div style={{height:'var(--spacing-80)'}}/>}
       {isNavbarVisible && <MainMenu />}
     </>
   );
