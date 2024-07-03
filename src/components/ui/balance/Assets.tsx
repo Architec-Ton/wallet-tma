@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-import { NavLink } from "react-router-dom";
-import useLanguage from "../../../hooks/useLanguage";
-import Section from "../../containers/Section";
-import ListBlock from "../listBlock";
-import "./Balance.styles.css";
-import { CoinDto } from "../../../types/assest";
-import ListTileItem from "../listBlock/ListTileItem";
-import PriceChanges from "../../typography/PriceChanges";
-import ListBaseItem from "../listBlock/ListBaseItem";
+import { ReactNode } from 'react';
+import { NavLink } from 'react-router-dom';
+import useLanguage from '../../../hooks/useLanguage';
+import Section from '../../containers/Section';
+import ListBlock from '../listBlock';
+import './Balance.styles.css';
+import { CoinDto } from '../../../types/assest';
+import ListTileItem from '../listBlock/ListTileItem';
+import PriceChanges from '../../typography/PriceChanges';
+import ListBaseItem from '../listBlock/ListBaseItem';
 
 type Props = {
   children?: ReactNode;
@@ -16,7 +16,7 @@ type Props = {
 
 function Assets({ children, assets }: Props) {
   //   const ton = useTon();
-  const t = useLanguage("assets");
+  const t = useLanguage('assets');
   //   const navigate = useNavigate();
 
   //   const assets: AssetType[] = [
@@ -47,7 +47,7 @@ function Assets({ children, assets }: Props) {
   console.log(assets);
   if (assets) {
     return (
-      <Section title={t("title")} className="add-crypto__container">
+      <Section title={t('title')} className="add-crypto__container">
         <ListBlock>
           {assets.map((asset, index) => {
             return (
@@ -56,7 +56,7 @@ function Assets({ children, assets }: Props) {
                 icon={asset.meta?.image}
                 title={asset.meta?.name}
                 description={`${asset.amount.toLocaleString(undefined, {
-                  maximumFractionDigits: asset.meta?.decimals,
+                  maximumFractionDigits: 5, //asset.meta?.decimals,
                   minimumFractionDigits: 2,
                 })} ${asset.meta?.symbol}`}
                 // onClick={assetClickHandler(asset)}
@@ -67,7 +67,7 @@ function Assets({ children, assets }: Props) {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
-                    {" $"}
+                    {' $'}
                   </div>
                   <div className="list-block__descriptio11n">
                     <PriceChanges changePrice={asset.changePrice} />

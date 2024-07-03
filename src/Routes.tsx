@@ -23,9 +23,9 @@ import AddCryptoAddress from './pages/addCrypto/Address.tsx';
 import Account from './pages/Account.tsx';
 import News from './pages/news/News.tsx';
 import Swap from './pages/swap';
-import SelectAsset from './pages/send/SelectAsset.tsx';
 import SelectAddress from './pages/send/SelectAddress.tsx';
 import SelectAmount from './pages/send/SelectAmount.tsx';
+import SendPage from './pages/send/send.tsx';
 
 const router = createBrowserRouter(
   [
@@ -121,7 +121,7 @@ const router = createBrowserRouter(
     },
     {
       path: '/send',
-      element: <SelectAsset />,
+      element: <SendPage />,
     },
     {
       path: '/send/address',
