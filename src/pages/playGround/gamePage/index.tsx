@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useAppDispatch } from "../../../hooks/useAppDispatch"
 import { setLoading } from "../../../features/page/pageSlice"
 import Tile from "../../../components/typography/Tile"
-import { iconCoinButton, iconGlobalButton, iconLogoButton, iconSendButton } from "../../../assets/icons/buttons"
+import { iconCoinButton, iconGlobalButton, iconSendButton } from "../../../assets/icons/buttons"
 
 import Slider from "../../../components/ui/slider"
 import { SwiperSlide } from "swiper/react"
@@ -22,10 +22,10 @@ import './index.css'
 // import ModalPinCode from "../../../components/ui/modals/modalPinCode"
 // import TransactionModal from "../../../components/ui/modals/transactionModal"
 // import TransactionCompleteModal from "../../../components/ui/modals/transactionCompleteModal"
-import { useApiWalletInfoMutation } from "../../../features/wallet/walletApi"
-import { WalletInfoData } from "../../../types/wallet"
-import { CoinDto } from "../../../types/assest"
-import { initialAssets } from "../../../mocks/mockAssets"
+// import { useApiWalletInfoMutation } from "../../../features/wallet/walletApi"
+// import { WalletInfoData } from "../../../types/wallet"
+// import { CoinDto } from "../../../types/assest"
+// import { initialAssets } from "../../../mocks/mockAssets"
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -37,36 +37,36 @@ const GamePage = () => {
   const t = useLanguage("game")
   const { id } = useParams()
   const dispatch = useAppDispatch()
-  const [walletInfoApi] = useApiWalletInfoMutation();
+  // const [walletInfoApi] = useApiWalletInfoMutation();
   // const navigate = useNavigate()
   const {data: game, isLoading} = useGetGameQuery(id as string)
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
   
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false)
-  const [assets, setAssets] = useState<CoinDto[]>()
-  const [isPinCode, setIsPinCode] = useState<boolean>(false)
-  const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
-  const [showTransaction, setShowTransaction] = useState<boolean>(false);
-  const [showTransactionComplete, setShowTransactionComplete] =
-    useState<boolean>(false);
-  const [isTransactionInProgress, setIsTransactionInProgress] =
-    useState<boolean>(false);
+  // const [assets, setAssets] = useState<CoinDto[]>()
+  // const [isPinCode, setIsPinCode] = useState<boolean>(false)
+  // const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
+  // const [showTransaction, setShowTransaction] = useState<boolean>(false);
+  // const [showTransactionComplete, setShowTransactionComplete] =
+  //   useState<boolean>(false);
+  // const [isTransactionInProgress, setIsTransactionInProgress] =
+  //   useState<boolean>(false);
 
   useEffect(() => {
     dispatch(setLoading(isLoading))
   }, [isLoading])
 
-  useEffect(() => {
-    walletInfoApi(null)
-      .unwrap()
-      .then((result: WalletInfoData) => {
-        const { assets } = result.wallets[result.currentWallet];
-        setAssets(assets);
-      })
-      .catch(() => {
-        setAssets(initialAssets);
-      });
-  }, []);
+  // useEffect(() => {
+  //   walletInfoApi(null)
+  //     .unwrap()
+  //     .then((result: WalletInfoData) => {
+  //       const { assets } = result.wallets[result.currentWallet];
+  //       setAssets(assets);
+  //     })
+  //     .catch(() => {
+  //       setAssets(initialAssets);
+  //     });
+  // }, []);
 
   const readMoreHandler = () => {
     setReacMoreDescription(!readMoreDescription)
@@ -87,36 +87,36 @@ const GamePage = () => {
     }
   }, [game])
 
-  const voteGameHandler = () => {
-    setIsPinCode(true)
-    setIsVoteModal(false)
-  }
+  // const voteGameHandler = () => {
+  //   setIsPinCode(true)
+  //   setIsVoteModal(false)
+  // }
 
-  const modalHandler = () => {
-    setIsVoteModal(!isVoteModal)
-  }
+  // const modalHandler = () => {
+  //   setIsVoteModal(!isVoteModal)
+  // }
 
-  const onPinSuccess = () => {
-    setIsPinCode(false);
-    setShowTransaction(true);
-  };
+  // const onPinSuccess = () => {
+  //   setIsPinCode(false);
+  //   setShowTransaction(true);
+  // };
 
-  const delay = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, 10000);
-    });
-  };
+  // const delay = () => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve(true);
+  //     }, 10000);
+  //   });
+  // };
 
-  const transactionSuccessHandler = async () => {
-    setIsTransactionInProgress(true);
+  // const transactionSuccessHandler = async () => {
+  //   setIsTransactionInProgress(true);
     
-    await delay();
-    setIsTransactionInProgress(false);
-    setShowTransaction(false);
-    setShowTransactionComplete(true);
-  };
+  //   await delay();
+  //   setIsTransactionInProgress(false);
+  //   setShowTransaction(false);
+  //   setShowTransactionComplete(true);
+  // };
 
   return (
     <Page>

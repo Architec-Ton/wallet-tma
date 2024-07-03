@@ -4,7 +4,7 @@ import Section from '../../components/containers/Section';
 import Delimiter from '../../components/typography/Delimiter';
 import Row from '../../components/containers/Row';
 import { iconReverseButton } from '../../assets/icons/buttons';
-import { iconPepe, iconTon, iconUsdt } from '../../assets/icons/jettons';
+// import { iconPepe, iconTon, iconUsdt } from '../../assets/icons/jettons';
 import SendAsset from './sendAsset';
 import ReceiveAsset from './receiveAsset';
 import AssetsList from './assetsList';
