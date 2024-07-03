@@ -1,0 +1,32 @@
+.complete-modal__content {
+  height: 66svh;
+  align-items: center;
+  justify-content: center;
+  margin: 0 var(--spacing-16);
+  text-align:center;
+}
+
+.circle-block {
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  height: 128px;
+  border-radius: var(--border-radius-full);
+}
+
+.complete-container .section__body {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-secondary-color);
+  gap: var(--spacing-12);
+}
+
+.complete-container .primary-button {
+  padding: var(--spacing-12);
+}
+
+.complete-container .section__header h2 {
+  flex-grow: 1;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-medium);
+}

@@ -1,12 +1,12 @@
-import { iconButtonCopy } from "../../../assets/icons/buttons";
-import Row from "../../containers/Row";
-import "./Address.styles.css";
+import { iconButtonCopy } from '../../../assets/icons/buttons';
+import Row from '../../containers/Row';
+import './Address.styles.css';
 
 type Props = {
   address?: string;
 };
 
-const shortenString = (str: string): string => {
+export const shortenString = (str: string): string => {
   if (str.length <= 10) {
     return str;
   }
@@ -22,7 +22,7 @@ function Address({ address }: Props) {
     if (address) {
       navigator.clipboard
         .writeText(address)
-        .catch((err) => console.error("Failed to copy text: ", err));
+        .catch((err) => console.error('Failed to copy text: ', err));
     }
   };
 
@@ -30,7 +30,7 @@ function Address({ address }: Props) {
     <Row className="address">
       <small>{address && shortenString(address)}</small>
       <a href="#" onClick={copyToClipboard}>
-        <img src={iconButtonCopy} />{" "}
+        <img src={iconButtonCopy} />{' '}
       </a>
     </Row>
   );

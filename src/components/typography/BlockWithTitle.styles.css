@@ -1,0 +1,11 @@
+.block-with-title h1{
+    font-size: var(--font-size-medium);
+    text-align: start;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.block-with-title h1 img{
+        width: var(--font-size-medium);
+        height: var(--font-size-medium);
+}

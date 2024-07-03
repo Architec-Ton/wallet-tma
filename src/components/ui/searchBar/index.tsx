@@ -13,7 +13,7 @@ const SearchIconComponent = () => <img src={SearchIcon} alt="" />
 
 const SearchBar = ({ onChange, value }: OwnPropsType) => {
   const { t } = useTranslation()
-  const [searchValue, setSearchValue] = useState<string>(value as string)
+  const [searchValue, setSearchValue] = useState<string>(value || '')
 
   const searchHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.currentTarget.value

@@ -46,6 +46,8 @@
     "button-paste": "Paste from clipboard",
     "button-copy": "Copy to clipboard",
     "button-next": "Next",
+    "button-stake": "Stake",
+    "button-continue": "Continue",
 
     "game-all": "All",
     "game-description": "Description",
@@ -86,5 +88,52 @@
 
 
     "assets-title": "Assets",
-    "history-title": "History"
+    "history-title": "History",
+
+
+    "bank-staking": "Staking",
+    "bank-staking-hint": "Staking banks",
+    "bank-stake": "Stake",
+
+    "bank-quests": "Quests",
+    "bank-quests-hints": "Quests banks",
+    "bank-tasks": "Tasks",
+    "bank-refferals": "Refferals",
+    "bank-refferals-hint": "Refferals",
+    "bank-bankers": "Bankers",
+    "bank-bankers-hint": "Bankers",
+
+    "banking-tasks-title": "Banking Tasks",
+    "banking-tasks-comment": "* You can receive rewards for completing a number of tasks in our quests",
+    "banking-tasks-partners": "Partners",
+
+    "bank-stake-title": "Staking Bank",
+
+    "swap-page-title": "Swap",
+    "swap-receive-value-title": "You receive (icnl. fee)",
+    "swap-select-token": "Select Token",
+    "swap-route": "Route",
+    "swap-send": "Send",
+    "swap-balance": "Balance",
+    "swap-select": "Select",
+    "swap-clear": "Clear",
+    "swap-max": "Max",
+    "swap-receive": "Receive",
+
+    "transaction-loading": "Transaction is proceed...",
+    "transaction-receiver-address": "Receiver address",
+    "transaction-commission": "Commission",
+    "transaction-return": "Return",
+    "transaction-comment": "Comment",
+    "transaction-finish": "finish",
+    "transaction-page-title": "Transaction",
+    "transaction-complete-text": "The transaction is completed! Thanks for choosing and believing us",
+    "transaction-wallet-button": "Wallet",
+    "transaction-congratulation": "Congratulations!",
+
+
+    "send-select-title": "Choose asset to send",
+
+    "input-address": "Address",
+    "input-paste": "Paste"
 }
