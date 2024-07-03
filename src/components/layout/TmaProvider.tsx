@@ -129,8 +129,8 @@ export function TmaProvider({ children }: Props) {
   }, [isTma, isTmaLoading, initDataRaw]);
 
   useEffect(() => {
-    if (isTmaReady && isTonReady) {
-      console.log("final auth request:", auth, ton.wallet);
+    if (isTmaReady && isTonReady && ton.wallet?.address) {
+      console.log("final auth request:", auth);
       const initTon = ton.wallet
         ? ({
             network: ton.wallet.network,
@@ -140,7 +140,7 @@ export function TmaProvider({ children }: Props) {
         : undefined;
       handleAuth(auth, initTon);
     }
-  }, [isTmaReady, isTonReady]);
+  }, [isTmaReady, isTonReady, ton.wallet]);
 
   return (
     <TmaStateContext.Provider value={{ setMainButtonHandler }}>

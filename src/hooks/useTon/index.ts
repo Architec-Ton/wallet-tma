@@ -2,10 +2,11 @@ import { useAppDispatch } from "../useAppDispatch";
 import useLocalStorage from "../useLocalStorage";
 import { setAddress, TonConnectionMode } from "../../features/ton/tonSlice";
 import { useEffect, useState } from "react";
-import { get_wallet } from "./wallet";
+import { useWalletInitData } from "./useWalletInitData";
 
 export function useTon() {
   const dispatch = useAppDispatch();
+  const wallet = useWalletInitData()
   const [bcData, setBcData] = useLocalStorage("bcData", {
     network: "ton",
     mode: "disconnect",
@@ -21,7 +22,7 @@ export function useTon() {
 
   return {
     mode: tonMode,
-    wallet: get_wallet(),
+    wallet: wallet,
     setAddress: (
       address: string,
       mode: "disconnect" | "tonconnect" | "mnemonics",
