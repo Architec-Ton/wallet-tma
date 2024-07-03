@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import useLanguage from '../../hooks/useLanguage';
 import Page from '../../components/containers/Page';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ export type AssetType = {
 
 const SendPage = () => {
   const t = useLanguage('send-select');
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const [walletApiAssets] = useApiWalletAssetsMutation();
   const page = usePage();
   const [assets, setAssets] = useState<CoinDto[]>([]);
@@ -78,6 +78,7 @@ const SendPage = () => {
         t('continue', 'button'),
         () => {
           console.log(address);
+          console.log(asset);
           setStep(2);
         },
         isButtonEnabled
