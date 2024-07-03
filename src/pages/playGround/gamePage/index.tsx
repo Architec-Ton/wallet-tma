@@ -20,6 +20,12 @@ import useLanguage from "../../../hooks/useLanguage"
 import './index.css'
 import VoteModal from "../../../components/ui/games/voteModal"
 import ModalPinCode from "../../../components/ui/modals/modalPinCode"
+import TransactionModal from "../../../components/ui/modals/transactionModal"
+import TransactionCompleteModal from "../../../components/ui/modals/transactionCompleteModal"
+import { useApiWalletInfoMutation } from "../../../features/wallet/walletApi"
+import { WalletInfoData } from "../../../types/wallet"
+import { CoinDto } from "../../../types/assest"
+import { initialAssets } from "../../../mocks/mockAssets"
 
 const typedIcons = {
   web: iconGlobalButton,
@@ -31,17 +37,36 @@ const GamePage = () => {
   const t = useLanguage("game")
   const { id } = useParams()
   const dispatch = useAppDispatch()
+  const [walletInfoApi] = useApiWalletInfoMutation();
   // const navigate = useNavigate()
   const {data: game, isLoading} = useGetGameQuery(id as string)
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
   
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false)
+  const [assets, setAssets] = useState<CoinDto[]>()
   const [isPinCode, setIsPinCode] = useState<boolean>(false)
   const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
+  const [showTransaction, setShowTransaction] = useState<boolean>(false);
+  const [showTransactionComplete, setShowTransactionComplete] =
+    useState<boolean>(false);
+  const [isTransactionInProgress, setIsTransactionInProgress] =
+    useState<boolean>(false);
 
   useEffect(() => {
     dispatch(setLoading(isLoading))
   }, [isLoading])
+
+  useEffect(() => {
+    walletInfoApi(null)
+      .unwrap()
+      .then((result: WalletInfoData) => {
+        const { assets } = result.wallets[result.currentWallet];
+        setAssets(assets);
+      })
+      .catch(() => {
+        setAssets(initialAssets);
+      });
+  }, []);
 
   const readMoreHandler = () => {
     setReacMoreDescription(!readMoreDescription)
@@ -70,6 +95,28 @@ const GamePage = () => {
   const modalHandler = () => {
     setIsVoteModal(!isVoteModal)
   }
+
+  const onPinSuccess = () => {
+    setIsPinCode(false);
+    setShowTransaction(true);
+  };
+
+  const delay = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 10000);
+    });
+  };
+
+  const transactionSuccessHandler = async () => {
+    setIsTransactionInProgress(true);
+    
+    await delay();
+    setIsTransactionInProgress(false);
+    setShowTransaction(false);
+    setShowTransactionComplete(true);
+  };
 
   return (
     <Page>
@@ -143,7 +190,28 @@ const GamePage = () => {
           
       </Section>
       {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
-      {isPinCode && <ModalPinCode />}
+      {isPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="registration" />}
+      {showTransaction && (
+        <TransactionModal
+          from={assets && assets[0]}
+          to={assets && assets[1]}
+          sendedValue="1000"
+          receivedValue="1000"
+          commission={0.17}
+          returnValue={0.125}
+          address="jjsjsdljfsldkfj"
+          transactionData={new Date()}
+          transactionType={t('page-title')}
+          onClose={() => setShowTransaction(false)}
+          onSuccess={transactionSuccessHandler}
+          inProgress={isTransactionInProgress}
+        />
+      )}
+      {showTransactionComplete && (
+        <TransactionCompleteModal
+          onClose={() => setShowTransactionComplete(false)}
+        />
+      )}
     </Page>
   )
 }
