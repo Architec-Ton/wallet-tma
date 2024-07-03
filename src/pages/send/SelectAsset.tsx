@@ -5,7 +5,7 @@ import useLanguage from '../../hooks/useLanguage';
 import Page from '../../components/containers/Page';
 import { useEffect, useState } from 'react';
 import { usePage } from '../../hooks/usePage';
-import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
+import { useApiWalletAssetsMutation } from '../../features/wallet/walletApi';
 import ListTileItem from '../../components/ui/listBlock/ListTileItem';
 import { CoinDto } from '../../types/assest';
 
@@ -20,7 +20,7 @@ export type AssetType = {
 const SelectAsset = () => {
   const t = useLanguage('send-select');
   const navigate = useNavigate();
-  const [walletInfoApi] = useApiWalletInfoMutation();
+  const [walletApiAssets] = useApiWalletAssetsMutation();
   const page = usePage();
   const [assets, setAssets] = useState<CoinDto[]>([]);
 
@@ -32,9 +32,9 @@ const SelectAsset = () => {
 
   const handleInfo = async () => {
     try {
-      const result = await walletInfoApi(null).unwrap();
+      const result = await walletApiAssets(null).unwrap();
       console.log('Wallet result:', result);
-      setAssets(result.wallets[result.currentWallet].assets);
+      setAssets(result);
     } catch (err) {
       console.error('Failed to get info: ', err);
     } finally {
@@ -58,7 +58,7 @@ const SelectAsset = () => {
                 icon={asset.meta?.image}
                 title={asset.meta?.name}
                 description={`${asset.amount.toLocaleString(undefined, {
-                  maximumFractionDigits: asset.meta?.decimals,
+                  maximumFractionDigits: 5, //asset.meta?.decimals,
                   minimumFractionDigits: 2,
                 })} ${asset.meta?.symbol}`}
                 onClick={() => handlerClick(asset)}></ListTileItem>
