@@ -73,6 +73,7 @@ function Page({
 
         {children}
       </Container>
+
       {isNavbarVisible && <div style={{height:'var(--spacing-80)'}}/>}
       {isNavbarVisible && <MainMenu />}
     </>
