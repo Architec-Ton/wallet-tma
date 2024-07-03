@@ -24,6 +24,7 @@ import './index.css';
 import useLanguage from '../../hooks/useLanguage';
 import { usePage } from '../../hooks/usePage';
 import { useTmaMainButton } from '../../hooks/useTma';
+import { initialAssets } from '../../mocks/mockAssets';
 
 export type AssetDataType = {
   title: string;
@@ -65,50 +66,6 @@ const swapData: SwapDataType = {
   } satisfies AssetDataType,
 };
 
-const initialAssets: CoinDto[] = [
-  {
-    type: 'ton',
-    amount: 100000,
-    usdPrice: 7.7,
-    changePrice: 1.2,
-    meta: {
-      name: 'Toncoin',
-      description: '',
-      address: 'Elkdfgj98098dfg098-dfgkjlkj-dfgkj',
-      image: iconTon,
-      decimals: 9,
-      symbol: 'TON',
-    },
-  },
-  {
-    type: 'pepe',
-    amount: 0,
-    usdPrice: 0.0001,
-    changePrice: 0.02,
-    meta: {
-      name: 'PEPE',
-      description: '',
-      address: 'Elkdfert8098dfg098-dfgkjlkj-dfgkj',
-      image: iconPepe,
-      decimals: 9,
-      symbol: 'PEPE',
-    },
-  },
-  {
-    type: 'usdt',
-    amount: 1000,
-    usdPrice: 1,
-    changePrice: 0.01,
-    meta: {
-      name: 'USDT',
-      description: '',
-      address: 'Elkdfert8098dfg098-dfgkjlkj-jklkj',
-      image: iconUsdt,
-      decimals: 6,
-      symbol: 'USDT',
-    },
-  },
-];
 
 const Swap = () => {
   const [swapAssets, setSwappAssets] = useState(swapData);
@@ -139,7 +96,7 @@ const Swap = () => {
         const { assets } = result.wallets[result.currentWallet];
         setAssets(assets);
         page.setLoading(false);
-        btn.init(t('page-title'), () => swapHanler, true);
+        btn.init(t('page-title'), swapHanler, true);
       })
       .catch(() => {
         setAssets(initialAssets);
