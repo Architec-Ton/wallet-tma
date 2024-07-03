@@ -18,10 +18,10 @@ import { GameResource } from "../../../types/gameTypes"
 import useLanguage from "../../../hooks/useLanguage"
 
 import './index.css'
-import VoteModal from "../../../components/ui/games/voteModal"
-import ModalPinCode from "../../../components/ui/modals/modalPinCode"
-import TransactionModal from "../../../components/ui/modals/transactionModal"
-import TransactionCompleteModal from "../../../components/ui/modals/transactionCompleteModal"
+// import VoteModal from "../../../components/ui/games/voteModal"
+// import ModalPinCode from "../../../components/ui/modals/modalPinCode"
+// import TransactionModal from "../../../components/ui/modals/transactionModal"
+// import TransactionCompleteModal from "../../../components/ui/modals/transactionCompleteModal"
 import { useApiWalletInfoMutation } from "../../../features/wallet/walletApi"
 import { WalletInfoData } from "../../../types/wallet"
 import { CoinDto } from "../../../types/assest"
@@ -128,10 +128,10 @@ const GamePage = () => {
       >
         <div className="game-controls">
           <button className="rounded-button primary-button">{t("play")}</button>
-          <button className="rounded-button vote-button" onClick={modalHandler}>
+          {/* <button className="rounded-button vote-button" onClick={modalHandler}>
             <img src={iconLogoButton} alt="" />
             <span>350k+</span>
-          </button>
+          </button> */}
         </div>
       </Tile>
       <Row className="w-screen">
@@ -189,7 +189,7 @@ const GamePage = () => {
         })}
           
       </Section>
-      {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
+      {/* {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
       {isPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="registration" />}
       {showTransaction && (
         <TransactionModal
@@ -211,7 +211,7 @@ const GamePage = () => {
         <TransactionCompleteModal
           onClose={() => setShowTransactionComplete(false)}
         />
-      )}
+      )} */}
     </Page>
   )
 }
