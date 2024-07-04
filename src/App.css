@@ -394,6 +394,12 @@ template {
   color: var(--button-hover-text-color);
 }
 
+a.primary-button{
+    padding: var(--spacing-12) var(--spacing-16);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius-16);
+}
+
 .control-button {
   border-color: var(--primary-color);
   background-color: var(--background-color);
