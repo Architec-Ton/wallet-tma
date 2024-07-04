@@ -18,7 +18,7 @@ export const gamingApi = createApi({
       string | undefined
     >({
       query: (search) => ({
-        url: !!search ? `apps?search=${search}` : 'apps',
+        url: search ? `apps?search=${search}` : 'apps',
         method: 'GET',
       }),
       async onCacheEntryAdded(_, { dispatch, cacheDataLoaded }) {
@@ -29,7 +29,7 @@ export const gamingApi = createApi({
       },
     }),
     getGame: builder.query<IGame, string>({
-      query: (id) => `game/${id}`,
+      query: (id) => `app/${id}`,
     }),
     getGameLeaders: builder.query<
       TGameLeader[],

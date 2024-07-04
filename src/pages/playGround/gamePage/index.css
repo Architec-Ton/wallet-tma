@@ -88,3 +88,8 @@
   margin-right: var(--spacing-4);
   width: 1rem;
 }
+
+.game-gallery-img{
+  aspect-ratio: 220/380;
+  min-width: 200px;
+}
