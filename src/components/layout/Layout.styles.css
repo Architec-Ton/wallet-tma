@@ -133,3 +133,16 @@ input:focus, input:focus-visible,input:active, input:visited {
     align-items: center;
     justify-content: center;
 }
+
+.start{
+    text-align: start;
+    align-items: start;
+    justify-content: start;
+    margin-left: 0;
+    margin-right: 0;
+
+}
+
+.text-small{
+    font-size: var(--font-size-small);
+}
