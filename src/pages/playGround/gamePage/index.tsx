@@ -22,6 +22,7 @@ import { GameResource } from '../../../types/gameTypes';
 import useLanguage from '../../../hooks/useLanguage';
 
 import './index.css';
+import useRouter from '../../../hooks/useRouter';
 // import VoteModal from "../../../components/ui/games/voteModal"
 // import ModalPinCode from "../../../components/ui/modals/modalPinCode"
 // import TransactionModal from "../../../components/ui/modals/transactionModal"
@@ -41,6 +42,7 @@ const GamePage = () => {
   const t = useLanguage('game');
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useRouter();
   // const [walletInfoApi] = useApiWalletInfoMutation();
   // const navigate = useNavigate()
   const { data: game, isLoading } = useGetGameQuery(id as string);
@@ -134,7 +136,13 @@ const GamePage = () => {
         icon={game?.icon}
         className="game-page__header">
         <div className="game-controls">
-          <button className="rounded-button primary-button">{t('play')}</button>
+          <button
+            className="rounded-button btn primary-button"
+            onClick={() => {
+              if (game?.url) navigate(game?.url);
+            }}>
+            {t('play')}
+          </button>
           {/* <button className="rounded-button vote-button" onClick={modalHandler}>
             <img src={iconLogoButton} alt="" />
             <span>350k+</span>
