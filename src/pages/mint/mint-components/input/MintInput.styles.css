@@ -1,0 +1,82 @@
+.mintinputmint {
+
+    padding: 1rem;
+    display: block;
+    border: 2px solid var(--background-selected-color);
+    border-radius: 1rem;
+    cursor: pointer;
+    background-color: var(--background-selected-color);
+    justify-content: space-between;
+    font-size: 13px;
+    min-width: 90%;
+}
+
+.mintinput-header-mint{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    color: var(--text-secondary-color);
+    font-size: 1rem;
+}
+.mintinput-header-mint div{
+    width: fit-content;
+    flex-wrap: nowrap;
+}
+
+.mintinput-mint.selected,
+.mintinput-mint.selected:hover {
+    border-color: var(--primary-color);
+}
+
+.mintinput-mint:hover {
+    border: 2px solid var(--primary-color);
+}
+
+.mintinput-body-mint{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.mintinput-body-mint input{
+    text-align: right;
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    max-width: 220px;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Для удаления спиннеров в Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.mintinput-input-mint:focus, .mintinput-input-mint:active, .mintinput-input-mint:focus-visible, .mintinput-input-mint:hover{
+    border: none;
+    outline-width: 0;
+}
+
+.mintinput-title-mint{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    font-size: 1.5rem;
+    font-weight: 400;
+    column-gap: 0.5rem;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.mintinput-title-mint h3{
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+
+}
+

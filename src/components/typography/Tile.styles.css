@@ -1,9 +1,36 @@
 .tile{
     display: flex;
+    flex: 1;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     column-gap: var(--spacing-12);
+}
+
+.tile-setting {
+    margin-left: auto;
+}
+
+.setting-value {
+    display: flex;
+    color: var(--selected-color);
+}
+
+.account-settings-tile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.account-settings-tile h2,
+.account-settings-tile p {
+    margin: 0;
+}
+
+.account-settings-tile .setting-value {
+    margin-left: auto;
 }
 
 

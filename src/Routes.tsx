@@ -20,12 +20,14 @@ import AddCrypto from './pages/addCrypto';
 import ReceiveAsset from './pages/addCrypto/ReceiveAsset.tsx';
 import ChooseAddMethod from './pages/addCrypto/AddCrypto.tsx';
 import AddCryptoAddress from './pages/addCrypto/Address.tsx';
-import Account from './pages/Account.tsx';
+// import Account from './pages/Account.tsx';
 import News from './pages/news/News.tsx';
 import Swap from './pages/swap';
 import SelectAddress from './pages/send/SelectAddress.tsx';
 import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from './pages/send/send.tsx';
+import AccountDisconnect from "./pages/account/AccountDisconnect.tsx";
+import Mint from "./pages/mint/Mint.tsx";
 
 const router = createBrowserRouter(
   [
@@ -77,10 +79,10 @@ const router = createBrowserRouter(
       path: '/pin-code',
       element: <PinCode />,
     },
-    {
-      path: '/account',
-      element: <Account />,
-    },
+    // {
+    //   path: '/account',
+    //   element: <Account />,
+    // },
     {
       path: '/add-crypto',
       element: <AddCrypto />,
@@ -131,6 +133,14 @@ const router = createBrowserRouter(
       path: '/send/amount',
       element: <SelectAmount />,
     },
+    {
+       path: '/account',
+       element: <AccountDisconnect/>
+    },
+    {
+       path: '/mint-bank',
+       element: <Mint/>
+    }
   ],
 
   { basename: '/wallet' }

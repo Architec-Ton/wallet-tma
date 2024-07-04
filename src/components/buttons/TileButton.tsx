@@ -12,6 +12,8 @@ type Props = {
   style?: CSSProperties;
   className?: string;
   onClick?: MouseEventHandler;
+  isSettingVisible?: boolean;
+  settingValue?: string | null;
 };
 
 function TileButton({
@@ -22,6 +24,8 @@ function TileButton({
   style,
   className,
   onClick,
+  isSettingVisible,
+  settingValue
 }: Props) {
   return (
     <button
@@ -34,6 +38,8 @@ function TileButton({
         title={title}
         description={description}
         iconAction={iconAction}
+        isSettingVisible={isSettingVisible}
+        settingValue={settingValue}
       />
     </button>
   );

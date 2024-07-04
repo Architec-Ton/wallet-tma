@@ -39,8 +39,7 @@ const News = () => {
 
     
     useEffect(() => {
-        page.setLoading(false)
-        page.setNavbarVisible(true)
+        page.setLoading(false, true)
     }, []);
 
 

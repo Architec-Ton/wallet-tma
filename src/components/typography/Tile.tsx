@@ -12,7 +12,10 @@ interface OwnProps<T> extends HTMLAttributes<T> {
   style?: CSSProperties;
   className?: string;
   children?: React.ReactNode;
-};
+  isSettingVisible?: boolean;
+  keyToStorage?: string;
+  settingValue?: string | null;
+}
 
 function Tile({
   icon,
@@ -22,6 +25,8 @@ function Tile({
   style,
   className,
   children,
+  isSettingVisible,
+  settingValue,
   ...divProps
 }: OwnProps<HTMLDivElement>) {
   return (
@@ -37,6 +42,7 @@ function Tile({
           <h2>{title}</h2>
           <p>{description}</p>
           {children}
+          {isSettingVisible && <div className='setting-value'>{settingValue}</div>}
         </div>
       </Row>
       {iconAction && (

@@ -1,0 +1,19 @@
+.selector-tile {
+    display: flex;
+    margin: var(--spacing-8);
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: column;
+}
+
+.selector-tile-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.selector-tile-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
