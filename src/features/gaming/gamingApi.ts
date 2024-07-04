@@ -1,8 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
+  AppsList,
   GameCategoryType,
   GameListItemType,
-  GameListType,
   IGame,
   TGameLeader,
 } from '../../types/gameTypes';
@@ -13,10 +13,7 @@ export const gamingApi = createApi({
   reducerPath: 'gamingApi',
   baseQuery: baseQuery,
   endpoints: (builder) => ({
-    getCategories: builder.mutation<
-      GameListType<GameListItemType[]>,
-      string | undefined
-    >({
+    getCategories: builder.mutation<AppsList, string | undefined>({
       query: (search) => ({
         url: search ? `apps?search=${search}` : 'apps',
         method: 'GET',
