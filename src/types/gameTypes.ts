@@ -31,6 +31,7 @@ export interface IGame {
   title: string;
   subtitle: string;
   description: string;
+  url?: string;
   icon?: string;
   gallery: string[];
   category: number;
