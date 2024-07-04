@@ -10,6 +10,7 @@ import Block from "../../components/typography/Block.tsx";
 // } from '../../assets/icons/pincode/index.ts'
 import useLanguage from "../../hooks/useLanguage.ts";
 import Circle from "../../components/pin-page/Circle.tsx";
+import {usePage} from "../../hooks/usePage.ts";
 
 
 export interface PinInputProps {
@@ -29,6 +30,11 @@ const PinCode:
     const [pin, setPin] = useState<string>('')
     const [status, setStatus] =useState<'normal'|'error'|'success'>('normal')
     const regPin = useRef('')
+    const page = usePage();
+
+    useEffect(() => {
+        page.setLoading(false)
+    }, []);
 
     useEffect(() => {
         switch (status) {
@@ -127,8 +133,9 @@ const PinCode:
     const title = regPin.current && status !== 'error' ? 'confirm' : status
 
     return (
-        <Page title={ t(title)}>
+        <Page>
             <div className='pin-container'>
+                <h1 className='pin-title'>{t(title)}</h1>
                 <div className="pin-input">
                     <Block direction='row'>
                             {[...Array(4)].map((_, index) => (

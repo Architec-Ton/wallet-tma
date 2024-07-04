@@ -35,7 +35,7 @@ const GameList = ({ games }: OwnPropsType) => {
         acc.push({
           title,
           id,
-          apps: slideMatrix(apps as GameListItemType[], 5),
+          apps: slideMatrix(apps as GameListItemType[], 3),
         });
         return acc;
       },

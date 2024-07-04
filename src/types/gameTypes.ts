@@ -14,6 +14,18 @@ export type GameCategoryType<T> = {
 
 export type GameListType<G> = GameCategoryType<G>[];
 
+export interface MarketingItem {
+  id: string;
+  image: string;
+  url: string;
+  title?: string;
+}
+
+export type AppsList = {
+  categories: GameListType<GameListItemType[]>;
+  marketings: MarketingItem[];
+};
+
 export interface IGame {
   id: string;
   title: string;
