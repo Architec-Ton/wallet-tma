@@ -12,7 +12,6 @@ interface OwnProps<T> extends HTMLAttributes<T> {
   style?: CSSProperties;
   className?: string;
   children?: React.ReactNode;
-  isSettingVisible?: boolean;
 }
 
 function Tile({
@@ -23,28 +22,20 @@ function Tile({
   style,
   className,
   children,
-  isSettingVisible,
   ...divProps
 }: OwnProps<HTMLDivElement>) {
-
-  const visibleSetting = () => {
-
-  }
-
   return (
     <Block
       style={style}
       direction="row"
       className={classNames('tile', className)}
-      {...divProps}
-    >
+      {...divProps}>
       <Row>
         {icon && <img src={icon} className="tile-icon" />}
         <div className="tile-body">
           <h2>{title}</h2>
           <p>{description}</p>
           {children}
-          {isSettingVisible }
         </div>
       </Row>
       {iconAction && (
