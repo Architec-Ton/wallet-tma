@@ -17,16 +17,17 @@ export type GameListType<G> = GameCategoryType<G>[];
 export interface IGame {
   id: string;
   title: string;
+  subtitle: string;
   description: string;
-  thumb: string;
+  icon?: string;
   gallery: string[];
   category: number;
   resources: GameResource[];
-  rate: number;
+  rating: number;
 }
 
 export interface GameResource {
-  thumb: string;
+  icon: string;
   title: string;
   description: string;
   link: string;
