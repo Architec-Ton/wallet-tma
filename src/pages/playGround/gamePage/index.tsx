@@ -1,28 +1,28 @@
-import { useParams } from 'react-router-dom';
-import Page from '../../../components/containers/Page';
-import { useGetGameQuery } from '../../../features/gaming/gamingApi';
 import { useCallback, useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { setLoading } from '../../../features/page/pageSlice';
-import Tile from '../../../components/typography/Tile';
+import { useParams } from 'react-router-dom';
 import {
   iconCoinButton,
   iconGlobalButton,
   iconSendButton,
 } from '../../../assets/icons/buttons';
+import Page from '../../../components/containers/Page';
+import Tile from '../../../components/typography/Tile';
+import { useGetGameQuery } from '../../../features/gaming/gamingApi';
+import { setLoading } from '../../../features/page/pageSlice';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
 
-import Slider from '../../../components/ui/slider';
+import classNames from 'classnames';
 import { SwiperSlide } from 'swiper/react';
 import Row from '../../../components/containers/Row';
 import Section from '../../../components/containers/Section';
 import Block from '../../../components/typography/Block';
-import classNames from 'classnames';
 import TypedTile from '../../../components/typography/TypedTile';
-import { GameResource } from '../../../types/gameTypes';
+import Slider from '../../../components/ui/slider';
 import useLanguage from '../../../hooks/useLanguage';
+import { GameResource } from '../../../types/gameTypes';
 
+import LinkButton from '../../../components/buttons/LinkButton';
 import './index.css';
-import useRouter from '../../../hooks/useRouter';
 // import VoteModal from "../../../components/ui/games/voteModal"
 // import ModalPinCode from "../../../components/ui/modals/modalPinCode"
 // import TransactionModal from "../../../components/ui/modals/transactionModal"
@@ -42,7 +42,6 @@ const GamePage = () => {
   const t = useLanguage('game');
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const navigate = useRouter();
   // const [walletInfoApi] = useApiWalletInfoMutation();
   // const navigate = useNavigate()
   const { data: game, isLoading } = useGetGameQuery(id as string);
@@ -125,8 +124,7 @@ const GamePage = () => {
   //   await delay();
   //   setIsTransactionInProgress(false);
   //   setShowTransaction(false);
-  //   setShowTransactionComplete(true);
-  // };
+  //   setShowTransactionComplete(true);  // };
 
   return (
     <Page>
@@ -136,13 +134,10 @@ const GamePage = () => {
         icon={game?.icon}
         className="game-page__header">
         <div className="game-controls">
-          <button
-            className="rounded-button btn primary-button"
-            onClick={() => {
-              if (game?.url) navigate(game?.url);
-            }}>
+          <LinkButton className="primary-button" to={game?.url || ''}>
             {t('play')}
-          </button>
+          </LinkButton>
+
           {/* <button className="rounded-button vote-button" onClick={modalHandler}>
             <img src={iconLogoButton} alt="" />
             <span>350k+</span>
