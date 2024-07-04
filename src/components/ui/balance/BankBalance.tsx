@@ -18,18 +18,13 @@ function BankBalance({ children, walletInfoData }: Props) {
   return (
     <Block className="balance-block space-between">
       <Column className="w-100 start">
-        <h1 className="title">
+        <h1 className="title start">
           <span>Bank</span> Architec.TON
         </h1>
         <Row className="space-between">
           <div className="balance-block-value">
-            {walletInfoData &&
-              `${walletInfoData.wallets[
-                walletInfoData.currentWallet
-              ].usdPrice.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
-              })} $ARCH`}
+            {walletInfoData && `0.00000 ARC`}{' '}
+            <span className="text-small">(0 banks)</span>
           </div>
           {/* <h1>
             <span>Wallet</span> Architec.TON
@@ -38,7 +33,7 @@ function BankBalance({ children, walletInfoData }: Props) {
         </Row>
         <Row
           style={{
-            margin: '1rem 0',
+            margin: 'var(--spacing-16) 0',
           }}>
           <Button icon={iconBankButton}>Buy</Button>
         </Row>

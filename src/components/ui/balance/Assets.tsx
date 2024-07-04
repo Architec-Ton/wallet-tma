@@ -61,18 +61,20 @@ function Assets({ children, assets }: Props) {
                 })} ${asset.meta?.symbol}`}
                 // onClick={assetClickHandler(asset)}
               >
-                <div className="list-block__right">
-                  <div className="list-block__title">
-                    {asset.usdPrice.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                    {' $'}
+                {asset.usdPrice > 0 && (
+                  <div className="list-block__right">
+                    <div className="list-block__title">
+                      {asset.usdPrice.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                      {' $'}
+                    </div>
+                    <div className="list-block__descriptio11n">
+                      <PriceChanges changePrice={asset.changePrice} />
+                    </div>
                   </div>
-                  <div className="list-block__descriptio11n">
-                    <PriceChanges changePrice={asset.changePrice} />
-                  </div>
-                </div>
+                )}
               </ListTileItem>
             );
           })}
