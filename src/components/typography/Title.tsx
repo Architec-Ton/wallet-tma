@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import INFO_ICON from '../../assets/icons/pages/secret-key/info-circle.svg';
+import './Title.styles.css'
+
 interface Props {
   title?: string;
   titleAccent?: string;
