@@ -29,8 +29,8 @@ function AddWallet() {
   };
 
   useEffect(() => {
-    if (state.status == "closed" && state.closeReason == "wallet-selected") {
-      // console.log(state, address);
+      console.log(state, address);
+    if (state.status == "closed" && state.closeReason == "wallet-selected" && address) {
       ton.setAddress(address, "tonconnect");
     }
   }, [state]);
