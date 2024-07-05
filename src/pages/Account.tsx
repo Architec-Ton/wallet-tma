@@ -8,6 +8,7 @@ import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
 import { TonConnectionMode } from "../features/ton/tonSlice";
 import { useTon } from "../hooks/useTon";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import Button from "../components/buttons/Button.tsx";
 
 function Account() {
   const navigate = useRouter();
@@ -34,15 +35,18 @@ function Account() {
   return (
     <Page>
       <Column>
-        <button
+        <Button
           onClick={() => {
             ton.setDisconnect();
             tonConnectUI.disconnect();
           }}
-          className="btn"
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
           Disconnect
-        </button>
+        </Button>
         {/* {tonMode == TonConnectionMode.tonconnect && <TonConnectButton />} */}
       </Column>
     </Page>
