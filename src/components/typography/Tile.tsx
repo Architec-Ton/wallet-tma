@@ -12,7 +12,7 @@ interface OwnProps<T> extends HTMLAttributes<T> {
   style?: CSSProperties;
   className?: string;
   children?: React.ReactNode;
-};
+}
 
 function Tile({
   icon,
@@ -29,8 +29,7 @@ function Tile({
       style={style}
       direction="row"
       className={classNames('tile', className)}
-      {...divProps}
-    >
+      {...divProps}>
       <Row>
         {icon && <img src={icon} className="tile-icon" />}
         <div className="tile-body">

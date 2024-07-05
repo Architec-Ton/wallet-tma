@@ -1,25 +1,22 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi } from '@reduxjs/toolkit/query/react';
 import {
+  AppsList,
   GameCategoryType,
   GameListItemType,
-  GameListType,
   IGame,
   TGameLeader,
-} from "../../types/gameTypes";
-import { setCategories } from "./gamingSlice";
-import baseQuery from "../api/api";
+} from '../../types/gameTypes';
+import { setCategories } from './gamingSlice';
+import baseQuery from '../api/api';
 
 export const gamingApi = createApi({
-  reducerPath: "gamingApi",
+  reducerPath: 'gamingApi',
   baseQuery: baseQuery,
   endpoints: (builder) => ({
-    getCategories: builder.mutation<
-      GameListType<GameListItemType[]>,
-      string | undefined
-    >({
+    getCategories: builder.mutation<AppsList, string | undefined>({
       query: (search) => ({
-        url: !!search ? `games?search=${search}` : "games",
-        method: "GET",
+        url: search ? `apps?search=${search}` : 'apps',
+        method: 'GET',
       }),
       async onCacheEntryAdded(_, { dispatch, cacheDataLoaded }) {
         const cacheData = await cacheDataLoaded;
@@ -29,14 +26,14 @@ export const gamingApi = createApi({
       },
     }),
     getGame: builder.query<IGame, string>({
-      query: (id) => `game/${id}`,
+      query: (id) => `app/${id}`,
     }),
     getGameLeaders: builder.query<
       TGameLeader[],
       { id: string; limit?: number }
     >({
       query: ({ id, limit = 0 }) =>
-        `leaders/?gameId=${id}${limit ? `&_limit=${limit}` : ""}`,
+        `leaders/?gameId=${id}${limit ? `&_limit=${limit}` : ''}`,
     }),
     getCategoryGames: builder.query<
       GameCategoryType<GameListItemType[]>,
@@ -50,14 +47,14 @@ export const gamingApi = createApi({
     >({
       query: ({ id, params }) => ({
         url: `games/${id}?${params.toString()}`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
     getTopRateGames: builder.mutation<
       GameListItemType[],
       URLSearchParams | undefined
     >({
-      query: (params) => (!params ? "top" : `top?${params.toString()}`),
+      query: (params) => (!params ? 'top' : `top?${params.toString()}`),
     }),
   }),
 });

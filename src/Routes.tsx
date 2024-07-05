@@ -2,9 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import PlayGround from './pages/playGround';
 // import AddWallet from "./components/start-page/AddWallet/AddWallet.tsx";
 // import YourSecretKey from "./components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx";
-import BankMain from './pages/banks/BankMain.tsx';
-import BankingTasks from './pages/banks/BankingTasks.tsx';
-import BankStaking from './pages/banks/BankStaking.tsx';
+
 import Welcome from './pages/registration/Welcome.tsx';
 import ConfirmKey from './pages/registration/ConfirmKey.tsx';
 import AddWallet from './pages/registration/AddWallet.tsx';
@@ -20,8 +18,16 @@ import AddCrypto from './pages/addCrypto';
 import ReceiveAsset from './pages/addCrypto/ReceiveAsset.tsx';
 import ChooseAddMethod from './pages/addCrypto/AddCrypto.tsx';
 import AddCryptoAddress from './pages/addCrypto/Address.tsx';
-import Account from './pages/Account.tsx';
+import Account from './pages/account/Account.tsx';
 import News from './pages/news/News.tsx';
+import WalletLanguage from './pages/account/account-settings-pages/WalletLanguage.tsx';
+import MainCurrency from './pages/account/account-settings-pages/MainCurrency.tsx';
+import ApplicationSubmit from './pages/account/account-settings-pages/ApplicationSubmit.tsx';
+import WalletSafety from './pages/account/account-settings-pages/WalletSafety.tsx';
+import Notifications from './pages/account/account-settings-pages/Notifications.tsx';
+import BankMain from './pages/banks/BankMain.tsx';
+import BankingTasks from './pages/banks/BankingTasks.tsx';
+import BankStaking from './pages/banks/BankStaking.tsx';
 import Swap from './pages/swap';
 import SelectAddress from './pages/send/SelectAddress.tsx';
 import SelectAmount from './pages/send/SelectAmount.tsx';
@@ -82,6 +88,29 @@ const router = createBrowserRouter(
       element: <Account />,
     },
     {
+      path: '/wallet-language',
+      element: <WalletLanguage />,
+    },
+    {
+      path: '/main-currency',
+      element: <MainCurrency />,
+    },
+    {
+      path: '/application-submit',
+      element: <ApplicationSubmit />,
+    },
+    {
+      path: '/wallet-safety',
+      element: <WalletSafety />,
+    },
+    {
+      path: '/notifications',
+      element: <Notifications />,
+    },
+    {
+      path: '/dev-menu',
+    },
+    {
       path: '/add-crypto',
       element: <AddCrypto />,
       children: [
@@ -132,7 +161,6 @@ const router = createBrowserRouter(
       element: <SelectAmount />,
     },
   ],
-
   { basename: '/wallet' }
 );
 

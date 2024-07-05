@@ -6,7 +6,8 @@ body {
 
 h1 {
     font-size: var(--font-size-large);
-    margin: var(--spacing-12) auto;
+    /*margin: var(--spacing-12) auto;*/
+    margin: var(--spacing-12) 0;
     font-weight: var(--font-medium);
 }
 
@@ -132,4 +133,17 @@ input:focus, input:focus-visible,input:active, input:visited {
     text-align: center;
     align-items: center;
     justify-content: center;
+}
+
+.start{
+    text-align: start;
+    align-items: start;
+    justify-content: start;
+    margin-left: 0;
+    margin-right: 0;
+
+}
+
+.text-small{
+    font-size: var(--font-size-small);
 }
