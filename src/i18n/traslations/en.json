@@ -48,6 +48,7 @@
     "button-next": "Next",
     "button-stake": "Stake",
     "button-continue": "Continue",
+    "button-buy": "Buy",
 
     "game-all": "All",
     "game-description": "Description",
@@ -135,5 +136,7 @@
     "send-select-title": "Choose asset to send",
 
     "input-address": "Address",
-    "input-paste": "Paste"
+    "input-paste": "Paste",
+
+    "bank-buy-title": "Buy Bank"
 }

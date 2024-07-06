@@ -8,6 +8,8 @@ import { WalletInfoData } from '../../../types/wallet';
 import Address from './Address';
 import Button from '../../buttons/Button';
 import { iconBankButton } from '../../../assets/icons/buttons';
+import useRouter from '../../../hooks/useRouter';
+import useLanguage from '../../../hooks/useLanguage';
 
 type Props = {
   walletInfoData: WalletInfoData | null;
@@ -15,6 +17,8 @@ type Props = {
 };
 
 function BankBalance({ children, walletInfoData }: Props) {
+  const navigate = useRouter();
+  const t = useLanguage('bank-balance');
   return (
     <Block className="balance-block space-between">
       <Column className="w-100 start">
@@ -35,7 +39,9 @@ function BankBalance({ children, walletInfoData }: Props) {
           style={{
             margin: 'var(--spacing-16) 0',
           }}>
-          <Button icon={iconBankButton}>Buy</Button>
+          <Button icon={iconBankButton} onClick={() => navigate('/bank/buy')}>
+            {t('Buy', 'button')}
+          </Button>
         </Row>
 
         {children}

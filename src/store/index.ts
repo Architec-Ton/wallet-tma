@@ -1,15 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import pageReducer from "../features/page/pageSlice";
-import tonReducer from "../features/ton/tonSlice";
-import mainButtonReducer from "../features/tma/mainButtonSlice";
-import backButtonReducer from "../features/tma/backButtonSlice";
-import tmaReducer from "../features/tma/tmaSlice";
-import gamingSlice from "../features/gaming/gamingSlice";
-import { gamingApi } from "../features/gaming/gamingApi";
-import authSlice from "../features/auth/authSlice";
-import { authApi } from "../features/auth/authApi";
-import { walletApi } from "../features/wallet/walletApi";
-import swapSlice from "../features/swap/swapSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import pageReducer from '../features/page/pageSlice';
+import tonReducer from '../features/ton/tonSlice';
+import mainButtonReducer from '../features/tma/mainButtonSlice';
+import backButtonReducer from '../features/tma/backButtonSlice';
+import tmaReducer from '../features/tma/tmaSlice';
+import gamingSlice from '../features/gaming/gamingSlice';
+import { gamingApi } from '../features/gaming/gamingApi';
+import authSlice from '../features/auth/authSlice';
+import { authApi } from '../features/auth/authApi';
+import { walletApi } from '../features/wallet/walletApi';
+import swapSlice from '../features/swap/swapSlice';
+import { bankApi } from '../features/bank/bankApi';
 
 export const store = configureStore({
   reducer: {
@@ -22,12 +23,14 @@ export const store = configureStore({
     auth: authSlice,
     swap: swapSlice,
     [authApi.reducerPath]: authApi.reducer,
+    [bankApi.reducerPath]: bankApi.reducer,
     [gamingApi.reducerPath]: gamingApi.reducer,
     [walletApi.reducerPath]: walletApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
+      bankApi.middleware,
       walletApi.middleware,
       gamingApi.middleware
     ),

@@ -32,6 +32,7 @@ import Swap from './pages/swap';
 import SelectAddress from './pages/send/SelectAddress.tsx';
 import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from './pages/send/send.tsx';
+import BankBuy from './pages/banks/BankBuy.tsx';
 
 const router = createBrowserRouter(
   [
@@ -143,6 +144,10 @@ const router = createBrowserRouter(
     {
       path: '/bank/stake',
       element: <BankStaking />,
+    },
+    {
+      path: '/bank/buy',
+      element: <BankBuy />,
     },
     {
       path: '/swap',
