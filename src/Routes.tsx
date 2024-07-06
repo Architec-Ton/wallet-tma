@@ -81,7 +81,7 @@ const router = createBrowserRouter(
     },
     {
       path: '/pin-code',
-      element: <PinCode />,
+      element: <PinCode setPinCode={() => {}}/>,
     },
     {
       path: '/account',

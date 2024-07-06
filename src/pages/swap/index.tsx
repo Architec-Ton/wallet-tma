@@ -240,6 +240,7 @@ const Swap = () => {
     setIsTransactionInProgress(true);
     const types = [sendingAsset?.type, receivingAsset?.type];
     try {
+      console.log(pinCode)
       if (types.includes('ton')) {
         types[0] === 'ton'
           ? await tonToJettonTransaction()
@@ -353,6 +354,7 @@ const Swap = () => {
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
+  const [pinCode, setPinCode] = useState<string>('');
 
   useEffect(() => {
     const isValid: boolean =
@@ -436,7 +438,7 @@ const Swap = () => {
         />
       )}
       {showPinCode && (
-        <ModalPinCode onSuccess={onPinSuccess} mode="confirmation" />
+        <ModalPinCode setPinCode={setPinCode} onSuccess={onPinSuccess} mode="confirmation" />
       )}
       {showTransaction && (
         <TransactionModal

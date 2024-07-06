@@ -79,4 +79,5 @@
 
 .modal__content {
     overflow-y: unset;
+    background-color: var(--background-color);
 }

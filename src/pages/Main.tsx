@@ -13,6 +13,7 @@ import { useAppSelector } from "../hooks/useAppDispatch";
 import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { WalletInfoData } from "../types/wallet";
+import useLocalStorage from "../hooks/useLocalStorage.ts";
 
 function Main() {
   const navigate = useRouter();
@@ -25,6 +26,7 @@ function Main() {
   const page = usePage();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);
+  const [mnemonic] = useLocalStorage<string>("mnemonic", '');
   //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
 
   const handleInfo = async () => {
@@ -49,7 +51,10 @@ function Main() {
 
   useEffect(() => {
     console.log("isTonLoading", isTonLoading);
-    if (!isTonLoading) {
+    if (mnemonic.length !== 0) {
+      // TODO load data from blockchain
+      console.log(mnemonic)
+    } else if (!isTonLoading) {
       // console.log("Call ", isTonLoading, tonMode);
       if (tonMode == TonConnectionMode.disconnect) {
         // console.log("mode disconnect");
