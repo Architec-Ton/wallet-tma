@@ -13,10 +13,17 @@ import useLanguage from '../../../hooks/useLanguage';
 
 type Props = {
   walletInfoData: WalletInfoData | null;
+  arcAmount: bigint;
+  bnkAmount: bigint;
   children?: ReactNode;
 };
 
-function BankBalance({ children, walletInfoData }: Props) {
+function BankBalance({
+  children,
+  arcAmount,
+  bnkAmount,
+  walletInfoData,
+}: Props) {
   const navigate = useRouter();
   const t = useLanguage('bank-balance');
   return (
@@ -27,8 +34,11 @@ function BankBalance({ children, walletInfoData }: Props) {
         </h1>
         <Row className="space-between">
           <div className="balance-block-value">
-            {walletInfoData && `0.00000 ARC`}{' '}
-            <span className="text-small">(0 banks)</span>
+            {Number((arcAmount * 100n) / 1_000_00n) / 100_000_0} ARC
+            {/* {Number(arcAmount) / (10 ^ 9)} ffff
+            {walletInfoData &&
+              `${((arcAmount * 10n) / 1000_000_000_0n).toString()} ARC`}{' '} */}
+            <span className="text-small"> ({Number(bnkAmount)} banks)</span>
           </div>
           {/* <h1>
             <span>Wallet</span> Architec.TON
