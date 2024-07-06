@@ -4,7 +4,7 @@ export interface CoinMetaDto {
   address?: string;
   url?: string;
   image?: string;
-  image_data?: string;
+  imageData?: string;
   decimals?: number;
   symbol?: string;
 }
