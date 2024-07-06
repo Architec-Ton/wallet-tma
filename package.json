@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@orbs-network/ton-access": "^2.3.3",
     "@reduxjs/toolkit": "^2.2.5",
     "@ston-fi/sdk": "^1.0.0",
     "@tma.js/sdk": "^1.5.3",
