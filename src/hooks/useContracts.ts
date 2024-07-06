@@ -73,15 +73,11 @@ function useContracts() {
       },
 
       stake: (walletAddress: Address, amount: bigint) =>
-        bankJettonWallet(walletAddress)?.send(
-          sender,
-          { value: toNano(BANK_GAS_AMOUNT) },
-          {
-            $$type: 'Stake',
-            query_id: 0n,
-            amount: amount,
-          } as Stake
-        ),
+        bankJettonWallet(walletAddress)?.send(sender, { value: toNano(2) }, {
+          $$type: 'Stake',
+          query_id: 0n,
+          amount: amount,
+        } as Stake),
       unstake: () =>
         bankJettonMaster()?.send(
           sender,

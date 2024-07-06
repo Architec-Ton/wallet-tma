@@ -1,6 +1,6 @@
 export const BE_URL =
-import.meta.env.VITE_BE_URL || 'https://dev.architecton.site/api/v2/wallet'/*"http://localhost:8000/api/v2/wallet"*/;
-
+  import.meta.env.VITE_BE_URL ||
+  'https://dev.architecton.site/api/v2/wallet'; /*"http://localhost:8000/api/v2/wallet"*/
 
 export const FE_URL = import.meta.env.VITE_FE_URL || '/wallet';
 
@@ -21,4 +21,4 @@ export const BANK_CROWDSALE_ADDRESS =
   import.meta.env.VITE_BANK_CROWDSALE_ADDRESS ||
   'kQBmyiov17J71ontt2u1F_dwKTfcUoghCMVyfIsDRM9NNvhp';
 
-export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT || '2';
+export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT || '0.07';
