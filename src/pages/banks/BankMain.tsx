@@ -18,6 +18,8 @@ import BlockWithTitle from '../../components/typography/BlockWithTitle';
 import { iconStakeButton, iconTasksButton } from '../../assets/icons/buttons';
 import useLanguage from '../../hooks/useLanguage';
 import BankBalance from '../../components/ui/balance/BankBalance';
+import useContracts from '../../hooks/useContracts';
+import { useTon } from '../../hooks/useTon';
 
 function BankMain() {
   const navigate = useRouter();
@@ -31,6 +33,10 @@ function BankMain() {
   const page = usePage();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);
+  const [arc, setArc] = useState<bigint>(0n);
+  const [bnk, setBnk] = useState<bigint>(0n);
+  const contracts = useContracts();
+  const ton = useTon();
   //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
 
   const handleInfo = async () => {
@@ -45,9 +51,32 @@ function BankMain() {
     }
   };
 
+  const handleStakeInfo = async () => {
+    console.log(ton.wallet.address);
+    if (ton.wallet.address) {
+      const ownerAddress = ton.wallet.address;
+      //Get BNK Wallet address
+      const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
+      console.log('BNK Stake Wallet', stakeAddress?.toString());
+      if (stakeAddress) {
+        const stakeInfo = await contracts.bank.getStakeInfo(
+          stakeAddress,
+          ownerAddress
+        );
+        if (stakeInfo) setArc(stakeInfo?.calculatedAmount);
+        if (stakeInfo) setBnk(stakeInfo?.stakedAmount);
+        console.log('getStakeInfo:', stakeInfo);
+      }
+    }
+  };
+
   useEffect(() => {
     page.setTitle(t('title'));
   }, []);
+
+  useEffect(() => {
+    if (isReady) handleStakeInfo();
+  }, [isReady, ton]);
 
   useEffect(() => {
     console.log('walletInfoData', walletInfoData);
@@ -70,7 +99,10 @@ function BankMain() {
   return (
     <Page>
       <Column>
-        <BankBalance walletInfoData={walletInfoData}></BankBalance>
+        <BankBalance
+          walletInfoData={walletInfoData}
+          arcAmount={arc}
+          bnkAmount={bnk}></BankBalance>
         <Column columns={2}>
           <BlockWithTitle title={t('Staking')} hintMessage={t('Staking-hint')}>
             <Button
