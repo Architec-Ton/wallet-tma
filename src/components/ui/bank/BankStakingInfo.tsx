@@ -27,8 +27,8 @@ function BankStakingInfo() {
 
   return (
     <ListBlock>
-      {infoItems.map((item) => (
-        <ListBaseItem>
+      {infoItems.map((item, index) => (
+        <ListBaseItem key={index}>
           <Row className="space-between w-100">
             <div>{item.title}</div>
             <div>{item.value}</div>
