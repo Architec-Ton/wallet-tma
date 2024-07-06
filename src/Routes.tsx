@@ -18,7 +18,7 @@ import AddCrypto from './pages/addCrypto';
 import ReceiveAsset from './pages/addCrypto/ReceiveAsset.tsx';
 import ChooseAddMethod from './pages/addCrypto/AddCrypto.tsx';
 import AddCryptoAddress from './pages/addCrypto/Address.tsx';
-import Account from './pages/account/Account.tsx';
+// import Account from './pages/account/Account.tsx';
 import News from './pages/news/News.tsx';
 import WalletLanguage from './pages/account/account-settings-pages/WalletLanguage.tsx';
 import MainCurrency from './pages/account/account-settings-pages/MainCurrency.tsx';
@@ -32,6 +32,7 @@ import Swap from './pages/swap';
 import SelectAddress from './pages/send/SelectAddress.tsx';
 import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from './pages/send/send.tsx';
+import AccountDisconnect from "./pages/AccountDisconnect.tsx";
 import BankBuy from './pages/banks/BankBuy.tsx';
 
 const router = createBrowserRouter(
@@ -86,7 +87,7 @@ const router = createBrowserRouter(
     },
     {
       path: '/account',
-      element: <Account />,
+      element: <AccountDisconnect />,
     },
     {
       path: '/wallet-language',
