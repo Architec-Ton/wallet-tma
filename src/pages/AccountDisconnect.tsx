@@ -10,7 +10,7 @@ import { useTon } from "../hooks/useTon";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import Button from "../components/buttons/Button.tsx";
 
-function Account() {
+function AccountDisconnect() {
   const navigate = useRouter();
   const isTonLoading = useAppSelector(selectIsTonLoading);
   const [tonConnectUI] = useTonConnectUI();
@@ -53,4 +53,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default AccountDisconnect;
