@@ -68,6 +68,11 @@ function BankBuy() {
 
   useEffect(() => {
     const bnkAmount = Math.trunc(Number(sendAmount) / bnkPrice);
+    const btnVisible =
+      !!sendAsset &&
+      Number(recvAmount) > 0 &&
+      recvMaxAmount >= Number(recvAmount) &&
+      Number(sendAmount) <= sendAsset?.amount;
     if (isReady) {
       btn.init(
         `${t('buy', 'button')} (${Number(bnkAmount * bnkPrice).toLocaleString(
@@ -79,10 +84,10 @@ function BankBuy() {
         () => {
           handleBuyBank(Number(bnkAmount * bnkPrice));
         },
-        true
+        btnVisible
       );
     }
-  }, [sendAmount, isReady]);
+  }, [sendAmount, isReady, recvAmount, recvMaxAmount, isReady, sendAsset]);
 
   const handleSendOnChange = (value: string) => {
     const tonAmount = Number(value);
