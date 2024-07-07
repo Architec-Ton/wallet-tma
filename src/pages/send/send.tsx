@@ -10,33 +10,39 @@ import { useAppSelector } from '../../hooks/useAppDispatch';
 import { selectAuthIsReady } from '../../features/auth/authSelector';
 import AddressInput from '../../components/inputs/AddressInput';
 import { useTmaMainButton } from '../../hooks/useTma';
-import { Address } from '@ton/core';
+import { Address, toNano } from '@ton/core';
 import Delimiter from '../../components/typography/Delimiter';
 import Row from '../../components/containers/Row';
 import { iconPageSend } from '../../assets/icons/pages/send';
 import { shortenString } from '../../components/ui/balance/Address';
+import TransferAsset from '../../components/ui/assets/TransferAssets';
+import ListBlock from '../../components/ui/listBlock';
+import ListBaseItem from '../../components/ui/listBlock/ListBaseItem';
+import { useTon } from '../../hooks/useTon';
+import useContracts from '../../hooks/useContracts';
 
-export type AssetType = {
-  thumb: string;
+interface ItemInfo {
   title: string;
-  description: string;
-  wallet: string;
-  coin: string;
-};
+  value?: string;
+}
 
 const SendPage = () => {
-  const t = useLanguage('send-select');
+  const t = useLanguage('send');
   //   const navigate = useNavigate();
   const [walletApiAssets] = useApiWalletAssetsMutation();
   const page = usePage();
   const [assets, setAssets] = useState<CoinDto[]>([]);
-  const [asset, setAsset] = useState<CoinDto | null>(null);
+  const [asset, setAsset] = useState<CoinDto | undefined>(undefined);
   const [step, setStep] = useState<number>(0);
   const isReady = useAppSelector(selectAuthIsReady);
   const [address, setAddress] = useState<string>('');
+  const [amount, setAmount] = useState<string>('0');
   const [error, setError] = useState<boolean>(false);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const btn = useTmaMainButton();
+  const ton = useTon();
+  const contracts = useContracts();
+  const [confirmInfo, setConfirmInfo] = useState<ItemInfo[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
@@ -50,6 +56,97 @@ const SendPage = () => {
     }
   };
 
+  const handleAmountInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const amount = Number(event.target.value);
+    if (
+      step == 2 &&
+      !isNaN(amount) &&
+      amount > 0 &&
+      asset &&
+      amount < asset?.amount
+    ) {
+      btn.init(
+        t('continue', 'button'),
+        () => {
+          setStep(3);
+          btn.init(
+            `${t('confirm', 'button')} (${amount} ${asset.meta?.symbol})`,
+            async () => {
+              //Transfer
+              console.log(address, asset.type);
+              if (asset.type == 'ton') {
+                const tx = await ton.sender.send({
+                  value: toNano(amount),
+                  to: Address.parse(address),
+                });
+                console.log('Ton TX:', tx);
+              } else if (asset.type == 'jetton') {
+                console.log(
+                  ton.wallet.address,
+                  asset.meta?.address,
+                  asset.meta?.decimals
+                );
+                if (
+                  ton.wallet.address &&
+                  asset.meta?.address &&
+                  asset.meta?.decimals !== undefined &&
+                  asset.meta?.decimals !== null
+                ) {
+                  const walletAddress = await contracts.jetton.getWallet(
+                    Address.parse(asset.meta?.address),
+                    ton.wallet.address
+                  );
+
+                  console.log('walletJetton:', walletAddress);
+                  const jettonAmount = BigInt(
+                    amount * Math.pow(10, asset.meta.decimals)
+                  );
+                  console.log('jettonAmount:', jettonAmount);
+                  if (walletAddress) {
+                    const tx = await contracts.jetton.transfer(
+                      walletAddress,
+                      Address.parse(address),
+                      jettonAmount
+                    );
+                    console.log('Jetton TX:', tx);
+                  }
+                }
+              }
+            },
+            isButtonEnabled
+          );
+          const itemsInfo: ItemInfo[] = [
+            {
+              title: t('sender'),
+              value: shortenString(
+                ton.wallet.address?.toString({ urlSafe: true }) || 'hidden'
+              ),
+            },
+            {
+              title: t('currency'),
+              value: asset.meta?.symbol,
+            },
+            {
+              title: t('amount'),
+              value: amount?.toString(),
+            },
+            {
+              title: t('commission'),
+              value: `~ 0.002344 TON`,
+            },
+          ];
+          setConfirmInfo(itemsInfo);
+        },
+        true
+      );
+    } else if (step == 2) {
+      btn.setVisible(false);
+    }
+    setAmount(event.target.value);
+  };
+
   const handlerClick = (asset: CoinDto) => {
     setStep(1);
     setAsset(asset);
@@ -58,7 +155,7 @@ const SendPage = () => {
   const handleInfo = async () => {
     try {
       const result = await walletApiAssets(null).unwrap();
-      console.log('Wallet result:', result);
+      // console.log('Wallet result:', result);
       setAssets(result);
     } catch (err) {
       console.error('Failed to get info: ', err);
@@ -79,6 +176,7 @@ const SendPage = () => {
         () => {
           console.log(address);
           console.log(asset);
+          btn.setVisible(false);
           setStep(2);
         },
         isButtonEnabled
@@ -109,7 +207,30 @@ const SendPage = () => {
             <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />
-          block here
+          <TransferAsset
+            asset={asset}
+            value={amount}
+            onChange={handleAmountInputChange}
+          />
+        </>
+      )}
+      {step == 3 && (
+        <>
+          <Row>
+            <img src={iconPageSend} />
+            <h2> Send to {shortenString(address)}</h2>
+          </Row>
+          <Delimiter />
+          <ListBlock>
+            {confirmInfo.map((item, index) => (
+              <ListBaseItem key={index}>
+                <Row className="space-between w-100">
+                  <div>{item.title}</div>
+                  <div>{item.value}</div>
+                </Row>
+              </ListBaseItem>
+            ))}
+          </ListBlock>
         </>
       )}
     </Page>

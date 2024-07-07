@@ -1,5 +1,5 @@
 import { useTonClient } from './useTonClient';
-import { Address, OpenedContract, toNano } from '@ton/core';
+import { Address, beginCell, OpenedContract, toNano } from '@ton/core';
 import { BankJettonWallet, Stake } from '../contracts/tact_BankJettonWallet';
 import { useTon } from './useTon/index';
 import { BankJetton } from '../contracts/tact_BankJetton';
@@ -13,6 +13,11 @@ import {
   BanksCrowdSaleV3 as BanksCrowdSale,
   ReferralAddress,
 } from '../contracts/tact_BanksCrowdSaleV3';
+import { ArcJetton } from '../contracts/tact_ArcJetton';
+import {
+  ArcJettonWallet,
+  JettonTransfer,
+} from '../contracts/tact_ArcJettonWallet';
 
 function useContracts() {
   const { client } = useTonClient();
@@ -21,6 +26,21 @@ function useContracts() {
   // if (network === CHAIN.MAINNET) {
   //   return null;
   // }
+
+  const jettonWallet = (
+    address: Address
+  ): OpenedContract<ArcJettonWallet> | undefined => {
+    if (!client) return;
+    const contract = ArcJettonWallet.fromAddress(address);
+    return client.open(contract) as OpenedContract<ArcJettonWallet>;
+  };
+  const jettonMaster = (
+    address: Address
+  ): OpenedContract<ArcJetton> | undefined => {
+    if (!client) return;
+    const contract = ArcJetton.fromAddress(address);
+    return client.open(contract) as OpenedContract<ArcJetton>;
+  };
 
   const bankJettonWallet = (
     address: Address
@@ -54,6 +74,34 @@ function useContracts() {
   };
 
   return {
+    jetton: {
+      getWallet: async (jettonMasterAddress: Address, ownerAddress: Address) =>
+        jettonMaster(jettonMasterAddress)?.getGetWalletAddress(ownerAddress),
+
+      transfer: async (
+        walletAddress: Address,
+        destinationAddress: Address,
+        amount: bigint
+      ) =>
+        jettonWallet(walletAddress)?.send(
+          sender,
+          {
+            value: toNano(BANK_GAS_AMOUNT),
+            bounce: true,
+          },
+          {
+            $$type: 'JettonTransfer',
+            query_id: 0n,
+            destination: destinationAddress,
+            response_destination: destinationAddress,
+            amount: amount,
+            forward_ton_amount: 100n,
+            custom_payload: beginCell().endCell(),
+            forward_payload: beginCell().endCell(),
+          } as JettonTransfer
+        ),
+    },
+
     bank: {
       buy: (amount: bigint) => {
         bankCrowdSale()?.send(

@@ -49,6 +49,8 @@
     "button-stake": "Stake",
     "button-continue": "Continue",
     "button-buy": "Buy",
+    "button-send": "Send",
+    "button-confirm": "Confirm",
 
     "game-all": "All",
     "game-description": "Description",
@@ -133,7 +135,11 @@
     "transaction-congratulation": "Congratulations!",
 
 
-    "send-select-title": "Choose asset to send",
+    "send-title": "Choose asset to send",
+    "send-sender": "Sender",
+    "send-amount": "Amount",
+    "send-currency": "Currency",
+    "send-commission": "Commision",
 
     "input-address": "Address",
     "input-paste": "Paste",
