@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 //@ts-ignore
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint:disable:no-unused-variable */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-/* @ts-expect-error */
+/* tslint:disable:no-unused-variable */
 import {
   Cell,
   Slice,

@@ -137,6 +137,11 @@
 
     "input-address": "Address",
     "input-paste": "Paste",
+    "input-send": "Send",
+    "input-recv": "Recv",
+    "input-balance": "Balance",
+    "input-clear": "Clear",
+    "input-max": "Max",
 
     "bank-buy-title": "Buy Bank"
 }

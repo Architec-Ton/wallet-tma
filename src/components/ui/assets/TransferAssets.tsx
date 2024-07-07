@@ -1,5 +1,3 @@
-//@ts-nocheck
-//@ts-ignore
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { iconOpenButton } from '../../../assets/icons/buttons';
 import Row from '../../../components/containers/Row';

@@ -1,90 +1,64 @@
-import { useEffect } from 'react';
-// import Column from '../../components/containers/Column';
+import { useEffect, useState } from 'react';
 import Page from '../../components/containers/Page';
 import useLanguage from '../../hooks/useLanguage';
 import { usePage } from '../../hooks/usePage';
 import Delimiter from '../../components/typography/Delimiter';
-// import SendAsset from '../swap/sendAsset';
-import { AssetDataType } from '../swap';
 
 import { useAppSelector } from '../../hooks/useAppDispatch';
 import { selectAuthIsReady } from '../../features/auth/authSelector';
 import { useApiGetBankBuyMutation } from '../../features/bank/bankApi';
-// import AssetInput from '../../components/inputs/AssetInput';
-// import { useTonClient } from '../../hooks/useTonClient';
 import useContracts from '../../hooks/useContracts';
 import { toNano } from '@ton/core';
 import { useTon } from '../../hooks/useTon';
-
-type SwapDataType = {
-  send: AssetDataType;
-  receive: AssetDataType;
-};
-
-// const swapData: SwapDataType = {
-//   send: {
-//     title: '',
-//     balance: 0,
-//     icon: '',
-//     address: '',
-//     value: '',
-//   },
-//   receive: {
-//     title: '',
-//     balance: 0,
-//     icon: '',
-//     address: '',
-//     value: '',
-//   } satisfies AssetDataType,
-// };
+import SendAssetInput from '../../components/ui/assets/SendAssets';
+import { CoinDto } from '../../types/assest';
+import RecvAssetInput from '../../components/ui/assets/RecvAssets';
+import { iconReverseButton } from '../../assets/icons/buttons';
+import { useTmaMainButton } from '../../hooks/useTma';
+import useRouter from '../../hooks/useRouter';
 
 function BankBuy() {
+  const bnkPrice = 1.5;
   const page = usePage();
   const isReady = useAppSelector(selectAuthIsReady);
   const t = useLanguage('bank-buy');
-  // const [swapAssets, setSwappAssets] = useState(swapData);
-  // const [sendAsset, setSendAsset] = useState<CoinDto | null>(null);
-  // const [assets, setAssets] = useState<CoinDto[] | null>(null);
+  const navigate = useRouter();
+  const [sendAsset, setSendAsset] = useState<CoinDto | undefined>(undefined);
+  const [recvAsset, setRecvAsset] = useState<CoinDto | undefined>(undefined);
   const [bankBuyApi] = useApiGetBankBuyMutation();
   const ton = useTon();
+  const btn = useTmaMainButton();
+
+  const [sendAmount, setSendAmount] = useState<string>('0');
+  const [recvAmount, setRecvAmount] = useState<string>('0');
+  const [recvMaxAmount, setRecvMaxAmount] = useState<number>(0);
+
+  useEffect(() => {
+    const btnVisible =
+      !!sendAsset &&
+      Number(recvAmount) > 0 &&
+      recvMaxAmount >= Number(recvAmount) &&
+      Number(sendAmount) <= sendAsset?.amount;
+    btn.setVisible(btnVisible);
+  }, [recvAmount, recvMaxAmount, sendAmount, btn]);
 
   const contracts = useContracts();
-
-  // const { client } = useTonClient();
 
   const handleInfo = async () => {
     try {
       const result = await bankBuyApi(null).unwrap();
-      console.log('Bank result:', result);
-
-      // setSendAsset(result.ton);
-      const buyData: SwapDataType = {
-        send: {
-          title: result.ton.meta?.name || 'Ton',
-          balance: result.ton.amount,
-          icon: result.ton.meta?.image || '',
-          address: '',
-          value: '1.5',
-        },
-        receive: {
-          title: '',
-          balance: 0,
-          icon: '',
-          address: '',
-          value: '',
-        },
-      };
-      console.log('SwapDataType', buyData);
-      // setSwappAssets(buyData);
+      setSendAsset(result.ton);
+      setRecvAsset(result.bnk);
+      setRecvMaxAmount(Math.trunc(result.ton.amount / bnkPrice));
     } catch (err) {
       console.error('Failed to get info: ', err);
     } finally {
-      page.setLoading(false, true);
+      page.setLoading(false, false);
+      btn.init(t('buy', 'button'), () => handleBuyBank, true);
     }
   };
 
   useEffect(() => {
-    console.log('isReady', isReady);
     if (isReady) handleInfo();
   }, [isReady]);
 
@@ -92,11 +66,49 @@ function BankBuy() {
     page.setLoading(false);
   }, []);
 
-  const handleBuyBank = async () => {
-    console.log('call buy');
+  useEffect(() => {
+    if (isReady)
+      btn.init(
+        t('buy', 'button'),
+        () => {
+          handleBuyBank(Number(sendAmount));
+        },
+        true
+      );
+  }, [sendAmount, isReady]);
+
+  const handleSendOnChange = (value: string) => {
+    const tonAmount = Number(value);
+    if (!isNaN(tonAmount)) {
+      const bnkAmount = Math.trunc(tonAmount / bnkPrice);
+      if (bnkAmount <= recvMaxAmount) setRecvAmount(bnkAmount.toString());
+      //setSendAmount((bnkAmount * bnkPrice).toString());
+    }
+    setSendAmount(value);
+  };
+
+  const handleRecvOnChange = (value: string) => {
+    const bnkAmount = Number(value);
+    if (!isNaN(bnkAmount)) {
+      const bnkTAmount = Math.trunc(bnkAmount);
+      if (bnkAmount <= recvMaxAmount)
+        setSendAmount((bnkTAmount * bnkPrice).toString());
+      if (bnkAmount <= recvMaxAmount) setRecvAmount(bnkTAmount.toString());
+    } else {
+      setRecvAmount(value);
+    }
+  };
+
+  const handleBuyBank = async (amount: number) => {
     if (ton.wallet.address) {
-      const tx = await contracts.bank.buy(toNano(1.5));
-      console.log('transaction:', tx);
+      console.log(sendAmount);
+      try {
+        const tx = await contracts.bank.buy(toNano(amount));
+        console.log('transaction:', tx);
+        navigate(-1);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -108,10 +120,22 @@ function BankBuy() {
   return (
     <Page title={t('title')}>
       <Delimiter />
+      <SendAssetInput
+        asset={sendAsset}
+        value={sendAmount}
+        onChange={handleSendOnChange}
+      />
       {/* {sendAsset && <AssetInput asset={sendAsset} value="00" />} */}
       <Delimiter>
-        {/* <img src={iconReverseButton} alt="" onClick={reverseSwaping} /> */}
+        <img src={iconReverseButton} alt="" />
       </Delimiter>
+      <RecvAssetInput
+        maxValue={recvMaxAmount}
+        asset={recvAsset}
+        value={recvAmount}
+        onChange={handleRecvOnChange}
+      />
+
       {/* <ReceiveAsset
         asset={swapAssets.receive}
         onChange={changeReceiveHandler}
@@ -121,9 +145,9 @@ function BankBuy() {
         sendedCoin={swapAssets.send}
         disabled={false}
       /> */}
-      <button className="primary-button" onClick={() => handleBuyBank()}>
+      {/* <button className="primary-button" onClick={() => handleBuyBank()}>
         Buy 1 BNK
-      </button>
+      </button> */}
     </Page>
   );
 }
