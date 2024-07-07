@@ -29,10 +29,10 @@ import BankMain from './pages/banks/BankMain.tsx';
 import BankingTasks from './pages/banks/BankingTasks.tsx';
 import BankStaking from './pages/banks/BankStaking.tsx';
 import Swap from './pages/swap';
-import SelectAddress from './pages/send/SelectAddress.tsx';
-import SelectAmount from './pages/send/SelectAmount.tsx';
+// import SelectAddress from './pages/send/SelectAddress.tsx';
+// import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from './pages/send/send.tsx';
-import AccountDisconnect from "./pages/AccountDisconnect.tsx";
+import AccountDisconnect from './pages/AccountDisconnect.tsx';
 import BankBuy from './pages/banks/BankBuy.tsx';
 
 const router = createBrowserRouter(
@@ -157,14 +157,6 @@ const router = createBrowserRouter(
     {
       path: '/send',
       element: <SendPage />,
-    },
-    {
-      path: '/send/address',
-      element: <SelectAddress />,
-    },
-    {
-      path: '/send/amount',
-      element: <SelectAmount />,
     },
   ],
   { basename: '/wallet' }
