@@ -11,14 +11,16 @@ function useRouter() {
     dispatch(setMainButtonVisible(false));
     dispatch(setLoading(true));
     dispatch(setTitle({}));
-    const nav = async () => {
+    const nav = (url: string | number) => {
       if (url == -1) {
         navigate(url as number);
       } else {
         navigate(url as To);
       }
     };
-    nav();
+    setTimeout(() => {
+      nav(url as string | number);
+    }, 100);
   };
 
   return navigateFunc;

@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import Column from "../../containers/Column";
-import ListBaseItem from "./ListBaseItem";
+import { ReactNode } from 'react';
+import Column from '../../containers/Column';
+import ListBaseItem from './ListBaseItem';
 
 type OwnPropsType = {
   icon?: string;

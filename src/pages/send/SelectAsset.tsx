@@ -9,13 +9,13 @@ import { useApiWalletAssetsMutation } from '../../features/wallet/walletApi';
 import ListTileItem from '../../components/ui/listBlock/ListTileItem';
 import { CoinDto } from '../../types/assest';
 
-export type AssetType = {
-  thumb: string;
-  title: string;
-  description: string;
-  wallet: string;
-  coin: string;
-};
+// export type AssetType = {
+//   thumb: string;
+//   title: string;
+//   description: string;
+//   wallet: string;
+//   coin: string;
+// };
 
 const SelectAsset = () => {
   const t = useLanguage('send-select');
@@ -33,7 +33,7 @@ const SelectAsset = () => {
   const handleInfo = async () => {
     try {
       const result = await walletApiAssets(null).unwrap();
-      console.log('Wallet result:', result);
+      // console.log('Wallet result:', result);
       setAssets(result);
     } catch (err) {
       console.error('Failed to get info: ', err);
@@ -51,19 +51,21 @@ const SelectAsset = () => {
     <Page>
       <Section title={t('title')} className="add-crypto__container">
         <ListBlock>
-          {assets.map((asset, index) => {
-            return (
-              <ListTileItem
-                key={`${asset.meta?.address}-${index}`}
-                icon={asset.meta?.image}
-                title={asset.meta?.name}
-                description={`${asset.amount.toLocaleString(undefined, {
-                  maximumFractionDigits: 5, //asset.meta?.decimals,
-                  minimumFractionDigits: 2,
-                })} ${asset.meta?.symbol}`}
-                onClick={() => handlerClick(asset)}></ListTileItem>
-            );
-          })}
+          {assets.map((asset, index) => (
+            <ListTileItem
+              key={`${asset.meta?.address}-${index}`}
+              icon={
+                asset.meta?.image
+                  ? asset.meta?.image
+                  : `data:image;base64, ${asset.meta?.imageData}`
+              }
+              title={asset.meta?.name}
+              description={`${asset.amount.toLocaleString(undefined, {
+                maximumFractionDigits: 5, //asset.meta?.decimals,
+                minimumFractionDigits: 2,
+              })} ${asset.meta?.symbol}`}
+              onClick={() => handlerClick(asset)}></ListTileItem>
+          ))}
         </ListBlock>
       </Section>
     </Page>
