@@ -5,6 +5,7 @@ import Block from '../typography/Block';
 import useLanguage from '../../hooks/useLanguage';
 import { iconInputScan } from '../../assets/icons/inputs';
 import Row from '../containers/Row';
+import QrButton from '../buttons/qrButton';
 
 interface AddressInputProps {
   onChange?: ChangeEventHandler<HTMLElement>;
@@ -22,6 +23,8 @@ function AddressInput({
   disabled,
 }: AddressInputProps) {
   const t = useLanguage('input');
+  // const isTma = useAppSelector(selectIsTma);
+  // const qrScanner = useQRScanner();
 
   const handlePaste = async () => {
     const clipboardData = await navigator.clipboard.readText();
@@ -54,9 +57,7 @@ function AddressInput({
           }}>
           {t('paste')}
         </a>
-        <a onClick={() => handlePaste} href="#">
-          <img src={iconInputScan} />
-        </a>
+        <QrButton icon={iconInputScan} />
       </Row>
     </Block>
   );
