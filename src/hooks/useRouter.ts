@@ -1,7 +1,7 @@
-import { To, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "./useAppDispatch";
-import { setLoading, setTitle } from "../features/page/pageSlice";
-import { setMainButtonVisible } from "../features/tma/mainButtonSlice";
+import { To, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from './useAppDispatch';
+import { setLoading, setTitle } from '../features/page/pageSlice';
+import { setMainButtonVisible } from '../features/tma/mainButtonSlice';
 
 function useRouter() {
   const navigate = useNavigate();
@@ -11,11 +11,14 @@ function useRouter() {
     dispatch(setMainButtonVisible(false));
     dispatch(setLoading(true));
     dispatch(setTitle({}));
-    if (url == -1) {
-      navigate(url as number);
-    } else {
-      navigate(url as To);
-    }
+    const nav = async () => {
+      if (url == -1) {
+        navigate(url as number);
+      } else {
+        navigate(url as To);
+      }
+    };
+    nav();
   };
 
   return navigateFunc;
