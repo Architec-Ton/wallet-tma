@@ -9,53 +9,37 @@ import { useTmaMainButton } from "../../hooks/useTma.ts";
 import "./SecretKey.styles.css";
 import { usePage } from "../../hooks/usePage.ts";
 import useRouter from "../../hooks/useRouter.ts";
-
-const key_to_wallet = [
-  "test1",
-  "test2",
-  "test3",
-  "test4",
-  "test5",
-  "test6",
-  "test7",
-  "test8",
-  "test9",
-  "test10",
-  "test11",
-  "test12",
-  "test13",
-  "test14",
-  "test15",
-  "test16",
-  "test17",
-  "test18",
-  "test19",
-  "test20",
-  "test21",
-  "test22",
-  "test23",
-  "test24",
-];
+import {mnemonicNew} from "@ton/crypto";
+import useLocalStorage from "../../hooks/useLocalStorage.ts";
 
 const SecretKey = () => {
   const t = useLanguage("Key");
   const navigate = useRouter();
   const btn = useTmaMainButton();
   const page = usePage();
+  const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
 
   useEffect(() => {
-    page.setLoading(false);
+    if (mnemonic === '') {
+      mnemonicNew(24).then((mnemonic) => {
+        setMnemonic(mnemonic.join(' '))
+      })
+    } else if (mnemonic.split(' ').length === 1) {
+      console.log(mnemonic, 'aaa')
+      navigate('/')
+    }
+
     btn.init(
-      t("next", "button"),
-      () => navigate("/registration/confirm-secret-key"),
-      true
-    );
+        t("next", "button"),
+        () => navigate("/registration/confirm-secret-key"),
+        true
+    )
+    page.setLoading(false)
   }, []);
 
   const copyToClipboard = () => {
-    const textToCopy = key_to_wallet.join(" ");
     navigator.clipboard
-      .writeText(textToCopy)
+      .writeText(mnemonic)
       //toDO алерт для тг .then(() => alert('Words copied to clipboard'))
       .catch((err) => console.error("Failed to copy text: ", err));
   };
@@ -68,10 +52,10 @@ const SecretKey = () => {
             display: "block",
           }}
         >
-          <Column columns={2} className="center">
-            {key_to_wallet.map((word, index) => (
+          <Column columns={2}>
+            {mnemonic.split(' ').map((word, index) => (
               <div className="registration-mnemonic-word" key={index}>
-                <h2>
+                <h2 style={{textAlign: 'left', marginLeft: '20%'}}>
                   {index + 1}. {word}
                 </h2>
               </div>

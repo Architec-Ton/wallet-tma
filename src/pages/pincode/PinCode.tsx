@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
+import { delButtonKeybord, bioButtonKeybord} from "../../assets/icons/pincode/index.ts";
 import './PinCode.style.css'
 import Page from "../../components/containers/Page.tsx";
 import Block from "../../components/typography/Block.tsx";
@@ -14,6 +15,7 @@ import {usePage} from "../../hooks/usePage.ts";
 
 
 export interface PinInputProps {
+    setPinCode: (pin: string) => void;
     mode?: 'registration' | 'confirmation';
     onSuccess?: () => void;
     onFailure?: () => void;
@@ -22,14 +24,14 @@ export interface PinInputProps {
 const PinCode:
     React.FC<PinInputProps> = ({
                                   mode = 'confirmation',
+                                   setPinCode,
                                   onSuccess,
-                                  onFailure
+                                  onFailure,
 }) => {
 
     const t = useLanguage('Pincode');
     const [pin, setPin] = useState<string>('')
     const [status, setStatus] =useState<'normal'|'error'|'success'>('normal')
-    const regPin = useRef('')
     const page = usePage();
 
     useEffect(() => {
@@ -66,71 +68,76 @@ const PinCode:
 
     //todo функция которая позволяет узнать UserId
 
-    const handleSubmit = async () => {
-        console.log('handleSubmit')
-        if (mode === 'registration') {
-            if (!regPin.current) {
-                regPin.current = pin
-                setPin('')
-                console.log('confirm pin')
-            } else {
-                if (pin === regPin.current) {
-                    console.log('reg yes')
-                    setStatus('success');
-                    //todo сделать нормальные запросы через колбэк
-                    // const response = await fetch('/api/register-pin', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify({ userId, pin })
-                    // });
-                    // if (response.ok && onSuccess) {
-                    //     onSuccess();
-                    //     setStatus('success');
-                    //     setPin('')
-                    //     regPin.current = ''
-                    //     console.log('reg complete')
-                    // } else if (onFailure) {
-                    //     onFailure();
-                    //     setPin('')
-                    //     console.log('reg error')
-                    // }
-                } else {
-                    setStatus('error');
-                    setPin('')
-                    console.log('reg error')
-                }
-            }
-        } else if (mode === 'confirmation'){
-            setStatus('error');
-            setPin('')
-            //todo сделать нормальные запросы через колбэк
-            // const response = await fetch('/api/confirm-pin', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({ userId, pin})
-            // });
-            // if (response.ok && onSuccess) {
-            //     onSuccess()
-            //     setPin('')
-            // } else if (onFailure) {
-            //     onFailure()
-            //     setStatus('error');
-            //     setPin('')
-            // }
-        }
-    };
+    // const handleSubmit = async () => {
+    //     console.log('handleSubmit')
+    //     if (mode === 'registration') {
+    //         if (!regPin.current) {
+    //             regPin.current = pin
+    //             setPin('')
+    //             console.log('confirm pin')
+    //         } else {
+    //             if (pin === regPin.current) {
+    //                 console.log('reg yes')
+    //                 setStatus('success');
+    //                 //todo сделать нормальные запросы через колбэк
+    //                 // const response = await fetch('/api/register-pin', {
+    //                 //     method: 'POST',
+    //                 //     headers: {
+    //                 //         'Content-Type': 'application/json'
+    //                 //     },
+    //                 //     body: JSON.stringify({ userId, pin })
+    //                 // });
+    //                 // if (response.ok && onSuccess) {
+    //                 //     onSuccess();
+    //                 //     setStatus('success');
+    //                 //     setPin('')
+    //                 //     regPin.current = ''
+    //                 //     console.log('reg complete')
+    //                 // } else if (onFailure) {
+    //                 //     onFailure();
+    //                 //     setPin('')
+    //                 //     console.log('reg error')
+    //                 // }
+    //             } else {
+    //                 setStatus('error');
+    //                 setPin('')
+    //                 console.log('reg error')
+    //             }
+    //         }
+    //     } else if (mode === 'confirmation'){
+    //         setStatus('error');
+    //         setPin('')
+    //         //todo сделать нормальные запросы через колбэк
+    //         // const response = await fetch('/api/confirm-pin', {
+    //         //     method: 'POST',
+    //         //     headers: {
+    //         //         'Content-Type': 'application/json'
+    //         //     },
+    //         //     body: JSON.stringify({ userId, pin})
+    //         // });
+    //         // if (response.ok && onSuccess) {
+    //         //     onSuccess()
+    //         //     setPin('')
+    //         // } else if (onFailure) {
+    //         //     onFailure()
+    //         //     setStatus('error');
+    //         //     setPin('')
+    //         // }
+    //     }
+    // };
 
     useEffect(() => {
         if (pin.length === 4) {
-            handleSubmit()
+            // check the decoding and set status
+            setPinCode(pin)
+
+            if (mode == 'registration') {
+                setStatus('success')
+            }
         }
     }, [pin]);
 
-    const title = regPin.current && status !== 'error' ? 'confirm' : status
+    const title = status !== 'error' ? 'confirm' : status
 
     return (
         <Page>
@@ -146,21 +153,24 @@ const PinCode:
 
                 <div className="pin-keypad">
                     {[...Array(9)].map((_, index) => <button key={index}
-                        onClick={() => handleClick(index + 1)}
-                        className='pin-button'>{index + 1}</button>)}
-                    
+                                                             onClick={() => handleClick(index + 1)}
+                                                             className='pin-button'>{index + 1}</button>)}
 
-                    <button 
+
+                    <button
                         onClick={handleBiometry}
-                        className='pin-button'>B</button>
-                    
+                        className='pin-button'
+                    > {<img src={bioButtonKeybord} style={{marginTop: 8, blockSize: '50%'}} alt={'Bio'}/>}</button>
+
                     <button
                         onClick={() => handleClick(0)}
-                        className='pin-button'>0</button>
-                    
+                        className='pin-button'>0
+                    </button>
+
                     <button
                         onClick={handleDelete}
-                        className='pin-button'>D</button>
+                        className='pin-button'
+                    >{<img src={delButtonKeybord} style={{marginTop: 8, blockSize: '50%'}} alt={'Del'}/>}</button>
                 </div>
             </div>
         </Page>
