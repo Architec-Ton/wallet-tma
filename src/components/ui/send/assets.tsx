@@ -19,7 +19,11 @@ const AssetsList = ({ title, assets, onClick }: OwnPropsType) => {
           return (
             <ListTileItem
               key={`${asset.meta?.address}-${index}`}
-              icon={asset.meta?.image}
+              icon={
+                asset.meta?.image
+                  ? asset.meta?.image
+                  : `data:image;base64, ${asset.meta?.imageData}`
+              }
               title={asset.meta?.name}
               description={`${asset.amount.toLocaleString(undefined, {
                 maximumFractionDigits: 5, //asset.meta?.decimals,
