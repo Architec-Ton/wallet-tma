@@ -24,15 +24,17 @@ function Menu({ menuItems, style, className }: MenuProps) {
   };
 
   return (
-    <nav className={classNames(className, 'menu')} style={style}>
-      {menuItems.map((item) => (
-        <NavLink to={item.to} key={item.to} onClick={handlerClick}>
-          {item.icon && (
-            <img src={item.icon} alt={item.label} aria-label={item.label} />
-          )}
-          <p>{item.label}</p>
-        </NavLink>
-      ))}
+    <nav className={classNames(className, 'menu-nav')} style={style}>
+      <div className="menu">
+        {menuItems.map((item) => (
+          <NavLink to={item.to} key={item.to} onClick={handlerClick}>
+            {item.icon && (
+              <img src={item.icon} alt={item.label} aria-label={item.label} />
+            )}
+            <p>{item.label}</p>
+          </NavLink>
+        ))}
+      </div>
     </nav>
   );
 }

@@ -9,7 +9,13 @@
     z-index: 999;
     overflow: hidden;
     height: fit-content;
-    min-height: var(--spacing-64);
+    /* min-height: var(--spacing-64); */
+}
+
+.main-menu div.menu{
+    background-color: var(--background-selected-color);
+    margin-bottom: var(--spacing-8);
+    
 }
 
 .active{
