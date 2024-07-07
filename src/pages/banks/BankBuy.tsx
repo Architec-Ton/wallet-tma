@@ -67,14 +67,21 @@ function BankBuy() {
   }, []);
 
   useEffect(() => {
-    if (isReady)
+    const bnkAmount = Math.trunc(Number(sendAmount) / bnkPrice);
+    if (isReady) {
       btn.init(
-        t('buy', 'button'),
+        `${t('buy', 'button')} (${Number(bnkAmount * bnkPrice).toLocaleString(
+          undefined,
+          {
+            maximumFractionDigits: 1,
+          }
+        )} TON)`,
         () => {
-          handleBuyBank(Number(sendAmount));
+          handleBuyBank(Number(bnkAmount * bnkPrice));
         },
         true
       );
+    }
   }, [sendAmount, isReady]);
 
   const handleSendOnChange = (value: string) => {
@@ -112,11 +119,6 @@ function BankBuy() {
     }
   };
 
-  // const changeSendHandler = () => {};
-  // const changeSendValue = () => {};
-  // const chooseAssetHandler = (s: string) => () => {};
-  // const changeReceiveHandler = () => {};
-
   return (
     <Page title={t('title')}>
       <Delimiter />
@@ -136,15 +138,6 @@ function BankBuy() {
         onChange={handleRecvOnChange}
       />
 
-      {/* <ReceiveAsset
-        asset={swapAssets.receive}
-        onChange={changeReceiveHandler}
-        onClick={chooseAssetHandler('receive')}
-        value={swapAssets.receive.value || ''}
-        coin={swapAssets.send}
-        sendedCoin={swapAssets.send}
-        disabled={false}
-      /> */}
       {/* <button className="primary-button" onClick={() => handleBuyBank()}>
         Buy 1 BNK
       </button> */}
