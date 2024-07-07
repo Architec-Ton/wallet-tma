@@ -38,9 +38,13 @@ const RecvAssetInput = ({
       title={t('recv')}
       subTitle={
         asset
-          ? `${t('balance')}: ${asset?.amount.toLocaleString(undefined, {
-              maximumFractionDigits: 3,
-            })}`
+          ? `${t('balance')}: ${
+              asset && asset.amount
+                ? asset?.amount.toLocaleString(undefined, {
+                    maximumFractionDigits: 3,
+                  })
+                : 0
+            }`
           : ''
       }
       asset={asset}
