@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useMemo, useRef, useState } from 'react';
 import Column from '../../components/containers/Column';
 import Page from '../../components/containers/Page';
 import useLanguage from '../../hooks/useLanguage';
@@ -13,24 +13,57 @@ import "./BankStaking.styles.css"
 import Section from '../../components/containers/Section';
 import Row from '../../components/containers/Row';
 import Delimiter from '../../components/typography/Delimiter';
-import ListBlock from '../../components/ui/listBlock';
-import Block from '../../components/typography/Block';
-import ListBaseItem from '../../components/ui/listBlock/ListBaseItem';
+import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
+import { WalletInfoData } from '../../types/wallet';
+import { CoinDto } from '../../types/assest';
+import { initialAssets } from '../../mocks/mockAssets';
+import ModalPinCode from '../../components/ui/modals/modalPinCode';
+import bankIcon from '../../assets/images/bank.png'
+import { Link, useNavigate } from 'react-router-dom';
+import BankStakingHistorySection from '../../components/ui/bank/BankStakingHistorySection';
+import { formatDate } from 'date-fns';
+import { useTransaction } from '../../hooks/useTransaction';
+import PartialContent from '../../components/ui/modals/PartialContent';
 
-const stakeHistory = {
-  date: "20.02.2024",
-  lockPeriod: "90 d",
-  rewards: 1000,
-  claimDate: "20.06.2024"
-}
+const stakeHistory = null
 
 function BankStaking() {
   //   const navigate = useRouter();
   const page = usePage();
   const btn = useTmaMainButton();
-
   const t = useLanguage('bank-stake');
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [walletInfoApi] = useApiWalletInfoMutation();
+  const transaction = useTransaction()
+  const navigate = useNavigate()
 
+  const [value, setValue] = useState<string>('')
+  const [stakingValue, setStagingValue] = useState<number>(0)
+  const [receivingValue, setReceivingValue] = useState<number>(0)
+  const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>()
+  const [arcAsset, setArcAsset] = useState<CoinDto | undefined>()
+  const [showPinCode, setShowPinCode] = useState<boolean>(false);
+
+  useEffect(() => {    
+    walletInfoApi(null)
+    .unwrap()
+    .then((result: WalletInfoData) => {
+      const { assets } = result.wallets[result.currentWallet];
+      const bnk = assets.find(asset => asset.meta?.symbol === 'BNK')
+      const arc = assets.find(asset => asset.meta?.symbol === 'ARC')
+      setBnkAsset(bnk);
+      setArcAsset(arc);
+      page.setLoading(false);
+    })
+    .catch(() => {
+      const bnk = initialAssets.find(asset => asset.meta?.symbol === 'BNK')
+      const arc = initialAssets.find(asset => asset.meta?.symbol === 'ARC')
+      setBnkAsset(bnk);
+      setArcAsset(arc);
+      page.setLoading(false);
+    });
+  }, [])
+  
   const contracts = useContracts();
   const ton = useTon();
 
@@ -41,9 +74,9 @@ function BankStaking() {
     btn.init(
       t('stake', 'button'),
       () => {
-        //   navigate('/registration/add-wallet');
+        setShowPinCode(true)
       },
-      true
+      false
     );
   }, []);
 
@@ -92,6 +125,118 @@ function BankStaking() {
       console.log('Unstake', tx);
     }
   };
+  useEffect(() => {
+    if (bnkAsset && arcAsset) {
+      transaction.init({
+        commission: 0.17,
+        returnValue: 0.125,
+        address: arcAsset?.meta?.address as string,
+        onSuccess: transactionSuccessHandler,
+        tonUsdPrice: 6.7,
+        completeIcon: bankIcon,
+        completeTitle: t(`Your staked ${value} BANK`)
+      })
+    }
+  }, [
+    bnkAsset,
+    arcAsset,
+  ])
+
+  useEffect(() => {
+    setStagingValue(Number(value))
+    setReceivingValue(calculateArc())
+  }, [value])
+  
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.currentTarget.value
+    if (!isNaN(Number(value)) && value.length <= 7) {
+      setValue(value)
+    }
+  }
+
+  const onClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
+
+  const stakeAllHandler = () => {
+    inputRef.current?.focus()
+    setValue(Number(bnkAsset?.amount).toString())
+  }
+
+  const isValid = useMemo(() => {
+    return !isNaN(stakingValue) && stakingValue >= 1 && stakingValue <= Number(bnkAsset?.amount)
+  }, [value, bnkAsset])
+
+  useEffect(() => {
+    if (isValid) {
+      btn.setVisible(true)
+    } else {
+      btn.setVisible(false)
+    }
+  }, [isValid])
+
+  const infoItems = useMemo(() => {
+    if (bnkAsset) {
+      return [
+        {
+          title: 'Available balance',
+          value: `${bnkAsset.amount} ${bnkAsset.meta?.symbol}`,
+        },
+        {
+          title: 'Min deposit',
+          value: `1 ${bnkAsset.meta?.symbol}`,
+        },
+        {
+          title: 'Your rewards',
+          value: `${receivingValue} ARC`,
+        },
+      ];
+    }
+  }, [bnkAsset, receivingValue])
+
+  const onPinSuccess = () => {
+    setShowPinCode(false);
+    transaction.open()
+  };
+
+  const calculateArc = () => {
+    let parameter = 0
+    if (stakingValue < 10) {
+      parameter = 0.001
+    } else if (stakingValue < 100) {
+      parameter = 0.011
+    } else if (stakingValue < 1000) {
+      parameter = 0.22
+    } else if (stakingValue < 10_000) {
+      parameter = 2.5
+    } else {
+      parameter = 3
+    }
+    return parameter //(/* self.amount *  */self.durationTime() * parameter / 86400);  // 60sec*60min*24hour  )
+  }
+
+  const stakeTransaction = async () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 5000);
+    });
+  };
+
+
+  const transactionSuccessHandler = async () => {
+    try {
+      await stakeTransaction();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onComplete = () => {
+    navigate("/bank")
+  }
 
   return (
     <Page title={t('title')} className="staking-page">
@@ -99,46 +244,61 @@ function BankStaking() {
       <Column>
         <Section>
           <Row className="staking-form-container">
-            <Column className="grow">
-              <Row>
-                <input type="text" value={100000} />
-                <div className="text-secondary">BANK</div>
+            <Column className="">
+              <Row className="staking-asset-container">
+                <div  className="staking-asset" onClick={onClick}>
+                  <input ref={inputRef} type="text" value={value} onChange={onChange} placeholder="0" inputMode="numeric" />
+                  <div className="bank-value">
+                    {value != '' && Number(value).toLocaleString(undefined).replaceAll(",", " ")}
+                  </div>
+                </div>
+                <div className="staking-asset-title">{bnkAsset?.meta?.name}</div>
               </Row>
-              <div><span>APR</span> 32-45%</div>
             </Column>
-            <button className="control-button rounded-button">Shake All</button>
+            <button className="control-button rounded-button" onClick={stakeAllHandler}>Stake All</button>
           </Row>
         </Section>
-        <BankStakingInfo />
         <h2>{arc.toLocaleString()} ARC</h2>
         <button onClick={() => handleStake(1)}>Stake 1 BNK</button>
         <button onClick={() => handleStakeInfo()}>Stake info</button>
         <button onClick={() => handleUnstake()}>UnStake</button>
         <button onClick={() => handleClaim()}>Claim</button>
-        <Section title="History">
-          {!stakeHistory && <Block className="stake-history-loss">Your stakes will apear here</Block>}
-          {stakeHistory && (
-            <ListBlock>
-              <ListBaseItem>
-                <div>Date</div>
-                <div>{stakeHistory.date}</div>
-              </ListBaseItem>
-              <ListBaseItem>
-                <div>Lock pariod</div>
-                <div>{stakeHistory.lockPeriod}</div>
-              </ListBaseItem>
-              <ListBaseItem>
-                <div>Your rewards</div>
-                <div>{stakeHistory.rewards}</div>
-              </ListBaseItem>
-              <ListBaseItem>
-                <span>Claim Available</span>
-                <div>{stakeHistory.claimDate}</div>
-              </ListBaseItem>
-            </ListBlock>
-          )}
-        </Section>
+        
+        <BankStakingInfo infoItems={infoItems} />
+        <BankStakingHistorySection stakeHistory={stakeHistory} title="History" readMore={<Link to="/bank/stake/history">See all</Link>} />
       </Column>
+      {showPinCode && (
+        <ModalPinCode onSuccess={onPinSuccess} mode="registration" />
+      )}
+      {transaction.isOpen && (
+        <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
+          <Row className="transaction-assets">
+            <img src={bnkAsset?.meta?.image} alt="" />
+            <img src={arcAsset?.meta?.image} alt="" />
+          </Row>
+          <div className="">
+            +{value} {bnkAsset?.meta?.symbol}
+          </div>
+          <div className="">
+            +{receivingValue} {arcAsset?.meta?.symbol}
+          </div>
+          <div className="secondary-data">
+            {Number(receivingValue) * Number(arcAsset?.usdPrice)} $
+          </div>
+          <div className="secondary-data">
+            {t('page-title')} {formatDate(new Date(), "d MM, hh:mm")}
+          </div>
+        </PartialContent>
+      )}
+      
+      {transaction.isComplete && (
+        <PartialContent wait={[transaction.isComplete]} init={transaction.setPartialContent}>
+          <div>
+            Your tokens have been successfully sent to staking! Thanks for choosing and believing us 🩵 
+          </div>
+          <button onClick={onComplete} className="primary-button rounded-button">{t("Bank")}</button>
+        </PartialContent>
+      )}
     </Page>
   );
 }

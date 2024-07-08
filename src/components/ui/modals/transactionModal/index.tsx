@@ -13,54 +13,37 @@ import './index.css';
 
 type TransactionModalPropsType = {
   onClose: () => void;
-  onSuccess: () => void;
-  from: CoinDto | undefined;
-  to: CoinDto | undefined;
-  sendedValue: string;
-  receivedValue: string;
-  commission: number;
-  returnValue: number;
-  address: string;
-  transactionType: string;
-  transactionData: Date;
+  onSuccess?: () => void;
+  from?: CoinDto | undefined;
+  to?: CoinDto | undefined;
+  sendedValue?: string;
+  receivedValue?: string;
+  commission?: number;
+  returnValue?: number;
+  address?: string;
+  transactionType?: string;
+  transactionData?: Date;
   inProgress?: boolean;
+  tonUsdPrice?: number;
+  children?: React.ReactNode;
 };
 
 const TransactionModal = ({
   onClose,
   onSuccess,
-  from,
-  to,
-  sendedValue,
-  receivedValue,
   commission,
   returnValue,
   address,
-  transactionType,
-  transactionData,
   inProgress,
+  tonUsdPrice,
+  children
 }: TransactionModalPropsType) => {
   const t = useLanguage('transaction');
 
   return (
     <Modal onClose={onClose}>
       <Column className="transaction-data">
-        <Row className="transaction-assets">
-          <img src={from?.meta?.image} alt="" />
-          <img src={to?.meta?.image} alt="" />
-        </Row>
-        <div className="">
-          -{sendedValue} {from?.meta?.symbol}
-        </div>
-        <div className="">
-          +{receivedValue} {to?.meta?.symbol}
-        </div>
-        <div className="secondary-data">
-          {Number(receivedValue) * Number(to?.usdPrice)} $
-        </div>
-        <div className="secondary-data">
-          {transactionType} {transactionData?.toLocaleString()}
-        </div>
+        {children}
         {inProgress && (
           <Row className="process">
             <InlineLoader />
@@ -80,7 +63,7 @@ const TransactionModal = ({
           <Column className="transaction-info">
             <div>{commission} TON</div>
             <div className="secondary-info">
-              $ {commission * Number(from?.usdPrice)}
+              $ {commission && commission * Number(tonUsdPrice)}
             </div>
           </Column>
         </ListBaseItem>
@@ -89,7 +72,7 @@ const TransactionModal = ({
           <Column className="transaction-info">
             <div>{returnValue} TON</div>
             <div className="secondary-info">
-              $ {returnValue * Number(from?.usdPrice)}
+              $ {returnValue && returnValue * Number(tonUsdPrice)}
             </div>
           </Column>
         </ListBaseItem>

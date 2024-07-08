@@ -25,6 +25,9 @@ import useLanguage from '../../hooks/useLanguage';
 import { usePage } from '../../hooks/usePage';
 import { useTmaMainButton } from '../../hooks/useTma';
 import { initialAssets } from '../../mocks/mockAssets';
+import { Link } from 'react-router-dom';
+
+import congratulateImg from "../../assets/images/congretulate.png";
 
 export type AssetDataType = {
   title: string;
@@ -457,7 +460,14 @@ const Swap = () => {
       {showTransactionComplete && (
         <TransactionCompleteModal
           onClose={() => setShowTransactionComplete(false)}
-        />
+          thumb={congratulateImg}
+          title={t("congratulation")}
+        >
+          <div>
+            {t("complete-text")}
+          </div>
+          <Link to="/" className="primary-button rounded-button">{t("wallet-button")}</Link>
+        </TransactionCompleteModal>
       )}
     </Page>
   );
