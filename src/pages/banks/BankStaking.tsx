@@ -110,13 +110,11 @@ function BankStaking() {
           </Row>
         </Section>
         <BankStakingInfo />
-<<<<<<< HEAD
         <h2>{arc.toLocaleString()} ARC</h2>
         <button onClick={() => handleStake(1)}>Stake 1 BNK</button>
         <button onClick={() => handleStakeInfo()}>Stake info</button>
         <button onClick={() => handleUnstake()}>UnStake</button>
         <button onClick={() => handleClaim()}>Claim</button>
-=======
         <Section title="History">
           {!stakeHistory && <Block className="stake-history-loss">Your stakes will apear here</Block>}
           {stakeHistory && (
@@ -140,7 +138,6 @@ function BankStaking() {
             </ListBlock>
           )}
         </Section>
->>>>>>> 2978a35 (stacking)
       </Column>
     </Page>
   );
