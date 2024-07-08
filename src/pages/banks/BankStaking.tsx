@@ -17,13 +17,13 @@ import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
 import { WalletInfoData } from '../../types/wallet';
 import { CoinDto } from '../../types/assest';
 import { initialAssets } from '../../mocks/mockAssets';
-import ModalPinCode from '../../components/ui/modals/modalPinCode';
 import bankIcon from '../../assets/images/bank.png'
 import { Link, useNavigate } from 'react-router-dom';
 import BankStakingHistorySection from '../../components/ui/bank/BankStakingHistorySection';
 import { formatDate } from 'date-fns';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
+import classNames from 'classnames';
 
 const stakeHistory = null
 
@@ -40,12 +40,14 @@ function BankStaking() {
   const ton = useTon();
 
   const [value, setValue] = useState<string>('')
-  const [stakingValue, setStagingValue] = useState<number>(0)
+  const [stakingValue, setStakingValue] = useState<number>(0)
   const [receivingValue, setReceivingValue] = useState<number>(0)
+  const [returnValue, setReturnValue] = useState<number>(0)
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>()
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>()
-  const [showPinCode, setShowPinCode] = useState<boolean>(false);
+  const [tonAsset, setTonAsset] = useState<CoinDto | undefined>()
   const [arc, setArc] = useState<bigint>(0n);
+  const [stakeAddress, setStakeAddress] = useState<string>();
 
   useEffect(() => {    
     walletInfoApi(null)
@@ -54,22 +56,22 @@ function BankStaking() {
       const { assets } = result.wallets[result.currentWallet];
       const bnk = assets.find(asset => asset.meta?.symbol === 'BNK')
       const arc = assets.find(asset => asset.meta?.symbol === 'ARC')
+      const ton = initialAssets.find(asset => asset.meta?.symbol === 'TON')
       setBnkAsset(bnk);
       setArcAsset(arc);
-      page.setLoading(false);
+      setTonAsset(ton);
     })
-    .catch(() => {
-      const bnk = initialAssets.find(asset => asset.meta?.symbol === 'BNK')
-      const arc = initialAssets.find(asset => asset.meta?.symbol === 'ARC')
-      setBnkAsset(bnk);
-      setArcAsset(arc);
+    .catch((e) => {
+      console.error(e)
+    })
+    .finally(() => {
       page.setLoading(false);
     });
     
     btn.init(
       t('stake', 'button'),
       () => {
-        setShowPinCode(true)
+        transactionSuccessHandler()
       },
       false
     );
@@ -95,6 +97,7 @@ function BankStaking() {
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
       console.log('BNK Stake Wallet', stakeAddress?.toString());
       if (stakeAddress) {
+        setStakeAddress(stakeAddress.toString())
         const stakeInfo = await contracts.bank.getStakeInfo(
           stakeAddress,
           ownerAddress
@@ -122,26 +125,31 @@ function BankStaking() {
   };
 
   useEffect(() => {
-    if (bnkAsset && arcAsset) {
+    if (bnkAsset && tonAsset) {
       transaction.init({
         commission: 0.17,
-        returnValue: 0.125,
-        address: arcAsset?.meta?.address as string,
-        onSuccess: transactionSuccessHandler,
-        tonUsdPrice: 6.7,
+        returnValue: returnValue,
+        address: stakeAddress as string,
+        tonUsdPrice: tonAsset.usdPrice,
         completeIcon: bankIcon,
         completeTitle: t("complete-title", undefined, {value})
       })
     }
   }, [
     bnkAsset,
-    arcAsset,
+    stakeAddress,
+    tonAsset,
+    returnValue
   ])
 
   useEffect(() => {
-    setStagingValue(Number(value))
-    setReceivingValue(calculateArc())
-  }, [value])
+    if (tonAsset && arcAsset) {
+      const returnValue = calculateArc(Number(value))
+      setReturnValue(returnValue * arcAsset.usdPrice / tonAsset.usdPrice)
+      setStakingValue(Number(value))      
+      setReceivingValue(returnValue)
+    }
+  }, [value, tonAsset, arcAsset])
   
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.currentTarget.value
@@ -173,6 +181,25 @@ function BankStaking() {
     }
   }, [isValid])
 
+  const calculateArc = (value: number) => {
+    let parameter = 0
+    if (value <= 0) {
+      return parameter
+    }
+    if (value < 10) {
+      parameter = 0.001
+    } else if (value < 100) {
+      parameter = 0.011
+    } else if (value < 1000) {
+      parameter = 0.22
+    } else if (value < 10000) {
+      parameter = 2.5
+    } else {
+      parameter = 3
+    }
+    return parameter //(/* self.amount *  */self.durationTime() * parameter / 86400);  // 60sec*60min*24hour  )
+  }
+
   const infoItems = useMemo(() => {
     if (bnkAsset) {
       return [
@@ -186,37 +213,19 @@ function BankStaking() {
         },
         {
           title: t("rewards"),
-          value: `${receivingValue} ARC`,
+          value: `${calculateArc(bnkAsset.amount)} ARC`,
         },
       ];
     }
   }, [bnkAsset, receivingValue])
 
-  const onPinSuccess = () => {
-    setShowPinCode(false);
-    transaction.open()
-  };
-
-  const calculateArc = () => {
-    let parameter = 0
-    if (stakingValue < 10) {
-      parameter = 0.001
-    } else if (stakingValue < 100) {
-      parameter = 0.011
-    } else if (stakingValue < 1000) {
-      parameter = 0.22
-    } else if (stakingValue < 10_000) {
-      parameter = 2.5
-    } else {
-      parameter = 3
-    }
-    return parameter //(/* self.amount *  */self.durationTime() * parameter / 86400);  // 60sec*60min*24hour  )
-  }
 
   const transactionSuccessHandler = async () => {
     try {
       await handleUnstake()
       await handleStake(stakingValue);
+      await handleStakeInfo()
+      transaction.open()
     } catch (e) {
       console.error(e);
     }
@@ -234,7 +243,7 @@ function BankStaking() {
           <Row className="staking-form-container">
             <Column className="">
               <Row className="staking-asset-container">
-                <div  className="staking-asset" onClick={onClick}>
+                <div  className={classNames("staking-asset", {"warning": stakingValue > Number(bnkAsset?.amount)})} onClick={onClick}>
                   <input ref={inputRef} type="text" value={value} onChange={onChange} placeholder="0" inputMode="numeric" />
                   <div className="bank-value">
                     {value != '' && Number(value).toLocaleString(undefined).replaceAll(",", " ")}
@@ -260,9 +269,6 @@ function BankStaking() {
           onClaim={handleClaim}
         />
       </Column>
-      {showPinCode && (
-        <ModalPinCode onSuccess={onPinSuccess} mode="confirmation" />
-      )}
       {transaction.isOpen && (
         <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
           <Row className="transaction-assets">
@@ -270,16 +276,16 @@ function BankStaking() {
             <img src={arcAsset?.meta?.image} alt="" />
           </Row>
           <div className="">
-            -{value} {bnkAsset?.meta?.symbol}
+            -{stakingValue} {bnkAsset?.meta?.symbol}
           </div>
           <div className="">
-            +{receivingValue} {arcAsset?.meta?.symbol}
+            +{receivingValue.toString()} {arcAsset?.meta?.symbol}
           </div>
           <div className="secondary-data">
             {Number(receivingValue) * Number(arcAsset?.usdPrice)} $
           </div>
           <div className="secondary-data">
-            {t('page-title')} {formatDate(new Date(), "d MMMM, hh:mm")}
+            {t('transaction-type')} {formatDate(new Date(), "d MMMM, hh:mm")}
           </div>
         </PartialContent>
       )}

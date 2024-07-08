@@ -7,8 +7,6 @@ import { usePage } from "../../../hooks/usePage"
 import { formatDate } from "date-fns"
 import { useApiWalletAssetsMutation } from "../../../features/wallet/walletApi"
 import { CoinDto } from "../../../types/assest"
-import { useClosure } from "../../../hooks/useClosure"
-import ModalPinCode from "../modals/modalPinCode"
 import Row from "../../containers/Row"
 import useLanguage from "../../../hooks/useLanguage"
 import bankIcon from '../../../assets/images/bank.png'
@@ -17,13 +15,14 @@ import { useTransaction } from "../../../hooks/useTransaction"
 import PartialContent from "../modals/PartialContent"
 import useContracts from "../../../hooks/useContracts"
 import { useTon } from "../../../hooks/useTon"
+import { fromNano } from "@ton/core"
 
 const historyMockData = [
   {
     date: "2024-06-16",
     rewards: 1,
     deposit: 100,
-    claimAvailable: true
+    claimAvailable: false
   },
   {
     date: "2024-06-18",
@@ -41,7 +40,7 @@ const historyMockData = [
     date: "2024-02-20",
     rewards: 0.1,
     deposit: 10,
-    claimAvailable: true
+    claimAvailable: false
   }
 ]
 
@@ -55,33 +54,44 @@ const BankStakingHistory = () => {
   const ton = useTon();
 
   const [historyData, setHistoryData] = useState<StakeHistoryType[]>()
-  const [claimingData, setClaimingData] = useState<StakeHistoryType>()
-  const [showPinCode, setShowPinCode] = useState<boolean>(false)
   const [direction, setDirection] = useState<"desc" | "asc">("desc")
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>()
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>()
+  const [arc, setArc] = useState<string>();
+
 
   useEffect(() => {
     // getHistoryData
     setHistoryData(historyMockData)
-    page.setLoading(false)
+    walletApiAssets(null)
+    .unwrap()
+    .then(assets => {
+      const bnk = assets.find(asset => asset.meta?.symbol === "BNK")
+      const arc = assets.find(asset => asset.meta?.symbol === "ARC")
+      setBnkAsset(bnk)
+      setArcAsset(arc)
+    })
+    .catch(e => {
+      console.error(e)
+    })
+    .finally(() => {
+      page.setLoading(false)
+    })
+    
   }, [])
 
   useEffect(() => {
-    console.log("before-init", bnkAsset, arcAsset)
-    if (bnkAsset && arcAsset) {
-      console.log("init")
+    if (arcAsset) {
       transaction.init({
         commission: 0.17,
         returnValue: 0.125,
-        address: arcAsset?.meta?.address as string,
-        onSuccess: transactionSuccessHandler,
+        address: arcAsset.meta?.address as string,
         tonUsdPrice: 6.7,
         completeIcon: bankIcon,
         completeTitle: t("complete-title")
       })
     }
-  }, [bnkAsset, arcAsset, showPinCode])
+  }, [arcAsset])
 
   const sortHandler = () => {
     setDirection(direction => direction === "desc" ? "asc" : "desc")
@@ -112,20 +122,22 @@ const BankStakingHistory = () => {
     return {}
   }, [historyData, direction])
 
-  const onClaim = useClosure(async (stakedData: StakeHistoryType) => {
-    setClaimingData(stakedData)
-    setShowPinCode(true)
-  })
-
-  const onSuccess = async () => {
-    const assets: CoinDto[] = await walletApiAssets(null).unwrap()
-    const bnk = assets.find(asset => asset.meta?.symbol === "BNK")
-    const arc = assets.find(asset => asset.meta?.symbol === "ARC")
-    setBnkAsset(bnk)
-    setArcAsset(arc)
-    setShowPinCode(false)
-    transaction.open()
-  }
+  const handleStakeInfo = async () => {
+    if (ton.wallet.address) {
+      const ownerAddress = ton.wallet.address;
+      //Get BNK Wallet address
+      const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
+      console.log('BNK Stake Wallet', stakeAddress?.toString());
+      if (stakeAddress) {
+        const stakeInfo = await contracts.bank.getStakeInfo(
+          stakeAddress,
+          ownerAddress
+        );
+        if (stakeInfo) setArc(fromNano(stakeInfo.calculatedAmount));
+        console.log('getStakeInfo:', stakeInfo);
+      }
+    }
+  };
 
   const handleClaim = async () => {
     if (ton.wallet.address) {
@@ -135,9 +147,11 @@ const BankStakingHistory = () => {
     }
   };
 
-  const transactionSuccessHandler = async () => {
+  const onClaim = async () => {
     try {
+      await handleStakeInfo()
       await handleClaim();
+      transaction.open()
     } catch (e) {
       console.error(e);
     }
@@ -154,14 +168,11 @@ const BankStakingHistory = () => {
           const dataList = sortedData[key] as StakeHistoryType[]
           return (
             <Section key={key} title={formatDate(key, "dd MMM")}>
-              {dataList.map(data => <BankStakingHistorySection key={`${Object.values(data).join("_")}`} stakeHistory={data} onClaim={onClaim(data)} />)}
+              {dataList.map(data => <BankStakingHistorySection key={`${Object.values(data).join("_")}`} stakeHistory={data} onClaim={onClaim} />)}
             </Section>
           )
         })}
       </Section>
-      {showPinCode && (
-        <ModalPinCode onSuccess={onSuccess} mode="confirmation" />
-      )}
       {transaction.isOpen && (
         <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
           <Row className="transaction-assets">
@@ -169,13 +180,10 @@ const BankStakingHistory = () => {
             <img src={arcAsset?.meta?.image} alt="" />
           </Row>
           <div className="">
-            +{claimingData?.deposit} {bnkAsset?.meta?.symbol}
-          </div>
-          <div className="">
-            +{claimingData?.rewards} {arcAsset?.meta?.symbol}
+            +{arc} {arcAsset?.meta?.symbol}
           </div>
           <div className="secondary-data">
-            {Number(claimingData?.rewards) * Number(arcAsset?.usdPrice)} $
+            {Number(arc) * Number(arcAsset?.usdPrice)} $
           </div>
           <div className="secondary-data">
             {t('claim')} {formatDate(new Date(), "d MMMM, hh:mm")}

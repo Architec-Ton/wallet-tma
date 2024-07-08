@@ -30,7 +30,7 @@ type TransactionModalPropsType = {
 
 const TransactionModal = ({
   onClose,
-  onSuccess,
+  // onSuccess,
   commission,
   returnValue,
   address,
@@ -81,9 +81,7 @@ const TransactionModal = ({
           <div>{t('finish')}</div>
         </ListBaseItem>
       </ListBlock>
-      <button
-        className="rounded-button control-button transaction-button"
-        onClick={onSuccess}>
+      <button className="rounded-button control-button transaction-button">
         <Row>
           <img src={iconGlobalButton} alt="" />
           <span>{t('page-title')}</span>

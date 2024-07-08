@@ -62,7 +62,7 @@ export const initialAssets: CoinDto[] = [
   {
     type: 'jeton',
     amount: 10000,
-    usdPrice: 0.01,
+    usdPrice: 0.001,
     changePrice: 0,
     meta: {
       name: 'ARC',

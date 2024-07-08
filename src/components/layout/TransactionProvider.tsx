@@ -50,7 +50,7 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
   const [isComplete, setIsComplete] = useState<boolean>()
   const [partialContent, setPartialContent] = useState<React.ReactNode>()
   const [isTransactionInProgress, setIsTransactionInProgress] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   // TransactionProvider state params
   const [state, setOwnState] = useState<ProviderStateType>({})
@@ -60,6 +60,8 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
   }
 
   const onClose = () => {
+    setIsComplete(true)
+    setIsTransactionInProgress(false)
     setIsOpen(false)
   }
 
@@ -67,23 +69,6 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
     setIsOpen(false)
     setIsComplete(false)
   }
-
-  const transactionSuccessHandler = async () => {
-    if (state?.onSuccess) {
-      setIsTransactionInProgress(true)
-      state.onSuccess()
-      .then(() => {
-        setIsComplete(true)
-      })
-      .catch(e => {
-        console.error(e)
-      })
-      .finally(() => {
-        setIsTransactionInProgress(false)
-        setIsOpen(false)
-      })
-    }
-  };
 
   const setState = (key: string, value: any) => {
     setOwnState(state => {
@@ -105,7 +90,6 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
       {isOpen && (
         <TransactionModal
           onClose={onClose}
-          onSuccess={transactionSuccessHandler}
           from={state?.from}
           to={state?.to}
           sendedValue={state?.sendedValue}
