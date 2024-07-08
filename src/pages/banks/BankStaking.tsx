@@ -16,7 +16,6 @@ import Delimiter from '../../components/typography/Delimiter';
 import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
 import { WalletInfoData } from '../../types/wallet';
 import { CoinDto } from '../../types/assest';
-import { initialAssets } from '../../mocks/mockAssets';
 import bankIcon from '../../assets/images/bank.png'
 import { Link, useNavigate } from 'react-router-dom';
 import BankStakingHistorySection from '../../components/ui/bank/BankStakingHistorySection';
@@ -58,7 +57,6 @@ function BankStaking() {
       const { assets } = result.wallets[result.currentWallet];
       const bnk = assets.find(asset => asset.meta?.symbol === 'BNK')
       const arc = assets.find(asset => asset.meta?.symbol === 'ARC')
-      const ton = initialAssets.find(asset => asset.meta?.symbol === 'TON')
       setBnkAsset(bnk);
       setArcAsset(arc);
     })
