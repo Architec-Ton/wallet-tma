@@ -5,6 +5,7 @@ import ListBlock from "../listBlock"
 import ListBaseItem from "../listBlock/ListBaseItem"
 
 import "./BankStakingHistorySection.styles.css"
+import useLanguage from "../../../hooks/useLanguage"
 
 export type StakeHistoryType = {
   date: string
@@ -21,26 +22,27 @@ type OwnPropsType = {
 }
 
 const BankStakingHistorySection = ({stakeHistory, title, readMore, onClaim}: OwnPropsType) => {
+  const t = useLanguage("bank-stake-history")
   return (
     <Section title={title} readMore={readMore}>
-      {!stakeHistory && <Block className="stake-history-loss">Your stakes will apear here</Block>}
+      {!stakeHistory && <Block className="stake-history-loss">{t("empty-description")}</Block>}
       {stakeHistory && (
         <ListBlock>
           <ListBaseItem>
-            <div>Date</div>
+            <div>{t("date")}</div>
             <div>{formatDate(stakeHistory.date, "dd.MM.yyyy")}</div>
           </ListBaseItem>
           <ListBaseItem>
-            <div>Deposit</div>
+            <div>{t("deposit")}</div>
             <div>{stakeHistory.deposit}</div>
           </ListBaseItem>
           <ListBaseItem>
-            <div>Your rewards</div>
+            <div>{t("rewards")}</div>
             <div>{stakeHistory.rewards}</div>
           </ListBaseItem>
           {stakeHistory.claimAvailable && (
             <ListBaseItem className="claim-button" onClick={onClaim}>
-              <span>Claim</span>
+              <span>{t("claim")}</span>
             </ListBaseItem>
           )}
         </ListBlock>

@@ -15,7 +15,11 @@ import Row from "../../containers/Row"
 import useLanguage from "../../../hooks/useLanguage"
 import TransactionCompleteModal from "../modals/transactionCompleteModal"
 import bankIcon from '../../../assets/images/bank.png'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useTransaction } from "../../../hooks/useTransaction"
+import PartialContent from "../modals/PartialContent"
+import useContracts from "../../../hooks/useContracts"
+import { useTon } from "../../../hooks/useTon"
 
 const historyMockData = [
   {
@@ -45,26 +49,42 @@ const historyMockData = [
 ]
 
 const BankStakingHistory = () => {
-  const t = useLanguage("stake")
+  const t = useLanguage("bank-stake-history")
+  const transaction = useTransaction()
+  const navigate = useNavigate()
   const [walletApiAssets] = useApiWalletAssetsMutation();
+  const page = usePage()
+  const contracts = useContracts();
+  const ton = useTon();
+
   const [historyData, setHistoryData] = useState<StakeHistoryType[]>()
   const [claimingData, setClaimingData] = useState<StakeHistoryType>()
   const [showPinCode, setShowPinCode] = useState<boolean>(false)
   const [direction, setDirection] = useState<"desc" | "asc">("desc")
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>()
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>()
-  const [showTransaction, setShowTransaction] = useState<boolean>(false);
-  const [showTransactionComplete, setShowTransactionComplete] =
-    useState<boolean>(false);
-  const [isTransactionInProgress, setIsTransactionInProgress] =
-    useState<boolean>(false);
-  const page = usePage()
 
   useEffect(() => {
     // getHistoryData
     setHistoryData(historyMockData)
     page.setLoading(false)
   }, [])
+
+  useEffect(() => {
+    console.log("before-init", bnkAsset, arcAsset)
+    if (bnkAsset && arcAsset) {
+      console.log("init")
+      transaction.init({
+        commission: 0.17,
+        returnValue: 0.125,
+        address: arcAsset?.meta?.address as string,
+        onSuccess: transactionSuccessHandler,
+        tonUsdPrice: 6.7,
+        completeIcon: bankIcon,
+        completeTitle: t("complete-title")
+      })
+    }
+  }, [bnkAsset, arcAsset, showPinCode])
 
   const sortHandler = () => {
     setDirection(direction => direction === "desc" ? "asc" : "desc")
@@ -101,13 +121,13 @@ const BankStakingHistory = () => {
   })
 
   const onSuccess = async () => {
-    const assets: CoinDto[] = (await walletApiAssets(null).unwrap()) || initialAssets
+    const assets: CoinDto[] = initialAssets //(await walletApiAssets(null).unwrap()) || initialAssets
     const bnk = assets.find(asset => asset.meta?.symbol === "BNK")
     const arc = assets.find(asset => asset.meta?.symbol === "ARC")
     setBnkAsset(bnk)
     setArcAsset(arc)
     setShowPinCode(false)
-    setShowTransaction(true)
+    transaction.open()
   }
 
   const claimTransaction = async () => {
@@ -118,19 +138,25 @@ const BankStakingHistory = () => {
     });
   };
 
-  const transactionSuccessHandler = async () => {
-    setIsTransactionInProgress(true);
-    try {
-      await claimTransaction();
-      setIsTransactionInProgress(false);
-      setShowTransaction(false);
-      setShowTransactionComplete(true);
-    } catch (e) {
-      console.error(e);
-      setIsTransactionInProgress(false);
-      setShowTransaction(false);
+  const handleClaim = async () => {
+    if (ton.wallet.address) {
+      //Get BNK Wallet address
+      const tx = await contracts.bank.claim();
+      console.log('Unstake', tx);
     }
   };
+
+  const transactionSuccessHandler = async () => {
+    try {
+      await handleClaim();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onComplete = () => {
+    navigate("/bank")
+  }
   
   return (
     <Page>
@@ -139,7 +165,7 @@ const BankStakingHistory = () => {
           const dataList = sortedData[key] as StakeHistoryType[]
           return (
             <Section key={key} title={formatDate(key, "dd MMM")}>
-              {dataList.map(data => <BankStakingHistorySection key={`${Object.values(data).join("_")}`} stakeHistory={data} onClaim={onClaim} />)}
+              {dataList.map(data => <BankStakingHistorySection key={`${Object.values(data).join("_")}`} stakeHistory={data} onClaim={onClaim(data)} />)}
             </Section>
           )
         })}
@@ -147,16 +173,8 @@ const BankStakingHistory = () => {
       {showPinCode && (
         <ModalPinCode onSuccess={onSuccess} mode="registration" />
       )}
-      {showTransaction && (
-        <TransactionModal
-          commission={0.17}
-          returnValue={0.125}
-          address={arcAsset?.meta?.address as string}
-          onClose={() => setShowTransaction(false)}
-          onSuccess={transactionSuccessHandler}
-          inProgress={isTransactionInProgress}
-          tonUsdPrice={6.7}
-        >
+      {transaction.isOpen && (
+        <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
           <Row className="transaction-assets">
             <img src={bnkAsset?.meta?.image} alt="" />
             <img src={arcAsset?.meta?.image} alt="" />
@@ -171,21 +189,18 @@ const BankStakingHistory = () => {
             {Number(claimingData?.rewards) * Number(arcAsset?.usdPrice)} $
           </div>
           <div className="secondary-data">
-            {t('page-title')} {formatDate(new Date(), "d MM, hh:mm")}
+            {t('claim')} {formatDate(new Date(), "d MMMM, hh:mm")}
           </div>
-        </TransactionModal>
+        </PartialContent>
       )}
-      {showTransactionComplete && (
-        <TransactionCompleteModal
-          onClose={() => setShowTransactionComplete(false)}
-          thumb={bankIcon}
-          title={`Your staked ${0} BANK`}
-        >
+      
+      {transaction.isComplete && (
+        <PartialContent wait={[transaction.isComplete]} init={transaction.setPartialContent}>
           <div>
-            Your tokens have been successfully sent to staking! Thanks for choosing and believing us 🩵 
+            {t("complete-description")} 
           </div>
-          <Link to="/bank" className="primary-button rounded-button">{t("Bank")}</Link>
-        </TransactionCompleteModal>
+          <button onClick={onComplete} className="primary-button rounded-button">{t("bank-button")}</button>
+        </PartialContent>
       )}
     </Page>
   )

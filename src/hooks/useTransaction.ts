@@ -1,8 +1,14 @@
-import { useCallback, useContext } from "react"
+import { useCallback, useContext, useEffect } from "react"
 import { TransactionContext } from "../components/layout/TransactionProvider"
 
 export const useTransaction = () => {
   const transactionContext = useContext(TransactionContext)
+
+  useEffect(() => {
+    return () => {
+      transactionContext.destruct()
+    }
+  }, [])
 
   const init = useCallback((params: any) => {
     Object.keys(params).forEach((key) => {

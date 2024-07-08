@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import TransactionModal from "../ui/modals/transactionModal"
 import { CoinDto } from "../../types/assest"
 import TransactionCompleteModal from "../ui/modals/transactionCompleteModal"
@@ -23,6 +23,7 @@ type ProviderStateType = {
 
 type ProviderValuesType = {
   open: () => void;
+  destruct: () => void;
   setPartialContent: (c: React.ReactNode) => void
   setState: (k: string, v: any) => void
   state: ProviderStateType;
@@ -36,6 +37,7 @@ type TransactionHocPropsType = {
 
 export const TransactionContext = createContext<ProviderValuesType>({
   open: () => {},
+  destruct: () => {},
   setPartialContent: () => {},
   setState: () => {},
   state: {},
@@ -59,6 +61,11 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
 
   const onClose = () => {
     setIsOpen(false)
+  }
+
+  const destruct = () => {
+    setIsOpen(false)
+    setIsComplete(false)
   }
 
   const transactionSuccessHandler = async () => {
@@ -87,6 +94,7 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
   return (
     <TransactionContext.Provider value={{
       open: openHandler,
+      destruct: destruct,
       setPartialContent,
       setState,
       isOpen,
