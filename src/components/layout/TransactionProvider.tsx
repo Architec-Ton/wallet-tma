@@ -90,17 +90,10 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
       {isOpen && (
         <TransactionModal
           onClose={onClose}
-          from={state?.from}
-          to={state?.to}
-          sendedValue={state?.sendedValue}
-          receivedValue={state?.receivedValue}
           commission={state?.commission}
           returnValue={state?.returnValue}
           address={state?.address}
-          transactionType={state?.transactionType}
-          transactionData={new Date()}
           inProgress={isTransactionInProgress}
-          tonUsdPrice={state?.tonUsdPrice}
         >{partialContent}</TransactionModal>
       )}
       {isComplete && (

@@ -17,4 +17,5 @@ export interface WalletBalanceData {
 export interface WalletInfoData {
   currentWallet: number;
   wallets: WalletBalanceData[];
+  tonUsdPrice?: number
 }

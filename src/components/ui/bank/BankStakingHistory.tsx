@@ -86,7 +86,6 @@ const BankStakingHistory = () => {
         commission: 0.17,
         returnValue: 0.125,
         address: arcAsset.meta?.address as string,
-        tonUsdPrice: 6.7,
         completeIcon: bankIcon,
         completeTitle: t("complete-title")
       })

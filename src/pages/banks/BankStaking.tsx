@@ -24,6 +24,8 @@ import { formatDate } from 'date-fns';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
 import classNames from 'classnames';
+import { useAppSelector } from '../../hooks/useAppDispatch';
+import { selectTonUsdPrice } from '../../features/wallet/walletSelector';
 
 const stakeHistory = null
 
@@ -38,6 +40,7 @@ function BankStaking() {
   const navigate = useNavigate()
   const contracts = useContracts();
   const ton = useTon();
+  const tonUsdPrice = useAppSelector(selectTonUsdPrice)
 
   const [value, setValue] = useState<string>('')
   const [stakingValue, setStakingValue] = useState<number>(0)
@@ -45,7 +48,6 @@ function BankStaking() {
   const [returnValue, setReturnValue] = useState<number>(0)
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>()
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>()
-  const [tonAsset, setTonAsset] = useState<CoinDto | undefined>()
   const [arc, setArc] = useState<bigint>(0n);
   const [stakeAddress, setStakeAddress] = useState<string>();
 
@@ -59,7 +61,6 @@ function BankStaking() {
       const ton = initialAssets.find(asset => asset.meta?.symbol === 'TON')
       setBnkAsset(bnk);
       setArcAsset(arc);
-      setTonAsset(ton);
     })
     .catch((e) => {
       console.error(e)
@@ -125,12 +126,11 @@ function BankStaking() {
   };
 
   useEffect(() => {
-    if (bnkAsset && tonAsset) {
+    if (bnkAsset) {
       transaction.init({
         commission: 0.17,
         returnValue: returnValue,
         address: stakeAddress as string,
-        tonUsdPrice: tonAsset.usdPrice,
         completeIcon: bankIcon,
         completeTitle: t("complete-title", undefined, {value})
       })
@@ -138,18 +138,17 @@ function BankStaking() {
   }, [
     bnkAsset,
     stakeAddress,
-    tonAsset,
     returnValue
   ])
 
   useEffect(() => {
-    if (tonAsset && arcAsset) {
+    if (arcAsset) {
       const returnValue = calculateArc(Number(value))
-      setReturnValue(returnValue * arcAsset.usdPrice / tonAsset.usdPrice)
+      setReturnValue(returnValue * arcAsset.usdPrice / tonUsdPrice)
       setStakingValue(Number(value))      
       setReceivingValue(returnValue)
     }
-  }, [value, tonAsset, arcAsset])
+  }, [value, arcAsset])
   
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.currentTarget.value

@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { iconGlobalButton } from '../../../../assets/icons/buttons';
 // import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
 import useLanguage from '../../../../hooks/useLanguage';
@@ -10,6 +11,7 @@ import ListBaseItem from '../../listBlock/ListBaseItem';
 import Modal from '../../modal';
 
 import './index.css';
+import { selectTonUsdPrice } from '../../../../features/wallet/walletSelector';
 
 type TransactionModalPropsType = {
   onClose: () => void;
@@ -35,10 +37,10 @@ const TransactionModal = ({
   returnValue,
   address,
   inProgress,
-  tonUsdPrice,
   children
 }: TransactionModalPropsType) => {
   const t = useLanguage('transaction');
+  const tonUsdPrice = useSelector(selectTonUsdPrice)
 
   return (
     <Modal onClose={onClose}>
