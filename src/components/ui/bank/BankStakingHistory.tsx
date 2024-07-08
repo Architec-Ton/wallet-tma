@@ -9,13 +9,10 @@ import { useApiWalletAssetsMutation } from "../../../features/wallet/walletApi"
 import { CoinDto } from "../../../types/assest"
 import { useClosure } from "../../../hooks/useClosure"
 import ModalPinCode from "../modals/modalPinCode"
-import { initialAssets } from "../../../mocks/mockAssets"
-import TransactionModal from "../modals/transactionModal"
 import Row from "../../containers/Row"
 import useLanguage from "../../../hooks/useLanguage"
-import TransactionCompleteModal from "../modals/transactionCompleteModal"
 import bankIcon from '../../../assets/images/bank.png'
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useTransaction } from "../../../hooks/useTransaction"
 import PartialContent from "../modals/PartialContent"
 import useContracts from "../../../hooks/useContracts"
@@ -121,7 +118,7 @@ const BankStakingHistory = () => {
   })
 
   const onSuccess = async () => {
-    const assets: CoinDto[] = initialAssets //(await walletApiAssets(null).unwrap()) || initialAssets
+    const assets: CoinDto[] = await walletApiAssets(null).unwrap()
     const bnk = assets.find(asset => asset.meta?.symbol === "BNK")
     const arc = assets.find(asset => asset.meta?.symbol === "ARC")
     setBnkAsset(bnk)
@@ -129,14 +126,6 @@ const BankStakingHistory = () => {
     setShowPinCode(false)
     transaction.open()
   }
-
-  const claimTransaction = async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, 10000);
-    });
-  };
 
   const handleClaim = async () => {
     if (ton.wallet.address) {

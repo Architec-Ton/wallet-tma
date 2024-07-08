@@ -4,8 +4,6 @@ import Modal from "../../modal"
 
 import "./index.css"
 import Section from "../../../containers/Section"
-import { Link } from "react-router-dom"
-import useLanguage from "../../../../hooks/useLanguage"
 
 type TransactionCompleteModalProps = {
   onClose: () => void
@@ -15,7 +13,6 @@ type TransactionCompleteModalProps = {
 }
 
 const TransactionCompleteModal = ({ onClose, thumb, title, children }: TransactionCompleteModalProps) => {
-  const t = useLanguage("transaction")
   return (
     <Modal onClose={onClose}>
       <Column className="complete-modal__content">

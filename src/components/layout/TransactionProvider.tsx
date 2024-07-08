@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useState } from "react"
 import TransactionModal from "../ui/modals/transactionModal"
 import { CoinDto } from "../../types/assest"
 import TransactionCompleteModal from "../ui/modals/transactionCompleteModal"
