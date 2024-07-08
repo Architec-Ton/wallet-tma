@@ -3,6 +3,8 @@ import Row from '../../containers/Row.tsx';
 import ListBaseItem from '../listBlock/ListBaseItem.tsx';
 import ListBlock from '../listBlock/index.tsx';
 
+import "./BankStakingInfo.styles.css"
+
 function BankStakingInfo() {
   //   const t = useLanguage('bank-staking');
 
