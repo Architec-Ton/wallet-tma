@@ -261,7 +261,7 @@ function BankStaking() {
         />
       </Column>
       {showPinCode && (
-        <ModalPinCode onSuccess={onPinSuccess} mode="registration" />
+        <ModalPinCode onSuccess={onPinSuccess} mode="confirmation" />
       )}
       {transaction.isOpen && (
         <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>

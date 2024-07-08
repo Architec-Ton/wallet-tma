@@ -160,7 +160,7 @@ const BankStakingHistory = () => {
         })}
       </Section>
       {showPinCode && (
-        <ModalPinCode onSuccess={onSuccess} mode="registration" />
+        <ModalPinCode onSuccess={onSuccess} mode="confirmation" />
       )}
       {transaction.isOpen && (
         <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
