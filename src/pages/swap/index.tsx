@@ -120,11 +120,12 @@ const Swap = () => {
 
   const sendingAsset: CoinDto = useMemo(() => {
     if (combinedAssets.length) {
+      console.log("swapAssets", swapAssets)
       return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.send.address
       );
     }
-  }, [swapAssets.send.address]);
+  }, [swapAssets, combinedAssets]);
 
   const receivingAsset: CoinDto = useMemo(() => {
     if (combinedAssets.length) {
@@ -132,7 +133,7 @@ const Swap = () => {
         (asset) => asset.meta?.address === swapAssets.receive.address
       );
     }
-  }, [swapAssets.receive.address]);
+  }, [swapAssets, combinedAssets]);
 
   useEffect(() => {
     if (sendingAsset && receivingAsset) {
@@ -191,6 +192,7 @@ const Swap = () => {
   };
 
   const changeSendValue = (value: string) => {
+    console.log("value", value)
     const receivedValue = calculateSwappValues(value, 'send') || '';
     setSwappAssets(({ send, receive }) => {
       return {
@@ -263,6 +265,7 @@ const Swap = () => {
 
   const transactionSuccessHandler = async () => {
     const types = [sendingAsset?.type, receivingAsset?.type];
+    console.log("types", types, swapAssets)
     try {
       if (types.includes('ton')) {
         types[0] === 'ton'
@@ -379,7 +382,7 @@ const Swap = () => {
       !!sendingAsset &&
       !!receivingAsset &&
       sendingAsset.amount > 0 &&
-      sendingAsset.amount - Number(swapAssets.send.value) > 0 &&
+      sendingAsset.amount - Number(swapAssets.send.value) >= 0 &&
       !!swapAssets.send.value &&
       !!swapAssets.receive.value;
     setIsValidSwapp(isValid);
@@ -387,6 +390,9 @@ const Swap = () => {
 
   useEffect(() => {
     btn.setVisible(isValidSwapp);
+    if (isValidSwapp) {
+      btn.refresh(swapHanler);
+    }
   }, [isValidSwapp]);
 
   const onComplete = () => {
