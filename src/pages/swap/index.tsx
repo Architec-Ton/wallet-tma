@@ -28,6 +28,7 @@ import { initialAssets } from '../../mocks/mockAssets';
 import { Link } from 'react-router-dom';
 
 import congratulateImg from "../../assets/images/congretulate.png";
+import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
 
 export type AssetDataType = {
   title: string;
@@ -71,6 +72,7 @@ const swapData: SwapDataType = {
 
 
 const Swap = () => {
+  const { data: stonFiAssets, isLoading } = useGetStonfiAssetsQuery(null)
   const [swapAssets, setSwappAssets] = useState(swapData);
   const [showAssetsList, setShowAssetsList] = useState(false);
   const [swappingTokenMode, setSwappingTokenMode] = useState<
@@ -91,6 +93,11 @@ const Swap = () => {
   const wallet = useTonAddress();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage('swap');
+
+  useEffect(() => {
+    page.setLoading(isLoading)
+    console.log("stonFiAssets", stonFiAssets)
+  }, [isLoading])
 
   useEffect(() => {
     walletInfoApi(null)
