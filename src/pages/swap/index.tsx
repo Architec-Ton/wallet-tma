@@ -4,18 +4,14 @@ import Section from '../../components/containers/Section';
 import Delimiter from '../../components/typography/Delimiter';
 import Row from '../../components/containers/Row';
 import { iconReverseButton } from '../../assets/icons/buttons';
-// import { iconPepe, iconTon, iconUsdt } from '../../assets/icons/jettons';
 import SendAsset from './sendAsset';
 import ReceiveAsset from './receiveAsset';
 import AssetsList from './assetsList';
 import { AddressType, DEX, pTON } from '@ston-fi/sdk';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useClosure } from '../../hooks/useClosure';
-import ModalPinCode from '../../components/ui/modals/modalPinCode';
-import TransactionModal from '../../components/ui/modals/transactionModal';
 import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
 import { WalletInfoData } from '../../types/wallet';
-import TransactionCompleteModal from '../../components/ui/modals/transactionCompleteModal';
 import { CoinDto } from '../../types/assest';
 import { useTonClient } from '../../hooks/useTonClient';
 import { toNano } from '@ton/core';
@@ -24,11 +20,13 @@ import './index.css';
 import useLanguage from '../../hooks/useLanguage';
 import { usePage } from '../../hooks/usePage';
 import { useTmaMainButton } from '../../hooks/useTma';
-import { initialAssets } from '../../mocks/mockAssets';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import congratulateImg from "../../assets/images/congretulate.png";
 import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
+import { useTransaction } from '../../hooks/useTransaction';
+import PartialContent from '../../components/ui/modals/PartialContent';
+import { formatDate } from 'date-fns';
 
 export type AssetDataType = {
   title: string;
@@ -78,12 +76,6 @@ const Swap = () => {
   const [swappingTokenMode, setSwappingTokenMode] = useState<
     'send' | 'receive' | null
   >(null);
-  const [showPinCode, setShowPinCode] = useState<boolean>(false);
-  const [showTransaction, setShowTransaction] = useState<boolean>(false);
-  const [showTransactionComplete, setShowTransactionComplete] =
-    useState<boolean>(false);
-  const [isTransactionInProgress, setIsTransactionInProgress] =
-    useState<boolean>(false);
   const [assets, setAssets] = useState<CoinDto[] | null>(null);
   const page = usePage();
   const btn = useTmaMainButton();
@@ -93,10 +85,11 @@ const Swap = () => {
   const wallet = useTonAddress();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage('swap');
+  const transaction = useTransaction()
+  const navigate = useNavigate()
 
   useEffect(() => {
     page.setLoading(isLoading)
-    console.log("stonFiAssets", stonFiAssets)
   }, [isLoading])
 
   useEffect(() => {
@@ -108,33 +101,60 @@ const Swap = () => {
         page.setLoading(false);
         btn.init(t('page-title'), swapHanler, true);
       })
-      .catch(() => {
-        setAssets(initialAssets);
+      .catch((e) => {
+        console.error(e)
         page.setLoading(false);
       });
   }, []);
 
-  const sendingAsset = useMemo(() => {
-    if (assets) {
-      return assets.find(
+  const combinedAssets = useMemo(() => {
+    if (assets && stonFiAssets) {
+      const _stonFiAssets = stonFiAssets.filter((stonFiAsset) => {
+        return !assets.find(asset => asset.meta?.symbol?.toLowerCase() === stonFiAsset?.meta?.symbol?.toLowerCase())
+      })
+      const _assets = (new Array()).concat(assets, _stonFiAssets)
+      return _assets
+    }
+    return [] as CoinDto[]
+  }, [assets, stonFiAssets])
+
+  const sendingAsset: CoinDto = useMemo(() => {
+    if (combinedAssets.length) {
+      return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.send.address
       );
     }
   }, [swapAssets.send.address]);
 
-  const receivingAsset = useMemo(() => {
-    if (assets) {
-      return assets.find(
+  const receivingAsset: CoinDto = useMemo(() => {
+    if (combinedAssets.length) {
+      return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.receive.address
       );
     }
   }, [swapAssets.receive.address]);
+
+  useEffect(() => {
+    if (sendingAsset && receivingAsset) {
+      transaction.init({
+        commission: 0.17,
+        returnValue: 0.125,
+        address: receivingAsset.meta?.address as string,
+        completeIcon: congratulateImg,
+        completeTitle: t("transaction-complete-title")
+      })
+    }
+  }, [
+    sendingAsset,
+    receivingAsset
+  ])
 
   const calculateSwappValues = (
     value: number | string,
     mode: 'send' | 'receive'
   ) => {
     const _value = Number(value);
+    console.log("calc", _value, mode)
     if (mode === 'send') {
       return receivingAsset
         ? (Number(sendingAsset?.usdPrice) * _value) /
@@ -204,7 +224,7 @@ const Swap = () => {
           send: {
             title: asset.meta?.symbol as string,
             balance: asset.amount ?? 0,
-            icon: asset.meta?.image as string,
+            icon: (asset.meta?.image || asset.meta?.imageData && `data:image/png;base64, ${asset.meta?.imageData}`) as string,
             address: asset.meta?.address,
             value: sendedValue.toString(),
           },
@@ -219,7 +239,7 @@ const Swap = () => {
           receive: {
             title: asset.meta?.symbol as string,
             balance: asset.amount ?? 0,
-            icon: asset.meta?.image as string,
+            icon: (asset.meta?.image || asset.meta?.imageData && `data:image/png;base64, ${asset.meta?.imageData}`) as string,
             address: asset.meta?.address,
             value: receivedValue.toString(),
           },
@@ -230,24 +250,18 @@ const Swap = () => {
   };
 
   const swapHanler = () => {
-    setShowPinCode(true);
+    transactionSuccessHandler()
   };
 
-  const delay = () => {
+  const delay = (time: number) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
-      }, 10000);
+      }, time);
     });
   };
 
-  const onPinSuccess = () => {
-    setShowPinCode(false);
-    setShowTransaction(true);
-  };
-
   const transactionSuccessHandler = async () => {
-    setIsTransactionInProgress(true);
     const types = [sendingAsset?.type, receivingAsset?.type];
     try {
       if (types.includes('ton')) {
@@ -257,15 +271,11 @@ const Swap = () => {
       } else {
         await jettonToJettonTransaction();
       }
-      await delay();
-      setIsTransactionInProgress(false);
-      setShowTransaction(false);
-      setShowTransactionComplete(true);
+      transaction.open()
+      await delay(5000);
+      
     } catch (e) {
       console.error(e);
-      await delay();
-      setIsTransactionInProgress(false);
-      setShowTransaction(false);
     }
   };
 
@@ -279,8 +289,8 @@ const Swap = () => {
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
       offerAmount: toNano(
-        Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number)
+        Math.round(Number(swapAssets.send.value) *
+          Math.pow(10, sendingAsset?.meta?.decimals as number))
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: toNano(
@@ -310,8 +320,8 @@ const Swap = () => {
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
       offerAmount: toNano(
-        Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number)
+        Math.round(Number(swapAssets.send.value) *
+          Math.pow(10, sendingAsset?.meta?.decimals as number))
       ),
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
       minAskAmount: toNano(
@@ -341,8 +351,8 @@ const Swap = () => {
       userWalletAddress: wallet,
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
       offerAmount: toNano(
-        Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number)
+        Math.round(Number(swapAssets.send.value) *
+          Math.pow(10, sendingAsset?.meta?.decimals as number))
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: toNano(
@@ -379,6 +389,9 @@ const Swap = () => {
     btn.setVisible(isValidSwapp);
   }, [isValidSwapp]);
 
+  const onComplete = () => {
+    navigate("/bank/buy")
+  }
   return (
     <Page title={t('page-title')} className="swap">
       <Delimiter />
@@ -431,50 +444,41 @@ const Swap = () => {
         </Row>
         <Delimiter />
       </Section>
-      {/* <button
-        className="primary-button rounded-button large-button"
-        onClick={swapHanler}
-        disabled={!isValidSwapp}>
-        {t('page-title')}
-      </button> */}
       {showAssetsList && (
         <AssetsList
           onClose={closeAssetsList}
           onJetonSelect={setJeton}
-          assets={assets}
+          assets={combinedAssets}
           excludeAssets={{ send: sendingAsset, receive: receivingAsset }}
         />
       )}
-      {showPinCode && (
-        <ModalPinCode onSuccess={onPinSuccess} mode="confirmation" />
-      )}
-      {showTransaction && (
-        <TransactionModal
-          from={sendingAsset}
-          to={receivingAsset}
-          sendedValue={swapAssets.send.value as string}
-          receivedValue={swapAssets.receive.value as string}
-          commission={0.17}
-          returnValue={0.125}
-          address={swapAssets.receive.address as string}
-          transactionData={new Date()}
-          transactionType={t('page-title')}
-          onClose={() => setShowTransaction(false)}
-          onSuccess={transactionSuccessHandler}
-          inProgress={isTransactionInProgress}
-        />
-      )}
-      {showTransactionComplete && (
-        <TransactionCompleteModal
-          onClose={() => setShowTransactionComplete(false)}
-          thumb={congratulateImg}
-          title={t("congratulation")}
-        >
-          <div>
-            {t("complete-text")}
+      {transaction.isOpen && (
+        <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
+          <Row className="transaction-assets">
+            <img src={sendingAsset?.meta?.image} alt="" />
+            <img src={receivingAsset?.meta?.image} alt="" />
+          </Row>
+          <div className="">
+            -{swapAssets.send.value} {sendingAsset?.meta?.symbol}
           </div>
-          <Link to="/" className="primary-button rounded-button">{t("wallet-button")}</Link>
-        </TransactionCompleteModal>
+          <div className="">
+            +{swapAssets.receive.value} {receivingAsset?.meta?.symbol}
+          </div>
+          <div className="secondary-data">
+            {Number(swapAssets.receive.value) * Number(receivingAsset?.usdPrice)} $
+          </div>
+          <div className="secondary-data">
+            {t('page-title')} {formatDate(new Date(), "d MMMM, hh:mm")}
+          </div>
+        </PartialContent>
+      )}
+      {transaction.isComplete && (
+        <PartialContent wait={[transaction.isComplete]} init={transaction.setPartialContent}>
+          <div>
+            {t("transaction-complete-description")} 
+          </div>
+          <button onClick={onComplete} className="primary-button rounded-button">{t("transaction-complete-button")}</button>
+        </PartialContent>
       )}
     </Page>
   );

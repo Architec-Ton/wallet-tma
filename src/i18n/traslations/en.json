@@ -141,6 +141,9 @@
     "swap-clear": "Clear",
     "swap-max": "Max",
     "swap-receive": "Receive",
+    "swap-transaction-complete-title": "Let's mint yours first Bank!",
+    "swap-transaction-complete-description": "Thanks for choosing and believing us 🩵",
+    "swap-transaction-complete-button": "Mint",
 
     "transaction-loading": "Transaction is proceed...",
     "transaction-receiver-address": "Receiver address",

@@ -34,7 +34,7 @@ export const stonFiApi = createApi({
     baseUrl: "https://api.ston.fi/v1"
   }),
   endpoints: (builder) => ({
-    getStonfiAssets: builder.query<AssetInfo[] | CoinDto[], unknown>({
+    getStonfiAssets: builder.query<CoinDto[], unknown>({
       query: () => `assets`,
       transformResponse: (response: { asset_list: AssetInfo[]}) => {
         const assets = response.asset_list.filter(asset => asset.default_symbol === true && !asset.blacklisted)

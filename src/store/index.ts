@@ -12,7 +12,7 @@ import { walletApi } from '../features/wallet/walletApi';
 import swapSlice from '../features/swap/swapSlice';
 import { bankApi } from '../features/bank/bankApi';
 import walletSlice from '../features/wallet/walletSlice';
-import { stonFiApi } from "../features/stonfi/stonFiApi";
+import { stonFiApi } from '../features/stonfi/stonFiApi';
 
 export const store = configureStore({
   reducer: {
