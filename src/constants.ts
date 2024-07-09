@@ -15,10 +15,10 @@ export const TONAPI_KEY = import.meta.env.VITE_TONAPI_KEY || null;
 
 export const BANK_JETTON_MASTER_ADDRESS =
   import.meta.env.VITE_BANK_JETTON_MASTER_ADDRESS ||
-  'kQDDm3AwW9NAP2sv3ZjKPje9hY5zEiM68GxoUVtMX616n6Cm';
+  'kQCkaGQTCUMUzu5b9IDYY4EjGI4hLIrnnKa5oAhgymxp9pES';
 
 export const BANK_CROWDSALE_ADDRESS =
   import.meta.env.VITE_BANK_CROWDSALE_ADDRESS ||
-  'kQBmyiov17J71ontt2u1F_dwKTfcUoghCMVyfIsDRM9NNvhp';
+  'kQBmuTZSqNFw0qe2gcJV1bl_abjxlR9mTIPHeB-4HEXn2dVY';
 
 export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT || '0.07';
