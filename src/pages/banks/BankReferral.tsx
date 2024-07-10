@@ -16,7 +16,7 @@ const BankReferral = () => {
   const page = usePage()
   const { data, isLoading } = useApiGetBankReferralsQuery(null)
 
-  const [referralLink, setReferralLink] = useState<string>()
+  const [referralLink, setReferralLink] = useState<string>('https://t.me/...')
 
   useEffect(() => {
     page.setLoading(isLoading)
@@ -25,7 +25,7 @@ const BankReferral = () => {
   useEffect(() => {
     if (data) {
       // TODO: set true referral link
-      setReferralLink('https://t.me/...')
+      setReferralLink('')
     }
   }, [data])
 
