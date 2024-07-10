@@ -110,7 +110,7 @@ function useContracts() {
           'buyBank'
         );
       },
-      buyWithRefferal: (referralAddress: Address, amount: bigint) => {
+      buyWithReferral: (referralAddress: Address, amount: bigint) => {
         bankCrowdSale()?.send(
           sender,
           { value: amount + toNano(BANK_GAS_AMOUNT) },
