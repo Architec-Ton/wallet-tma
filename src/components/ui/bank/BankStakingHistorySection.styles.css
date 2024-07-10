@@ -1,0 +1,7 @@
+.claim-button {
+  justify-content: center;
+}
+
+.page-header .title {
+  margin: var(--spacing-12) 0;
+}

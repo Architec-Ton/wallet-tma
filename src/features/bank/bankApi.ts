@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQuery from '../api/api';
 import { BankBuyDto } from '../../types/banks';
+import { ReferalsInfo } from '../../types/referals';
 
 export const bankApi = createApi({
   reducerPath: 'bankApi',
@@ -13,7 +14,10 @@ export const bankApi = createApi({
         method: 'GET',
       }),
     }),
+    apiGetBankReferrals: builder.query<ReferalsInfo, null>({
+      query: () => "/bank/referal"
+    })
   }),
 });
 
-export const { useApiGetBankBuyMutation } = bankApi;
+export const { useApiGetBankBuyMutation, useApiGetBankReferralsQuery } = bankApi;

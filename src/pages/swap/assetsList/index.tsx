@@ -27,10 +27,14 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
     const debounce = useDebounce()
     const [filteredAssets, setFilterdAssets] = useState<typeof assets>(assets)
 
+    const isSameAssets = (a: CoinDto, b: CoinDto) => {
+        return a.meta?.symbol?.toLowerCase() === b?.meta?.symbol?.toLowerCase()
+    }
+
     useEffect(() => {
         if (assets) {
             const { send, receive } = excludeAssets
-            const filteredAssets = assets.filter(asset => asset.type !== send?.type && asset.type !== receive?.type)
+            const filteredAssets = assets.filter(asset => !isSameAssets(asset, send as CoinDto) && !isSameAssets(asset, receive as CoinDto))
             setFilterdAssets(filteredAssets)
         }
     }, [assets])
@@ -41,7 +45,7 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
             const _assets = assets?.filter(asset => {
                 return (
                     asset.meta?.name?.toLowerCase().includes(value.toLowerCase())
-                    && asset.type !== send?.type && asset.type !== receive?.type
+                    && !isSameAssets(asset, send as CoinDto) && !isSameAssets(asset, receive as CoinDto)
                 )
             } )
             setFilterdAssets(_assets)
@@ -67,7 +71,7 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
                         return (
                             <Block key={asset.meta?.address} className="asset-list__row" onClick={clickHandler(asset.meta?.address as string)}>
                                 <Row>
-                                    <img src={asset.meta?.image} alt="" className="asset-icon large" />
+                                    <img src={asset.meta?.image || `data:image/png;base64, ${asset.meta?.imageData}`} alt="" className="asset-icon large" />
                                     <div className="asset-info">
                                         <div className="asset-symbol">{asset.meta?.symbol}</div>
                                         <div className="asset-dex-price">

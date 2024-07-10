@@ -9,6 +9,7 @@ import { store } from "./store";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { FE_URL, MANIFEST_URL } from "./constants";
 import { TonProvider } from "./components/layout/TonProvider";
+import TransactionProvider from "./components/layout/TransactionProvider";
 
 // import { Buffer } from "buffer/";
 // window.Buffer = Buffer;
@@ -27,7 +28,9 @@ function App() {
           <SDKProvider acceptCustomStyles>
             <TonProvider>
               <Layout>
-                <RouterProvider router={router} />
+                <TransactionProvider>
+                  <RouterProvider router={router} />
+                </TransactionProvider>
               </Layout>
             </TonProvider>
           </SDKProvider>

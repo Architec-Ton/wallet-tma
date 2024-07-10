@@ -132,13 +132,11 @@ const ConfirmKey: React.FC = () => {
       setMnemonics(state.split(' '));
     }
     page.setLoading(false, false);
-    btn.init(t('next', 'button'), () => confirmHandler);
+    btn.init(t('next', 'button'), confirmHandler);
   }, []);
 
   useEffect(() => {
-    btn.init(t('next', 'button'), () => {
-      confirmHandler();
-    });
+    btn.init(t('next', 'button'), confirmHandler);
   }, [mnemonics, mnemonicsVerifyIdx, inputs]);
 
   return (

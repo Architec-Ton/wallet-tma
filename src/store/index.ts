@@ -11,6 +11,8 @@ import { authApi } from '../features/auth/authApi';
 import { walletApi } from '../features/wallet/walletApi';
 import swapSlice from '../features/swap/swapSlice';
 import { bankApi } from '../features/bank/bankApi';
+import walletSlice from '../features/wallet/walletSlice';
+import { stonFiApi } from '../features/stonfi/stonFiApi';
 
 export const store = configureStore({
   reducer: {
@@ -22,17 +24,20 @@ export const store = configureStore({
     gaming: gamingSlice,
     auth: authSlice,
     swap: swapSlice,
+    wallet: walletSlice,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,
     [gamingApi.reducerPath]: gamingApi.reducer,
     [walletApi.reducerPath]: walletApi.reducer,
+    [stonFiApi.reducerPath]: stonFiApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
       bankApi.middleware,
       walletApi.middleware,
-      gamingApi.middleware
+      gamingApi.middleware,
+      stonFiApi.middleware
     ),
 });
 

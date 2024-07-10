@@ -1,0 +1,116 @@
+.staking-page .title {
+  margin-left: 0
+}
+
+.staking-form-container {
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.stake-history-loss {
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-80) var(--spacing-12);
+  color: var(--text-secondary-color);
+}
+
+.staking-asset-container {
+  gap: var(--spacing-4);
+  align-items: flex-end;
+}
+
+.staking-asset input {
+  border: none;
+    background: none;
+    padding: 0;
+    width: 100%;
+    color: transparent;
+    position: absolute;
+    height: var(--font-size-xlarge);
+    font-size: var(--font-size-xlarge);
+    font-weight: var(--font-medium);
+    line-height: var(--font-size-xlarge);
+    text-align: right;
+    caret-color: black;
+    bottom: 0;
+}
+.staking-asset {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  min-width: 1.2rem;
+  max-width: 182px;
+  gap: 0;
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-medium);
+  line-height: var(--font-size-xlarge);
+  height: var(--font-size-xlarge);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.staking-asset.warning {
+  color: var(--error-color);
+}
+
+.bank-value {
+  position: relative;
+}
+
+.staking-asset input::placeholder {
+  color: var(--text-secondary-color);
+}
+
+.staking-asset-title {
+  color: var(--text-secondary-color);
+  padding-bottom: var(--spacing-2);
+}
+
+
+/* Number input */
+.number-input {
+  display: inline-flex;
+  align-items: center;
+  color: #00aaff;
+}
+
+.number-input input {
+  border: none;
+  text-align: right;
+  width: 100%;
+  color: #00aaff;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  padding-right: var(--spacing-2);
+  margin-right: var(--spacing-2);
+}
+
+.number-input-buttons {
+  position: relative;
+  padding: var(--spacing-8);
+}
+
+.up-button {  
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  display: block;
+  border-top: 1px solid var(--primary-color);
+  border-left: 1px solid var(--primary-color);
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.down-button {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  display: block;
+  border-top: 1px solid var(--primary-color);
+  border-left: 1px solid var(--primary-color);
+  transform: rotate(-135deg);
+  bottom: 0;
+}

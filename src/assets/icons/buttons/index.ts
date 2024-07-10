@@ -14,12 +14,14 @@ import iconInfoButton from './info-circle.svg';
 import iconLogoButton from './logo.svg';
 import iconButtonMedalStars from './medal-star.svg';
 import iconButtonPaste from './paste-icon.svg';
-import iconRefferalsButton from './people.svg';
+import iconReferralsButton from './people.svg';
 import iconSendButton from './send-2.svg';
 import iconSettingsButton from './setting-2.svg';
 import iconSortButton from './sort.svg';
 import iconStakeButton from './stake.svg';
 import iconTasksButton from './tasks.svg';
+import iconButtonCopyLight from './copy-white.svg';
+import iconButtonProfileUsers from './profile-2user.svg';
 
 export {
   iconBankButton,
@@ -35,11 +37,13 @@ export {
   iconInfoButton,
   iconLogoButton,
   iconOpenButton,
-  iconRefferalsButton,
+  iconReferralsButton,
   iconReverseButton,
   iconSendButton,
   iconSettingsButton,
   iconSortButton,
   iconStakeButton,
   iconTasksButton,
+  iconButtonCopyLight,
+  iconButtonProfileUsers,
 };
