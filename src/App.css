@@ -415,3 +415,7 @@ a.primary-button{
   padding-bottom: var(--spacing-12);
   line-height: var(--spacing-20);
 }
+
+.font-medium {
+    font-weight: var(--font-medium);
+}

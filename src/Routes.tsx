@@ -34,6 +34,7 @@ import Swap from './pages/swap';
 import SendPage from './pages/send/send.tsx';
 import AccountDisconnect from './pages/AccountDisconnect.tsx';
 import BankBuy from './pages/banks/BankBuy.tsx';
+import BankReferral from './pages/banks/BankReferral.tsx';
 
 const router = createBrowserRouter(
   [
@@ -157,6 +158,10 @@ const router = createBrowserRouter(
     {
       path: '/send',
       element: <SendPage />,
+    },
+    {
+      path: '/bank/referal',
+      element: <BankReferral />,
     },
   ],
   { basename: '/wallet' }
