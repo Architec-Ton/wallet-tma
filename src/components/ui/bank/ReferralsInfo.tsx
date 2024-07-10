@@ -5,11 +5,10 @@ import useLanguage from "../../../hooks/useLanguage"
 import { iconReferralsButton } from "../../../assets/icons/buttons"
 import Title from "../../typography/Title"
 import Column from "../../containers/Column"
-
-import "./ReferralsInfo.style.css"
-import Row from "../../containers/Row"
 import MiniBlock from "../../typography/MiniBlock"
 import { useApiGetBankReferralsQuery } from "../../../features/bank/bankApi"
+
+import "./ReferralsInfo.style.css"
 
 const ReferralsInfo = () => {
   const t = useLanguage("bank")

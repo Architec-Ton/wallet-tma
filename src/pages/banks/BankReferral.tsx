@@ -16,11 +16,18 @@ const BankReferral = () => {
   const page = usePage()
   const { data, isLoading } = useApiGetBankReferralsQuery(null)
 
-  const [referralLink, setReferralLink] = useState<string>('https://t.me/...')
+  const [referralLink, setReferralLink] = useState<string>()
 
   useEffect(() => {
     page.setLoading(isLoading)
   }, [isLoading])
+
+  useEffect(() => {
+    if (data) {
+      // TODO: set true referral link
+      setReferralLink('https://t.me/...')
+    }
+  }, [data])
 
   const copyToClipboard = () => {
     if (referralLink) {
