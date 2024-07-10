@@ -47,7 +47,7 @@ function BankStaking() {
   const [returnValue, setReturnValue] = useState<number>(0)
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>()
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>()
-  const [arc, setArc] = useState<bigint>(0n);
+  // const [arc, setArc] = useState<bigint>(0n);
   const [stakeAddress, setStakeAddress] = useState<string>();
 
   useEffect(() => {    
@@ -101,7 +101,7 @@ function BankStaking() {
           stakeAddress,
           ownerAddress
         );
-        if (stakeInfo) setArc(stakeInfo?.calculatedAmount);
+        // if (stakeInfo) setArc(stakeInfo?.calculatedAmount);
         console.log('getStakeInfo:', stakeInfo);
       }
     }
@@ -252,11 +252,11 @@ function BankStaking() {
             <button className="control-button rounded-button" onClick={stakeAllHandler}>{t("all")}</button>
           </Row>
         </Section>
-        <h2>{arc.toLocaleString()} ARC</h2>
+        {/* <h2>{arc.toLocaleString()} ARC</h2>
         <button onClick={() => handleStake(1)}>Stake 1 BNK</button>
         <button onClick={() => handleStakeInfo()}>Stake info</button>
         <button onClick={() => handleUnstake()}>UnStake</button>
-        <button onClick={() => handleClaim()}>Claim</button>
+        <button onClick={() => handleClaim()}>Claim</button> */}
         
         <BankStakingInfo infoItems={infoItems} />
         <BankStakingHistorySection
