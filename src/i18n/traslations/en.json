@@ -104,7 +104,9 @@
     "bank-referrals": "Referrals",
     "bank-referrals-hint": "Referrals",
     "bank-bankers": "Bankers",
-    "bank-bankers-hint": "Bankers",
+    "bank-free-banks": "Free banks",
+    "bank-minting": "Minting",
+    "bank-minting-hint": "Minting",
 
     "banking-tasks-title": "Banking Tasks",
     "banking-tasks-comment": "* You can receive rewards for completing a number of tasks in our quests",

@@ -21,6 +21,7 @@ import BankBalance from '../../components/ui/balance/BankBalance';
 import useContracts from '../../hooks/useContracts';
 import { useTon } from '../../hooks/useTon';
 import ReferralsInfo from '../../components/ui/bank/ReferralsInfo';
+import BankMintingInfo from '../../components/ui/bank/BankMintingInfo';
 
 function BankMain() {
   const navigate = useRouter();
@@ -122,9 +123,7 @@ function BankMain() {
             />
           </BlockWithTitle>
           <ReferralsInfo />
-          <BlockWithTitle title={t('Bankers')} hintMessage={t('Bankers-hint')}>
-            construction
-          </BlockWithTitle>
+          <BankMintingInfo />
         </Column>
         <History />
       </Column>
