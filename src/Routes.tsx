@@ -34,6 +34,7 @@ import Swap from './pages/swap';
 import SendPage from './pages/send/send.tsx';
 import AccountDisconnect from './pages/AccountDisconnect.tsx';
 import BankBuy from './pages/banks/BankBuy.tsx';
+import BankStakingHistory from './components/ui/bank/BankStakingHistory.tsx';
 
 const router = createBrowserRouter(
   [
@@ -149,6 +150,10 @@ const router = createBrowserRouter(
     {
       path: '/bank/buy',
       element: <BankBuy />,
+    },
+    {
+      path: '/bank/stake/history',
+      element: <BankStakingHistory />,
     },
     {
       path: '/swap',

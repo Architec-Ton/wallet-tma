@@ -3,34 +3,30 @@ import Row from '../../containers/Row.tsx';
 import ListBaseItem from '../listBlock/ListBaseItem.tsx';
 import ListBlock from '../listBlock/index.tsx';
 
-function BankStakingInfo() {
+import "./BankStakingInfo.styles.css"
+
+export interface InfoItems {
+  title: string;
+  value: string | React.ReactNode;
+}
+
+type OwnProps = {
+  infoItems: InfoItems[] | undefined
+}
+
+function BankStakingInfo({ infoItems }: OwnProps) {
   //   const t = useLanguage('bank-staking');
 
-  const infoItems = [
-    {
-      title: 'Available balance',
-      value: '100 BNK',
-    },
-    {
-      title: 'Min deposit',
-      value: '1 BNK',
-    },
-    {
-      title: 'Staking period',
-      value: '30d',
-    },
-    {
-      title: 'Your rewards',
-      value: '1000 ARCH',
-    },
-  ];
+  if (!infoItems) {
+    return null
+  }
 
   return (
     <ListBlock>
       {infoItems.map((item, index) => (
         <ListBaseItem key={index}>
           <Row className="space-between w-100">
-            <div>{item.title}</div>
+            <div className="nowrap">{item.title}</div>
             <div>{item.value}</div>
           </Row>
         </ListBaseItem>
