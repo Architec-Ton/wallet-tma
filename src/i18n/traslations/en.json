@@ -101,8 +101,8 @@
     "bank-quests": "Quests",
     "bank-quests-hints": "Quests banks",
     "bank-tasks": "Tasks",
-    "bank-refferals": "Refferals",
-    "bank-refferals-hint": "Refferals",
+    "bank-referrals": "Referrals",
+    "bank-referrals-hint": "Referrals",
     "bank-bankers": "Bankers",
     "bank-bankers-hint": "Bankers",
 
@@ -171,5 +171,17 @@
     "input-clear": "Clear",
     "input-max": "Max",
 
-    "bank-buy-title": "Buy Bank"
+    "bank-buy-title": "Buy Bank",
+    "bank-see-all": "See All",
+
+    "bank-referral-page-title": "Referrals",
+    "bank-referral-earning-program": "Earning Program",
+    "bank-referral-earn-more": "Earn <span>100%</span> more <span>$BANK</span> from your friend <span>minted</span>",
+    "bank-referral-earn-description": "The more people there are, the stronger your banks are. — Become a global banker!",
+    "bank-referral-reward-title": "Your Reward",
+    "bank-referral-reward-hint": "Your Reward",
+    "bank-referral-referral-title": "Referral",
+    "bank-referral-referral-hint": "Referral",
+    "bank-referral-bought-bank": "Bought a Bank",
+    "bank-referral-count": "<span>{{count}}</span> Referrals"
 }
