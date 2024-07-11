@@ -54,7 +54,7 @@ function AddWallet() {
     {
       name: 'existing',
       icon: iconPageAddWalletKey,
-      onClick: () => navigate('/registration/existing'),
+      onClick: () => {}, // navigate('/registration/existing'),
     },
     {
       name: 'import',

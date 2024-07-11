@@ -1,6 +1,19 @@
-import { UserInfo } from "./user";
+import { UserInfo } from './user';
 
-export type TAuthType = "telegram" | "web";
+export type TAuthType = 'telegram' | 'web';
+
+export interface WalletState {
+  network: string;
+  mode: string;
+  address?: string;
+  publicKey?: string;
+  privateKey?: string;
+}
+
+export interface WalletsState {
+  currentWallet: number;
+  wallets: WalletState[];
+}
 
 export interface WalletInfo {
   network: string;

@@ -9,9 +9,11 @@ import useRouter from '../../hooks/useRouter.ts';
 import ModalPinCode from '../../components/ui/modals/modalPinCode';
 // import { usePage } from '../../hooks/usePage.ts';
 import CryptoES from 'crypto-es';
-import { sha256_sync } from '@ton/crypto';
+import { mnemonicToPrivateKey, sha256_sync } from '@ton/crypto';
 import { useTmaMainButton } from '../../hooks/useTma.ts';
 import { useLocation } from 'react-router-dom';
+import { useTon } from '../../hooks/useTon/index.ts';
+import { WalletContractV4 } from '@ton/ton';
 
 const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -38,6 +40,7 @@ const ConfirmKey: React.FC = () => {
   const t = useLanguage('Confirm');
   const navigate = useRouter();
   const page = usePage();
+  const ton = useTon();
   const btn = useTmaMainButton();
   const { state } = useLocation(); // state is any or unknown
 
@@ -74,8 +77,11 @@ const ConfirmKey: React.FC = () => {
     }
   };
 
-  const onConfirmPinSuccess = () => {
+  const onConfirmPinSuccess = async () => {
     console.log('onConfirmPinSuccess', confirmPinCode);
+    if (verificationStep == 2) {
+      navigate('/registration/completed');
+    }
     if (verificationStep == 1) {
       console.log(pinCode, confirmPinCode);
       try {
@@ -83,7 +89,25 @@ const ConfirmKey: React.FC = () => {
         // console.log('privateHash2:', mmDecoded);
         if (mmDecoded.split(' ').length == 24) {
           //TODO: save and setup
-          navigate('/registration/completed');
+
+          console.log('mm:', mmDecoded);
+          // navigate('/registration/completed');
+          const keyPair = await mnemonicToPrivateKey(mmDecoded.split(' '));
+
+          //Use v4 by default
+          const workchain = 0; // Usually you need a workchain 0
+          const wallet = WalletContractV4.create({
+            workchain,
+            publicKey: keyPair.publicKey,
+          });
+          ton.setAddress(
+            wallet.address.toString({ urlSafe: true, bounceable: true }),
+            'mnemonics',
+            keyPair.publicKey.toString('hex'),
+            privateHash
+          );
+
+          setVerificationStep(2);
         } else {
           setVerificationStep(0);
         }
@@ -104,7 +128,7 @@ const ConfirmKey: React.FC = () => {
       );
       if (!checkMnemonics.every((v) => Boolean(v))) {
         console.log('Wrong inputs', checkMnemonics, inputs, mnemonicsVerifyIdx);
-        return;
+        // return;
       }
 
       setShowPinCode(true);
@@ -120,6 +144,10 @@ const ConfirmKey: React.FC = () => {
     ),
     [mnemonics, mnemonicsVerifyIdx, inputs]
   );
+
+  useEffect(() => {
+    if (verificationStep == 2) navigate('/registration/completed');
+  }, [verificationStep]);
 
   useEffect(() => {
     const randomIdx = Array(3)

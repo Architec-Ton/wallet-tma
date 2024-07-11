@@ -386,7 +386,7 @@ const Swap = () => {
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
-  const [pinCode, setPinCode] = useState<string>('');
+  const [pinCode] = useState<string>('');
 
   useEffect(() => {
     const isValid: boolean =
