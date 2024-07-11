@@ -43,8 +43,8 @@ export interface GameResource {
   icon: string;
   title: string;
   description: string;
-  link: string;
-  type: 'web' | 'telegram' | 'coin';
+  url: string;
+  type: 'website' | 'telegram' | 'jetton';
 }
 
 export type TGameLeader = {
