@@ -4,13 +4,14 @@ import { setAddress, TonConnectionMode } from '../../features/ton/tonSlice';
 import { useEffect, useState } from 'react';
 import { useWalletInitData } from './useWalletInitData';
 import { useTonConnect } from './tonConnect';
+import { WalletsState } from '../../types/auth';
 
 export function useTon() {
   const dispatch = useAppDispatch();
   const wallet = useWalletInitData();
-  const [bcData, setBcData] = useLocalStorage('bcData', {
-    network: 'ton',
-    mode: 'disconnect',
+  const [bcData, setBcData] = useLocalStorage<WalletsState>('wData', {
+    currentWallet: -1,
+    wallets: [],
   });
 
   const { sender } = useTonConnect();
@@ -20,7 +21,13 @@ export function useTon() {
   >('disconnect');
 
   useEffect(() => {
-    setTonMode(bcData.mode as 'disconnect' | 'tonconnect' | 'mnemonics');
+    if (bcData.currentWallet < 0) {
+      setTonMode('disconnect');
+    } else if (bcData.wallets[bcData.currentWallet].mode == 'tonconnect') {
+      setTonMode('tonconnect');
+    } else if (bcData.wallets[bcData.currentWallet].mode == 'mnemonics') {
+      setTonMode('mnemonics');
+    }
   }, []);
 
   return {
@@ -30,9 +37,21 @@ export function useTon() {
     setAddress: (
       address: string,
       mode: 'disconnect' | 'tonconnect' | 'mnemonics',
-      publicKey?: string
+      publicKey?: string,
+      privateKey?: string
     ) => {
-      setBcData({ network: 'ton', mode: mode });
+      setBcData({
+        currentWallet: 0,
+        wallets: [
+          {
+            network: 'ton',
+            mode: mode,
+            publicKey: publicKey,
+            address: address,
+            privateKey: privateKey,
+          },
+        ],
+      });
       setTonMode(mode);
       dispatch(
         setAddress({
@@ -44,14 +63,17 @@ export function useTon() {
               ? TonConnectionMode.mnemonics
               : TonConnectionMode.disconnect,
           publicKey: publicKey,
+          privateKey: privateKey,
         })
       );
-      console.log('useTon.setAddress', mode, address);
+      console.log('useTon.setAddress', mode, address, publicKey);
     },
     setDisconnect: () => {
       setBcData({
-        network: 'ton',
-        mode: 'disconnect',
+        currentWallet: -1,
+        wallets: [],
+        // network: 'ton',
+        // mode: 'disconnect',
       });
       setTonMode('disconnect');
       dispatch(

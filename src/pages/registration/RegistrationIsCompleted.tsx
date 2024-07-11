@@ -14,6 +14,7 @@ const RegistrationIsCompleted = () => {
   const btn = useTmaMainButton();
   const page = usePage()
   const t = useLanguage('Registration');
+
   const description = (
     <p>
       {t('1-description')}
@@ -24,7 +25,7 @@ const RegistrationIsCompleted = () => {
 
   useEffect(() => {
     page.setLoading(false)
-    btn.init(t('next','button'), () => navigate('/registration/completed'), true);
+    btn.init(t('next','button'), () => navigate('/'), true);
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export enum TonConnectionMode {
   disconnect = 0,
@@ -9,6 +9,7 @@ export enum TonConnectionMode {
 interface TonState {
   address?: string;
   publicKey?: string;
+  privateKey?: string;
   mode: TonConnectionMode;
   isTonLoading: boolean;
 }
@@ -16,6 +17,7 @@ interface TonState {
 interface TonAddressProp {
   address?: string;
   publicKey?: string;
+  privateKey?: string;
   mode: TonConnectionMode;
 }
 
@@ -25,12 +27,13 @@ const initialState: TonState = {
 };
 
 const tonSlice = createSlice({
-  name: "ton",
+  name: 'ton',
   initialState,
   reducers: {
     setAddress(state, action: PayloadAction<TonAddressProp>) {
       state.address = action.payload.address;
       state.publicKey = action.payload.publicKey;
+      state.privateKey = action.payload.privateKey;
       state.mode = action.payload.mode;
       if (action.payload.mode == TonConnectionMode.disconnect) {
         state.address = undefined;

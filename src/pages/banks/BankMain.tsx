@@ -78,7 +78,7 @@ function BankMain() {
 
   useEffect(() => {
     if (isReady) handleStakeInfo();
-  }, [isReady, ton]);
+  }, [isReady]);
 
   useEffect(() => {
     console.log('walletInfoData', walletInfoData);

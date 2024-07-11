@@ -63,6 +63,7 @@
     top: 0svh;
     height: 100svh;
     border-radius: 0;
+    background-color: var(--background-color);
 }
 
 .modal__before {

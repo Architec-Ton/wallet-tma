@@ -22,7 +22,7 @@ import { usePage } from '../../hooks/usePage';
 import { useTmaMainButton } from '../../hooks/useTma';
 import { useNavigate } from 'react-router-dom';
 
-import congratulateImg from "../../assets/images/congretulate.png";
+import congratulateImg from '../../assets/images/congretulate.png';
 import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
@@ -68,9 +68,8 @@ const swapData: SwapDataType = {
   } satisfies AssetDataType,
 };
 
-
 const Swap = () => {
-  const { data: stonFiAssets, isLoading } = useGetStonfiAssetsQuery(null)
+  const { data: stonFiAssets, isLoading } = useGetStonfiAssetsQuery(null);
   const [swapAssets, setSwappAssets] = useState(swapData);
   const [showAssetsList, setShowAssetsList] = useState(false);
   const [swappingTokenMode, setSwappingTokenMode] = useState<
@@ -85,12 +84,12 @@ const Swap = () => {
   const wallet = useTonAddress();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage('swap');
-  const transaction = useTransaction()
-  const navigate = useNavigate()
+  const transaction = useTransaction();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    page.setLoading(isLoading)
-  }, [isLoading])
+    page.setLoading(isLoading);
+  }, [isLoading]);
 
   useEffect(() => {
     walletInfoApi(null)
@@ -102,7 +101,7 @@ const Swap = () => {
         btn.init(t('page-title'), swapHanler, true);
       })
       .catch((e) => {
-        console.error(e)
+        console.error(e);
         page.setLoading(false);
       });
   }, []);
@@ -110,17 +109,21 @@ const Swap = () => {
   const combinedAssets = useMemo(() => {
     if (assets && stonFiAssets) {
       const _stonFiAssets = stonFiAssets.filter((stonFiAsset) => {
-        return !assets.find(asset => asset.meta?.symbol?.toLowerCase() === stonFiAsset?.meta?.symbol?.toLowerCase())
-      })
-      const _assets = (new Array()).concat(assets, _stonFiAssets)
-      return _assets
+        return !assets.find(
+          (asset) =>
+            asset.meta?.symbol?.toLowerCase() ===
+            stonFiAsset?.meta?.symbol?.toLowerCase()
+        );
+      });
+      const _assets = new Array().concat(assets, _stonFiAssets);
+      return _assets;
     }
-    return [] as CoinDto[]
-  }, [assets, stonFiAssets])
+    return [] as CoinDto[];
+  }, [assets, stonFiAssets]);
 
   const sendingAsset: CoinDto = useMemo(() => {
     if (combinedAssets.length) {
-      console.log("swapAssets", swapAssets)
+      console.log('swapAssets', swapAssets);
       return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.send.address
       );
@@ -142,20 +145,17 @@ const Swap = () => {
         returnValue: 0.125,
         address: receivingAsset.meta?.address as string,
         completeIcon: congratulateImg,
-        completeTitle: t("transaction-complete-title")
-      })
+        completeTitle: t('transaction-complete-title'),
+      });
     }
-  }, [
-    sendingAsset,
-    receivingAsset
-  ])
+  }, [sendingAsset, receivingAsset]);
 
   const calculateSwappValues = (
     value: number | string,
     mode: 'send' | 'receive'
   ) => {
     const _value = Number(value);
-    console.log("calc", _value, mode)
+    console.log('calc', _value, mode);
     if (mode === 'send') {
       return receivingAsset
         ? (Number(sendingAsset?.usdPrice) * _value) /
@@ -192,7 +192,7 @@ const Swap = () => {
   };
 
   const changeSendValue = (value: string) => {
-    console.log("value", value)
+    console.log('value', value);
     const receivedValue = calculateSwappValues(value, 'send') || '';
     setSwappAssets(({ send, receive }) => {
       return {
@@ -226,7 +226,9 @@ const Swap = () => {
           send: {
             title: asset.meta?.symbol as string,
             balance: asset.amount ?? 0,
-            icon: (asset.meta?.image || asset.meta?.imageData && `data:image/png;base64, ${asset.meta?.imageData}`) as string,
+            icon: (asset.meta?.image ||
+              (asset.meta?.imageData &&
+                `data:image/png;base64, ${asset.meta?.imageData}`)) as string,
             address: asset.meta?.address,
             value: sendedValue.toString(),
           },
@@ -241,7 +243,9 @@ const Swap = () => {
           receive: {
             title: asset.meta?.symbol as string,
             balance: asset.amount ?? 0,
-            icon: (asset.meta?.image || asset.meta?.imageData && `data:image/png;base64, ${asset.meta?.imageData}`) as string,
+            icon: (asset.meta?.image ||
+              (asset.meta?.imageData &&
+                `data:image/png;base64, ${asset.meta?.imageData}`)) as string,
             address: asset.meta?.address,
             value: receivedValue.toString(),
           },
@@ -252,7 +256,7 @@ const Swap = () => {
   };
 
   const swapHanler = () => {
-    transactionSuccessHandler()
+    transactionSuccessHandler();
   };
 
   const delay = (time: number) => {
@@ -265,8 +269,9 @@ const Swap = () => {
 
   const transactionSuccessHandler = async () => {
     const types = [sendingAsset?.type, receivingAsset?.type];
-    console.log("types", types, swapAssets)
+    console.log('types', types, swapAssets);
     try {
+      console.log(pinCode);
       if (types.includes('ton')) {
         types[0] === 'ton'
           ? await tonToJettonTransaction()
@@ -274,9 +279,8 @@ const Swap = () => {
       } else {
         await jettonToJettonTransaction();
       }
-      transaction.open()
+      transaction.open();
       await delay(5000);
-      
     } catch (e) {
       console.error(e);
     }
@@ -292,8 +296,10 @@ const Swap = () => {
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
       offerAmount: toNano(
-        Math.round(Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number))
+        Math.round(
+          Number(swapAssets.send.value) *
+            Math.pow(10, sendingAsset?.meta?.decimals as number)
+        )
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: toNano(
@@ -323,8 +329,10 @@ const Swap = () => {
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
       offerAmount: toNano(
-        Math.round(Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number))
+        Math.round(
+          Number(swapAssets.send.value) *
+            Math.pow(10, sendingAsset?.meta?.decimals as number)
+        )
       ),
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
       minAskAmount: toNano(
@@ -354,8 +362,10 @@ const Swap = () => {
       userWalletAddress: wallet,
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
       offerAmount: toNano(
-        Math.round(Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number))
+        Math.round(
+          Number(swapAssets.send.value) *
+            Math.pow(10, sendingAsset?.meta?.decimals as number)
+        )
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: toNano(
@@ -376,6 +386,7 @@ const Swap = () => {
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
+  const [pinCode] = useState<string>('');
 
   useEffect(() => {
     const isValid: boolean =
@@ -396,8 +407,8 @@ const Swap = () => {
   }, [isValidSwapp]);
 
   const onComplete = () => {
-    navigate("/bank/buy")
-  }
+    navigate('/bank/buy');
+  };
   return (
     <Page title={t('page-title')} className="swap">
       <Delimiter />
@@ -459,7 +470,9 @@ const Swap = () => {
         />
       )}
       {transaction.isOpen && (
-        <PartialContent wait={[transaction.isOpen]} init={transaction.setPartialContent}>
+        <PartialContent
+          wait={[transaction.isOpen]}
+          init={transaction.setPartialContent}>
           <Row className="transaction-assets">
             <img src={sendingAsset?.meta?.image} alt="" />
             <img src={receivingAsset?.meta?.image} alt="" />
@@ -471,19 +484,25 @@ const Swap = () => {
             +{swapAssets.receive.value} {receivingAsset?.meta?.symbol}
           </div>
           <div className="secondary-data">
-            {Number(swapAssets.receive.value) * Number(receivingAsset?.usdPrice)} $
+            {Number(swapAssets.receive.value) *
+              Number(receivingAsset?.usdPrice)}{' '}
+            $
           </div>
           <div className="secondary-data">
-            {t('page-title')} {formatDate(new Date(), "d MMMM, hh:mm")}
+            {t('page-title')} {formatDate(new Date(), 'd MMMM, hh:mm')}
           </div>
         </PartialContent>
       )}
       {transaction.isComplete && (
-        <PartialContent wait={[transaction.isComplete]} init={transaction.setPartialContent}>
-          <div>
-            {t("transaction-complete-description")} 
-          </div>
-          <button onClick={onComplete} className="primary-button rounded-button">{t("transaction-complete-button")}</button>
+        <PartialContent
+          wait={[transaction.isComplete]}
+          init={transaction.setPartialContent}>
+          <div>{t('transaction-complete-description')}</div>
+          <button
+            onClick={onComplete}
+            className="primary-button rounded-button">
+            {t('transaction-complete-button')}
+          </button>
         </PartialContent>
       )}
     </Page>
