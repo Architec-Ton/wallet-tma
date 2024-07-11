@@ -132,8 +132,9 @@ const ConfirmKey: React.FC = () => {
       }
 
       setShowPinCode(true);
+      setVerificationStep(1);
     }
-  }, [mnemonics, mnemonicsVerifyIdx, inputs]);
+  }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
   const description = useMemo(
     () => (
@@ -165,7 +166,7 @@ const ConfirmKey: React.FC = () => {
 
   useEffect(() => {
     btn.init(t('next', 'button'), confirmHandler);
-  }, [mnemonics, mnemonicsVerifyIdx, inputs]);
+  }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
   return (
     <Page title={t('confirm-mnemonics')}>
