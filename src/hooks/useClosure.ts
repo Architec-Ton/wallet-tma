@@ -1,8 +1,13 @@
+import { useMemo } from "react"
+
 export const useClosure = <T, R>(func: (...args: T[]) => R | void) => {
-  return (...args: T[]) => {
-    const result = () => {
-      return func(...args)
+  const closure = useMemo(() => {
+    return (...args: T[]) => {
+      const result = () => {
+        return func(...args)
+      }
+      return result
     }
-    return result
-  }
+  }, [func])
+  return closure
 }
