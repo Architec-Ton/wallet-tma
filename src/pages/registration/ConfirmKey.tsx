@@ -130,9 +130,9 @@ const ConfirmKey: React.FC = () => {
         console.log('Wrong inputs', checkMnemonics, inputs, mnemonicsVerifyIdx);
         // return;
       }
-
+      btn.setVisible(false);
       setShowPinCode(true);
-      setVerificationStep(1);
+      // setVerificationStep(1);
     }
   }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
@@ -171,19 +171,21 @@ const ConfirmKey: React.FC = () => {
   return (
     <Page title={t('confirm-mnemonics')}>
       {description}
-      <Column>
-        <div className="container">
-          {mnemonicsVerifyIdx.map((number, index) => (
-            <label key={index}>
-              <Input
-                prefix={`${number + 1}.`}
-                key={number}
-                onChange={handleChange(index)}
-              />
-            </label>
-          ))}
-        </div>
-      </Column>
+      {!showPinCode && (
+        <Column>
+          <div className="container">
+            {mnemonicsVerifyIdx.map((number, index) => (
+              <label key={index}>
+                <Input
+                  prefix={`${number + 1}.`}
+                  key={number}
+                  onChange={handleChange(index)}
+                />
+              </label>
+            ))}
+          </div>
+        </Column>
+      )}
 
       {showPinCode && (
         <ModalPinCode
