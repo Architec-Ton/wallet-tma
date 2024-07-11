@@ -76,7 +76,7 @@
     "add-crypto-coin-address": "Your {{coin}} adress",
     "add-crypto-copy": "Copy Address",
     "add-crypto-choose-asset": "Choose asset to receive",
-    "add-crypto-receive-description": "One-way transaction with automatic rounding. Working <l>conditions</l> of banks.",
+    "add-crypto-receive-description": "Deposits to USDT should be made exclusively through the <span>TRC20</span> network",
 
 
     "menu-wallet-add": "Add crypto",

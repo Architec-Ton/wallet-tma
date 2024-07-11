@@ -16,6 +16,10 @@
   color: var(--text-secondary-color);
 }
 
+.asset-info.receive {
+  color: var(--text-secondary-color);
+}
+
 .address-description__container {
   display: flex;
   flex-direction: column;
