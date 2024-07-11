@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Column from '../../components/containers/Column.tsx';
 import Page from '../../components/containers/Page.tsx';
 import Input from '../../components/inputs/Input.tsx';
@@ -116,25 +116,28 @@ const ConfirmKey: React.FC = () => {
       } finally {
         setShowPinCode(false);
         setShowConfirmPinCode(false);
+        btn.init(t('next', 'button'), () => {
+          confirmHandler();
+        });
       }
     }
   };
 
-  const confirmHandler = useCallback(() => {
-    if (verificationStep == 0) {
-      console.log('mnemonicsVerifyIdx', mnemonicsVerifyIdx);
-      const checkMnemonics = mnemonicsVerifyIdx.map(
-        (v, index) => mnemonics[v] == inputs[index].toLowerCase()
-      );
-      if (!checkMnemonics.every((v) => Boolean(v))) {
-        console.log('Wrong inputs', checkMnemonics, inputs, mnemonicsVerifyIdx);
-        // return;
-      }
-      btn.setVisible(false);
-      setShowPinCode(true);
-      // setVerificationStep(1);
+  const confirmHandler = () => {
+    // if (verificationStep == 0) {
+    console.log('mnemonicsVerifyIdx', mnemonicsVerifyIdx);
+    const checkMnemonics = mnemonicsVerifyIdx.map(
+      (v, index) => mnemonics[v] == inputs[index].toLowerCase()
+    );
+    if (!checkMnemonics.every((v) => Boolean(v))) {
+      console.log('Wrong inputs', checkMnemonics, inputs, mnemonicsVerifyIdx);
+      // return;
     }
-  }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
+    btn.setVisible(false);
+    setShowPinCode(true);
+    // setVerificationStep(1);
+    // }
+  }; //, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
   const description = useMemo(
     () => (
@@ -161,12 +164,14 @@ const ConfirmKey: React.FC = () => {
       setMnemonics(state.split(' '));
     }
     page.setLoading(false, false);
-    btn.init(t('next', 'button'), confirmHandler);
+    btn.init(t('next', 'button'), () => {
+      confirmHandler();
+    });
   }, []);
 
-  useEffect(() => {
-    btn.init(t('next', 'button'), confirmHandler);
-  }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
+  // useEffect(() => {
+  //   btn.init(t('next', 'button'), () => confirmHandler);
+  // }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
   return (
     <Page title={t('confirm-mnemonics')}>
