@@ -1,5 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
-import { iconInfoButton } from "../../assets/icons/buttons"
+import { useNavigate } from "react-router-dom"
 import { iconTon, iconUsdt } from "../../assets/icons/jettons"
 import Section from "../../components/containers/Section"
 import Delimiter from "../../components/typography/Delimiter"
@@ -61,13 +60,12 @@ const ReceiveAsset = () => {
         </ListBlock>
       </Section>
       <Delimiter />
-      <div className="asset-info">
+      <div className="asset-info receive">
         <div>
-          <FormatMessage components={{l: <Link to="" />}}>
+          <FormatMessage components={{span: <span />}}>
             {t("receive-description")}
           </FormatMessage>
         </div>
-        <img src={iconInfoButton} alt="" />
       </div>
     </>
   )
