@@ -7,7 +7,7 @@ import Tile from "../../components/typography/Tile"
 const ChooseAddMethod = () => {
   const navigate = useNavigate()
   const clickHandler = () => {
-    navigate("receive")
+    navigate("address")
   }
   return (
     <Section title="How do you want to add crypto?" className="add-crypto__container">
