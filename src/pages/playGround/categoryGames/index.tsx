@@ -47,8 +47,8 @@ const CategoryGames = () => {
   }, [isLoading, searchIsLoading]);
 
   useEffect(() => {
-    if (data?.apps) {
-      setCategoryGamesData(data);
+    if (data && data.categories && data.categories.length > 0) {
+      setCategoryGamesData(data.categories[0]);
     }
   }, [data]);
 

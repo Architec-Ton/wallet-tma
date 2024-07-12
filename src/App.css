@@ -384,6 +384,7 @@ template {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: var(--text-primary-color);
+  padding: var(--spacing-12);
 }
 
 .primary-button:hover,

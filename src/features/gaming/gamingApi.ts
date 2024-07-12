@@ -35,18 +35,15 @@ export const gamingApi = createApi({
       query: ({ id, limit = 0 }) =>
         `leaders/?gameId=${id}${limit ? `&_limit=${limit}` : ''}`,
     }),
-    getCategoryGames: builder.query<
-      GameCategoryType<GameListItemType[]>,
-      string
-    >({
-      query: (id) => `games/${id}`,
+    getCategoryGames: builder.query<AppsList, string>({
+      query: (id) => `apps?categoryId=${id}`,
     }),
     searchGames: builder.mutation<
       GameCategoryType<GameListItemType[]>,
       { id: string; params: URLSearchParams }
     >({
       query: ({ id, params }) => ({
-        url: `games/${id}?${params.toString()}`,
+        url: `apps?categoryId=${id}&${params.toString()}`,
         method: 'GET',
       }),
     }),
