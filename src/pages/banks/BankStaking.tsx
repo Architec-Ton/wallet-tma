@@ -172,6 +172,7 @@ function BankStaking() {
 
   useEffect(() => {
     if (isValid) {
+      btn.refresh(transactionSuccessHandler)
       btn.setVisible(true)
     } else {
       btn.setVisible(false)
