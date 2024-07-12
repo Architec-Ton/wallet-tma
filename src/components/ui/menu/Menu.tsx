@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import { CSSProperties } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Menu.styles.css';
 import { usePage } from '../../../hooks/usePage';
+import { useClosure } from '../../../hooks/useClosure';
 
 export interface MenuItem {
   to: string;
@@ -18,24 +19,27 @@ interface MenuProps {
 
 function Menu({ menuItems, style, className }: MenuProps) {
   const page = usePage();
+  const location = useLocation()
 
-  const handlerClick = () => {
-    page.setLoading(true, false);
-  };
+  const handlerClick = useClosure((to: string) => {
+    console.log(location.pathname, to)
+    if (location.pathname !== to)
+      page.setLoading(true, false);
+  });
 
   return (
-    <nav className={classNames(className, 'menu-nav')} style={style}>
-      <div className="menu">
-        {menuItems.map((item) => (
-          <NavLink to={item.to} key={item.to} onClick={handlerClick}>
-            {item.icon && (
-              <img src={item.icon} alt={item.label} aria-label={item.label} />
-            )}
-            <p>{item.label}</p>
-          </NavLink>
-        ))}
-      </div>
-    </nav>
+      <nav className={classNames(className, 'menu-nav')} style={style}>
+        <div className="menu">
+          {menuItems.map((item) => (
+              <NavLink to={item.to} key={item.to} onClick={handlerClick(item.to)}>
+                {item.icon && (
+                    <img src={item.icon} alt={item.label} aria-label={item.label} />
+                )}
+                <p>{item.label}</p>
+              </NavLink>
+          ))}
+        </div>
+      </nav>
   );
 }
 
