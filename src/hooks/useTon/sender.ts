@@ -72,7 +72,7 @@ export const useSender = (): Sender => {
   if (walletMode == TonConnectionMode.tonconnect) return sender;
 
   return {
-    address: Address.parse(address || ''),
+    address: address ? Address.parse(address) : undefined,
     send: tonSend,
   };
 };
