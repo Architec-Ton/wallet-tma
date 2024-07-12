@@ -3,8 +3,8 @@ import useLocalStorage from '../useLocalStorage';
 import { setAddress, TonConnectionMode } from '../../features/ton/tonSlice';
 import { useEffect, useState } from 'react';
 import { useWalletInitData } from './useWalletInitData';
-import { useTonConnect } from './tonConnect';
 import { WalletsState } from '../../types/auth';
+import { useSender } from './sender';
 
 export function useTon() {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ export function useTon() {
     wallets: [],
   });
 
-  const { sender } = useTonConnect();
+  const sender = useSender();
 
   const [tonMode, setTonMode] = useState<
     'disconnect' | 'tonconnect' | 'mnemonics'

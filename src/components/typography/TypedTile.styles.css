@@ -20,6 +20,9 @@
 
 .type-icon {
   margin-right: var(--spacing-4);
+  width: var(--thumbnail-medium-width);
+  height: var(--thumbnail-medium-height);
+  border-radius: var(--border-radius-full);
 }
 
 .tile-header h2 {

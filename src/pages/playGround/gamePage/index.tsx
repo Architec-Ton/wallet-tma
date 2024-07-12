@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   iconCoinButton,
@@ -19,32 +19,26 @@ import Block from '../../../components/typography/Block';
 import TypedTile from '../../../components/typography/TypedTile';
 import Slider from '../../../components/ui/slider';
 import useLanguage from '../../../hooks/useLanguage';
-import { GameResource } from '../../../types/gameTypes';
+// import { GameResource } from '../../../types/gameTypes';
 
 import LinkButton from '../../../components/buttons/LinkButton';
 import './index.css';
-// import VoteModal from "../../../components/ui/games/voteModal"
-// import ModalPinCode from "../../../components/ui/modals/modalPinCode"
-// import TransactionModal from "../../../components/ui/modals/transactionModal"
-// import TransactionCompleteModal from "../../../components/ui/modals/transactionCompleteModal"
-// import { useApiWalletInfoMutation } from "../../../features/wallet/walletApi"
-// import { WalletInfoData } from "../../../types/wallet"
-// import { CoinDto } from "../../../types/assest"
-// import { initialAssets } from "../../../mocks/mockAssets"
 
 const typedIcons = {
-  web: iconGlobalButton,
+  website: iconGlobalButton,
   telegram: iconSendButton,
-  coin: iconCoinButton,
+  jetton: iconCoinButton,
 };
 
 const GamePage = () => {
   const t = useLanguage('game');
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  // const utils = useUtils();
   // const [walletInfoApi] = useApiWalletInfoMutation();
-  // const navigate = useNavigate()
+  // const navigate = useNavigate();
   const { data: game, isLoading } = useGetGameQuery(id as string);
+  // const isTma = useAppSelector(selectIsTma);
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
 
   const [readMoreDescription, setReacMoreDescription] =
@@ -82,19 +76,24 @@ const GamePage = () => {
   //   navigate(`/playground/${id}/leaders`)
   // }
 
-  const resourceHandler = useCallback(
-    (resource: GameResource) => {
-      return () => {
-        const { link, type } = resource;
-        /**
-         * if (type === 'telegram') { WebApp.openTelegramLink(link) }
-         * else { WebApp.openLink(link) }
-         */
-        console.log(link, type);
-      };
-    },
-    [game]
-  );
+  // const resourceHandler = useCallback(
+  //   (resource: GameResource) => {
+  //     return () => {
+  //       const { url, type } = resource;
+  //       if (isTma) {
+  //         if (type === 'telegram') {
+  //           utils.openTelegramLink(url);
+  //         } else {
+  //           utils.openLink(url);
+  //         }
+  //       } else {
+  //         navigate(url);
+  //       }
+  //       console.log(url, type);
+  //     };
+  //   },
+  //   [game]
+  // );
 
   // const voteGameHandler = () => {
   //   setIsPinCode(true)
@@ -194,22 +193,26 @@ const GamePage = () => {
           <GameLeaderRow num={12458} name="You" totalCoins="45678" asset="$PNK" time="12 H" />
         </Grid>
       </Section> */}
-      <Section title={t('project-resources')}>
-        {game?.resources.map((resource) => {
-          return (
-            <TypedTile
-              key={`${resource.type}-${game.id}`}
-              icon={resource.icon}
-              typeIcon={typedIcons[resource.type]}
-              title={resource.title}
-              description={resource.description}
-              link={resource.link}
-              className="game-resource__block telegram"
-              onClick={resourceHandler(resource)}
-            />
-          );
-        })}
-      </Section>
+      {game?.resources && game.resources.length > 0 && (
+        <Section title={t('project-resources')}>
+          {game?.resources.map((resource) => {
+            return (
+              <LinkButton to={resource.url}>
+                <TypedTile
+                  key={`${resource.type}-${game.id}`}
+                  icon={resource.icon}
+                  typeIcon={typedIcons[resource.type]}
+                  title={resource.type}
+                  description={resource.title}
+                  // link={resource.url}
+                  className="game-resource__block telegram"
+                  // onClick={resourceHandler(resource)}
+                />
+              </LinkButton>
+            );
+          })}
+        </Section>
+      )}
       {/* {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
       {isPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="registration" />}
       {showTransaction && (

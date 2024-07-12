@@ -134,6 +134,7 @@ const ConfirmKey: React.FC = () => {
       // return;
     }
     btn.setVisible(false);
+    page.setLoading(false, false);
     setShowPinCode(true);
     // setVerificationStep(1);
     // }
