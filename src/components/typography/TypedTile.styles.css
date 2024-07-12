@@ -9,7 +9,9 @@
 }
 
 .typed-tile .tile-icon {
-  border-radius: 50%;
+    width: var(--thumbnail-medium-width);
+      height: var(--thumbnail-medium-height);
+      border-radius: var(--border-radius-full);
 }
 
 .tile-header {
@@ -20,13 +22,16 @@
 
 .type-icon {
   margin-right: var(--spacing-4);
-  width: var(--thumbnail-medium-width);
-  height: var(--thumbnail-medium-height);
-  border-radius: var(--border-radius-full);
 }
 
 .tile-header h2 {
-  color: var(--primary-color)
+  color: var(--primary-color);
+  margin: var(--spacing-4);
+  text-transform: capitalize;
+}
+
+.tile-body p{
+  margin: 0;
 }
 
 .typed-tile p {
