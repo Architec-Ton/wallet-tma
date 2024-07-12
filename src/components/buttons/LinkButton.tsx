@@ -1,5 +1,4 @@
 import { useUtils } from '@tma.js/sdk-react';
-import classNames from 'classnames';
 import { CSSProperties } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
@@ -22,14 +21,19 @@ function LinkButtonTMA({ to, children, style, className, visible }: Props) {
   return (
     <>
       {visible && (
-        <button
+        <a
           onClick={() => {
-            utils.openTelegramLink(to);
+            if (to.startsWith('https://t.me')) {
+              utils.openTelegramLink(to);
+            } else {
+              utils.openLink(to);
+            }
           }}
+          href={`#`}
           style={style}
-          className={classNames(className, 'primary-btn')}>
+          className={className}>
           {children}
-        </button>
+        </a>
       )}
     </>
   );
@@ -42,7 +46,7 @@ function LinkButton({ children, to, style, className, visible = true }: Props) {
   if (isTmaLoading) return <></>;
   if (isTma)
     return (
-      <LinkButtonTMA to={to} visible={visible}>
+      <LinkButtonTMA to={to} visible={visible} className={className}>
         {children}
       </LinkButtonTMA>
     );

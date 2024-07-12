@@ -133,7 +133,9 @@ const GamePage = () => {
         icon={game?.icon}
         className="game-page__header">
         <div className="game-controls">
-          <LinkButton className="primary-button" to={game?.url || ''}>
+          <LinkButton
+            className="primary-button primary-btn"
+            to={game?.url || ''}>
             {t('play')}
           </LinkButton>
 
