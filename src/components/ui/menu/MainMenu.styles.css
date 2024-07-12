@@ -19,5 +19,5 @@
 }
 
 .active{
-    filter: brightness(0) saturate(100%) invert(73%) sepia(9%) saturate(2841%) hue-rotate(171deg) brightness(101%) contrast(101%);
+    filter: brightness(0) saturate(100%) invert(52%) sepia(62%) saturate(2050%) hue-rotate(169deg) brightness(98%) contrast(105%);
 }
