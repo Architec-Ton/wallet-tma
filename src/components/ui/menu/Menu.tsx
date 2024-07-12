@@ -22,7 +22,6 @@ function Menu({ menuItems, style, className }: MenuProps) {
   const location = useLocation()
 
   const handlerClick = useClosure((to: string) => {
-    console.log(location.pathname, to)
     if (location.pathname !== to)
       page.setLoading(true, false);
   });

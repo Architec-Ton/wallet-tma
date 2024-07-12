@@ -3,6 +3,7 @@ import { SearchIcon } from '../../../assets/icons/inputs/index.ts'
 import Input from "../../inputs/Input"
 import { useTranslation } from "react-i18next"
 
+import "./index.css"
 
 type OwnPropsType = {
   onChange: (value: string) => void
@@ -22,7 +23,14 @@ const SearchBar = ({ onChange, value }: OwnPropsType) => {
   }
 
   return (
-    <Input type="text" value={searchValue} placeholder={t("search")} onChange={searchHandler} prefix={<SearchIconComponent />} />
+    <Input
+      type="text"
+      value={searchValue}
+      placeholder={t("search")}
+      onChange={searchHandler}
+      prefix={<SearchIconComponent />}
+      className="search-bar"
+    />
   )
 }
 

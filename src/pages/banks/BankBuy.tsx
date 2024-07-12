@@ -13,9 +13,14 @@ import { useTon } from '../../hooks/useTon';
 import SendAssetInput from '../../components/ui/assets/SendAssets';
 import { CoinDto } from '../../types/assest';
 import RecvAssetInput from '../../components/ui/assets/RecvAssets';
-import { iconReverseButton } from '../../assets/icons/buttons';
+import { iconInfoButton, iconReverseButton } from '../../assets/icons/buttons';
 import { useTmaMainButton } from '../../hooks/useTma';
 import useRouter from '../../hooks/useRouter';
+import FormatMessage from '../../components/typography/FormatMessage';
+import Column from '../../components/containers/Column';
+import Row from '../../components/containers/Row';
+
+import "./BankBuy.styles.css"
 
 function BankBuy() {
   const bnkPrice = 1.5;
@@ -140,9 +145,17 @@ function BankBuy() {
         maxValue={recvMaxAmount}
         asset={recvAsset}
         value={recvAmount}
+        subTitle={`${bnkPrice} TON = 1 BNK`}
         onChange={handleRecvOnChange}
       />
-
+      <Delimiter />
+      <Row  className="mint-info">
+        <div>
+          <FormatMessage components={{span: <span />}}>{t("info")}</FormatMessage>
+        </div>
+        <img src={iconInfoButton} alt="" />
+      </Row>
+      <Delimiter />
       {/* <button className="primary-button" onClick={() => handleBuyBank()}>
         Buy 1 BNK
       </button> */}

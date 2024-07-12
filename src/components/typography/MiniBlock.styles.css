@@ -3,7 +3,7 @@
   align-items: stretch;
   align-content: stretch;
   height: var(--spacing-48);
-  background-color: var(--background-color);
+  max-height: 44px;
   border: 2px solid var(--primary-color);
   border-radius: var(--border-radius-12);
   overflow: hidden;

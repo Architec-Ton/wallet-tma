@@ -44,23 +44,22 @@
     flex-direction: column;
     flex-grow: 1;
     align-items: start;
-    gap: var(--spacing-4);
+    line-height: var(--line-height-medium);
+    gap: 0;
     color: unset;
+}
+
+.asset-balance {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    line-height: var(--line-height-medium);
+    gap: 0;
 }
 
 .asset-dex-price {
     font-size: var(--font-size-small);
     color: var(--text-secondary-color);
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    padding: 1rem;
-    background-color: var(--color-bg-selected);
-    border-radius: 1.2rem 1rem;
-    margin-bottom: 1rem;
 }
 
 .assets-search {

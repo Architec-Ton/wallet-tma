@@ -8,9 +8,10 @@ interface AssetInputProps {
   value: string;
   //   setValue: Dispatch<SetStateAction<number>>;
   onChange?: (value: string) => void;
+  isSelectable?: boolean;
 }
 
-const SendAssetInput = ({ asset, value, onChange }: AssetInputProps) => {
+const SendAssetInput = ({ asset, value, isSelectable, onChange }: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
 
   const handlerOnChange = (value: string) => {
@@ -41,6 +42,7 @@ const SendAssetInput = ({ asset, value, onChange }: AssetInputProps) => {
       //   className={className}
       error={error}
       value={value}
+      isSelectable={isSelectable}
       onChange={handlerOnChange}>
       <button
         className="rounded-button control-button"

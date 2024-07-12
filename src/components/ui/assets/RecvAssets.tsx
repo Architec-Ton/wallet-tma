@@ -9,12 +9,16 @@ interface AssetInputProps {
   value: string;
   //   setValue: Dispatch<SetStateAction<number>>;
   onChange?: (value: string) => void;
+  isSelectable?: boolean;
+  subTitle: string;
 }
 
 const RecvAssetInput = ({
   asset,
   value,
   maxValue,
+  isSelectable,
+  subTitle,
   onChange,
 }: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
@@ -36,21 +40,12 @@ const RecvAssetInput = ({
   return (
     <AssetInput
       title={t('recv')}
-      subTitle={
-        asset
-          ? `${t('balance')}: ${
-              asset && asset.amount
-                ? asset?.amount.toLocaleString(undefined, {
-                    maximumFractionDigits: 3,
-                  })
-                : 0
-            }`
-          : ''
-      }
+      subTitle={subTitle}
       asset={asset}
       //   className={className}
       error={error}
       value={value}
+      isSelectable={isSelectable}
       onChange={handlerOnChange}></AssetInput>
   );
 };
