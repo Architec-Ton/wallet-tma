@@ -1,0 +1,32 @@
+.alert {
+    position: fixed;
+    color: white;
+    background-color: var(--hint-message-back-background-color);
+    padding: var(--spacing-4) var(--spacing-8);
+    border-radius: var(--border-radius-8);
+    font-size: var(--font-size-medium);
+    opacity: 0;
+    animation: fadeInDown 0.5s forwards, fadeOutUp 0.5s forwards 2.5s;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate(50%, -100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(50%, 50%);
+    }
+}
+
+@keyframes fadeOutUp {
+    0% {
+        opacity: 1;
+        transform: translate(50%, 50%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(50%, -100px);
+    }
+}
