@@ -10,9 +10,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  border: var(--spacing-2) solid var(--primary-color);
+  width: 44px;
+  border: 2px solid var(--primary-color);
   border-radius: var(--spacing-12);
-  background-color: var(--background-color);
   margin-right: var(--spacing-4);
   overflow: hidden;
 }

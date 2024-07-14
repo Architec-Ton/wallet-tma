@@ -49,7 +49,7 @@ function BankBalance({
           style={{
             margin: 'var(--spacing-16) 0',
           }}>
-          <Button icon={iconBankButton} onClick={() => navigate('/bank/buy')}>
+          <Button icon={iconBankButton} onClick={() => navigate('/bank/buy')} className="buy-button">
             {t('Buy', 'button')}
           </Button>
         </Row>

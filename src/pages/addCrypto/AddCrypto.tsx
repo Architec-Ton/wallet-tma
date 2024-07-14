@@ -17,6 +17,7 @@ const ChooseAddMethod = () => {
         icon={iconScanBarcode} 
         iconAction={iconButtonArraw}
         onClick={clickHandler}
+        className="icon-start"
       />
     </Section>
   )

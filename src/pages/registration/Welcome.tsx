@@ -44,6 +44,7 @@ function Welcome() {
             icon={icon}
             title={t(`${index}-title`)}
             description={t(`${index}-description`)}
+            className="icon-start"
           />
         ))}
       </Column>

@@ -4,7 +4,7 @@
 
 .swap .section__header h2,
 .swap .section__header .section__read-more {
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-base);
 }
 
 .swap .section__header .section__read-more {
@@ -52,12 +52,20 @@
   gap: var(--spacing-8);
 }
 
+.asset-data-row {
+  align-items: flex-end;
+}
+
+.asset-feat-value {
+  padding-bottom: var(--spacing-4);
+}
+
 .asset-input {
   width: 50%;
   border: none;
   background: transparent;
   padding: 0;
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-xlarge);
   font-weight: var(--font-medium);
   color: unset;
 }

@@ -396,7 +396,7 @@ template {
 }
 
 a.primary-button{
-    padding: var(--spacing-12) var(--spacing-16);
+    padding: var(--spacing-8) var(--spacing-16);
     border: 1px solid var(--primary-color);
     border-radius: var(--border-radius-16);
 }
@@ -405,6 +405,7 @@ a.primary-button{
   border-color: var(--primary-color);
   background-color: var(--background-color);
   color: var(--primary-color);
+  border-radius: var(--border-radius-12);
 }
 
 .control-button:disabled {

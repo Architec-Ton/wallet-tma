@@ -29,6 +29,8 @@
 
 .copy-button {
   border-radius: var(--spacing-12);
+  padding: var(--spacing-12);
+  width: 48px;
 }
 
 .referral-data {

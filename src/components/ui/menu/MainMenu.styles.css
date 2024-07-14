@@ -5,7 +5,7 @@
     right: 0;
     border-top: 1px solid var(--border-color-light);
     padding: var(--spacing-12) 0;
-    background-color: var(--background-selected-color);
+    background-color: var(--background-color);
     z-index: 999;
     overflow: hidden;
     height: fit-content;
@@ -13,7 +13,7 @@
 }
 
 .main-menu div.menu{
-    background-color: var(--background-selected-color);
+    background-color: var(--background-color);
     margin-bottom: var(--spacing-8);
     
 }

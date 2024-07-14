@@ -49,7 +49,7 @@ function BankMain() {
     } catch (err) {
       console.error('Failed to get info: ', err);
     } finally {
-      page.setLoading(false, true);
+      page.setLoading(false);
     }
   };
 
@@ -77,7 +77,9 @@ function BankMain() {
   }, []);
 
   useEffect(() => {
-    if (isReady) handleStakeInfo();
+    if (isReady) {
+      handleStakeInfo();
+    }
   }, [isReady]);
 
   useEffect(() => {

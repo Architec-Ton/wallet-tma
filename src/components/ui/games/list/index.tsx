@@ -46,7 +46,7 @@ const GameList = ({ games }: OwnPropsType) => {
 
   return (
     <Column className="w-screen">
-      {gameList.map((category) => (
+      {gameList.map((category) => category.apps.length > 0 && (
         <Column key={category.id}>
           <Row className="category-header">
             <div className="category-header__title">{category.title}</div>

@@ -19,6 +19,7 @@ interface AssetInputProps {
   error?: boolean;
   children?: ReactNode;
   onChange?: (value: string) => void;
+  isSelectable?: boolean;
 }
 
 const AssetInput = ({
@@ -31,6 +32,7 @@ const AssetInput = ({
   onChange,
   disabled,
   error,
+  isSelectable,
   children,
 }: AssetInputProps) => {
   const t = useLanguage('input');
@@ -53,7 +55,7 @@ const AssetInput = ({
       // }`}
     >
       <Row className="justify-between asset-row">
-        <Row className="asset-button asset-send-button">
+        <Row className={classNames("asset-button asset-send-button", { "not-selectable": !isSelectable })}>
           {asset && (
             <img
               src={
@@ -68,14 +70,14 @@ const AssetInput = ({
           <div className="asset-title">
             {asset?.meta?.symbol || t('select')}
           </div>{' '}
-          <img src={iconOpenButton} alt="" className="asset-open-icon" />
+          {isSelectable && <img src={iconOpenButton} alt="" className="asset-open-icon" />}
         </Row>
         <Row className="controls-container">{children}</Row>
       </Row>
       <Row className="justify-between asset-data-row">
         <input
           type="numeric"
-          value={value}
+          value={Number(value)}
           style={style}
           className={classNames('asset-input', {
             error: !!error,

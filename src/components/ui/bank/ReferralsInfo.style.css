@@ -17,3 +17,7 @@
   width: var(--font-size-medium);
   height: var(--font-size-medium);
 }
+
+.referals-info .mini-block {
+  margin-bottom: var(--spacing-32);
+}
