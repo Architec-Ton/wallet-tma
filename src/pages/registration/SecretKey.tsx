@@ -10,6 +10,7 @@ import './SecretKey.styles.css';
 import { usePage } from '../../hooks/usePage.ts';
 import useRouter from '../../hooks/useRouter.ts';
 import { mnemonicNew } from '@ton/crypto';
+import Alert from "../../components/ui/alert/Alert.tsx";
 
 const SecretKey = () => {
   const t = useLanguage('Key');
@@ -17,6 +18,7 @@ const SecretKey = () => {
   const btn = useTmaMainButton();
   const page = usePage();
   const [mnemonic, setMnemonic] = useState<string>('');
+  const [alert,setAlert]=useState<boolean>(false)
   //const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
 
   useEffect(() => {
@@ -38,12 +40,18 @@ const SecretKey = () => {
   const copyToClipboard = () => {
     navigator.clipboard
       .writeText(mnemonic)
-      //toDO алерт для тг .then(() => alert('Words copied to clipboard'))
+      .then(() => {
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 1200);
+      })
       .catch((err) => console.error('Failed to copy text: ', err));
   };
 
   return (
     <Page title={t('your-secret-key')} hintMessage={'here hint message'}>
+      <Alert text={t('copied-to-clipboard')} isVisible={alert}/>
       <Column>
         <Block
           style={{
