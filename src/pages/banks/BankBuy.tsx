@@ -17,10 +17,10 @@ import { iconInfoButton, iconReverseButton } from '../../assets/icons/buttons';
 import { useTmaMainButton } from '../../hooks/useTma';
 import useRouter from '../../hooks/useRouter';
 import FormatMessage from '../../components/typography/FormatMessage';
-import Column from '../../components/containers/Column';
+// import Column from '../../components/containers/Column';
 import Row from '../../components/containers/Row';
 
-import "./BankBuy.styles.css"
+import './BankBuy.styles.css';
 
 function BankBuy() {
   const bnkPrice = 1.5;
@@ -149,9 +149,11 @@ function BankBuy() {
         onChange={handleRecvOnChange}
       />
       <Delimiter />
-      <Row  className="mint-info">
+      <Row className="mint-info">
         <div>
-          <FormatMessage components={{span: <span />}}>{t("info")}</FormatMessage>
+          <FormatMessage components={{ span: <span /> }}>
+            {t('info')}
+          </FormatMessage>
         </div>
         <img src={iconInfoButton} alt="" />
       </Row>
