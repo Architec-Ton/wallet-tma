@@ -1,5 +1,6 @@
 import React from "react";
 import './Alert.css'
+
 interface AlertProps {
     text: string,
     isVisible: boolean

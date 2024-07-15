@@ -41,7 +41,7 @@ const BankReferral = () => {
     <Page title={t("page-title")}>
       <BlockWithTitle
         title={t("earning-program")}
-        hintMessage={t("earning-program")}
+        hintMessage={t("earning-program-hint")}
         className="referral-block"
       >
         <div className="referral-earn-more">
