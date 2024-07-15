@@ -12,7 +12,7 @@
 .balance-block-value{
     font-size: var(--font-size-xlarge);
     font-weight: var(--font-bold);
-    color: var(--text-primary-color);
+    color: var(--text-color);
 }
 
 button.button.buy-button {
