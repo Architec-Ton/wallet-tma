@@ -8,6 +8,7 @@
     "welcome-2-title": "Data Security Level",
     "welcome-2-description": "High level of personal data security. Full responsibility for the decentralization of all information.",
     "key-your-secret-key": "Your secret key",
+    "key-your-secret-key-hint": "Your secret key. Ensure it is securely stored and not shared with third parties.",
     "key-copied-to-clipboard": "Words copied to clipboard",
     "copy-copy": "Copy to clipboard",
     "confirm-confirm-mnemonics": "Confirm the key",
