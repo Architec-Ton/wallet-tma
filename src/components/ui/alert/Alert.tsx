@@ -7,10 +7,13 @@ interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({text, isVisible}) => {
     return (
+
         isVisible &&
-        <div className='alert'>
-            {text}
-        </div>
+            <div className='alert-container'>
+                <div className='alert'>
+                    {text}
+                </div>
+            </div>
     );
 };
 

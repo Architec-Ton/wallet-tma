@@ -8,8 +8,7 @@
     "welcome-2-title": "Data Security Level",
     "welcome-2-description": "High level of personal data security. Full responsibility for the decentralization of all information.",
     "key-your-secret-key": "Your secret key",
-    "key-copied-to-clipboard": "Words copied to clipboard",
-    "copy-copy": "Copy to clipboard",
+
     "confirm-confirm-mnemonics": "Confirm the key",
     "confirm-description": "To make sure that you have written down the words, fill in the fields by entering the words ",
     "registration-registration-completed": "Registration is сompleted",
@@ -17,6 +16,9 @@
     "registration-2-description": "Architec.TON ",
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
+
+    "copy-copy": "Copy to clipboard",
+    "copy-copied-to-clipboard": "Words copied to clipboard",
 
     "pincode-normal": "Enter PIN code",
     "pincode-success": "Enter PIN code",

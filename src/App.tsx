@@ -10,6 +10,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { FE_URL, MANIFEST_URL } from "./constants";
 import { TonProvider } from "./components/layout/TonProvider";
 import TransactionProvider from "./components/layout/TransactionProvider";
+import AlertContainer from "./components/ui/alert/AlertContainer.tsx";
 
 // import { Buffer } from "buffer/";
 // window.Buffer = Buffer;
@@ -29,6 +30,7 @@ function App() {
             <TonProvider>
               <Layout>
                 <TransactionProvider>
+                  <AlertContainer />
                   <RouterProvider router={router} />
                 </TransactionProvider>
               </Layout>

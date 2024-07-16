@@ -8,9 +8,12 @@ import FormatMessage from "../../components/typography/FormatMessage"
 import { useTon } from "../../hooks/useTon"
 import { useEffect, useState } from "react"
 import { iconTon } from "../../assets/icons/jettons"
+import {showAlert} from "../../features/alert/alertSlice.ts";
+import {useDispatch} from "react-redux";
 
 const AddCryptoAddress = () => {
   const t = useLanguage("add-crypto")
+  const dispatch = useDispatch()
   const ton = useTon()
   const [tonState, setTonState] = useState<AssetType>()
 
@@ -28,7 +31,11 @@ const AddCryptoAddress = () => {
   
   const copyAddressHandler = () => {
     if (tonState?.wallet) {
-      navigator.clipboard.writeText(tonState.wallet)
+      navigator.clipboard
+          .writeText(tonState.wallet)
+          .then(() => {
+            dispatch(showAlert({message: 'copy', duration: 1500}))
+      })
     }
   }
 
