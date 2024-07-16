@@ -8,7 +8,9 @@
     "welcome-2-title": "Data Security Level",
     "welcome-2-description": "High level of personal data security. Full responsibility for the decentralization of all information.",
     "key-your-secret-key": "Your secret key",
-
+    "key-your-secret-key-hint": "Your secret key. Ensure it is securely stored and not shared with third parties.",
+    "key-copied-to-clipboard": "Words copied to clipboard",
+    "copy-copy": "Copy to clipboard",
     "confirm-confirm-mnemonics": "Confirm the key",
     "confirm-description": "To make sure that you have written down the words, fill in the fields by entering the words ",
     "registration-registration-completed": "Registration is сompleted",
@@ -98,18 +100,18 @@
 
 
     "bank-staking": "Staking",
-    "bank-staking-hint": "Staking banks",
+    "bank-staking-hint": "Earn passive income by holding your BNK",
     "bank-stake": "Stake",
 
     "bank-quests": "Quests",
-    "bank-quests-hints": "Quests banks",
+    "bank-quests-hints": "Complete tasks to earn rewards",
     "bank-tasks": "Tasks",
     "bank-referrals": "Referrals",
-    "bank-referrals-hint": "Referrals",
+    "bank-referrals-hint": "Number of users you have referred",
     "bank-bankers": "Bankers",
     "bank-free-banks": "Free banks",
     "bank-minting": "Minting",
-    "bank-minting-hint": "Minting",
+    "bank-minting-hint": "Number of BNK sold",
 
     "banking-tasks-title": "Banking Tasks",
     "banking-tasks-comment": "* You can receive rewards for completing a number of tasks in our quests",
@@ -182,12 +184,13 @@
 
     "bank-referral-page-title": "Referrals",
     "bank-referral-earning-program": "Earning Program",
+    "bank-referral-earning-program-hint": "Terms of participation in the earning program",
     "bank-referral-earn-more": "Earn <span>100%</span> more <span>$BANK</span> from your friend <span>minted</span>",
     "bank-referral-earn-description": "The more people there are, the stronger your banks are. — Become a global banker!",
     "bank-referral-reward-title": "Your Reward",
-    "bank-referral-reward-hint": "Your Reward",
+    "bank-referral-reward-hint": "Your earnings from referred users",
     "bank-referral-referral-title": "Referral",
-    "bank-referral-referral-hint": "Referral",
+    "bank-referral-referral-hint": "Number of users you have referred",
     "bank-referral-bought-bank": "Bought a Bank",
     "bank-referral-count": "<span>{{count}}</span> Referrals"
 }

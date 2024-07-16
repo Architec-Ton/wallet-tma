@@ -48,7 +48,8 @@ const SecretKey = () => {
   };
 
   return (
-    <Page title={t('your-secret-key')} hintMessage={'here hint message'}>
+    <Page title={t('your-secret-key')} hintMessage={t('your-secret-key-hint')}>
+      <Alert text={t('copied-to-clipboard')} isVisible={alert}/>
       <Column>
         <Block
           style={{
