@@ -13,6 +13,8 @@ import swapSlice from '../features/swap/swapSlice';
 import { bankApi } from '../features/bank/bankApi';
 import walletSlice from '../features/wallet/walletSlice';
 import { stonFiApi } from '../features/stonfi/stonFiApi';
+import alertReducer from "../features/alert/alertSlice.ts";
+
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +27,7 @@ export const store = configureStore({
     auth: authSlice,
     swap: swapSlice,
     wallet: walletSlice,
+    alert: alertReducer,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,
     [gamingApi.reducerPath]: gamingApi.reducer,

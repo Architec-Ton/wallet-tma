@@ -14,7 +14,7 @@ import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
 import { WalletInfoData } from '../../types/wallet';
 import { CoinDto } from '../../types/assest';
 import { useTonClient } from '../../hooks/useTonClient';
-import { toNano } from '@ton/core';
+import { address, toNano } from '@ton/core';
 
 import './index.css';
 import useLanguage from '../../hooks/useLanguage';
@@ -27,6 +27,7 @@ import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
 import { formatDate } from 'date-fns';
+import { TonClient } from '@ton/ton';
 
 export type AssetDataType = {
   title: string;
@@ -98,7 +99,7 @@ const Swap = () => {
         const { assets } = result.wallets[result.currentWallet];
         setAssets(assets);
         page.setLoading(false);
-        btn.init(t('page-title'), swapHanler, true);
+        btn.init(t('page-title'), swapHanler, false);
       })
       .catch((e) => {
         console.error(e);
@@ -123,7 +124,6 @@ const Swap = () => {
 
   const sendingAsset: CoinDto = useMemo(() => {
     if (combinedAssets.length) {
-      console.log('swapAssets', swapAssets);
       return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.send.address
       );
@@ -295,15 +295,13 @@ const Swap = () => {
     const swapTxParams = await router.getSwapJettonToTonTxParams({
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
-      offerAmount: toNano(
-        Math.round(
-          Number(swapAssets.send.value) *
-            Math.pow(10, sendingAsset?.meta?.decimals as number)
-        )
+      offerAmount: Math.round(
+        Number(swapAssets.send.value) *
+          Math.pow(10, sendingAsset?.meta?.decimals as number)
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: toNano(
-        Math.round((Number(swapAssets.receive.value) + 0.17) * -1e9)
+        Math.round((Number(swapAssets.receive.value) * 0.75) * -1e9)
       ),
     });
 
@@ -328,15 +326,14 @@ const Swap = () => {
     const swapTxParams = await router.getSwapJettonToJettonTxParams({
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
-      offerAmount: toNano(
-        Math.round(
-          Number(swapAssets.send.value) *
-            Math.pow(10, sendingAsset?.meta?.decimals as number)
-        )
+      offerAmount: Math.round(
+        Number(swapAssets.send.value) *
+          Math.pow(10, sendingAsset?.meta?.decimals as number)
       ),
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
-      minAskAmount: toNano(
-        Math.round((Number(swapAssets.receive.value) + 0.22) * -1e9)
+      minAskAmount: Math.round(
+        Number(swapAssets.receive.value) * 0.75 *
+        Math.pow(10, Number(receivingAsset?.meta?.decimals))
       ),
     });
 
@@ -361,15 +358,14 @@ const Swap = () => {
     const swapTxParams = await router.getSwapTonToJettonTxParams({
       userWalletAddress: wallet,
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
-      offerAmount: toNano(
-        Math.round(
-          Number(swapAssets.send.value) *
-            Math.pow(10, sendingAsset?.meta?.decimals as number)
-        )
+      offerAmount: Math.round(
+        Number(swapAssets.send.value) *
+          Math.pow(10, Number(sendingAsset?.meta?.decimals))
       ),
       proxyTon: new pTON.v1(),
-      minAskAmount: toNano(
-        Math.round((Number(swapAssets.receive.value) + 0.185) * -1e9)
+      minAskAmount: Math.round(
+        Number(swapAssets.receive.value) * 0.75 *
+        Math.pow(10, Number(receivingAsset?.meta?.decimals))
       ),
     });
 
@@ -442,7 +438,7 @@ const Swap = () => {
             {sendingAsset &&
               receivingAsset &&
               (
-                (Number(swapAssets.send.value) - 0.17) *
+                (swapAssets.send.value ? Number(swapAssets.send.value) - Number(swapAssets.send.value) * 0.17 : 0) *
                 sendingAsset.usdPrice
               ).toLocaleString(undefined, {
                 style: 'currency',

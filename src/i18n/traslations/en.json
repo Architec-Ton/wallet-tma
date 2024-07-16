@@ -19,6 +19,9 @@
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
 
+    "copy-copy": "Copy to clipboard",
+    "copy-copied-to-clipboard": "Words copied to clipboard",
+
     "pincode-normal": "Enter PIN code",
     "pincode-success": "Enter PIN code",
     "pincode-error": "Invalid PIN code",

@@ -3,7 +3,7 @@ import {
   setMainButtonTitle,
   setMainButtonVisible,
 } from '../features/tma/mainButtonSlice';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 
 export interface TmaMainButton {
   title?: string;
@@ -25,6 +25,15 @@ export function useTmaMainButton() {
   //const { setMainButton } = useTmaState();
   const dispatch = useAppDispatch();
   const { setMainButtonHandler } = useTmaState();
+
+  useEffect(() => {
+    return () => {
+      dispatch(setMainButtonVisible(false));
+      setMainButtonHandler({
+        onClick: () => {}
+      })
+    }
+  }, [])
 
   return {
     init: (title: string, onClick: () => void, visible: boolean = true) => {
