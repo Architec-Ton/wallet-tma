@@ -98,7 +98,7 @@ const Swap = () => {
         const { assets } = result.wallets[result.currentWallet];
         setAssets(assets);
         page.setLoading(false);
-        btn.init(t('page-title'), swapHanler, true);
+        btn.init(t('page-title'), swapHanler, false);
       })
       .catch((e) => {
         console.error(e);
