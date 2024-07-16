@@ -23,7 +23,10 @@ function Title({ title, titleAccent, hintMessage }: Props) {
       {title}
       {titleAccent && <span> {titleAccent}</span>}
       {hintMessage && (
-        <div style={{ display: 'inline-block', position: 'relative' }}>
+        <div style={{
+          display: 'inline-block',
+          position: 'relative',
+        }}>
           <img
             src={INFO_ICON}
             alt="icon"
@@ -47,8 +50,10 @@ function Title({ title, titleAccent, hintMessage }: Props) {
                 padding: 'var(--spacing-4) var(--spacing-8)',
                 borderRadius: 'var(--border-radius-8)',
                 marginTop: 'var(--spacing-4)',
-                whiteSpace: 'nowrap',
                 fontSize: 'var(--font-size-small)',
+                maxWidth: '200px',
+                whiteSpace: 'normal',
+                zIndex: '1000'
               }}>
               {hintMessage}
             </div>

@@ -116,7 +116,7 @@ function BankMain() {
               onClick={() => navigate('/bank/stake')}
             />
           </BlockWithTitle>
-          <BlockWithTitle title={t('Quests')} hintMessage={t('Quests-hint')}>
+          <BlockWithTitle title={t('Quests')} hintMessage={t('quests-hints')}>
             <Button
               title={t('Tasks')}
               className="w-100 center"
