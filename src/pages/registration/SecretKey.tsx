@@ -12,6 +12,9 @@ import useRouter from '../../hooks/useRouter.ts';
 import { mnemonicNew } from '@ton/crypto';
 import {useDispatch} from "react-redux";
 import {showAlert} from "../../features/alert/alertSlice.ts";
+import { RootState } from '../../store/index.ts';
+import { useAppSelector } from '../../hooks/useAppDispatch.ts';
+import Alert from '../../components/ui/alert/Alert.tsx';
 
 const SecretKey = () => {
   const t = useLanguage('Key');
@@ -21,6 +24,7 @@ const SecretKey = () => {
   const [mnemonic, setMnemonic] = useState<string>('');
   const dispatch = useDispatch()
   //const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
+  const { isVisible } = useAppSelector((state: RootState) => state.alert);
 
   useEffect(() => {
     mnemonicNew(24).then((m) => {
@@ -49,7 +53,7 @@ const SecretKey = () => {
 
   return (
     <Page title={t('your-secret-key')} hintMessage={t('your-secret-key-hint')}>
-      <Alert text={t('copied-to-clipboard')} isVisible={alert}/>
+      <Alert text={t('copied-to-clipboard')} isVisible={isVisible}/>
       <Column>
         <Block
           style={{
