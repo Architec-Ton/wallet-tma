@@ -337,7 +337,7 @@ const Swap = () => {
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: toNano(
-        Math.round((Number(swapAssets.receive.value) * 0.75) * -1e9)
+        Math.round(Number(swapAssets.receive.value) * 0.75 * -1e9)
       ),
     });
 
@@ -369,8 +369,9 @@ const Swap = () => {
       ),
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
       minAskAmount: Math.round(
-        Number(swapAssets.receive.value) * 0.75 *
-        Math.pow(10, Number(receivingAsset?.meta?.decimals))
+        Number(swapAssets.receive.value) *
+          0.75 *
+          Math.pow(10, Number(receivingAsset?.meta?.decimals))
       ),
     });
 
@@ -402,8 +403,9 @@ const Swap = () => {
       ),
       proxyTon: new pTON.v1(),
       minAskAmount: Math.round(
-        Number(swapAssets.receive.value) * 0.75 *
-        Math.pow(10, Number(receivingAsset?.meta?.decimals))
+        Number(swapAssets.receive.value) *
+          0.75 *
+          Math.pow(10, Number(receivingAsset?.meta?.decimals))
       ),
     });
 
@@ -476,8 +478,10 @@ const Swap = () => {
             {sendingAsset &&
               receivingAsset &&
               (
-                (swapAssets.send.value ? Number(swapAssets.send.value) - Number(swapAssets.send.value) * 0.17 : 0) *
-                sendingAsset.usdPrice
+                (swapAssets.send.value
+                  ? Number(swapAssets.send.value) -
+                    Number(swapAssets.send.value) * 0.17
+                  : 0) * sendingAsset.usdPrice
               ).toLocaleString(undefined, {
                 style: 'currency',
                 currency: 'USD',
