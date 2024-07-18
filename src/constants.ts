@@ -22,3 +22,5 @@ export const BANK_CROWDSALE_ADDRESS =
   'kQBmuTZSqNFw0qe2gcJV1bl_abjxlR9mTIPHeB-4HEXn2dVY';
 
 export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT || '0.07';
+
+export const TON_CLIENT_NETWORK = import.meta.env.VITE_TON_CLIENT_NETWORK || 'testnet'

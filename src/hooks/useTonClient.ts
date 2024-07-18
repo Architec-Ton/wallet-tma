@@ -1,6 +1,6 @@
 import { getHttpEndpoint } from '@orbs-network/ton-access';
 import { TonClient } from '@ton/ton';
-import { TONAPI_KEY } from '../constants';
+import { TON_CLIENT_NETWORK, TONAPI_KEY } from '../constants';
 import { useAsyncInitialize } from './useAsyncInitialize';
 
 export function useTonClient() {
@@ -23,5 +23,6 @@ export function useTonClient() {
     testnet: testnet,
     mainnet: mainnet,
     client: testnet,
+    network: TON_CLIENT_NETWORK,
   };
 }

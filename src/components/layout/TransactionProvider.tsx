@@ -23,6 +23,7 @@ type ProviderStateType = {
 
 type ProviderValuesType = {
   open: () => void;
+  complete: () => void;
   destruct: () => void;
   setPartialContent: (c: React.ReactNode) => void
   setState: (k: string, v: any) => void
@@ -37,6 +38,7 @@ type TransactionHocPropsType = {
 
 export const TransactionContext = createContext<ProviderValuesType>({
   open: () => {},
+  complete: () => {},
   destruct: () => {},
   setPartialContent: () => {},
   setState: () => {},
@@ -59,6 +61,11 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
     setIsOpen(true)
   }
 
+  const completeHandler = () => {
+    setIsOpen(false)
+    setIsComplete(true)
+  }
+
   const onClose = () => {
     setIsComplete(true)
     setIsTransactionInProgress(false)
@@ -79,6 +86,7 @@ const TransactionProvider = ({ children }: TransactionHocPropsType) => {
   return (
     <TransactionContext.Provider value={{
       open: openHandler,
+      complete: completeHandler,
       destruct: destruct,
       setPartialContent,
       setState,
