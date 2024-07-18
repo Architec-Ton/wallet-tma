@@ -10,7 +10,6 @@
     "key-your-secret-key": "Your secret key",
     "key-your-secret-key-hint": "Your secret key. Ensure it is securely stored and not shared with third parties.",
     "key-copied-to-clipboard": "Words copied to clipboard",
-    "copy-copy": "Copy to clipboard",
     "confirm-confirm-mnemonics": "Confirm the key",
     "confirm-description": "To make sure that you have written down the words, fill in the fields by entering the words ",
     "registration-registration-completed": "Registration is сompleted",
@@ -18,6 +17,7 @@
     "registration-2-description": "Architec.TON ",
     "registration-3-description": "will do everything to make you feel comfortable!",
     "existing-enter-key": "Enter secret key",
+    "existing-enter-key-hint": "Your backup for wallet recovery",
 
     "copy-copy": "Copy to clipboard",
     "copy-copied-to-clipboard": "Words copied to clipboard",
