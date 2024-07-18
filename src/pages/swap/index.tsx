@@ -68,6 +68,37 @@ const swapData: SwapDataType = {
   } satisfies AssetDataType,
 };
 
+const testnetAssets = [
+  {
+    type: "jetton",
+    amount: 100,
+    usdPrice: Number(0.15),
+    changePrice: 0,
+    meta: {
+      name: "TestRED",
+      description: "Only for test",
+      address: "kQDLvsZol3juZyOAVG8tWsJntOxeEZWEaWCbbSjYakQpuYN5",
+      image: "",
+      decimals: "6",
+      symbol: "TestRED"
+    }
+  },
+  {
+    type: "jetton",
+    amount: 100,
+    usdPrice: Number(0.15),
+    changePrice: 0,
+    meta: {
+      name: "TestBlue",
+      description: "Only for test",
+      address: "kQB_TOJSB7q3-Jm1O8s0jKFtqLElZDPjATs5uJGsujcjznq3",
+      image: "",
+      decimals: "6",
+      symbol: "TestBlue"
+    }
+  },
+]
+
 const Swap = () => {
   const { data: stonFiAssets, isLoading } = useGetStonfiAssetsQuery(null);
   const [swapAssets, setSwappAssets] = useState(swapData);
@@ -80,7 +111,7 @@ const Swap = () => {
   const btn = useTmaMainButton();
 
   const [tonConnectUI] = useTonConnectUI();
-  const { client: tonClient } = useTonClient();
+  const { client: tonClient, network } = useTonClient();
   const wallet = useTonAddress();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage('swap');
@@ -115,11 +146,12 @@ const Swap = () => {
             stonFiAsset?.meta?.symbol?.toLowerCase()
         );
       });
-      const _assets = new Array().concat(assets, _stonFiAssets);
+      const testAssets = network === "testnet" ? testnetAssets : []
+      const _assets = new Array().concat(assets, testAssets, _stonFiAssets);
       return _assets;
     }
     return [] as CoinDto[];
-  }, [assets, stonFiAssets]);
+  }, [assets, stonFiAssets, network]);
 
   const sendingAsset: CoinDto = useMemo(() => {
     if (combinedAssets.length) {
@@ -154,7 +186,6 @@ const Swap = () => {
     mode: 'send' | 'receive'
   ) => {
     const _value = Number(value);
-    console.log('calc', _value, mode);
     if (mode === 'send') {
       return receivingAsset
         ? (Number(sendingAsset?.usdPrice) * _value) /
@@ -191,7 +222,6 @@ const Swap = () => {
   };
 
   const changeSendValue = (value: string) => {
-    console.log('value', value);
     const receivedValue = calculateSwappValues(value, 'send') || '';
     setSwappAssets(({ send, receive }) => {
       return {
@@ -266,9 +296,14 @@ const Swap = () => {
     });
   };
 
+  const transactionParams = () => {
+    const dex = network === "testnet" ? new DEX.v1.Router("kQCas2p939ESyXM_BzFJzcIe3GD5S0tbjJDj6EBVn-SPsEkN") : new DEX.v1.Router()
+
+    return { dex }
+  }
+
   const transactionSuccessHandler = async () => {
     const types = [sendingAsset?.type, receivingAsset?.type];
-    console.log('types', types, swapAssets);
     try {
       console.log(pinCode);
       if (types.includes('ton')) {
@@ -279,7 +314,8 @@ const Swap = () => {
         await jettonToJettonTransaction();
       }
       transaction.open();
-      await delay(5000);
+      await delay(10000);
+      transaction.complete();
     } catch (e) {
       console.error(e);
     }
@@ -289,7 +325,8 @@ const Swap = () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
     }
-    const router = tonClient.open(new DEX.v1.Router());
+    const { dex } = transactionParams()
+    const router = tonClient.open(dex);
 
     const swapTxParams = await router.getSwapJettonToTonTxParams({
       userWalletAddress: wallet,
@@ -320,7 +357,8 @@ const Swap = () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
     }
-    const router = tonClient.open(new DEX.v1.Router());
+    const { dex } = transactionParams()
+    const router = tonClient.open(dex);
 
     const swapTxParams = await router.getSwapJettonToJettonTxParams({
       userWalletAddress: wallet,
@@ -353,7 +391,8 @@ const Swap = () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
     }
-    const router = tonClient.open(new DEX.v1.Router());
+    const { dex } = transactionParams()
+    const router = tonClient.open(dex);
 
     const swapTxParams = await router.getSwapTonToJettonTxParams({
       userWalletAddress: wallet,
