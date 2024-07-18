@@ -1,19 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Column from '../../components/containers/Column.tsx';
-import Page from '../../components/containers/Page.tsx';
-import Input from '../../components/inputs/Input.tsx';
-import useLanguage from '../../hooks/useLanguage.ts';
-import './ConfirmKey.styles.css';
-import { usePage } from '../../hooks/usePage.ts';
-import useRouter from '../../hooks/useRouter.ts';
-import ModalPinCode from '../../components/ui/modals/modalPinCode';
+import React, { useEffect, useMemo, useState } from "react";
+import Column from "../../components/containers/Column.tsx";
+import Page from "../../components/containers/Page.tsx";
+import Input from "../../components/inputs/Input.tsx";
+import useLanguage from "../../hooks/useLanguage.ts";
+import "./ConfirmKey.styles.css";
+import { usePage } from "../../hooks/usePage.ts";
+import useRouter from "../../hooks/useRouter.ts";
+import ModalPinCode from "../../components/ui/modals/modalPinCode";
 // import { usePage } from '../../hooks/usePage.ts';
-import CryptoES from 'crypto-es';
-import { mnemonicToPrivateKey, sha256_sync } from '@ton/crypto';
-import { useTmaMainButton } from '../../hooks/useTma.ts';
-import { useLocation } from 'react-router-dom';
-import { useTon } from '../../hooks/useTon/index.ts';
-import { WalletContractV4 } from '@ton/ton';
+import CryptoES from "crypto-es";
+import { mnemonicToPrivateKey, sha256_sync } from "@ton/crypto";
+import { useTmaMainButton } from "../../hooks/useTma.ts";
+import { useLocation } from "react-router-dom";
+import { useTon } from "../../hooks/useTon/index.ts";
+import { WalletContractV4 } from "@ton/ton";
 
 const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -21,7 +21,7 @@ const randomInt = (min: number, max: number) =>
 const encodeMnemonic = (
   mnemonic: string,
   pinCode: string,
-  uuid: string = ''
+  uuid: string = ""
 ) => {
   return CryptoES.TripleDES.encrypt(
     mnemonic,
@@ -29,7 +29,7 @@ const encodeMnemonic = (
   ).toString();
 };
 
-const decodeMnemonic = (hash: string, pinCode: string, uuid: string = '') => {
+const decodeMnemonic = (hash: string, pinCode: string, uuid: string = "") => {
   return CryptoES.TripleDES.decrypt(
     hash,
     sha256_sync(pinCode + uuid).toString()
@@ -37,7 +37,7 @@ const decodeMnemonic = (hash: string, pinCode: string, uuid: string = '') => {
 };
 
 const ConfirmKey: React.FC = () => {
-  const t = useLanguage('Confirm');
+  const t = useLanguage("Confirm");
   const navigate = useRouter();
   const page = usePage();
   const ton = useTon();
@@ -45,16 +45,16 @@ const ConfirmKey: React.FC = () => {
   const { state } = useLocation(); // state is any or unknown
 
   const [mnemonics, setMnemonics] = useState<string[]>([]);
-  const [inputs, setInputs] = useState<string[]>(Array(3).fill(''));
+  const [inputs, setInputs] = useState<string[]>(Array(3).fill(""));
   const [mnemonicsVerifyIdx, setMnemonicsVerifyIdx] = useState<number[]>([
     3, 7, 17,
   ]);
 
   const [showPinCode, setShowPinCode] = useState<boolean>(false);
   const [showConfirmPinCode, setShowConfirmPinCode] = useState<boolean>(false);
-  const [pinCode, setPinCode] = useState<string>('');
-  const [confirmPinCode, setConfirmPinCode] = useState<string>('');
-  const [privateHash, setPrivateHash] = useState<string>('');
+  const [pinCode, setPinCode] = useState<string>("");
+  const [confirmPinCode, setConfirmPinCode] = useState<string>("");
+  const [privateHash, setPrivateHash] = useState<string>("");
   const [verificationStep, setVerificationStep] = useState<number>(0);
 
   const handleChange =
@@ -65,12 +65,12 @@ const ConfirmKey: React.FC = () => {
     };
 
   const onPinSuccess = () => {
-    console.log('onPinSuccess', pinCode);
+    console.log("onPinSuccess", pinCode);
     if (verificationStep == 0) {
       setShowPinCode(false);
       setVerificationStep(1);
       setShowConfirmPinCode(true);
-      const privateHash = encodeMnemonic(mnemonics.join(' '), pinCode, 'salt');
+      const privateHash = encodeMnemonic(mnemonics.join(" "), pinCode, "salt");
 
       // console.log('privateHash:', privateHash);
       setPrivateHash(privateHash);
@@ -78,21 +78,21 @@ const ConfirmKey: React.FC = () => {
   };
 
   const onConfirmPinSuccess = async () => {
-    console.log('onConfirmPinSuccess', confirmPinCode);
+    console.log("onConfirmPinSuccess", confirmPinCode);
     if (verificationStep == 2) {
-      navigate('/registration/completed');
+      navigate("/registration/completed");
     }
     if (verificationStep == 1) {
       console.log(pinCode, confirmPinCode);
       try {
-        const mmDecoded = decodeMnemonic(privateHash, confirmPinCode, 'salt');
+        const mmDecoded = decodeMnemonic(privateHash, confirmPinCode, "salt");
         // console.log('privateHash2:', mmDecoded);
-        if (mmDecoded.split(' ').length == 24) {
+        if (mmDecoded.split(" ").length == 24) {
           //TODO: save and setup
 
-          console.log('mm:', mmDecoded);
+          console.log("mm:", mmDecoded);
           // navigate('/registration/completed');
-          const keyPair = await mnemonicToPrivateKey(mmDecoded.split(' '));
+          const keyPair = await mnemonicToPrivateKey(mmDecoded.split(" "));
 
           //Use v4 by default
           const workchain = 0; // Usually you need a workchain 0
@@ -102,8 +102,8 @@ const ConfirmKey: React.FC = () => {
           });
           ton.setAddress(
             wallet.address.toString({ urlSafe: true, bounceable: true }),
-            'mnemonics',
-            keyPair.publicKey.toString('hex'),
+            "mnemonics",
+            keyPair.publicKey.toString("hex"),
             privateHash
           );
 
@@ -116,7 +116,7 @@ const ConfirmKey: React.FC = () => {
       } finally {
         setShowPinCode(false);
         setShowConfirmPinCode(false);
-        btn.init(t('next', 'button'), () => {
+        btn.init(t("next", "button"), () => {
           confirmHandler();
         });
       }
@@ -125,12 +125,12 @@ const ConfirmKey: React.FC = () => {
 
   const confirmHandler = () => {
     // if (verificationStep == 0) {
-    console.log('mnemonicsVerifyIdx', mnemonicsVerifyIdx);
+    console.log("mnemonicsVerifyIdx", mnemonicsVerifyIdx);
     const checkMnemonics = mnemonicsVerifyIdx.map(
       (v, index) => mnemonics[v] == inputs[index].toLowerCase()
     );
     if (!checkMnemonics.every((v) => Boolean(v))) {
-      console.log('Wrong inputs', checkMnemonics, inputs, mnemonicsVerifyIdx);
+      console.log("Wrong inputs", checkMnemonics, inputs, mnemonicsVerifyIdx);
       // return;
     }
     btn.setVisible(false);
@@ -143,29 +143,32 @@ const ConfirmKey: React.FC = () => {
   const description = useMemo(
     () => (
       <p>
-        {t('description')}{' '}
-        <span>{mnemonicsVerifyIdx.map((v) => v + 1).join(', ')}</span>
+        {t("description")}{" "}
+        <span>{mnemonicsVerifyIdx.map((v) => v + 1).join(", ")}</span>
       </p>
     ),
     [mnemonics, mnemonicsVerifyIdx, inputs]
   );
 
   useEffect(() => {
-    if (verificationStep == 2) navigate('/registration/completed');
+    if (verificationStep == 2) navigate("/registration/completed");
   }, [verificationStep]);
 
   useEffect(() => {
     const randomIdx = Array(3)
       .fill(0)
       .map(() => randomInt(0, 23));
-    console.log('rand:', randomIdx);
+    console.log("rand:", randomIdx);
     setMnemonicsVerifyIdx(randomIdx);
     if (state) {
-      console.log('state', state.split(' '));
-      setMnemonics(state.split(' '));
+      console.log("state", state.mnemonic.split(" "));
+      setMnemonics(state.mnemonic.split(" "));
+    }
+    if (!state?.confirm) {
+      setShowPinCode(true);
     }
     page.setLoading(false, false);
-    btn.init(t('next', 'button'), () => {
+    btn.init(t("next", "button"), () => {
       confirmHandler();
     });
   }, []);
@@ -175,7 +178,7 @@ const ConfirmKey: React.FC = () => {
   // }, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
   return (
-    <Page title={t('confirm-mnemonics')}>
+    <Page title={t("confirm-mnemonics")}>
       {description}
       {!showPinCode && (
         <Column>

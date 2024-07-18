@@ -32,13 +32,17 @@ const SecretKey = () => {
       page.setLoading(false, false);
     });
     btn.init(t("next", "button"), () =>
-      navigate("/registration/confirm-secret-key", { state: mnemonic })
+      navigate("/registration/confirm-secret-key", {
+        state: { mnemonic: mnemonic, confirm: true },
+      })
     );
   }, []);
 
   useEffect(() => {
     btn.init(t("next", "button"), () =>
-      navigate("/registration/confirm-secret-key", { state: mnemonic })
+      navigate("/registration/confirm-secret-key", {
+        state: { mnemonic: mnemonic, confirm: true },
+      })
     );
   }, [mnemonic]);
 
