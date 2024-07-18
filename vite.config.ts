@@ -9,21 +9,21 @@ export default defineConfig({
   base: '/wallet',
   plugins: [
     react(),
-    basicSsl({
-      /** name of certification */
-      name: 'test',
-      /** custom trust domains */
-      domains: ['*.local'],
-      /** custom certification directory */
-      certDir: './cert',
-    }),
+    // basicSsl({
+    //   /** name of certification */
+    //   name: 'test',
+    //   /** custom trust domains */
+    //   domains: ['*.local'],
+    //   /** custom certification directory */
+    //   certDir: './cert',
+    // }),
     nodePolyfills(),
     splitVendorChunkPlugin(),
   ],
-  server: {
-    host: 'architecton.local',
-    port: 443,
-  },
+  // server: {
+  //   host: 'architecton.local',
+  //   port: 443,
+  // },
   resolve: {
     alias: {
       '@': './src',
