@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { iconButtonCopyColor } from "../../assets/icons/buttons/index.ts";
 import Button from "../../components/buttons/Button.tsx";
@@ -13,25 +12,9 @@ import useRouter from "../../hooks/useRouter.ts";
 import { mnemonicNew } from "@ton/crypto";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../features/alert/alertSlice.ts";
-=======
-import { useEffect, useState } from 'react';
-import { iconButtonCopyColor } from '../../assets/icons/buttons/index.ts';
-import Button from '../../components/buttons/Button.tsx';
-import Column from '../../components/containers/Column.tsx';
-import Page from '../../components/containers/Page.tsx';
-import Block from '../../components/typography/Block.tsx';
-import useLanguage from '../../hooks/useLanguage.ts';
-import { useTmaMainButton } from '../../hooks/useTma.ts';
-import './SecretKey.styles.css';
-import { usePage } from '../../hooks/usePage.ts';
-import useRouter from '../../hooks/useRouter.ts';
-import { mnemonicNew } from '@ton/crypto';
-import {useDispatch} from "react-redux";
-import {showAlert} from "../../features/alert/alertSlice.ts";
-import { RootState } from '../../store/index.ts';
-import { useAppSelector } from '../../hooks/useAppDispatch.ts';
-import Alert from '../../components/ui/alert/Alert.tsx';
->>>>>>> remotes/origin/dev
+import { RootState } from "../../store/index.ts";
+import { useAppSelector } from "../../hooks/useAppDispatch.ts";
+import Alert from "../../components/ui/alert/Alert.tsx";
 
 const SecretKey = () => {
   const t = useLanguage("Key");
@@ -69,13 +52,8 @@ const SecretKey = () => {
   };
 
   return (
-<<<<<<< HEAD
     <Page title={t("your-secret-key")} hintMessage={t("your-secret-key-hint")}>
-      {/* <Alert text={t('copied-to-clipboard')} isVisible={alert}/> */}
-=======
-    <Page title={t('your-secret-key')} hintMessage={t('your-secret-key-hint')}>
-      <Alert text={t('copied-to-clipboard')} isVisible={isVisible}/>
->>>>>>> remotes/origin/dev
+      <Alert text={t("copied-to-clipboard")} isVisible={isVisible} />
       <Column>
         <Block
           style={{
