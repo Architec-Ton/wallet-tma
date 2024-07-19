@@ -34,8 +34,8 @@ function BankBuy() {
   const ton = useTon();
   const btn = useTmaMainButton();
 
-  const [sendAmount, setSendAmount] = useState<string>('0');
-  const [recvAmount, setRecvAmount] = useState<string>('0');
+  const [sendAmount, setSendAmount] = useState<string>('');
+  const [recvAmount, setRecvAmount] = useState<string>('');
   const [recvMaxAmount, setRecvMaxAmount] = useState<number>(0);
 
   useEffect(() => {
@@ -94,11 +94,20 @@ function BankBuy() {
     }
   }, [sendAmount, isReady, recvAmount, recvMaxAmount, isReady, sendAsset]);
 
+  const handleSendOnBlur = () => {
+    if (sendAmount) {
+      const amount = Number(sendAmount)
+      const bnkAmount = Math.trunc(amount / bnkPrice);
+      setSendAmount((bnkAmount * bnkPrice).toString());
+    }
+    //setSendAmount((bnkAmount * bnkPrice).toString());
+  }
+
   const handleSendOnChange = (value: string) => {
     const tonAmount = Number(value);
     if (!isNaN(tonAmount)) {
       const bnkAmount = Math.trunc(tonAmount / bnkPrice);
-      if (bnkAmount <= recvMaxAmount) setRecvAmount(bnkAmount.toString());
+      if (bnkAmount <= recvMaxAmount) setRecvAmount(() => bnkAmount ? bnkAmount.toString() : '');
       //setSendAmount((bnkAmount * bnkPrice).toString());
       setSendAmount(value);
     }
@@ -108,9 +117,10 @@ function BankBuy() {
     const bnkAmount = Number(value);
     if (!isNaN(bnkAmount)) {
       const bnkTAmount = Math.trunc(bnkAmount);
-      if (bnkAmount <= recvMaxAmount)
-        setSendAmount((bnkTAmount * bnkPrice).toString());
-      if (bnkAmount <= recvMaxAmount) setRecvAmount(bnkTAmount.toString());
+      if (bnkAmount <= recvMaxAmount) {
+        setSendAmount(() => bnkAmount ? (bnkTAmount * bnkPrice).toString() : '');
+        setRecvAmount(() => bnkAmount ? bnkTAmount.toString() : '');
+      }
     }
   };
 
@@ -134,6 +144,7 @@ function BankBuy() {
         asset={sendAsset}
         value={sendAmount}
         onChange={handleSendOnChange}
+        onBlur={handleSendOnBlur}
       />
       {/* {sendAsset && <AssetInput asset={sendAsset} value="00" />} */}
       <Delimiter>
