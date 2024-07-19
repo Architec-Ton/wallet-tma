@@ -13,7 +13,6 @@ import { useAppSelector } from "../hooks/useAppDispatch";
 import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { WalletInfoData } from "../types/wallet";
-import ListBaseItem from "../components/ui/listBlock/ListBaseItem";
 import { NavLink } from "react-router-dom";
 // import useLocalStorage from '../hooks/useLocalStorage.ts';
 
@@ -88,9 +87,7 @@ function Main() {
               : []
           }
         >
-          <ListBaseItem className="center">
-            <NavLink to="/histories">See more</NavLink>
-          </ListBaseItem>
+          <NavLink to="/histories">See more</NavLink>
         </History>
       </Column>
     </Page>

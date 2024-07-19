@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Page from "../../components/containers/Page";
 import { useApiWalletHistoryMutation } from "../../features/wallet/walletApi";
-import useLanguage from "../../hooks/useLanguage";
 import { TransactionHistoryItemDto } from "../../types/history";
 import { usePage } from "../../hooks/usePage";
 import History from "../../components/ui/balance/History";
@@ -9,7 +8,7 @@ import { useAppSelector } from "../../hooks/useAppDispatch";
 import { selectAuthIsReady } from "../../features/auth/authSelector";
 
 function Histories() {
-  const t = useLanguage("history");
+  //   const t = useLanguage("history");
   const page = usePage();
   const isReady = useAppSelector(selectAuthIsReady);
 
@@ -21,7 +20,7 @@ function Histories() {
   const handleInfo = async () => {
     try {
       const result = await walletHistoryApi(null).unwrap();
-      console.log("Wallet result:", result);
+      //   console.log("Wallet result:", result);
       setWalletItemsData(result);
     } catch (err) {
       console.error("Failed to get info: ", err);
@@ -35,7 +34,7 @@ function Histories() {
   }, [isReady]);
 
   return (
-    <Page title={t("title")}>
+    <Page>
       <History items={walletItemsData} />
     </Page>
   );
