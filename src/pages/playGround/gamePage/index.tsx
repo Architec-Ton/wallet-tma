@@ -199,7 +199,7 @@ const GamePage = () => {
         <Section title={t('project-resources')}>
           {game?.resources.map((resource) => {
             return (
-              <LinkButton to={resource.url}>
+              <LinkButton to={resource.url} key={resource.url}>
                 <TypedTile
                   key={`${resource.type}-${game.id}`}
                   icon={resource.icon}
