@@ -100,8 +100,8 @@ function BankBuy() {
       const bnkAmount = Math.trunc(tonAmount / bnkPrice);
       if (bnkAmount <= recvMaxAmount) setRecvAmount(bnkAmount.toString());
       //setSendAmount((bnkAmount * bnkPrice).toString());
+      setSendAmount(value);
     }
-    setSendAmount(value);
   };
 
   const handleRecvOnChange = (value: string) => {
@@ -111,8 +111,6 @@ function BankBuy() {
       if (bnkAmount <= recvMaxAmount)
         setSendAmount((bnkTAmount * bnkPrice).toString());
       if (bnkAmount <= recvMaxAmount) setRecvAmount(bnkTAmount.toString());
-    } else {
-      setRecvAmount(value);
     }
   };
 
