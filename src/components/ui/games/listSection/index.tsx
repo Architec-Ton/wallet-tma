@@ -27,17 +27,17 @@ const GameListSection = ({ title, list }: OwnPropsType) => {
     dispatch(setFilter(newFilter))
   }
 
-  const readMore  = useMemo(() => {
+  const readMore  = () => {
     return (
       <div className="read-more__component">
         <img src={iconSortButton} onClick={sortHandler} alt="" />
         <img src={iconFilterSquareButton} onClick={modalHandler} alt="" />
       </div>
     )
-  }, [])
+  }
 
   return (
-    <Section title={title as string} readMore={readMore} >
+    <Section title={title as string} readMore={readMore()} >
       { list && <GameListItemGroup group={list} />}
       {
         isFilterShow && 

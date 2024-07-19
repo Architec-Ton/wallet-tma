@@ -17,8 +17,13 @@ export const walletApi = createApi({
       async onCacheEntryAdded(_, { dispatch, cacheDataLoaded }) {
         const cacheData = await cacheDataLoaded;
         if (cacheData) {
-          const { tonUsdPrice = 0 } = cacheData.data
-          dispatch(setTonUsdPrice(tonUsdPrice));
+          const { currentWallet, wallets } = cacheData.data
+          const { assets } = wallets[currentWallet]
+          const ton = assets.find(asset => asset.meta?.symbol === "TON")
+          if (ton) {
+            const tonUsdPrice = ton.usdPrice / ton.amount
+            dispatch(setTonUsdPrice(tonUsdPrice));
+          }
         }
       },
     }),

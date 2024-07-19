@@ -4,6 +4,7 @@ export type GameListItemType = {
   subtitle: string;
   id: string;
   rating: number;
+  date?: number;
 };
 
 export type GameCategoryType<T> = {
