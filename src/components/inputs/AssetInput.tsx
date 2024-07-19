@@ -19,6 +19,7 @@ interface AssetInputProps {
   error?: boolean;
   children?: ReactNode;
   onChange?: (value: string) => void;
+  onBlur?: () => void
   isSelectable?: boolean;
 }
 
@@ -30,6 +31,7 @@ const AssetInput = ({
   title,
   subTitle,
   onChange,
+  onBlur,
   disabled,
   error,
   isSelectable,
@@ -77,12 +79,13 @@ const AssetInput = ({
       <Row className="justify-between asset-data-row">
         <input
           type="numeric"
-          value={Number(value)}
+          value={value}
           style={style}
           className={classNames('asset-input', {
             error: !!error,
           })}
           onChange={handlerOnChange}
+          onBlur={onBlur}
           placeholder="0"
           disabled={disabled}
         />

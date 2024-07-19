@@ -24,6 +24,7 @@
   border-radius: var(--spacing-12);
   color: var(--text-secondary-color);
   text-overflow: ellipsis;
+  text-wrap: nowrap;
   overflow: hidden;
 }
 

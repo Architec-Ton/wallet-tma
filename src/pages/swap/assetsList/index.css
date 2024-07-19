@@ -71,7 +71,7 @@
     outline: none;
 }
 
-.assets-modal-delimiter {
+.assets-modal-delimiter.delimiter-line {
     margin-top: var(--spacing-12);
     margin-bottom: var(--spacing-12);
 }

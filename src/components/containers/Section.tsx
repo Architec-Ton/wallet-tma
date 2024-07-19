@@ -1,7 +1,6 @@
 import classNames from "classnames"
 
 import "./Section.styles.css"
-import { useEffect, useRef } from "react"
 
 type SectionProps = {
   children: React.ReactNode
@@ -12,30 +11,13 @@ type SectionProps = {
 }
 
 const Section = ({ children, title, readMore, className, readMoreHandle }: SectionProps) => {
-  const ref = useRef(null)
-
-  useEffect(() => {
-    return () => {
-      if (ref.current) {
-        const readMoreElement = ref.current as HTMLSpanElement
-        readMoreElement.removeEventListener("click", () => {})
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (readMore && readMoreHandle && ref.current) {
-      const readMoreElement = ref.current as HTMLSpanElement
-      readMoreElement.addEventListener("click", readMoreHandle)
-    }
-  }, [readMoreHandle, readMore, ref])
 
   return (
     <section className={classNames("section", className)}>
       {(title || readMore) && (
         <div className="section__header"> 
           {title && <h2>{title}</h2>}
-          {readMore && <span ref={ref} className="section__read-more">{readMore}</span>}
+          {readMore && <span onClick={readMoreHandle} className="section__read-more">{readMore}</span>}
         </div>
       )}
       <div className="section__body">
