@@ -10,10 +10,12 @@ import Row from "../../components/containers/Row"
 import { iconBankButton, iconButtonCopyLight, iconButtonProfileUsers } from "../../assets/icons/buttons"
 import MiniBlock from "../../components/typography/MiniBlock"
 import { useApiGetBankReferralsQuery } from "../../features/bank/bankApi"
+import { useTonAddress } from "@tonconnect/ui-react"
 
 const BankReferral = () => {
   const t = useLanguage("bank-referral")
   const page = usePage()
+  const wallet = useTonAddress();
   const { data, isLoading } = useApiGetBankReferralsQuery(null)
 
   const [referralLink, setReferralLink] = useState<string>('https://t.me/...')
@@ -23,11 +25,11 @@ const BankReferral = () => {
   }, [isLoading])
 
   useEffect(() => {
-    if (data) {
+    if (wallet) {
       // TODO: set true referral link
-      setReferralLink('')
+      setReferralLink(`https://t.me/architec_ton_bot/wallet?startapp=${wallet}`)
     }
-  }, [data])
+  }, [wallet])
 
   const copyToClipboard = () => {
     if (referralLink) {
