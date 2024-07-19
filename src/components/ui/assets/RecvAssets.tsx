@@ -9,6 +9,7 @@ interface AssetInputProps {
   value: string;
   //   setValue: Dispatch<SetStateAction<number>>;
   onChange?: (value: string) => void;
+  onBlur?: () => void;
   isSelectable?: boolean;
   subTitle: string;
 }
@@ -20,6 +21,7 @@ const RecvAssetInput = ({
   isSelectable,
   subTitle,
   onChange,
+  onBlur,
 }: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
 
@@ -46,7 +48,8 @@ const RecvAssetInput = ({
       error={error}
       value={value}
       isSelectable={isSelectable}
-      onChange={handlerOnChange}></AssetInput>
+      onChange={handlerOnChange}
+      onBlur={onBlur}></AssetInput>
   );
 };
 

@@ -34,7 +34,7 @@
     flex-direction: column;
     bottom: 0%;
     height: fit-content;
-    background-color: white;
+    background-color: var(--background-color);
     width: 100%;
     left: 0;
     padding: 1rem;
@@ -113,4 +113,10 @@
 
 .close-button {
     cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .close-button {
+    filter: invert(1);
+  }
 }
