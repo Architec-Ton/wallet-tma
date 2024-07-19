@@ -7,6 +7,7 @@ import useLanguage from "../../../hooks/useLanguage";
 import ListTileItem from "../listBlock/ListTileItem";
 import { TransactionHistoryItemDto } from "../../../types/history";
 import { shortenString } from "./Address";
+import ListBaseItem from "../listBlock/ListBaseItem";
 
 type Props = {
   children?: ReactNode;
@@ -43,8 +44,8 @@ function History({ children, items = [] }: Props) {
             </ListTileItem>
           );
         })}
+        {children && <ListBaseItem className="center">{children}</ListBaseItem>}
       </ListBlock>
-      {children}
     </Section>
   );
 }
