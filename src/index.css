@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   /* Основные цвета */
   --primary-color: #07ACFF;
@@ -105,8 +105,8 @@
   /* Размеры аватарок */
   --thumbnail-width: 114px;
   --thumbnail-height: 114px;
-  --thumbnail-medium-width: 56px;
-  --thumbnail-medium-height: 56px;
+  --thumbnail-medium-width: 46px;
+  --thumbnail-medium-height: 46px;
 
   --swiper-pagination-bullet-inactive-color: light-dark(#000000, #ffffff);
 

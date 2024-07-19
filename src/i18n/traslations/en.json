@@ -97,6 +97,8 @@
 
     "assets-title": "Assets",
     "history-title": "History",
+    "history-in": "Received",
+    "history-out": "Sent",
 
 
     "bank-staking": "Staking",
