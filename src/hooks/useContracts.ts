@@ -41,7 +41,7 @@ function useContracts() {
     const contract = ArcJetton.fromAddress(address);
     return client.open(contract) as OpenedContract<ArcJetton>;
   };
-
+  
   const bankJettonWallet = (
     address: Address
   ): OpenedContract<BankJettonWallet> | undefined => {
@@ -50,6 +50,7 @@ function useContracts() {
     return client.open(contract) as OpenedContract<BankJettonWallet>;
   };
   const bankJettonMaster = (): OpenedContract<BankJetton> | undefined => {
+    console.log("client", client)
     if (!client) return;
     const contract = BankJetton.fromAddress(
       Address.parse(BANK_JETTON_MASTER_ADDRESS)
@@ -141,8 +142,10 @@ function useContracts() {
       getWallet: (ownerAddress: Address) =>
         bankJettonMaster()?.getGetWalletAddress(ownerAddress),
 
-      getStakeAddress: (ownerAddress: Address) =>
-        bankJettonMaster()?.getCalculateStakeAddress(ownerAddress),
+      getStakeAddress: (ownerAddress: Address) => {
+        console.log("getStakeAddress", ownerAddress, bankJettonMaster())
+        return bankJettonMaster()?.getCalculateStakeAddress(ownerAddress)
+      },
 
       getStakeInfo: (stakeAddress: Address, ownerAddress: Address) =>
         bankStakeStorage(stakeAddress)?.getAmountTime(ownerAddress),

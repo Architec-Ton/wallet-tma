@@ -22,10 +22,12 @@ import useContracts from '../../hooks/useContracts';
 import { useTon } from '../../hooks/useTon';
 import ReferralsInfo from '../../components/ui/bank/ReferralsInfo';
 import BankMintingInfo from '../../components/ui/bank/BankMintingInfo';
+import { useTonClient } from '../../hooks/useTonClient';
 
 function BankMain() {
   const navigate = useRouter();
   const t = useLanguage('bank');
+  const { client } = useTonClient()
 
   const [walletInfoData, setWalletInfoData] = useState<WalletInfoData | null>(
     null
@@ -77,10 +79,10 @@ function BankMain() {
   }, []);
 
   useEffect(() => {
-    if (isReady) {
+    if (isReady && client) {
       handleStakeInfo();
     }
-  }, [isReady]);
+  }, [isReady, client]);
 
   useEffect(() => {
     console.log('walletInfoData', walletInfoData);

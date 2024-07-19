@@ -52,6 +52,7 @@
     "button-copy": "Copy to clipboard",
     "button-next": "Next",
     "button-stake": "Stake",
+    "button-unstake": "Unstake",
     "button-continue": "Continue",
     "button-buy": "Buy",
     "button-send": "Send",
@@ -118,6 +119,7 @@
     "banking-tasks-partners": "Partners",
 
     "bank-stake-transaction-type": "Stake",
+    "bank-stake-transaction-type-unstake": "Unstake",
     "bank-stake-title": "Staking Bank",
     "bank-stake-all": "Stake All",
     "bank-stake-history-title": "History",
