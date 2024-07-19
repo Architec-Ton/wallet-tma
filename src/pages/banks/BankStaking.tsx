@@ -24,15 +24,15 @@ import { WalletInfoData } from '../../types/wallet';
 import { CoinDto } from '../../types/assest';
 import bankIcon from '../../assets/images/bank.png';
 import { Link, useNavigate } from 'react-router-dom';
-import BankStakingHistorySection from '../../components/ui/bank/BankStakingHistorySection';
+import BankStakingHistorySection, { StakeHistoryType } from '../../components/ui/bank/BankStakingHistorySection';
 import { formatDate } from 'date-fns';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks/useAppDispatch';
 import { selectTonUsdPrice } from '../../features/wallet/walletSelector';
+import { useTonClient } from '../../hooks/useTonClient';
 
-const stakeHistory = null;
 
 function BankStaking() {
   //   const navigate = useRouter();
@@ -46,6 +46,7 @@ function BankStaking() {
   const contracts = useContracts();
   const ton = useTon();
   const tonUsdPrice = useAppSelector(selectTonUsdPrice);
+  const {client} = useTonClient();
 
   const [value, setValue] = useState<string>('');
   const [stakingValue, setStakingValue] = useState<number>(0);
@@ -53,8 +54,9 @@ function BankStaking() {
   const [returnValue, setReturnValue] = useState<number>(0);
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>();
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>();
-  // const [arc, setArc] = useState<bigint>(0n);
   const [stakeAddress, setStakeAddress] = useState<string>();
+  const [stakeHistory, setStakeHistory] = useState<StakeHistoryType | null>(null)
+  const [isStakeAvailable, setIsStakeAvailable] = useState<boolean>(true)
 
   useEffect(() => {
     walletInfoApi(null)
@@ -82,6 +84,15 @@ function BankStaking() {
     );
   }, []);
 
+  useEffect(() => {
+    if (client && !stakeHistory) {
+      handleStakeInfo()
+    }
+    if (stakeHistory && !!stakeHistory.deposit) {
+      btn.init(t('unstake', 'button'), transactionUnstakeHandler, true)
+    }
+  }, [client, stakeHistory])
+
   const handleStake = async (amount: number) => {
     if (ton.wallet.address) {
       const ownerAddress = ton.wallet.address;
@@ -100,26 +111,40 @@ function BankStaking() {
       const ownerAddress = ton.wallet.address;
       //Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
-      console.log('BNK Stake Wallet', stakeAddress?.toString());
       if (stakeAddress) {
         setStakeAddress(stakeAddress.toString());
-        const stakeInfo = await contracts.bank.getStakeInfo(
-          stakeAddress,
-          ownerAddress
-        );
-        // if (stakeInfo) setArc(stakeInfo?.calculatedAmount);
-        console.log('getStakeInfo:', stakeInfo);
+        try {
+          const stakeInfo = await contracts.bank.getStakeInfo(
+            stakeAddress, 
+            ownerAddress
+          );
+          if (stakeInfo && stakeInfo.stakedAmount > 0) {
+            const rewards = Number((stakeInfo.calculatedAmount * 100n) / 1_000_00n) / 100_000_0
+            setStakeHistory({
+              date: new Date(Number(stakeInfo.time) * 1000).toString(),
+              deposit: Number(stakeInfo.stakedAmount),
+              rewards: rewards,
+              claimAvailable: true
+            })
+            setStakingValue(Number(stakeInfo.stakedAmount))
+            setReceivingValue(rewards)
+            setReturnValue((rewards * Number(arcAsset?.usdPrice)) / tonUsdPrice)
+            setIsStakeAvailable(false)
+          }
+        } catch (e) {
+          console.error(e)
+        }
       }
     }
   };
 
-  // const handleUnstake = async () => {
-  //   if (ton.wallet.address) {
-  //     //Get BNK Wallet address
-  //     const tx = await contracts.bank.unstake();
-  //     console.log('Unstake', tx);
-  //   }
-  // };
+  const handleUnstake = async () => {
+    if (ton.wallet.address) {
+      //Get BNK Wallet address
+      const tx = await contracts.bank.unstake();
+      console.log('Unstake', tx);
+    }
+  };
 
   const handleClaim = async () => {
     if (ton.wallet.address) {
@@ -139,13 +164,15 @@ function BankStaking() {
         completeTitle: t('complete-title', undefined, { value }),
       });
     }
-  }, [bnkAsset, stakeAddress, returnValue]);
+  }, [bnkAsset, stakeAddress, returnValue, isStakeAvailable]);
 
   useEffect(() => {
+    if (!isNaN(Number(value))) {
+      setStakingValue(Number(value));
+    }
     if (arcAsset) {
       const returnValue = calculateArc(Number(value));
       setReturnValue((returnValue * arcAsset.usdPrice) / tonUsdPrice);
-      setStakingValue(Number(value));
       setReceivingValue(returnValue);
     }
   }, [value, arcAsset]);
@@ -223,9 +250,18 @@ function BankStaking() {
     }
   }, [bnkAsset, receivingValue]);
 
+  const transactionUnstakeHandler = async () => {
+    try {
+      await handleUnstake();
+      await handleStakeInfo();
+      transaction.open();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const transactionSuccessHandler = async () => {
     try {
-      //await handleUnstake()
       await handleStake(stakingValue);
       await handleStakeInfo();
       transaction.open();
@@ -301,7 +337,7 @@ function BankStaking() {
             <img src={arcAsset?.meta?.image} alt="" />
           </Row>
           <div className="">
-            -{stakingValue} {bnkAsset?.meta?.symbol}
+            {isStakeAvailable ? -stakingValue : `+${stakingValue}`} {bnkAsset?.meta?.symbol}
           </div>
           <div className="">
             +{receivingValue.toString()} {arcAsset?.meta?.symbol}
@@ -310,7 +346,7 @@ function BankStaking() {
             {Number(receivingValue) * Number(arcAsset?.usdPrice)} $
           </div>
           <div className="secondary-data">
-            {t('transaction-type')} {formatDate(new Date(), 'd MMMM, hh:mm')}
+            {isStakeAvailable ? t('transaction-type') : t('transaction-type-unstake')} {formatDate(new Date(), 'd MMMM, hh:mm')}
           </div>
         </PartialContent>
       )}

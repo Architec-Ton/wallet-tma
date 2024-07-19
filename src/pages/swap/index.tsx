@@ -8,7 +8,7 @@ import SendAsset from './sendAsset';
 import ReceiveAsset from './receiveAsset';
 import AssetsList from './assetsList';
 import { AddressType, DEX, pTON } from '@ston-fi/sdk';
-import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
+import { useTonAddress } from '@tonconnect/ui-react';
 import { useClosure } from '../../hooks/useClosure';
 import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
 import { WalletInfoData } from '../../types/wallet';
@@ -27,6 +27,7 @@ import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
 import { formatDate } from 'date-fns';
+import { useAppTonConnectUi } from '../../hooks/useAppTonConnectUi';
 
 export type AssetDataType = {
   title: string;
@@ -110,7 +111,7 @@ const Swap = () => {
   const page = usePage();
   const btn = useTmaMainButton();
 
-  const [tonConnectUI] = useTonConnectUI();
+  const [tonConnectUI] = useAppTonConnectUi();
   const { client: tonClient, network } = useTonClient();
   const wallet = useTonAddress();
   const [walletInfoApi] = useApiWalletInfoMutation();

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import useLanguage from '../../../hooks/useLanguage';
 import Section from '../../containers/Section';
 import ListBlock from '../listBlock';
@@ -7,7 +7,7 @@ import './Balance.styles.css';
 import { CoinDto } from '../../../types/assest';
 import ListTileItem from '../listBlock/ListTileItem';
 import PriceChanges from '../../typography/PriceChanges';
-import ListBaseItem from '../listBlock/ListBaseItem';
+// import ListBaseItem from '../listBlock/ListBaseItem';
 
 type Props = {
   children?: ReactNode;
@@ -82,9 +82,9 @@ function Assets({ children, assets }: Props) {
               </ListTileItem>
             );
           })}
-          <ListBaseItem className="center">
+          {/* <ListBaseItem className="center">
             <NavLink to="#">See more</NavLink>
-          </ListBaseItem>
+          </ListBaseItem> */}
         </ListBlock>
         {children}
       </Section>

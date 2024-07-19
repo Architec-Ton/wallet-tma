@@ -1,18 +1,9 @@
 import { ReactNode } from "react";
-import "./Balance.styles.css";
 import Section from "../../containers/Section";
 import ListBlock from "../listBlock";
-import {
-  iconTon,
-  iconTrxRecv,
-  iconTrxSend,
-  iconUsdt,
-} from "../../../assets/icons/jettons";
-import { AssetType } from "../../../pages/addCrypto/ReceiveAsset";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useClosure } from "../../../hooks/useClosure";
+import { iconTrxRecv, iconTrxSend } from "../../../assets/icons/jettons";
 import useLanguage from "../../../hooks/useLanguage";
-import ListBaseItem from "../listBlock/ListBaseItem";
+
 import ListTileItem from "../listBlock/ListTileItem";
 import { TransactionHistoryItemDto } from "../../../types/history";
 import { shortenString } from "./Address";
@@ -25,13 +16,7 @@ type Props = {
 function History({ children, items = [] }: Props) {
   //   const ton = useTon();
   const t = useLanguage("history");
-  const navigate = useNavigate();
-
-  const assetClickHandler = useClosure((asset: AssetType) => {
-    navigate("/add-crypto/address", {
-      state: asset,
-    });
-  });
+  // const navigate = useNavigate();
 
   return (
     <Section title={t("title")} className="add-crypto__container">

@@ -41,6 +41,7 @@ const CategoryGames = () => {
   const [searchParams, setSearchParams] = useState<SearchParamsType>();
   const [isSearchParamsChanged, setIsSearchParamsChanged] =
     useState<boolean>(false);
+  const [apps, setApps] = useState<GameListItemType[]>([])
 
   useEffect(() => {
     dispatch(setLoading(isLoading || searchIsLoading));
@@ -49,6 +50,7 @@ const CategoryGames = () => {
   useEffect(() => {
     if (data && data.categories && data.categories.length > 0) {
       setCategoryGamesData(data.categories[0]);
+      setApps(data.categories[0].apps)
     }
   }, [data]);
 
@@ -78,20 +80,63 @@ const CategoryGames = () => {
 
   const searchHandler = (value: string) => {
     setSearchParams((params) => ({ ...params, search: value }));
-    setIsSearchParamsChanged(true);
+    // setIsSearchParamsChanged(true);
+    const _apps = categoryGamesData?.apps.filter(app => `${app.title}${app.subtitle}`.toLowerCase().includes(value.toLowerCase()))
+    setApps(_apps as GameListItemType[])
   };
 
   useEffect(() => {
-    const isSearchParams = !!searchParams;
+    // const isSearchParams = !!searchParams;
     const filterParams: string[] = Object.keys(filter).filter(
       (f: string) => filter[f as FilterKeys] === true
     );
+    let _apps = [...apps]
+    const direction = filter.direction === "desc" ? 1 : -1
+
+    if(filterParams.length) {
+      filterParams.forEach(param => {
+        console.log(param)
+        _apps = _apps.sort((a, b) => {
+          switch(param) {
+            case "name":
+              if (a.title > b.title)
+                return -1 * direction
+              else if (a.title < b.title)
+                return direction
+              return 0
+            case "rate":
+              if (a.rating > b.rating)
+                return direction
+              else if (a.rating < b.rating)
+                return -1 * direction
+              return 0
+            case "date":
+              if (Number(a.date) > Number(b.date))
+                return direction
+              else if (Number(a.date) < Number(b.date))
+                return -1 * direction
+              return 0
+            default:
+              return 0
+          }
+        })
+      })
+    } else {
+      _apps = _apps.sort((a, b) => {
+        if (a.title > b.title)
+          return -1 * direction
+        else if (a.title < b.title)
+          return direction
+        return 0
+      })
+    }
+    setApps(_apps)
     setSearchParams({
       ...searchParams,
       order: filterParams.join(','),
       direction: filter.direction as string,
     });
-    setIsSearchParamsChanged(isSearchParams);
+    // setIsSearchParamsChanged(isSearchParams);
   }, [filter]);
 
   return (
@@ -99,7 +144,7 @@ const CategoryGames = () => {
       <SearchBar onChange={searchHandler} value={searchParams?.search || ''} />
       <GameListSection
         title={categoryGamesData?.title as string}
-        list={categoryGamesData?.apps}
+        list={apps}
       />
     </Page>
   );
