@@ -76,7 +76,7 @@ const Existing: React.FC = () => {
   }, [inputs, isButtonEnabled]);
 
   return (
-    <Page title={t("enter-key")} hintMessage={"hintMessage"}>
+    <Page title={t("enter-key")} hintMessage={t('enter-key-hint')}>
       <form className="center">
         <Column columns={2}>
           {inputs.map((value, index) => (
