@@ -38,6 +38,8 @@ const ConfirmKey: React.FC = () => {
     wallets: [],
   });
 
+  console.log("storedValue", storedValue);
+
   const [showPinCode, setShowPinCode] = useState<boolean>(false);
 
   const pincode = usePinCodeModalManagement();

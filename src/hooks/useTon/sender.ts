@@ -3,7 +3,7 @@ import { useAppSelector } from "../useAppDispatch";
 import {
   selectAddress,
   selectAddressPrivateKey,
-  selectAddressPublicKey,
+  // selectAddressPublicKey,
   selectTonMode,
 } from "../../features/ton/tonSelector";
 import { TonConnectionMode } from "../../features/ton/tonSlice";
@@ -19,7 +19,7 @@ export const useSender = (): Sender => {
   const walletMode = useAppSelector(selectTonMode);
   const { sender } = useTonConnect();
   const privateHashKey = useAppSelector(selectAddressPrivateKey);
-  const publicKey = useAppSelector(selectAddressPublicKey);
+  // const publicKey = useAppSelector(selectAddressPublicKey);
   const client = useTonClient();
   const pincode = usePinCodeModalManagement();
 
