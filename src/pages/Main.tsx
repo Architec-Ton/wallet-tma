@@ -80,15 +80,17 @@ function Main() {
               : []
           }
         />
-        <History
-          items={
-            walletInfoData
-              ? walletInfoData.wallets[walletInfoData.currentWallet].history
-              : []
-          }
-        >
-          <NavLink to="/histories">See more</NavLink>
-        </History>
+        {walletInfoData &&
+          walletInfoData.wallets[walletInfoData.currentWallet].history.length >
+            0 && (
+            <History
+              items={
+                walletInfoData.wallets[walletInfoData.currentWallet].history
+              }
+            >
+              <NavLink to="/histories">See more</NavLink>
+            </History>
+          )}
       </Column>
     </Page>
   );

@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 // import { NavLink } from 'react-router-dom';
-import useLanguage from '../../../hooks/useLanguage';
-import Section from '../../containers/Section';
-import ListBlock from '../listBlock';
-import './Balance.styles.css';
-import { CoinDto } from '../../../types/assest';
-import ListTileItem from '../listBlock/ListTileItem';
-import PriceChanges from '../../typography/PriceChanges';
+import useLanguage from "../../../hooks/useLanguage";
+import Section from "../../containers/Section";
+import ListBlock from "../listBlock";
+import "./Balance.styles.css";
+import { CoinDto } from "../../../types/assest";
+import ListTileItem from "../listBlock/ListTileItem";
+import PriceChanges from "../../typography/PriceChanges";
 // import ListBaseItem from '../listBlock/ListBaseItem';
 
 type Props = {
@@ -15,39 +15,10 @@ type Props = {
 };
 
 function Assets({ children, assets }: Props) {
-  //   const ton = useTon();
-  const t = useLanguage('assets');
-  //   const navigate = useNavigate();
-
-  //   const assets: AssetType[] = [
-  //     {
-  //       thumb: iconTon,
-  //       title: "TON",
-  //       description: "31,0407843 TON",
-  //       wallet: "UQWQCHDSDNsfjiASXDSOsdUNPxlRi-GBmsdpaskow-7bgC",
-  //       coin: "Toncoin",
-  //     },
-  //     {
-  //       thumb: iconUsdt,
-  //       title: "USDT",
-  //       description: "221,4215 USDT",
-  //       wallet: "UQWQCHDSDNsfjiASXDSOsdUNPxlRi-GBmsdpaskow-8bgB",
-  //       coin: "USDTcoin",
-  //     },
-  //   ];
-
-  //   const assetClickHandler = useClosure(
-  //     (asset: CoinDto) => {
-  //       //   navigate("/add-crypto/address", {
-  //       //     state: asset,
-  //       //   });
-  //     },
-  //     [assets]
-  //   );
-  console.log(assets);
+  const t = useLanguage("assets");
   if (assets) {
     return (
-      <Section title={t('title')} className="add-crypto__container">
+      <Section title={t("title")} className="add-crypto__container">
         <ListBlock>
           {assets.map((asset, index) => {
             return (
@@ -72,7 +43,7 @@ function Assets({ children, assets }: Props) {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
-                      {' $'}
+                      {" $"}
                     </div>
                     <div className="list-block__descriptio11n">
                       <PriceChanges changePrice={asset.changePrice} />

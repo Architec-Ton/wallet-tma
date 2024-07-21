@@ -13,7 +13,6 @@ import Main from "./pages/Main.tsx";
 import GamePage from "./pages/playGround/gamePage";
 import LeaderBoard from "./pages/playGround/leaderBoard";
 import CategoryGames from "./pages/playGround/categoryGames";
-import PinCode from "./pages/pincode/PinCode.tsx";
 import AddCrypto from "./pages/addCrypto";
 import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
 import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
@@ -83,10 +82,6 @@ const router = createBrowserRouter(
     {
       path: "/registration/existing",
       element: <Existing />,
-    },
-    {
-      path: "/pin-code",
-      element: <PinCode setPinCode={() => {}} />,
     },
     {
       path: "/account",
