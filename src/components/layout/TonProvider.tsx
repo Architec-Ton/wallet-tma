@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from "react";
 
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { useTonConnectUI } from '@tonconnect/ui-react';
-import { useTon } from '../../hooks/useTon';
-import { setAddress, TonConnectionMode } from '../../features/ton/tonSlice';
-import { setIsTonReady } from '../../features/auth/authSlice';
-import { WalletsState } from '../../types/auth';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+import { useTon } from "../../hooks/useTon";
+import { setAddress, TonConnectionMode } from "../../features/ton/tonSlice";
+import { setIsTonReady } from "../../features/auth/authSlice";
+import { WalletsState } from "../../types/auth";
+import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
+import ModalPinCode from "../ui/modals/modalPinCode";
 // import { selectTonMode } from "../../features/ton/tonSelector";
 
 type Props = {
@@ -18,9 +20,10 @@ export function TonProvider({ children }: Props) {
   const [tonConnectUI] = useTonConnectUI();
   const dispatch = useAppDispatch();
   const ton = useTon();
+  const pincode = usePinCodeModalManagement();
 
   // const tonMode = useAppSelector(selectTonMode);
-  const [bcData] = useLocalStorage<WalletsState>('wData', {
+  const [bcData] = useLocalStorage<WalletsState>("wData", {
     currentWallet: -1,
     wallets: [],
   });
@@ -33,7 +36,7 @@ export function TonProvider({ children }: Props) {
         })
       );
       dispatch(setIsTonReady(true));
-    } else if (bcData.wallets[bcData.currentWallet].mode == 'tonconnect') {
+    } else if (bcData.wallets[bcData.currentWallet].mode == "tonconnect") {
       let resetTonConnect = true;
       tonConnectUI.onStatusChange((wallet) => {
         // console.log("TonProvider onStatusChange", wallet);
@@ -43,7 +46,7 @@ export function TonProvider({ children }: Props) {
           // console.log("setAddress onStatusChange", wallet);
           ton.setAddress(
             wallet.account.address,
-            'tonconnect',
+            "tonconnect",
             wallet.account.publicKey
           );
         } else {
@@ -60,10 +63,10 @@ export function TonProvider({ children }: Props) {
         }
       }, 20000);
       return () => clearTimeout(timer);
-    } else if (bcData.wallets[bcData.currentWallet].mode == 'mnemonics') {
+    } else if (bcData.wallets[bcData.currentWallet].mode == "mnemonics") {
       ton.setAddress(
-        bcData.wallets[bcData.currentWallet].address || '',
-        'mnemonics',
+        bcData.wallets[bcData.currentWallet].address || "",
+        "mnemonics",
         bcData.wallets[bcData.currentWallet].publicKey,
         bcData.wallets[bcData.currentWallet].privateKey
       );
@@ -71,5 +74,10 @@ export function TonProvider({ children }: Props) {
     }
   }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {pincode.isOpened && <ModalPinCode onSuccess={pincode.confirm} />}
+    </>
+  );
 }

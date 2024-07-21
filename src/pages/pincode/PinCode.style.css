@@ -33,14 +33,15 @@
 }
 
 .pin-button{
-    width: var(--spacing-80);
-    height: var(--spacing-80);
-    font-size: var(--font-size-xlarge);
+    width:  min(17vw, 17vh); 
+    height:   min(17vw, 17vh); 
+    font-size:  min(10vw, 10vh) ;
     font-weight: var(--font-bold);
     color: var(--background-color);
-    border-radius: var(--spacing-64);
-    border-color: rgba(0,0,0,0.04);
-    background-color: var(--text-color);
+    border-radius: 50%;
+    border-color: var(--third-colour);
+    color: var(--text-color); 
+    background-color: transparent;
 }
 
 .pin-title {
