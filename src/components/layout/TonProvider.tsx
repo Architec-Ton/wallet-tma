@@ -10,6 +10,8 @@ import { setIsTonReady } from "../../features/auth/authSlice";
 import { WalletsState } from "../../types/auth";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
 import ModalPinCode from "../ui/modals/modalPinCode";
+import ModalTrx from "../ui/modals/trxModal";
+import useTrxModalManagement from "../../hooks/useTon/useTrxModalManagment";
 // import { selectTonMode } from "../../features/ton/tonSelector";
 
 type Props = {
@@ -21,6 +23,7 @@ export function TonProvider({ children }: Props) {
   const dispatch = useAppDispatch();
   const ton = useTon();
   const pincode = usePinCodeModalManagement();
+  const trx = useTrxModalManagement();
 
   // const tonMode = useAppSelector(selectTonMode);
   const [bcData] = useLocalStorage<WalletsState>("wData", {
@@ -78,6 +81,17 @@ export function TonProvider({ children }: Props) {
     <>
       {children}
       {pincode.isOpened && <ModalPinCode onSuccess={pincode.confirm} />}
+      {trx.isOpened && (
+        <ModalTrx
+        // onClose={onClose}
+        // commission={state?.commission}
+        // returnValue={state?.returnValue}
+        // address={state?.address}
+        // inProgress={isTransactionInProgress}
+        >
+          {/* {partialContent} */}
+        </ModalTrx>
+      )}
     </>
   );
 }
