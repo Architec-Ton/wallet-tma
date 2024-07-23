@@ -86,7 +86,7 @@ export function TmaProvider({ children }: Props) {
 
   useEffect(() => {
     if (isTma){
-      // swipeBehavior.disableVerticalSwipe()}
+      // swipeBehavior.disableVerticalSwipe()
     }
   }, [isTma]);
 
