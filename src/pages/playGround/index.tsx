@@ -19,7 +19,7 @@ import {
 } from '../../features/gaming/gamingApi.ts';
 import TopRate from '../../components/ui/games/topRate';
 import useDebounce from '../../hooks/useDebounce.ts';
-import { GameFilterType } from '../../types/gameTypes.ts';
+import { AppsList, GameFilterType } from '../../types/gameTypes.ts';
 import { clearFilter } from '../../features/gaming/gamingSlice.ts';
 
 import './index.css';
@@ -50,6 +50,7 @@ function PlayGround() {
   const [searchParams, setSearchParams] = useState<SearchParamsType>();
   const [isSearchParamsChanged, setIsSearchParamsChanged] =
     useState<boolean>(false);
+  const [filteredGames, setFilteredGames] = useState<AppsList | null>()
 
   useEffect(() => {
     getCategories(undefined);
@@ -59,6 +60,12 @@ function PlayGround() {
       dispatch(clearFilter());
     };
   }, []);
+
+  useEffect(() => {
+    if (games) {
+      setFilteredGames(games)
+    }
+  }, [games])
 
   useEffect(() => {
     if (isSearchParamsChanged) {
@@ -74,9 +81,20 @@ function PlayGround() {
           }
           getTopGames(params);
         } else {
-          getCategories(searchParams?.search as string);
+          // getCategories(searchParams?.search as string);
+          const search = searchParams?.search as string
+          const _games = games.categories.filter(
+            category => category.apps.some(
+              app => app.title.toLowerCase().includes(search.toLowerCase())
+            )
+          )
+          setFilteredGames(oldGames => {
+            if (oldGames) {
+              return {...oldGames, categories: _games}
+            }
+          })
         }
-      }, 500);
+      }, 300);
     }
   }, [isSearchParamsChanged]);
 
@@ -151,7 +169,7 @@ function PlayGround() {
               ))}
           </Slider>
         </Row>
-        {isCategoryView && <GameList games={games.categories} />}
+        {isCategoryView && filteredGames && <GameList games={filteredGames.categories} />}
         {isTopView && <TopRate games={topGames} />}
       </Column>
     </Page>
