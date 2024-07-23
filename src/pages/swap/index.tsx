@@ -8,7 +8,6 @@ import SendAsset from './sendAsset';
 import ReceiveAsset from './receiveAsset';
 import AssetsList from './assetsList';
 import { AddressType, DEX, pTON } from '@ston-fi/sdk';
-import { useTonAddress } from '@tonconnect/ui-react';
 import { useClosure } from '../../hooks/useClosure';
 import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
 import { WalletInfoData } from '../../types/wallet';
@@ -27,7 +26,7 @@ import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
 import { useTransaction } from '../../hooks/useTransaction';
 import PartialContent from '../../components/ui/modals/PartialContent';
 import { formatDate } from 'date-fns';
-import { useAppTonConnectUi } from '../../hooks/useAppTonConnectUi';
+import { useTon } from '../../hooks/useTon';
 
 export type AssetDataType = {
   title: string;
@@ -102,6 +101,7 @@ const testnetAssets = [
 
 const Swap = () => {
   const { data: stonFiAssets, isLoading } = useGetStonfiAssetsQuery(null);
+  const [wallet, setWallet] = useState<string>('')
   const [swapAssets, setSwappAssets] = useState(swapData);
   const [showAssetsList, setShowAssetsList] = useState(false);
   const [swappingTokenMode, setSwappingTokenMode] = useState<
@@ -111,9 +111,8 @@ const Swap = () => {
   const page = usePage();
   const btn = useTmaMainButton();
 
-  const [tonConnectUI] = useAppTonConnectUi();
   const { client: tonClient, network } = useTonClient();
-  const wallet = useTonAddress();
+  const ton = useTon();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage('swap');
   const transaction = useTransaction();
@@ -122,6 +121,12 @@ const Swap = () => {
   useEffect(() => {
     page.setLoading(isLoading);
   }, [isLoading]);
+
+  useEffect(() => {
+    if (ton.wallet.address) {
+      setWallet(ton.wallet.address.toString())
+    }
+  }, [ton.wallet])
 
   useEffect(() => {
     walletInfoApi(null)
@@ -342,15 +347,10 @@ const Swap = () => {
       ),
     });
 
-    await tonConnectUI.sendTransaction({
-      validUntil: Date.now() + 1000000,
-      messages: [
-        {
-          address: swapTxParams.to.toString(),
-          amount: swapTxParams.value.toString(),
-          payload: swapTxParams.body?.toBoc().toString('base64'),
-        },
-      ],
+    await ton.sender.send({
+      value: swapTxParams.value,
+      to: swapTxParams.to,
+      body: swapTxParams.body
     });
   };
 
@@ -376,15 +376,10 @@ const Swap = () => {
       ),
     });
 
-    await tonConnectUI.sendTransaction({
-      validUntil: Date.now() + 1000000,
-      messages: [
-        {
-          address: swapTxParams.to.toString(),
-          amount: swapTxParams.value.toString(),
-          payload: swapTxParams.body?.toBoc().toString('base64'),
-        },
-      ],
+    await ton.sender.send({
+      value: swapTxParams.value,
+      to: swapTxParams.to,
+      body: swapTxParams.body
     });
   };
 
@@ -410,15 +405,10 @@ const Swap = () => {
       ),
     });
 
-    await tonConnectUI.sendTransaction({
-      validUntil: Date.now() + 1000000,
-      messages: [
-        {
-          address: swapTxParams.to.toString(),
-          amount: swapTxParams.value.toString(),
-          payload: swapTxParams.body?.toBoc().toString('base64'),
-        },
-      ],
+    await ton.sender.send({
+      value: swapTxParams.value,
+      to: swapTxParams.to,
+      body: swapTxParams.body
     });
   };
 
