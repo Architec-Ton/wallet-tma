@@ -192,7 +192,9 @@ function BankStaking() {
 
   const stakeAllHandler = () => {
     inputRef.current?.focus();
-    setValue(Number(bnkAsset?.amount).toString());
+    if (Number(bnkAsset?.amount) > 0) {
+      setValue(Number(bnkAsset?.amount).toString())
+    }
   };
 
   const isValid = useMemo(() => {
