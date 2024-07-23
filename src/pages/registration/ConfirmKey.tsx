@@ -137,10 +137,19 @@ const ConfirmKey: React.FC = () => {
     [mnemonics, mnemonicsVerifyIdx, inputs]
   );
 
+  const generateUniqueRandomNumbers = (count: number, min: number, max: number) => {
+    const uniqueNumbers = new Set();
+    while (uniqueNumbers.size < count) {
+      uniqueNumbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
+    }
+    return Array.from(uniqueNumbers);
+  }
+
   useEffect(() => {
-    const randomIdx = Array(3)
-      .fill(0)
-      .map(() => randomInt(0, 23));
+    const randomIdx = generateUniqueRandomNumbers(3, 0, 23);
+    // const randomIdx = Array(3)
+    //   .fill(0)
+    //   .map(() => randomInt(0, 23));
     console.log("rand:", randomIdx);
     setMnemonicsVerifyIdx(randomIdx);
     const mnemonics = state.mnemonic.split(" ");
