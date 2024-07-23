@@ -42,7 +42,7 @@ const GameList = ({ games }: OwnPropsType) => {
       [] as GameListType<GameListItemType[][]>
     );
     setGameList(list);
-  }, []);
+  }, [games]);
 
   return (
     <Column className="w-screen">
