@@ -28,7 +28,7 @@ function Input({
   return (
     // <div className={classNames('form-input', className)}>
     <Block direction="row" className={classNames('form-input', className)}>
-      {prefix && <span>{prefix}</span>}
+      {prefix && <span >{prefix}</span>}
       <input
         type={type}
         placeholder={placeholder}
