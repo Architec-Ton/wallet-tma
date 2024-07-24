@@ -1,16 +1,16 @@
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { CSSProperties, ReactNode, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   selectIsLoading,
   selectIsNavbarVisible,
-} from "../../features/page/pageSelectors";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import BackButton from "../buttons/BackButton.tsx";
-import Loader from "../layout/Loader";
-import Title from "../typography/Title";
-import MainMenu from "../ui/menu/MainMenu.tsx";
-import Container from "./Container";
-import "./Page.styles.css";
+} from '../../features/page/pageSelectors';
+import { useAppSelector } from '../../hooks/useAppDispatch';
+import BackButton from '../buttons/BackButton.tsx';
+import Loader from '../layout/Loader';
+import Title from '../typography/Title';
+import MainMenu from '../ui/menu/MainMenu.tsx';
+import Container from './Container';
+import './Page.styles.css';
 
 type Props = {
   children: ReactNode;
@@ -19,15 +19,15 @@ type Props = {
   title?: string;
   titleAccent?: string;
   hintMessage?: string;
-  pageControl?: ReactNode
+  pageControl?: ReactNode;
 };
 
 const backButtonExclude: string[] = [
-  "/",
-  "/playground",
-  "/news",
-  "/account",
-  "/registration/welcome",
+  '/',
+  '/playground',
+  '/news',
+  '/account',
+  '/registration/welcome',
 ];
 
 function Page({
@@ -39,13 +39,11 @@ function Page({
   hintMessage,
   pageControl,
 }: Props) {
-
   const location = useLocation();
   const [backButtonIsVisible, setBackButtonIsVisible] =
     useState<boolean>(false);
   const isLoading = useAppSelector(selectIsLoading);
   const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
-
 
   useEffect(() => {
     setBackButtonIsVisible(
@@ -57,7 +55,7 @@ function Page({
   return (
     <>
       <BackButton visible={backButtonIsVisible} />
-      <Container style={style} className={className}>
+      <Container style={style} className={className} key={location.key}>
         {(title || pageControl) && (
           <div className="page-header">
             {title && (
@@ -74,7 +72,7 @@ function Page({
         {children}
       </Container>
 
-      {isNavbarVisible && <div style={{height:'var(--spacing-80)'}}/>}
+      {isNavbarVisible && <div style={{ height: 'var(--spacing-80)' }} />}
       {isNavbarVisible && <MainMenu />}
     </>
   );
