@@ -83,10 +83,14 @@ function PlayGround() {
         } else {
           // getCategories(searchParams?.search as string);
           const search = searchParams?.search as string
-          const _games = games.categories.filter(
-            category => category.apps.some(
-              app => app.title.toLowerCase().includes(search.toLowerCase())
-            )
+          const _games = games.categories.map(
+            category => {
+              const _apps = category.apps.filter(
+                app => app.title.toLowerCase().includes(search.toLowerCase())
+              )
+
+              return {...category, apps: _apps}
+            }
           )
           setFilteredGames(oldGames => {
             if (oldGames) {
