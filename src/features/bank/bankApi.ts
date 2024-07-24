@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQuery from '../api/api';
-import { BankBuyDto } from '../../types/banks';
+import { BankBuyDto, BankInfoDto } from '../../types/banks';
 import { ReferalsInfo } from '../../types/referals';
 
 export const bankApi = createApi({
@@ -15,9 +15,16 @@ export const bankApi = createApi({
       }),
     }),
     apiGetBankReferrals: builder.query<ReferalsInfo, null>({
-      query: () => "/bank/referal"
-    })
+      query: () => '/bank/referal',
+    }),
+    apiGetBankInfo: builder.mutation<BankInfoDto, null>({
+      query: () => '/bank/info',
+    }),
   }),
 });
 
-export const { useApiGetBankBuyMutation, useApiGetBankReferralsQuery } = bankApi;
+export const {
+  useApiGetBankBuyMutation,
+  useApiGetBankReferralsQuery,
+  useApiGetBankInfoMutation,
+} = bankApi;

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { isTMA, useInitDataRaw } from '@tma.js/sdk-react';
-import { initSwipeBehavior } from '@telegram-apps/sdk';
 import { ReactNode, useEffect, useState } from 'react';
 import { useApiAuthMutation } from '../../features/auth/authApi';
 import {
@@ -37,7 +36,7 @@ export function TmaProvider({ children }: Props) {
   const dispatch = useAppDispatch();
 
   const mainButtonIsVisible = useAppSelector(selectMainButtonIsVisible);
-  const [swipeBehavior] = initSwipeBehavior()
+  // const [swipeBehavior] = initSwipeBehavior()
   const mainButtonTitle = useAppSelector(selectMainButtonTitle);
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
   const isTma = useAppSelector(selectIsTma);
@@ -85,7 +84,7 @@ export function TmaProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    if (isTma){
+    if (isTma) {
       // swipeBehavior.disableVerticalSwipe()
     }
   }, [isTma]);
