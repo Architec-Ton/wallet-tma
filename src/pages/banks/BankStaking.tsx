@@ -1,54 +1,57 @@
 import {
   ChangeEventHandler,
+  // useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from "react";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
+} from 'react';
+import Column from '../../components/containers/Column';
+import Page from '../../components/containers/Page';
+import useLanguage from '../../hooks/useLanguage';
 // import useRouter from '../../hooks/useRouter';
-import { useTmaMainButton } from "../../hooks/useTma";
-import { usePage } from "../../hooks/usePage";
-import BankStakingInfo from "../../components/ui/bank/BankStakingInfo";
-import useContracts from "../../hooks/useContracts";
-import { useTon } from "../../hooks/useTon";
+import { useTmaMainButton } from '../../hooks/useTma';
+import { usePage } from '../../hooks/usePage';
+import BankStakingInfo from '../../components/ui/bank/BankStakingInfo';
+import useContracts from '../../hooks/useContracts';
+import { useTon } from '../../hooks/useTon';
 
-import "./BankStaking.styles.css";
-import Section from "../../components/containers/Section";
-import Row from "../../components/containers/Row";
-import Delimiter from "../../components/typography/Delimiter";
-import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
-import { WalletInfoData } from "../../types/wallet";
-import { CoinDto } from "../../types/assest";
+import './BankStaking.styles.css';
+import Section from '../../components/containers/Section';
+import Row from '../../components/containers/Row';
+import Delimiter from '../../components/typography/Delimiter';
+import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
+import { WalletInfoData } from '../../types/wallet';
+import { CoinDto } from '../../types/assest';
 // import bankIcon from "../../assets/images/bank.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import BankStakingHistorySection, {
   StakeHistoryType,
-} from "../../components/ui/bank/BankStakingHistorySection";
+} from '../../components/ui/bank/BankStakingHistorySection';
 // import { formatDate } from "date-fns";
 
 // import PartialContent from "../../components/ui/modals/PartialContent";
-import classNames from "classnames";
+import classNames from 'classnames';
+// import { useAppSelector } from '../../hooks/useAppDispatch';
+// import { selectAuthIsReady } from '../../features/auth/authSelector';
 // import { useAppSelector } from "../../hooks/useAppDispatch";
 // import { selectTonUsdPrice } from "../../features/wallet/walletSelector";
-import { useTonClient } from "../../hooks/useTonClient";
+// import { useTonClient } from '../../hooks/useTonClient';
 
 function BankStaking() {
   //   const navigate = useRouter();
   const page = usePage();
   const btn = useTmaMainButton();
-  const t = useLanguage("bank-stake");
+  const t = useLanguage('bank-stake');
   const inputRef = useRef<HTMLInputElement>(null);
   const [walletInfoApi] = useApiWalletInfoMutation();
   const navigate = useNavigate();
   const contracts = useContracts();
   const ton = useTon();
   // const tonUsdPrice = useAppSelector(selectTonUsdPrice);
-  const { client } = useTonClient();
+  // const { client } = useTonClient();
 
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>('0');
   const [stakingValue, setStakingValue] = useState<number>(0);
   const [receivingValue, setReceivingValue] = useState<number>(0);
   // const [returnValue, setReturnValue] = useState<number>(0);
@@ -58,6 +61,7 @@ function BankStaking() {
   const [stakeHistory, setStakeHistory] = useState<StakeHistoryType | null>(
     null
   );
+  // const isReady = useAppSelector(selectAuthIsReady);
   // const [isStakeAvailable, setIsStakeAvailable] = useState<boolean>(true);
 
   useEffect(() => {
@@ -65,10 +69,13 @@ function BankStaking() {
       .unwrap()
       .then((result: WalletInfoData) => {
         const { assets } = result.wallets[result.currentWallet];
-        const bnk = assets.find((asset) => asset.meta?.symbol === "BNK");
-        const arc = assets.find((asset) => asset.meta?.symbol === "ARC");
+        const bnk = assets.find((asset) => asset.meta?.symbol === 'BNK');
+        const arc = assets.find((asset) => asset.meta?.symbol === 'ARC');
         setBnkAsset(bnk);
         setArcAsset(arc);
+        if (bnk) {
+          setValue(Number(bnk?.amount).toString());
+        }
       })
       .catch((e) => {
         console.error(e);
@@ -76,34 +83,22 @@ function BankStaking() {
       .finally(() => {
         page.setLoading(false);
       });
-
-    btn.init(
-      t("stake", "button"),
-      () => {
-        transactionSuccessHandler();
-      },
-      false
-    );
   }, []);
 
   useEffect(() => {
-    if (client && !stakeHistory) {
-      handleStakeInfo();
-    }
-    if (stakeHistory && !!stakeHistory.deposit) {
-      btn.init(t("unstake", "button"), transactionUnstakeHandler, true);
-    }
-  }, [client, stakeHistory]);
+    if (ton.wallet.address && receivingValue == 0) handleStakeInfo();
+  }, [ton]);
 
   const handleStake = async (amount: number) => {
     if (ton.wallet.address) {
       const ownerAddress = ton.wallet.address;
       //Get BNK Wallet address
       const walletAddress = await contracts.bank.getWallet(ownerAddress);
-      console.log("BNK Wallet", walletAddress?.toString());
+      console.log('BNK Wallet', walletAddress?.toString());
       if (walletAddress) {
         const tx = await contracts.bank.stake(walletAddress, BigInt(amount));
-        console.log("Transaction:", tx);
+        console.log('Transaction:', tx);
+        navigate('/bank');
       }
     }
   };
@@ -113,6 +108,7 @@ function BankStaking() {
       const ownerAddress = ton.wallet.address;
       //Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
+      console.log('stakeAddress', stakeAddress);
       if (stakeAddress) {
         // setStakeAddress(stakeAddress.toString());
         try {
@@ -120,6 +116,8 @@ function BankStaking() {
             stakeAddress,
             ownerAddress
           );
+
+          console.log('stakeInfo', stakeInfo);
           if (stakeInfo && stakeInfo.stakedAmount > 0) {
             const rewards =
               Number((stakeInfo.calculatedAmount * 100n) / 1_000_00n) /
@@ -142,6 +140,7 @@ function BankStaking() {
         }
       }
     }
+    console.log('handleStakeInfo');
   };
 
   const handleUnstake = async () => {
@@ -154,10 +153,9 @@ function BankStaking() {
           claimAvailable: false,
         });
       }
-      contracts.bank.unstake()?.then((tx) => {
-        console.log("Unstake", tx);
-        navigate("/bank");
-      });
+      const tx = await contracts.bank.unstake();
+      console.log('Unstake', tx);
+      navigate('/bank');
     }
   };
 
@@ -171,10 +169,9 @@ function BankStaking() {
           claimAvailable: false,
         });
       }
-      contracts.bank.claim()?.then((tx) => {
-        console.log("claim", tx);
-        navigate("/bank");
-      });
+      const tx = await contracts.bank.claim();
+      console.log('claim', tx);
+      navigate('/bank');
     }
   };
 
@@ -190,16 +187,16 @@ function BankStaking() {
   //   }
   // }, [bnkAsset, stakeAddress, returnValue, isStakeAvailable]);
 
-  useEffect(() => {
-    if (!isNaN(Number(value))) {
-      setStakingValue(Number(value));
-    }
-    if (arcAsset) {
-      const returnValue = calculateArc(Number(value));
-      // setReturnValue((returnValue * arcAsset.usdPrice) / tonUsdPrice);
-      setReceivingValue(returnValue);
-    }
-  }, [value, arcAsset]);
+  // useEffect(() => {
+  //   if (!isNaN(Number(value))) {
+  //     setStakingValue(Number(value));
+  //   }
+  //   if (arcAsset) {
+  //     const returnValue = calculateArc(Number(value));
+  //     // setReturnValue((returnValue * arcAsset.usdPrice) / tonUsdPrice);
+  //     setReceivingValue(returnValue);
+  //   }
+  // }, [value, arcAsset]);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.currentTarget.value;
@@ -217,26 +214,27 @@ function BankStaking() {
   const stakeAllHandler = () => {
     inputRef.current?.focus();
     if (Number(bnkAsset?.amount) > 0) {
-      setValue(Number(bnkAsset?.amount).toString())
+      setValue(Number(bnkAsset?.amount).toString());
     }
+    console.log(arcAsset);
   };
 
-  const isValid = useMemo(() => {
-    return (
-      !isNaN(stakingValue) &&
-      stakingValue >= 1 &&
-      stakingValue <= Number(bnkAsset?.amount)
-    );
-  }, [stakingValue, bnkAsset]);
+  // const isValid = useMemo(() => {
+  //   return (
+  //     !isNaN(stakingValue) &&
+  //     stakingValue >= 1 &&
+  //     stakingValue <= Number(bnkAsset?.amount)
+  //   );
+  // }, [stakingValue, bnkAsset]);
 
-  useEffect(() => {
-    if (isValid) {
-      btn.refresh(transactionSuccessHandler);
-      btn.setVisible(true);
-    } else {
-      btn.setVisible(false);
-    }
-  }, [isValid]);
+  // useEffect(() => {
+  //   if (isValid) {
+  //     btn.refresh(transactionSuccessHandler);
+  //     btn.setVisible(true);
+  //   } else {
+  //     btn.setVisible(false);
+  //   }
+  // }, [isValid]);
 
   const calculateArc = (value: number) => {
     let parameter = 0;
@@ -261,15 +259,15 @@ function BankStaking() {
     if (bnkAsset) {
       return [
         {
-          title: t("balance"),
+          title: t('balance'),
           value: `${bnkAsset.amount} ${bnkAsset.meta?.symbol}`,
         },
         {
-          title: t("min-deposit"),
+          title: t('min-deposit'),
           value: `1 ${bnkAsset.meta?.symbol}`,
         },
         {
-          title: t("rewards"),
+          title: t('rewards'),
           value: `${calculateArc(bnkAsset.amount)} ARC`,
         },
       ];
@@ -279,67 +277,77 @@ function BankStaking() {
   const transactionUnstakeHandler = async () => {
     try {
       await handleUnstake();
-      await handleStakeInfo();
+      navigate('/bank');
     } catch (e) {
       console.error(e);
     }
   };
 
-  const transactionSuccessHandler = async () => {
-    try {
-      await handleStake(stakingValue);
-      await handleStakeInfo();
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    console.log('My super:', value, stakingValue);
+    if (stakingValue > 0) {
+      btn.init(t('unstake', 'button'), transactionUnstakeHandler, true);
+    } else if (Number(value) > 0) {
+      const transactionSuccessHandler = async () => {
+        try {
+          await handleStake(Number(value));
+          navigate('/bank');
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      btn.init(t('stake', 'button'), transactionSuccessHandler, true);
     }
-  };
+  }, [value, stakingValue]);
 
   // const onComplete = () => {
   //   navigate("/bank");
   // };
 
+  // console.log('stakingValue', stakingValue);
+
   return (
-    <Page title={t("title")} className="staking-page">
+    <Page title={t('title')} className="staking-page">
       <Delimiter />
       <Column>
-        <Section>
-          <Row className="staking-form-container">
-            <Column className="">
-              <Row className="staking-asset-container">
-                <div
-                  className={classNames("staking-asset", {
-                    warning: stakingValue > Number(bnkAsset?.amount),
-                  })}
-                  onClick={onClick}
-                >
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="0"
-                    inputMode="numeric"
-                  />
-                  <div className="bank-value">
-                    {value != "" &&
-                      Number(value)
-                        .toLocaleString(undefined)
-                        .replaceAll(",", " ")}
+        {stakingValue == 0 && (
+          <Section>
+            <Row className="staking-form-container">
+              <Column className="">
+                <Row className="staking-asset-container">
+                  <div
+                    className={classNames('staking-asset', {
+                      warning: stakingValue > Number(bnkAsset?.amount),
+                    })}
+                    onClick={onClick}>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={value}
+                      onChange={onChange}
+                      placeholder="0"
+                      inputMode="numeric"
+                    />
+                    <div className="bank-value">
+                      {value != '' &&
+                        Number(value)
+                          .toLocaleString(undefined)
+                          .replaceAll(',', ' ')}
+                    </div>
                   </div>
-                </div>
-                <div className="staking-asset-title">
-                  {bnkAsset?.meta?.name}
-                </div>
-              </Row>
-            </Column>
-            <button
-              className="control-button rounded-button"
-              onClick={stakeAllHandler}
-            >
-              {t("all")}
-            </button>
-          </Row>
-        </Section>
+                  <div className="staking-asset-title">
+                    {bnkAsset?.meta?.name}
+                  </div>
+                </Row>
+              </Column>
+              <button
+                className="control-button rounded-button"
+                onClick={stakeAllHandler}>
+                {t('all')}
+              </button>
+            </Row>
+          </Section>
+        )}
         {/* <h2>{arc.toLocaleString()} ARC</h2>
         <button onClick={() => handleStake(1)}>Stake 1 BNK</button>
         <button onClick={() => handleStakeInfo()}>Stake info</button>
@@ -349,8 +357,8 @@ function BankStaking() {
         <BankStakingInfo infoItems={infoItems} />
         <BankStakingHistorySection
           stakeHistory={stakeHistory}
-          title={t("history-title")}
-          readMore={<Link to="/bank/stake/history">{t("see-all")}</Link>}
+          title={t('history-title')}
+          readMore={<Link to="/bank/stake/history">{t('see-all')}</Link>}
           onClaim={handleClaim}
         />
       </Column>

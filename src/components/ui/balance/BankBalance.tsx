@@ -4,7 +4,6 @@ import Row from '../../containers/Row';
 import Block from '../../typography/Block';
 
 import './Balance.styles.css';
-import { WalletInfoData } from '../../../types/wallet';
 import Address from './Address';
 import Button from '../../buttons/Button';
 import { iconBankButton } from '../../../assets/icons/buttons';
@@ -12,18 +11,13 @@ import useRouter from '../../../hooks/useRouter';
 import useLanguage from '../../../hooks/useLanguage';
 
 type Props = {
-  walletInfoData: WalletInfoData | null;
+  address?: string;
   arcAmount: bigint;
   bnkAmount: bigint;
   children?: ReactNode;
 };
 
-function BankBalance({
-  children,
-  arcAmount,
-  bnkAmount,
-  walletInfoData,
-}: Props) {
+function BankBalance({ children, arcAmount, bnkAmount, address }: Props) {
   const navigate = useRouter();
   const t = useLanguage('bank-balance');
   return (
@@ -49,22 +43,17 @@ function BankBalance({
           style={{
             margin: 'var(--spacing-16) 0',
           }}>
-          <Button icon={iconBankButton} onClick={() => navigate('/bank/buy')} className="buy-button">
+          <Button
+            icon={iconBankButton}
+            onClick={() => navigate('/bank/buy')}
+            className="buy-button">
             {t('Buy', 'button')}
           </Button>
         </Row>
 
         {children}
       </Column>
-      <Address
-        address={
-          walletInfoData
-            ? walletInfoData.wallets[
-                walletInfoData.currentWallet
-              ].address.toString()
-            : undefined
-        }
-      />
+      <Address address={address} />
     </Block>
   );
 }

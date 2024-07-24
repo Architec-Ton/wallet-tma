@@ -25,8 +25,12 @@ const ModalTrx = ({ trxHash, trxInitData }: TransactionModalInit) => {
   useEffect(() => {
     if (trxHash) {
       const fetchData = async (trx: string) => {
-        const transactionData = await trxApi(trx).unwrap();
-        if (transactionData) setTrxData(transactionData);
+        try {
+          const transactionData = await trxApi(trx).unwrap();
+          if (transactionData) setTrxData(transactionData);
+        } catch {
+          console.log('cath error');
+        }
       };
       fetchData(trxHash);
     }
