@@ -16,6 +16,7 @@ import { stonFiApi } from "../features/stonfi/stonFiApi";
 import alertReducer from "../features/alert/alertSlice.ts";
 import pinCodeModalReducer from "../features/modal/pinModalSlice.ts";
 import trxModalReducer from "../features/modal/trxModalSlice.ts";
+import { trxApi } from "../features/modal/trxModalApi.ts";
 
 export const store = configureStore({
   reducer: {
@@ -31,6 +32,7 @@ export const store = configureStore({
     alert: alertReducer,
     pincode: pinCodeModalReducer,
     trx: trxModalReducer,
+    [trxApi.reducerPath]: trxApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,
     [gamingApi.reducerPath]: gamingApi.reducer,
@@ -41,6 +43,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       authApi.middleware,
       bankApi.middleware,
+      trxApi.middleware,
       walletApi.middleware,
       gamingApi.middleware,
       stonFiApi.middleware

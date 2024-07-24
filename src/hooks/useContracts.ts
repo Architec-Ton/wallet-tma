@@ -1,23 +1,23 @@
-import { useTonClient } from './useTonClient';
-import { Address, beginCell, OpenedContract, toNano } from '@ton/core';
-import { BankJettonWallet, Stake } from '../contracts/tact_BankJettonWallet';
-import { useTon } from './useTon/index';
-import { BankJetton } from '../contracts/tact_BankJetton';
+import { useTonClient } from "./useTonClient";
+import { Address, beginCell, OpenedContract, toNano } from "@ton/core";
+import { BankJettonWallet, Stake } from "../contracts/tact_BankJettonWallet";
+import { useTon } from "./useTon/index";
+import { BankJetton } from "../contracts/tact_BankJetton";
 import {
   BANK_CROWDSALE_ADDRESS,
   BANK_GAS_AMOUNT,
   BANK_JETTON_MASTER_ADDRESS,
-} from '../constants';
-import { StakeStorage } from '../contracts/tact_StakeStorage';
+} from "../constants";
+import { StakeStorage } from "../contracts/tact_StakeStorage";
 import {
   BanksCrowdSaleV3 as BanksCrowdSale,
   ReferralAddress,
-} from '../contracts/tact_BanksCrowdSaleV3';
-import { ArcJetton } from '../contracts/tact_ArcJetton';
+} from "../contracts/tact_BanksCrowdSaleV3";
+import { ArcJetton } from "../contracts/tact_ArcJetton";
 import {
   ArcJettonWallet,
   JettonTransfer,
-} from '../contracts/tact_ArcJettonWallet';
+} from "../contracts/tact_ArcJettonWallet";
 
 function useContracts() {
   const { client } = useTonClient();
@@ -90,7 +90,7 @@ function useContracts() {
             bounce: true,
           },
           {
-            $$type: 'JettonTransfer',
+            $$type: "JettonTransfer",
             query_id: 0n,
             destination: destinationAddress,
             response_destination: destinationAddress,
@@ -103,40 +103,41 @@ function useContracts() {
     },
 
     bank: {
-      buy: (amount: bigint) => {
+      buy: (amount: bigint) =>
         bankCrowdSale()?.send(
           sender,
           { value: amount + toNano(BANK_GAS_AMOUNT) },
-          'buyBank'
-        );
-      },
-      buyWithReferral: (referralAddress: Address, amount: bigint) => {
+          "buyBank"
+        ),
+      buyWithReferral: (referralAddress: Address, amount: bigint) =>
         bankCrowdSale()?.send(
           sender,
           { value: amount + toNano(BANK_GAS_AMOUNT) },
           {
             referral: referralAddress,
           } as ReferralAddress
-        );
-      },
-
+        ),
       stake: (walletAddress: Address, amount: bigint) =>
-        bankJettonWallet(walletAddress)?.send(sender, { value: toNano(1) }, {
-          $$type: 'Stake',
-          query_id: 0n,
-          amount: amount,
-        } as Stake),
+        bankJettonWallet(walletAddress)?.send(
+          sender,
+          { value: toNano(5 * BANK_GAS_AMOUNT) },
+          {
+            $$type: "Stake",
+            query_id: 0n,
+            amount: amount,
+          } as Stake
+        ),
       unstake: () =>
         bankJettonMaster()?.send(
           sender,
           { value: toNano(BANK_GAS_AMOUNT) },
-          'Unstake'
+          "Unstake"
         ),
       claim: () =>
         bankJettonMaster()?.send(
           sender,
           { value: toNano(BANK_GAS_AMOUNT) },
-          'Claim'
+          "Claim"
         ),
       getWallet: (ownerAddress: Address) =>
         bankJettonMaster()?.getGetWalletAddress(ownerAddress),

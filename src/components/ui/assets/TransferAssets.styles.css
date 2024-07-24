@@ -8,5 +8,5 @@ input.transfer-input{
 }
 
 .inputWrapper .suffix{
-    color: var(--text-secondary-light-color);
+    color: var(--text-secondary-color);
 }

@@ -78,6 +78,7 @@ const SendPage = () => {
             async () => {
               //Transfer
               console.log(address, asset.type);
+              btn.setVisible(false);
               if (asset.type == "ton") {
                 const tx = await ton.sender.send({
                   value: toNano(amount),

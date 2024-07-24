@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { store } from "../../store";
 import { trxModalActions } from "./trxModalSlice";
+import { TransactionModalInit } from "../../types/transaction";
 
 const trxModalThunkActions = {
-  open: createAsyncThunk<string | undefined, void, {}>(
+  open: createAsyncThunk<string | undefined, TransactionModalInit | undefined>(
     "trxModal",
-    async (_, { dispatch }) => {
-      dispatch(trxModalActions.open());
+    async (trxData, { dispatch }) => {
+      dispatch(trxModalActions.open(trxData));
 
       return new Promise<string | undefined>((resolve) => {
         const unsubscribe = store.subscribe(() => {

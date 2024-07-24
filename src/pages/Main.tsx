@@ -14,7 +14,6 @@ import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { WalletInfoData } from "../types/wallet";
 import { NavLink } from "react-router-dom";
-// import useLocalStorage from '../hooks/useLocalStorage.ts';
 
 function Main() {
   const navigate = useRouter();
@@ -27,6 +26,7 @@ function Main() {
   const page = usePage();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);
+  // const trx = useTrxModalManagement();
   // const [mnemonic] = useLocalStorage<string>('mnemonic', '');
   //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
 
@@ -44,6 +44,21 @@ function Main() {
 
   useEffect(() => {
     page.setTitle("Main", "Page");
+
+    // const handle = async () => {
+    //   const tx = await trx.open(
+    //     "4551436b6147515443554d557a753562394944595934456a474934684c49726e6e4b61356f416867796d7870396971592e3233393334383430303030303032",
+    //     {
+    //       amount: 54554,
+    //       source: "dfsfdssdf",
+    //     } as TransactionDto
+    //   );
+
+    //   navigate(0);
+
+    //   console.log("tx", tx);
+    // };
+    // handle();
   }, []);
 
   useEffect(() => {
