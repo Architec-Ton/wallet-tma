@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 
 type Props = {
   address?: string;
+  copy?: boolean;
 };
 
 export const shortenString = (str: string): string => {
@@ -19,7 +20,7 @@ export const shortenString = (str: string): string => {
   return `${prefix}....${suffix}`;
 };
 
-function Address({ address }: Props) {
+function Address({ address, copy=true }: Props) {
   const dispatch = useDispatch()
   const copyToClipboard = () => {
     if (address) {
@@ -35,9 +36,9 @@ function Address({ address }: Props) {
   return (
     <Row className="address">
       <small>{address && shortenString(address)}</small>
-      <a href="#" onClick={copyToClipboard}>
-        <img src={iconButtonCopy} />{' '}
-      </a>
+        {copy && <a href="#" onClick={copyToClipboard}>
+            <img src={iconButtonCopy}/>{' '}
+        </a>}
     </Row>
   );
 }

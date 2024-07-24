@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import Column from "../components/containers/Column";
 import Page from "../components/containers/Page";
 import { useAppSelector } from "../hooks/useAppDispatch";
@@ -12,6 +12,9 @@ import useLanguage from "../hooks/useLanguage.ts";
 import {logOutIcon} from '../assets/icons/buttons'
 import TileButton from "../components/buttons/TileButton.tsx";
 import { initPopup } from '@telegram-apps/sdk';
+import Address from "../components/ui/balance/Address.tsx";
+import {useApiWalletInfoMutation} from "../features/wallet/walletApi.ts";
+import {WalletInfoData} from "../types/wallet.ts";
 
 function AccountDisconnect() {
   const popup = initPopup()
@@ -22,20 +25,37 @@ function AccountDisconnect() {
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
   const ton = useTon();
-  useEffect(() => {
-    page.setTitle("Account", "Page");
-    console.log("isTonLoading", isTonLoading);
-    if (!isTonLoading) {
-      console.log("Call ", isTonLoading, tonMode);
-      if (tonMode == TonConnectionMode.disconnect) {
-        console.log("mode disconnect");
-        navigate("/registration/welcome");
-      } else {
-        // TODO: Get Balance data
-        page.setLoading(false, true);
-      }
-    }
-  }, [isTonLoading, tonMode]);
+    const [walletInfoData, setWalletInfoData] = useState<WalletInfoData | null>(
+        null
+    );
+  const [walletInfoApi] = useApiWalletInfoMutation();
+
+    const handleInfo = async () => {
+        try {
+            const result = await walletInfoApi(null).unwrap();
+            console.log("Wallet result:", result);
+            setWalletInfoData(result);
+        } catch (err) {
+            console.error("Failed to get info: ", err);
+        }
+    };
+
+    useEffect(() => {
+        page.setTitle("Account", "Page");
+        handleInfo().then(() => {
+            console.log("isTonLoading", isTonLoading);
+            if (!isTonLoading) {
+                console.log("Call ", isTonLoading, tonMode);
+                if (tonMode === TonConnectionMode.disconnect) {
+                    console.log("mode disconnect");
+                    navigate("/registration/welcome");
+                } else {
+                    // TODO: Получение данных баланса
+                    page.setLoading(false, true);
+                }
+            }
+        });
+    }, [isTonLoading, tonMode]);
 
   const onClick = ()=>{
     popup
@@ -59,15 +79,20 @@ function AccountDisconnect() {
         })
   }
 
+  const address = walletInfoData
+    ? walletInfoData.wallets[walletInfoData.currentWallet].address.toString()
+    : undefined
+
   return (
     <Page title={t('account')}>
       <Column>
         <TileButton
             title={t('my-wallet')}
-            description={'test'}
             onClick={onClick}
             iconAction={logOutIcon}
-            />
+        >
+            <Address address={address} copy={false} />
+        </TileButton>
         {/* {tonMode == TonConnectionMode.tonconnect && <TonConnectButton />} */}
       </Column>
     </Page>

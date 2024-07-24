@@ -12,7 +12,7 @@ type Props = {
   style?: CSSProperties;
   className?: string;
   onClick?: MouseEventHandler;
-  isSettingVisible?: boolean;
+  children?: React.ReactNode;
 };
 
 function TileButton({
@@ -23,7 +23,7 @@ function TileButton({
   style,
   className,
   onClick,
-  isSettingVisible,
+  children,
 }: Props) {
   return (
     <button
@@ -35,7 +35,7 @@ function TileButton({
         title={title}
         description={description}
         iconAction={iconAction}>
-        {isSettingVisible}
+        {children}
       </Tile>
     </button>
   );
