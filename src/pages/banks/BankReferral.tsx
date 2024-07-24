@@ -11,14 +11,18 @@ import { iconBankButton, iconButtonCopyLight, iconButtonProfileUsers } from "../
 import MiniBlock from "../../components/typography/MiniBlock"
 import { useApiGetBankReferralsQuery } from "../../features/bank/bankApi"
 import { useTonAddress } from "@tonconnect/ui-react"
+import {useDispatch} from "react-redux";
+import {showAlert} from "../../features/alert/alertSlice.ts";
 
 const BankReferral = () => {
   const t = useLanguage("bank-referral")
   const page = usePage()
   const wallet = useTonAddress();
   const { data, isLoading } = useApiGetBankReferralsQuery(null)
+  const dispatch= useDispatch()
 
   const [referralLink, setReferralLink] = useState<string>('https://t.me/...')
+
 
   useEffect(() => {
     page.setLoading(isLoading)
@@ -35,6 +39,9 @@ const BankReferral = () => {
     if (referralLink) {
       navigator.clipboard
         .writeText(referralLink)
+          .then(() => {
+            dispatch(showAlert({ message: "copy", duration: 1500 }));
+          })
         .catch((err) => console.error('Failed to copy text: ', err));
     }
   };

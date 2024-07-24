@@ -15,16 +15,22 @@ type Props = {
 function BackButtonTMA({ visible }: Props) {
   const bb = useBackButton();
   const navigate = useRouter();
+
   useEffect(() => {
+    const handleBackClick = () => {
+      navigate(-1);
+    };
+
     if (visible) {
-      bb.on("click", () => {
-        navigate("/");
-      });
+      bb.on("click", handleBackClick);
       bb.show();
     } else {
       bb.hide();
     }
-  });
+    return () => {
+      bb.off("click", handleBackClick);
+    };
+  }, [bb, navigate, visible]);
   return <></>;
 }
 
