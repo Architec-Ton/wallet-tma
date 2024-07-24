@@ -37,6 +37,9 @@
     "account-wallet-safety": "Wallet Safety",
     "account-notifications": "Notifications",
     "account-dev-menu": "Dev Menu",
+    "account-my-wallet": "MyWallet",
+    "account-logout-title": "Log Out?",
+    "account-logout-description": "Are you sure want to log out from wallet?",
 
 
     "addwallet-addwallet": "Add Wallet",

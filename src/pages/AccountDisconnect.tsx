@@ -8,9 +8,14 @@ import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
 import { TonConnectionMode } from "../features/ton/tonSlice";
 import { useTon } from "../hooks/useTon";
 import { useTonConnectUI } from "@tonconnect/ui-react";
-import Button from "../components/buttons/Button.tsx";
+import useLanguage from "../hooks/useLanguage.ts";
+import {logOutIcon} from '../assets/icons/buttons'
+import TileButton from "../components/buttons/TileButton.tsx";
+import { initPopup } from '@telegram-apps/sdk';
 
 function AccountDisconnect() {
+  const popup = initPopup()
+  const t = useLanguage('account')
   const navigate = useRouter();
   const isTonLoading = useAppSelector(selectIsTonLoading);
   const [tonConnectUI] = useTonConnectUI();
@@ -32,21 +37,37 @@ function AccountDisconnect() {
     }
   }, [isTonLoading, tonMode]);
 
-  return (
-    <Page>
-      <Column>
-        <Button
-          onClick={() => {
+  const onClick = ()=>{
+    popup
+        .open({
+          title: t('logout-title'),
+          message: t('logout-description'),
+          buttons: [
+              { id: 'confirm', type: 'destructive', text: 'Сonfirm' },
+              { id: 'cancel', type: 'default', text: 'Сancel' }
+          ]
+        })
+        .then(buttonId => {
+          if (buttonId === 'confirm') {
             ton.setDisconnect();
             tonConnectUI.disconnect();
-          }}
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          Disconnect
-        </Button>
+            console.log("User confirmed disconnection");
+            // navigate("/registration/welcome");
+          } else {
+            console.log("User cancelled disconnection");
+          }
+        })
+  }
+
+  return (
+    <Page title={t('account')}>
+      <Column>
+        <TileButton
+            title={t('my-wallet')}
+            description={'test'}
+            onClick={onClick}
+            iconAction={logOutIcon}
+            />
         {/* {tonMode == TonConnectionMode.tonconnect && <TonConnectButton />} */}
       </Column>
     </Page>

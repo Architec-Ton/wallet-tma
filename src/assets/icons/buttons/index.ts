@@ -22,8 +22,10 @@ import iconStakeButton from './stake.svg';
 import iconTasksButton from './tasks.svg';
 import iconButtonCopyLight from './copy-white.svg';
 import iconButtonProfileUsers from './profile-2user.svg';
+import logOutIcon from './logout.svg'
 
 export {
+  logOutIcon,
   iconBankButton,
   iconButtonArraw,
   iconButtonCopy,
