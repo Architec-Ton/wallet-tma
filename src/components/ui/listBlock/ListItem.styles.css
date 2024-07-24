@@ -1,0 +1,9 @@
+.listitem-info-block-body{
+  justify-items: end;
+  row-gap: var(--spacing-2);
+}
+
+.listitem-info-block-body div{
+  text-align: right;
+
+}

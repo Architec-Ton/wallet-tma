@@ -1,32 +1,28 @@
-import { useMemo, useEffect, useState, ChangeEventHandler } from 'react';
-import Page from '../../components/containers/Page';
-import Section from '../../components/containers/Section';
-import Delimiter from '../../components/typography/Delimiter';
-import Row from '../../components/containers/Row';
-import { iconReverseButton } from '../../assets/icons/buttons';
-import SendAsset from './sendAsset';
-import ReceiveAsset from './receiveAsset';
-import AssetsList from './assetsList';
-import { AddressType, DEX, pTON } from '@ston-fi/sdk';
-import { useClosure } from '../../hooks/useClosure';
-import { useApiWalletInfoMutation } from '../../features/wallet/walletApi';
-import { WalletInfoData } from '../../types/wallet';
-import { CoinDto } from '../../types/assest';
-import { useTonClient } from '../../hooks/useTonClient';
-import { toNano } from '@ton/core';
+import { useMemo, useEffect, useState, ChangeEventHandler } from "react";
+import Page from "../../components/containers/Page";
+import Section from "../../components/containers/Section";
+import Delimiter from "../../components/typography/Delimiter";
+import Row from "../../components/containers/Row";
+import { iconReverseButton } from "../../assets/icons/buttons";
+import SendAsset from "./sendAsset";
+import ReceiveAsset from "./receiveAsset";
+import AssetsList from "./assetsList";
+import { AddressType, DEX, pTON } from "@ston-fi/sdk";
+import { useClosure } from "../../hooks/useClosure";
+import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
+import { WalletInfoData } from "../../types/wallet";
+import { CoinDto } from "../../types/assest";
+import { useTonClient } from "../../hooks/useTonClient";
+import { toNano } from "@ton/core";
 
-import './index.css';
-import useLanguage from '../../hooks/useLanguage';
-import { usePage } from '../../hooks/usePage';
-import { useTmaMainButton } from '../../hooks/useTma';
-import { useNavigate } from 'react-router-dom';
+import "./index.css";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+import { useTmaMainButton } from "../../hooks/useTma";
+import { useNavigate } from "react-router-dom";
 
-import congratulateImg from '../../assets/images/congretulate.png';
-import { useGetStonfiAssetsQuery } from '../../features/stonfi/stonFiApi';
-import { useTransaction } from '../../hooks/useTransaction';
-import PartialContent from '../../components/ui/modals/PartialContent';
-import { formatDate } from 'date-fns';
-import { useTon } from '../../hooks/useTon';
+import { useGetStonfiAssetsQuery } from "../../features/stonfi/stonFiApi";
+import { useTon } from "../../hooks/useTon";
 
 export type AssetDataType = {
   title: string;
@@ -53,18 +49,18 @@ type SwapDataType = {
 
 const swapData: SwapDataType = {
   send: {
-    title: '',
+    title: "",
     balance: 0,
-    icon: '',
-    address: '',
-    value: '',
+    icon: "",
+    address: "",
+    value: "",
   },
   receive: {
-    title: '',
+    title: "",
     balance: 0,
-    icon: '',
-    address: '',
-    value: '',
+    icon: "",
+    address: "",
+    value: "",
   } satisfies AssetDataType,
 };
 
@@ -80,8 +76,8 @@ const testnetAssets = [
       address: "kQDLvsZol3juZyOAVG8tWsJntOxeEZWEaWCbbSjYakQpuYN5",
       image: "",
       decimals: "6",
-      symbol: "TestRED"
-    }
+      symbol: "TestRED",
+    },
   },
   {
     type: "jetton",
@@ -94,18 +90,18 @@ const testnetAssets = [
       address: "kQB_TOJSB7q3-Jm1O8s0jKFtqLElZDPjATs5uJGsujcjznq3",
       image: "",
       decimals: "6",
-      symbol: "TestBlue"
-    }
+      symbol: "TestBlue",
+    },
   },
-]
+];
 
 const Swap = () => {
   const { data: stonFiAssets, isLoading } = useGetStonfiAssetsQuery(null);
-  const [wallet, setWallet] = useState<string>('')
+  const [wallet, setWallet] = useState<string>("");
   const [swapAssets, setSwappAssets] = useState(swapData);
   const [showAssetsList, setShowAssetsList] = useState(false);
   const [swappingTokenMode, setSwappingTokenMode] = useState<
-    'send' | 'receive' | null
+    "send" | "receive" | null
   >(null);
   const [assets, setAssets] = useState<CoinDto[] | null>(null);
   const page = usePage();
@@ -114,8 +110,7 @@ const Swap = () => {
   const { client: tonClient, network } = useTonClient();
   const ton = useTon();
   const [walletInfoApi] = useApiWalletInfoMutation();
-  const t = useLanguage('swap');
-  const transaction = useTransaction();
+  const t = useLanguage("swap");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -124,9 +119,9 @@ const Swap = () => {
 
   useEffect(() => {
     if (ton.wallet.address) {
-      setWallet(ton.wallet.address.toString())
+      setWallet(ton.wallet.address.toString());
     }
-  }, [ton.wallet])
+  }, [ton.wallet]);
 
   useEffect(() => {
     walletInfoApi(null)
@@ -135,7 +130,7 @@ const Swap = () => {
         const { assets } = result.wallets[result.currentWallet];
         setAssets(assets);
         page.setLoading(false);
-        btn.init(t('page-title'), swapHanler, false);
+        btn.init(t("page-title"), swapHanler, false);
       })
       .catch((e) => {
         console.error(e);
@@ -152,7 +147,7 @@ const Swap = () => {
             stonFiAsset?.meta?.symbol?.toLowerCase()
         );
       });
-      const testAssets = network === "testnet" ? testnetAssets : []
+      const testAssets = network === "testnet" ? testnetAssets : [];
       const _assets = new Array().concat(assets, testAssets, _stonFiAssets);
       return _assets;
     }
@@ -175,30 +170,30 @@ const Swap = () => {
     }
   }, [swapAssets, combinedAssets]);
 
-  useEffect(() => {
-    if (sendingAsset && receivingAsset) {
-      transaction.init({
-        commission: 0.17,
-        returnValue: 0.125,
-        address: receivingAsset.meta?.address as string,
-        completeIcon: congratulateImg,
-        completeTitle: t('transaction-complete-title'),
-      });
-    }
-  }, [sendingAsset, receivingAsset]);
+  // useEffect(() => {
+  //   if (sendingAsset && receivingAsset) {
+  //     transaction.init({
+  //       commission: 0.17,
+  //       returnValue: 0.125,
+  //       address: receivingAsset.meta?.address as string,
+  //       completeIcon: congratulateImg,
+  //       completeTitle: t("transaction-complete-title"),
+  //     });
+  //   }
+  // }, [sendingAsset, receivingAsset]);
 
   const calculateSwappValues = (
     value: number | string,
-    mode: 'send' | 'receive'
+    mode: "send" | "receive"
   ) => {
     const _value = Number(value);
-    if (mode === 'send') {
+    if (mode === "send") {
       return receivingAsset
         ? (Number(sendingAsset?.usdPrice) * _value) /
             Number(receivingAsset?.usdPrice)
         : undefined;
     }
-    if (mode === 'receive') {
+    if (mode === "receive") {
       return sendingAsset
         ? (Number(receivingAsset?.usdPrice) * _value) /
             Number(sendingAsset?.usdPrice)
@@ -215,7 +210,7 @@ const Swap = () => {
 
   const changeReceiveValue = (value: string) => {
     setSwappAssets(({ send, receive }) => {
-      const sendedValue = calculateSwappValues(value, 'receive') || '';
+      const sendedValue = calculateSwappValues(value, "receive") || "";
       return {
         send: { ...send, value: sendedValue?.toString() },
         receive: { ...receive, value },
@@ -228,7 +223,7 @@ const Swap = () => {
   };
 
   const changeSendValue = (value: string) => {
-    const receivedValue = calculateSwappValues(value, 'send') || '';
+    const receivedValue = calculateSwappValues(value, "send") || "";
     setSwappAssets(({ send, receive }) => {
       return {
         send: { ...send, value },
@@ -241,7 +236,7 @@ const Swap = () => {
     changeSendValue(e.currentTarget.value);
   };
 
-  const chooseAssetHandler = useClosure((mode: 'send' | 'receive') => {
+  const chooseAssetHandler = useClosure((mode: "send" | "receive") => {
     setSwappingTokenMode(mode);
     setShowAssetsList(true);
   });
@@ -253,10 +248,10 @@ const Swap = () => {
 
   const setJeton = (asset: CoinDto) => {
     setSwappAssets(({ send, receive }) => {
-      if (swappingTokenMode === 'send') {
+      if (swappingTokenMode === "send") {
         const sendedValue =
           (Number(receivingAsset?.usdPrice) * Number(receive.value)) /
-            asset.usdPrice || '';
+            asset.usdPrice || "";
         return {
           send: {
             title: asset.meta?.symbol as string,
@@ -272,7 +267,7 @@ const Swap = () => {
       } else {
         const receivedValue =
           (Number(sendingAsset?.usdPrice) * Number(send.value)) /
-            asset.usdPrice || '';
+            asset.usdPrice || "";
         return {
           send,
           receive: {
@@ -294,34 +289,34 @@ const Swap = () => {
     transactionSuccessHandler();
   };
 
-  const delay = (time: number) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, time);
-    });
-  };
+  // const delay = (time: number) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve(true);
+  //     }, time);
+  //   });
+  // };
 
   const transactionParams = () => {
-    const dex = network === "testnet" ? new DEX.v1.Router("kQCas2p939ESyXM_BzFJzcIe3GD5S0tbjJDj6EBVn-SPsEkN") : new DEX.v1.Router()
+    const dex =
+      network === "testnet"
+        ? new DEX.v1.Router("kQCas2p939ESyXM_BzFJzcIe3GD5S0tbjJDj6EBVn-SPsEkN")
+        : new DEX.v1.Router();
 
-    return { dex }
-  }
+    return { dex };
+  };
 
   const transactionSuccessHandler = async () => {
     const types = [sendingAsset?.type, receivingAsset?.type];
     try {
       console.log(pinCode);
-      if (types.includes('ton')) {
-        types[0] === 'ton'
+      if (types.includes("ton")) {
+        types[0] === "ton"
           ? await tonToJettonTransaction()
           : await jettonToTonTransaction();
       } else {
         await jettonToJettonTransaction();
       }
-      transaction.open();
-      await delay(10000);
-      transaction.complete();
     } catch (e) {
       console.error(e);
     }
@@ -331,7 +326,7 @@ const Swap = () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
     }
-    const { dex } = transactionParams()
+    const { dex } = transactionParams();
     const router = tonClient.open(dex);
 
     const swapTxParams = await router.getSwapJettonToTonTxParams({
@@ -350,15 +345,16 @@ const Swap = () => {
     await ton.sender.send({
       value: swapTxParams.value,
       to: swapTxParams.to,
-      body: swapTxParams.body
+      body: swapTxParams.body,
     });
+    navigate("/bank/buy");
   };
 
   const jettonToJettonTransaction = async () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
     }
-    const { dex } = transactionParams()
+    const { dex } = transactionParams();
     const router = tonClient.open(dex);
 
     const swapTxParams = await router.getSwapJettonToJettonTxParams({
@@ -379,15 +375,16 @@ const Swap = () => {
     await ton.sender.send({
       value: swapTxParams.value,
       to: swapTxParams.to,
-      body: swapTxParams.body
+      body: swapTxParams.body,
     });
+    navigate("/bank/buy");
   };
 
   const tonToJettonTransaction = async () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
     }
-    const { dex } = transactionParams()
+    const { dex } = transactionParams();
     const router = tonClient.open(dex);
 
     const swapTxParams = await router.getSwapTonToJettonTxParams({
@@ -408,12 +405,13 @@ const Swap = () => {
     await ton.sender.send({
       value: swapTxParams.value,
       to: swapTxParams.to,
-      body: swapTxParams.body
+      body: swapTxParams.body,
     });
+    navigate("/bank/buy");
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
-  const [pinCode] = useState<string>('');
+  const [pinCode] = useState<string>("");
 
   useEffect(() => {
     const isValid: boolean =
@@ -433,18 +431,18 @@ const Swap = () => {
     }
   }, [isValidSwapp]);
 
-  const onComplete = () => {
-    navigate('/bank/buy');
-  };
+  // const onComplete = () => {
+  //   navigate("/bank/buy");
+  // };
   return (
-    <Page title={t('page-title')} className="swap">
+    <Page title={t("page-title")} className="swap">
       <Delimiter />
       <SendAsset
         asset={swapAssets.send}
         onChange={changeSendHandler}
         forceChange={changeSendValue}
-        onClick={chooseAssetHandler('send')}
-        value={swapAssets.send.value || ''}
+        onClick={chooseAssetHandler("send")}
+        value={swapAssets.send.value || ""}
         coin={sendingAsset}
         disabled={!sendingAsset || !receivingAsset || sendingAsset.amount <= 0}
       />
@@ -454,8 +452,8 @@ const Swap = () => {
       <ReceiveAsset
         asset={swapAssets.receive}
         onChange={changeReceiveHandler}
-        onClick={chooseAssetHandler('receive')}
-        value={swapAssets.receive.value || ''}
+        onClick={chooseAssetHandler("receive")}
+        value={swapAssets.receive.value || ""}
         coin={receivingAsset}
         sendedCoin={sendingAsset}
         disabled={!sendingAsset || !receivingAsset || sendingAsset.amount <= 0}
@@ -464,7 +462,7 @@ const Swap = () => {
       <Section>
         <Delimiter />
         <Row className="justify-between swap-info-row">
-          <div>{t('receive-value-title')}</div>
+          <div>{t("receive-value-title")}</div>
           <div>
             {sendingAsset &&
               receivingAsset &&
@@ -474,17 +472,17 @@ const Swap = () => {
                     Number(swapAssets.send.value) * 0.17
                   : 0) * sendingAsset.usdPrice
               ).toLocaleString(undefined, {
-                style: 'currency',
-                currency: 'USD',
+                style: "currency",
+                currency: "USD",
               })}
           </div>
         </Row>
         <Delimiter />
         <Row className="justify-between swap-info-row">
-          <div>{t('route')}</div>
+          <div>{t("route")}</div>
           {sendingAsset && receivingAsset && (
             <div>
-              {sendingAsset?.meta?.symbol} {'»'} {receivingAsset?.meta?.symbol}
+              {sendingAsset?.meta?.symbol} {"»"} {receivingAsset?.meta?.symbol}
             </div>
           )}
         </Row>
@@ -497,42 +495,6 @@ const Swap = () => {
           assets={combinedAssets}
           excludeAssets={{ send: sendingAsset, receive: receivingAsset }}
         />
-      )}
-      {transaction.isOpen && (
-        <PartialContent
-          wait={[transaction.isOpen]}
-          init={transaction.setPartialContent}>
-          <Row className="transaction-assets">
-            <img src={sendingAsset?.meta?.image} alt="" />
-            <img src={receivingAsset?.meta?.image} alt="" />
-          </Row>
-          <div className="">
-            -{swapAssets.send.value} {sendingAsset?.meta?.symbol}
-          </div>
-          <div className="">
-            +{swapAssets.receive.value} {receivingAsset?.meta?.symbol}
-          </div>
-          <div className="secondary-data">
-            {Number(swapAssets.receive.value) *
-              Number(receivingAsset?.usdPrice)}{' '}
-            $
-          </div>
-          <div className="secondary-data">
-            {t('page-title')} {formatDate(new Date(), 'd MMMM, hh:mm')}
-          </div>
-        </PartialContent>
-      )}
-      {transaction.isComplete && (
-        <PartialContent
-          wait={[transaction.isComplete]}
-          init={transaction.setPartialContent}>
-          <div>{t('transaction-complete-description')}</div>
-          <button
-            onClick={onComplete}
-            className="primary-button rounded-button">
-            {t('transaction-complete-button')}
-          </button>
-        </PartialContent>
       )}
     </Page>
   );

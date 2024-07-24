@@ -1,94 +1,107 @@
-import { useSelector } from 'react-redux';
-import { iconGlobalButton } from '../../../../assets/icons/buttons';
+import { iconGlobalButton } from "../../../../assets/icons/buttons";
 // import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
-import useLanguage from '../../../../hooks/useLanguage';
-import { CoinDto } from '../../../../types/assest';
-import Column from '../../../containers/Column';
-import Row from '../../../containers/Row';
-import InlineLoader from '../../inlineLoader';
-import ListBlock from '../../listBlock';
-import ListBaseItem from '../../listBlock/ListBaseItem';
-import Modal from '../../modal';
+import useLanguage from "../../../../hooks/useLanguage";
+import Column from "../../../containers/Column";
+import Row from "../../../containers/Row";
+import InlineLoader from "../../inlineLoader";
+import Modal from "../../modal";
 
-import './index.css';
-import { selectTonUsdPrice } from '../../../../features/wallet/walletSelector';
+import "./index.css";
+import { TransactionDto } from "../../../../types/transaction";
+import ListItem from "../../listBlock/ListItem";
+import { ItemDto } from "../../../../types/list";
+import { shortenString } from "../../balance/Address";
 
 type TransactionModalPropsType = {
-  onClose: () => void;
-  onSuccess?: () => void;
-  from?: CoinDto | undefined;
-  to?: CoinDto | undefined;
-  sendedValue?: string;
-  receivedValue?: string;
-  commission?: number;
-  returnValue?: number;
-  address?: string;
-  transactionType?: string;
-  transactionData?: Date;
-  inProgress?: boolean;
-  tonUsdPrice?: number;
+  onClose?: () => void;
+  trx: TransactionDto | undefined;
   children?: React.ReactNode;
 };
 
 const TransactionModal = ({
   onClose,
-  // onSuccess,
-  commission,
-  returnValue,
-  address,
-  inProgress,
-  children
-}: TransactionModalPropsType) => {
-  const t = useLanguage('transaction');
-  const tonUsdPrice = useSelector(selectTonUsdPrice)
+  trx,
+}: // children,
+TransactionModalPropsType) => {
+  const t = useLanguage("transaction");
+
+  const items = [
+    {
+      title: t("sender-address"),
+      value: shortenString(trx?.source || ""),
+    },
+    {
+      title: t("recipient"),
+      value: shortenString(trx?.destination || ""),
+    },
+    {
+      title: t("commission"),
+      value:
+        trx && trx?.commissionAmount
+          ? `${trx?.commissionAmount?.toLocaleString(undefined, {
+              maximumFractionDigits: 5,
+            })} ${trx?.symbol}`
+          : "",
+      subvalue:
+        trx && trx?.commissionUsd
+          ? `${trx?.commissionUsd?.toLocaleString(undefined, {
+              style: "currency",
+              currency: "USD",
+            })}`
+          : "",
+    },
+    {
+      title: t("comment"),
+      value: trx?.comment,
+    },
+  ] as ItemDto[];
 
   return (
     <Modal onClose={onClose}>
       <Column className="transaction-data">
-        {children}
-        {inProgress && (
+        <Row>
+          {trx && trx.iconSrc && <img src={trx.iconSrc} />}
+          {trx && trx.iconDst && <img src={trx.iconDst} />}
+        </Row>
+
+        {trx && trx.amount && (
+          <>
+            <div>
+              {trx.amount.toLocaleString(undefined, {
+                maximumFractionDigits: 6,
+              })}{" "}
+              {trx.symbol}
+            </div>
+            <div className="secondary-data">
+              {trx.amountUsd &&
+                trx.amountUsd.toLocaleString(undefined, {
+                  style: "currency",
+                  currency: "USD",
+                })}
+            </div>
+          </>
+        )}
+        {trx && trx.utime && (
+          <div className="secondary-data">
+            {new Date(trx.utime * 1000).toLocaleString()}
+          </div>
+        )}
+        {(!trx || !trx.status) && (
           <Row className="process">
             <InlineLoader />
-            <div>{t('loading')}</div>
+            <div>{t("loading")}</div>
           </Row>
         )}
       </Column>
-      <ListBlock className="transaction-info__list">
-        <ListBaseItem>
-          <Column className="receiver-address">
-            <div>{t('receiver-address')}</div>
-            <span>{address}</span>
-          </Column>
-        </ListBaseItem>
-        <ListBaseItem>
-          <div>{t('commission')}</div>
-          <Column className="transaction-info">
-            <div>{commission} TON</div>
-            <div className="secondary-info">
-              $ {commission && commission * Number(tonUsdPrice)}
-            </div>
-          </Column>
-        </ListBaseItem>
-        <ListBaseItem>
-          <div>{t('return')}</div>
-          <Column className="transaction-info">
-            <div>{returnValue} TON</div>
-            <div className="secondary-info">
-              $ {returnValue && returnValue * Number(tonUsdPrice)}
-            </div>
-          </Column>
-        </ListBaseItem>
-        <ListBaseItem>
-          <div>{t('comment')}</div>
-          <div>{t('finish')}</div>
-        </ListBaseItem>
-      </ListBlock>
-      <button className="rounded-button control-button transaction-button">
-        <Row>
-          <img src={iconGlobalButton} alt="" />
-          <span>{t('page-title')}</span>
-        </Row>
-      </button>
+      <ListItem items={items}></ListItem>
+      {trx && trx.hash && (
+        <button className="rounded-button control-button transaction-button">
+          <Row>
+            <img src={iconGlobalButton} alt="" />
+            <span>{t("page-title")}</span>
+          </Row>
+        </button>
+      )}
     </Modal>
   );
 };

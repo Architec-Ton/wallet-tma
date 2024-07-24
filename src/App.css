@@ -3,6 +3,7 @@ html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     color: var(--text-color);
+    background-color: var(--background-color) ; 
 }
 
 body{

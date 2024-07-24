@@ -1,23 +1,23 @@
-import { useCallback, useContext, useEffect } from "react"
-import { TransactionContext } from "../components/layout/TransactionProvider"
+// import { useCallback, useContext, useEffect } from "react"
+// import { TransactionContext } from "../components/layout/TransactionProvider"
 
-export const useTransaction = () => {
-  const transactionContext = useContext(TransactionContext)
+// export const useTransaction = () => {
+//   const transactionContext = useContext(TransactionContext)
 
-  useEffect(() => {
-    return () => {
-      transactionContext.destruct()
-    }
-  }, [])
+//   useEffect(() => {
+//     return () => {
+//       transactionContext.destruct()
+//     }
+//   }, [])
 
-  const init = useCallback((params: any) => {
-    Object.keys(params).forEach((key) => {
-      transactionContext.setState(key, params[key])
-    })
-  }, [])
+//   const init = useCallback((params: any) => {
+//     Object.keys(params).forEach((key) => {
+//       transactionContext.setState(key, params[key])
+//     })
+//   }, [])
 
-  return {
-    init,
-    ...transactionContext
-  }
-}
+//   return {
+//     init,
+//     ...transactionContext
+//   }
+// }

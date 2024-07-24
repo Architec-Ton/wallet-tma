@@ -9,7 +9,6 @@ import { store } from "./store";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { FE_URL, MANIFEST_URL } from "./constants";
 import { TonProvider } from "./components/layout/TonProvider";
-import TransactionProvider from "./components/layout/TransactionProvider";
 import AlertContainer from "./components/ui/alert/AlertContainer.tsx";
 
 // import { Buffer } from "buffer/";
@@ -29,10 +28,8 @@ function App() {
           <SDKProvider acceptCustomStyles>
             <TonProvider>
               <Layout>
-                <TransactionProvider>
-                  <AlertContainer />
-                  <RouterProvider router={router} />
-                </TransactionProvider>
+                <AlertContainer />
+                <RouterProvider router={router} />
               </Layout>
             </TonProvider>
           </SDKProvider>

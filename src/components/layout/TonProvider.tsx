@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useEffect } from "react";
 
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTon } from "../../hooks/useTon";
@@ -10,6 +10,9 @@ import { setIsTonReady } from "../../features/auth/authSlice";
 import { WalletsState } from "../../types/auth";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
 import ModalPinCode from "../ui/modals/modalPinCode";
+import ModalTrx from "../ui/modals/trxModal";
+import useTrxModalManagement from "../../hooks/useTon/useTrxModalManagment";
+import { RootState } from "../../store";
 // import { selectTonMode } from "../../features/ton/tonSelector";
 
 type Props = {
@@ -21,6 +24,11 @@ export function TonProvider({ children }: Props) {
   const dispatch = useAppDispatch();
   const ton = useTon();
   const pincode = usePinCodeModalManagement();
+  const trx = useTrxModalManagement();
+  const trxHash = useAppSelector((state: RootState) => state.trx.trxHash);
+  const trxInitData = useAppSelector(
+    (state: RootState) => state.trx.trxInitData
+  );
 
   // const tonMode = useAppSelector(selectTonMode);
   const [bcData] = useLocalStorage<WalletsState>("wData", {
@@ -39,11 +47,8 @@ export function TonProvider({ children }: Props) {
     } else if (bcData.wallets[bcData.currentWallet].mode == "tonconnect") {
       let resetTonConnect = true;
       tonConnectUI.onStatusChange((wallet) => {
-        // console.log("TonProvider onStatusChange", wallet);
-        // console.log("TonProvider connectionRestored:", connectionRestored);
         resetTonConnect = false;
         if (wallet && wallet.account.address) {
-          // console.log("setAddress onStatusChange", wallet);
           ton.setAddress(
             wallet.account.address,
             "tonconnect",
@@ -55,9 +60,7 @@ export function TonProvider({ children }: Props) {
         dispatch(setIsTonReady(true));
       });
       const timer = setTimeout(() => {
-        // console.log("still tonconnect", ton.mode, tonMode, resetTonConnect);
         if (resetTonConnect) {
-          // console.log(resetTonConnect);
           ton.setDisconnect();
           dispatch(setIsTonReady(true));
         }
@@ -78,6 +81,19 @@ export function TonProvider({ children }: Props) {
     <>
       {children}
       {pincode.isOpened && <ModalPinCode onSuccess={pincode.confirm} />}
+      {trx.isOpened && (
+        <ModalTrx
+          trxHash={trxHash}
+          trxInitData={trxInitData}
+          // onClose={onClose}
+          // commission={state?.commission}
+          // returnValue={state?.returnValue}
+          // address={state?.address}
+          // inProgress={isTransactionInProgress}
+        >
+          {/* {partialContent} */}
+        </ModalTrx>
+      )}
     </>
   );
 }

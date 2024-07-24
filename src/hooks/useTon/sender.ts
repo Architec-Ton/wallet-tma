@@ -13,6 +13,9 @@ import { useTonClient } from "../useTonClient";
 import usePinCodeModalManagement from "./usePinCodeModal";
 import { decodePrivateKeyByPin } from "../../utils/pincode";
 import { mnemonicToPrivateKey } from "@ton/crypto";
+import useTrxModalManagement from "./useTrxModalManagment";
+import { TransactionDto } from "../../types/transaction";
+import { iconTon } from "../../assets/icons/jettons";
 
 export const useSender = (): Sender => {
   const address = useAppSelector(selectAddress);
@@ -22,8 +25,9 @@ export const useSender = (): Sender => {
   // const publicKey = useAppSelector(selectAddressPublicKey);
   const client = useTonClient();
   const pincode = usePinCodeModalManagement();
+  const trxModal = useTrxModalManagement();
 
-  const tonSend = async (args: SenderArguments): Promise<void> => {
+  const tonSend = async (args: SenderArguments): Promise<any> => {
     console.log("sender: ", args);
 
     if (privateHashKey === undefined) return;
@@ -82,13 +86,32 @@ export const useSender = (): Sender => {
           ],
         });
 
-        console.log("Transfer", transfer);
+        console.log("Transfer", transfer.toBoc().toString("hex"));
+
+        console.log("hash", transfer.hash().toString("hex"));
+        console.log("Transfer2", transfer.toString("hex"));
 
         const trx = await contract.send(transfer);
 
         console.log("trx", trx);
 
-        return;
+        const hash = Buffer.from(
+          `${args.to.toString()}.${seqno}`,
+          "utf-8"
+        ).toString("hex");
+
+        const txModal = await trxModal.open(hash, {
+          amount: Number(args.value / 1000_000n) / 1000,
+          iconSrc: iconTon,
+          symbol: "TON",
+          utime: Math.floor(new Date().getTime() / 1000),
+          source: wallet.address.toString(),
+          destination: args.to.toString(),
+        } as TransactionDto);
+
+        console.log("txModel:", txModal);
+
+        return transfer;
       }
     }
 
@@ -103,10 +126,22 @@ export const useSender = (): Sender => {
     return;
   };
 
-  if (walletMode == TonConnectionMode.tonconnect) return sender;
+  const commonSend = async (args: SenderArguments): Promise<void> => {
+    const commonSender =
+      walletMode == TonConnectionMode.tonconnect ? sender.send : tonSend;
+
+    console.log("Run sender: ", args);
+    // SEND: transaction to backend
+
+    const trx = await commonSender(args);
+
+    //TODO: open transaction screen here
+
+    return trx; //boc
+  };
 
   return {
     address: address ? Address.parse(address) : undefined,
-    send: tonSend,
+    send: commonSend,
   };
 };

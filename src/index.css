@@ -5,8 +5,8 @@
   --primary-color: #07ACFF;
   --secondary-color: #65656A;
   --third-colour: #e5e5e5;
-  --background-color: light-dark(#ffffff, #2c2c2c);  
-  /* # var(--tg-theme-bg-color) */
+  --background-color: light-dark(#ffffff, #0a0a0a );  
+  /* # var(--tg-theme-bg-color)  #2c2c2c*/ 
     /* #2c2c2c); */
   --background-selected-color: light-dark(#F7F9FB, #232328);
   --selected-color: #6ACDFF;
@@ -14,9 +14,8 @@
   --hint-message-back-background-color: var(--secondary-color);
 
   /* Цвета для текста */
-  --text-secondary-color: var(--secondary-color);
+  --text-secondary-color:  light-dark(#8e8e93, #76787A);
   --text-primary-color: #F7F9FB;
-  --text-secondary-light-color: #8E8E93;
   --link-color: var(--primary-color);
   --link-hover-color: var(--selected-color);
 
@@ -27,7 +26,7 @@
   --button-hover-bg-color: var(--selected-color);
   --button-hover-text-color: var(--background-color);
   --button-hover-border-color: var(--selected-color);
-  --hashtags-text-color: var(--text-secondary-light-color);
+  --hashtags-text-color: var(--text-secondary-color);
   --hashtags-bg-color: var(--background-selected-color);
   --hashtags-text-color-active: var(--primary-color);
   --hashtags-bg-color-active: rgba(7,172,255,0.12);
@@ -51,7 +50,7 @@
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
   --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
-  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.32), rgba(255,255,255,0.05));
+  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.64), rgba(255,255,255,0.05));
 
   /* Отступы и поля */  
   --spacing-2: 0.125rem;

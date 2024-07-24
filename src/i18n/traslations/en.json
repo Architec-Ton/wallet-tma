@@ -157,8 +157,10 @@
     "swap-transaction-complete-button": "Mint",
 
     "transaction-loading": "Transaction is proceed...",
+    "transaction-sender-address": "Sender address",
     "transaction-receiver-address": "Receiver address",
     "transaction-commission": "Commission",
+    "transaction-recipient": "Recipient",
     "transaction-return": "Return",
     "transaction-comment": "Comment",
     "transaction-finish": "finish",
