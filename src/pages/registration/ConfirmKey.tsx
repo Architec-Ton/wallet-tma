@@ -57,6 +57,7 @@ const ConfirmKey: React.FC = () => {
     };
 
   const setupPinCode = async (mnemonics: string[]) => {
+    page.setLoading(false, false);
     const pin1 = await pincode.open();
 
     if (!pin1) {
@@ -123,6 +124,9 @@ const ConfirmKey: React.FC = () => {
         keyPair.publicKey.toString("hex"),
         privateHash
       );
+      btn.init(t("next", "button"), () => {
+        navigate("/");
+      });
       setIsCompleted(true);
     } catch (e) {
       console.log("Coding wrong", e);
