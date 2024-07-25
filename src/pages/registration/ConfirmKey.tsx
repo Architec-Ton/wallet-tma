@@ -7,7 +7,7 @@ import "./ConfirmKey.styles.css";
 import { usePage } from "../../hooks/usePage.ts";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { useTmaMainButton } from "../../hooks/useTma.ts";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useTon } from "../../hooks/useTon/index.ts";
 import { WalletContractV4 } from "@ton/ton";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal.ts";
