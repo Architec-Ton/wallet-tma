@@ -125,7 +125,8 @@ const ConfirmKey: React.FC = () => {
       );
     }
 
-    setIsConfirmed(true);
+    //setIsConfirmed(true);
+    navigate("/registration/completed");
   };
 
   const confirmHandler = (mnemonics: string[]) => {
