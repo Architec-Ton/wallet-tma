@@ -44,6 +44,7 @@ const ConfirmKey: React.FC = () => {
   console.log("storedValue", storedValue);
 
   const [showPinCode, setShowPinCode] = useState<boolean>(false);
+  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
 
   const pincode = usePinCodeModalManagement();
 
@@ -190,7 +191,8 @@ const ConfirmKey: React.FC = () => {
         confirmHandler(mnemonics);
       });
     } else {
-      setupPinCode(mnemonics);
+      setIsConfirmed(true);
+      // setupPinCode(mnemonics);
     }
   }, []);
 
@@ -200,22 +202,27 @@ const ConfirmKey: React.FC = () => {
 
   return (
     <Page title={t("confirm-mnemonics")}>
-      {description}
-      {!showPinCode && (
-        <Column>
-          <div className="container">
-            {mnemonicsVerifyIdx.map((number, index) => (
-              <label key={index}>
-                <Input
-                  prefix={`${number + 1}.`}
-                  key={number}
-                  onChange={handleChange(index)}
-                />
-              </label>
-            ))}
-          </div>
-        </Column>
+      {isConfirmed && (
+        <>
+          {description}
+          {!showPinCode && (
+            <Column>
+              <div className="container">
+                {mnemonicsVerifyIdx.map((number, index) => (
+                  <label key={index}>
+                    <Input
+                      prefix={`${number + 1}.`}
+                      key={number}
+                      onChange={handleChange(index)}
+                    />
+                  </label>
+                ))}
+              </div>
+            </Column>
+          )}
+        </>
       )}
+      {!isConfirmed && <div>Next step You need setup pincode for wallet</div>}
     </Page>
   );
 };
