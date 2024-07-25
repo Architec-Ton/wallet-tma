@@ -13,13 +13,10 @@ import { useSender } from "./sender";
 export function useTon() {
   const dispatch = useAppDispatch();
   const wallet = useWalletInitData();
-  const [bcData, setBcData, removeStored] = useLocalStorage<WalletsState>(
-    "wData",
-    {
-      currentWallet: -1,
-      wallets: [],
-    }
-  );
+  const [bcData, setBcData] = useLocalStorage<WalletsState>("wData", {
+    currentWallet: -1,
+    wallets: [],
+  });
 
   const sender = useSender();
 
@@ -71,7 +68,8 @@ export function useTon() {
         // network: 'ton',
         // mode: 'disconnect',
       });
-      removeStored("ton-connect-storage_bridge-connection");
+      if (localStorage)
+        localStorage.removeItem("ton-connect-storage_bridge-connection");
       setTonMode("disconnect");
       dispatch(
         setAddress({
