@@ -11,7 +11,9 @@ export const MANIFEST_URL =
 export const TA_URL =
   import.meta.env.VITE_TA_URL || "https://ton.architecton.site/api/v2/";
 
-export const TONAPI_KEY = import.meta.env.VITE_TONAPI_KEY || null;
+export const TONAPI_KEY =
+  import.meta.env.VITE_TONAPI_KEY ||
+  "88d5912ad2394e5cbae97a351bb6a3e1174e09f7956d096beaae3acab91324da";
 
 export const BANK_JETTON_MASTER_ADDRESS =
   import.meta.env.VITE_BANK_JETTON_MASTER_ADDRESS ||

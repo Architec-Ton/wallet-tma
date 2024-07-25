@@ -1,6 +1,10 @@
 import { useAppDispatch } from "../useAppDispatch";
 import useLocalStorage from "../useLocalStorage";
-import { setAddress, TonConnectionMode } from "../../features/ton/tonSlice";
+import {
+  setAddress,
+  TonConnectionMode,
+  setSeqno,
+} from "../../features/ton/tonSlice";
 import { useEffect, useState } from "react";
 import { useWalletInitData } from "./useWalletInitData";
 import { WalletsState } from "../../types/auth";
@@ -34,6 +38,7 @@ export function useTon() {
     mode: tonMode,
     wallet: wallet,
     sender: sender,
+    setSeqno: (seqno: number | null) => dispatch(setSeqno(seqno)),
     setAddress: (
       address: string,
       mode: "disconnect" | "tonconnect" | "mnemonics",
