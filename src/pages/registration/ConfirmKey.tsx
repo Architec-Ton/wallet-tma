@@ -30,7 +30,7 @@ const ConfirmKey: React.FC = () => {
   const { state } = useLocation(); // state is any or unknown
 
   const [mnemonics, setMnemonics] = useState<string[]>([]);
-  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
+  // const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const [inputs, setInputs] = useState<string[]>(Array(3).fill(""));
   const [mnemonicsVerifyIdx, setMnemonicsVerifyIdx] = useState<number[]>([
     3, 7, 17,
@@ -125,7 +125,8 @@ const ConfirmKey: React.FC = () => {
       );
     }
 
-    setIsConfirmed(true);
+    //setIsConfirmed(true);
+    navigate("/registration/completed");
   };
 
   const confirmHandler = (mnemonics: string[]) => {
@@ -193,9 +194,9 @@ const ConfirmKey: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isConfirmed) navigate("/registration/completed");
-  }, [isConfirmed]);
+  // useEffect(() => {
+  //   if (isConfirmed) navigate("/registration/completed");
+  // }, [isConfirmed]);
 
   return (
     <Page title={t("confirm-mnemonics")}>
