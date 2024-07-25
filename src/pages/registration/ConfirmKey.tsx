@@ -45,6 +45,7 @@ const ConfirmKey: React.FC = () => {
 
   const [showPinCode, setShowPinCode] = useState<boolean>(false);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
   const pincode = usePinCodeModalManagement();
 
@@ -61,13 +62,19 @@ const ConfirmKey: React.FC = () => {
     if (!pin1) {
       // Wrong
       console.log("Something wrong");
+      dispatch(
+        showAlert({
+          message: "Pincode wrong.",
+          duration: 8000,
+        })
+      );
       navigate("/");
       return;
     }
 
     const pin2 = await pincode.open();
 
-    if (pin2 !== pin1) {
+    if (pin2 != pin1) {
       // Wrong
       dispatch(
         showAlert({
@@ -116,18 +123,18 @@ const ConfirmKey: React.FC = () => {
         keyPair.publicKey.toString("hex"),
         privateHash
       );
+      setIsCompleted(true);
     } catch (e) {
       console.log("Coding wrong", e);
       dispatch(
         showAlert({
-          message: "Coding wrong.",
+          message: `Coding wrong. (${(e as Error).message})`,
           duration: 8000,
         })
       );
     }
 
     //setIsConfirmed(true);
-    navigate("/registration/completed");
   };
 
   const confirmHandler = (mnemonics: string[]) => {
@@ -174,6 +181,11 @@ const ConfirmKey: React.FC = () => {
     //   .map(() => randomInt(0, 23));
     console.log("rand:", randomIdx);
     setMnemonicsVerifyIdx(randomIdx);
+    if (!state || state.mnemonic === null) {
+      navigate("/");
+      return;
+    }
+
     const mnemonics = state.mnemonic.split(" ");
     if (state) {
       console.log("state", state.mnemonic.split(" "));
@@ -196,9 +208,11 @@ const ConfirmKey: React.FC = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (isConfirmed) navigate("/registration/completed");
-  // }, [isConfirmed]);
+  useEffect(() => {
+    if (isCompleted) {
+      navigate("/registration/completed");
+    }
+  }, [isCompleted]);
 
   return (
     <Page title={t("confirm-mnemonics")}>

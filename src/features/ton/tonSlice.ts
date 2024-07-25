@@ -44,6 +44,8 @@ const tonSlice = createSlice({
         state.publicKey = undefined;
       }
       state.isTonLoading = false;
+      state.expiration = null;
+      state.seqno = null;
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.isTonLoading = action.payload;

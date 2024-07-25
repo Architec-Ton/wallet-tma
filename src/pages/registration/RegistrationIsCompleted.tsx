@@ -8,12 +8,15 @@ import { useEffect } from "react";
 import { usePage } from "../../hooks/usePage.ts";
 import { useTmaMainButton } from "../../hooks/useTma.ts";
 import useRouter from "../../hooks/useRouter.ts";
+import { useAppSelector } from "../../hooks/useAppDispatch.ts";
+import { selectIsTonLoading } from "../../features/ton/tonSelector.ts";
 
 const RegistrationIsCompleted = () => {
   const navigate = useRouter();
   const btn = useTmaMainButton();
   const page = usePage();
   const t = useLanguage("Registration");
+  const isTonLoading = useAppSelector(selectIsTonLoading);
 
   const description = (
     <p>
@@ -24,25 +27,17 @@ const RegistrationIsCompleted = () => {
   );
 
   useEffect(() => {
-    page.setLoading(false, false);
-    btn.init(
-      t("next", "button"),
-      () => {
-        navigate("/");
-      },
-      true
-    );
-  }, []);
-
-  useEffect(() => {
-    btn.init(
-      t("next", "button"),
-      () => {
-        navigate("/");
-      },
-      true
-    );
-  }, [btn]);
+    if (!isTonLoading) {
+      page.setLoading(false, false);
+      btn.init(
+        t("next", "button"),
+        () => {
+          navigate("/");
+        },
+        true
+      );
+    }
+  }, [isTonLoading]);
 
   return (
     <Page title={t("registration-completed")}>
