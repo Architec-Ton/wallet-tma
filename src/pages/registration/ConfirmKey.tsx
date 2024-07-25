@@ -43,8 +43,6 @@ const ConfirmKey: React.FC = () => {
   });
 
   console.log("storedValue", storedValue);
-
-  const [showPinCode, setShowPinCode] = useState<boolean>(false);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
@@ -59,6 +57,7 @@ const ConfirmKey: React.FC = () => {
 
   const setupPinCode = async (mnemonics: string[]) => {
     page.setLoading(false, false);
+    btn.setVisible(false);
     const pin1 = await pincode.open();
 
     if (!pin1) {
@@ -125,9 +124,6 @@ const ConfirmKey: React.FC = () => {
         keyPair.publicKey.toString("hex"),
         privateHash
       );
-      btn.init(t("next", "button"), () => {
-        navigate("/");
-      });
       setIsCompleted(true);
     } catch (e) {
       console.log("Coding wrong", e);
@@ -152,8 +148,6 @@ const ConfirmKey: React.FC = () => {
       console.log("Wrong inputs", checkMnemonics, inputs, mnemonicsVerifyIdx);
       // return;
     }
-    btn.setVisible(false);
-
     setupPinCode(mnemonics);
   }; //, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
@@ -198,18 +192,12 @@ const ConfirmKey: React.FC = () => {
     } else {
       console.log("no state", state);
     }
-    if (!state?.confirm) {
-      setShowPinCode(true);
-    }
     page.setLoading(false, false);
-
-    if (state?.confirm) {
-      btn.init(t("next", "button"), () => {
-        confirmHandler(mnemonics);
-      });
-    } else {
+    btn.init(t("next", "button"), () => {
+      confirmHandler(mnemonics);
+    });
+    if (!state?.confirm) {
       setIsConfirmed(true);
-      // setupPinCode(mnemonics);
     }
   }, []);
 
@@ -224,21 +212,19 @@ const ConfirmKey: React.FC = () => {
       {isConfirmed && (
         <>
           {description}
-          {!showPinCode && (
-            <Column>
-              <div className="container">
-                {mnemonicsVerifyIdx.map((number, index) => (
-                  <label key={index}>
-                    <Input
-                      prefix={`${number + 1}.`}
-                      key={number}
-                      onChange={handleChange(index)}
-                    />
-                  </label>
-                ))}
-              </div>
-            </Column>
-          )}
+          <Column>
+            <div className="container">
+              {mnemonicsVerifyIdx.map((number, index) => (
+                <label key={index}>
+                  <Input
+                    prefix={`${number + 1}.`}
+                    key={number}
+                    onChange={handleChange(index)}
+                  />
+                </label>
+              ))}
+            </div>
+          </Column>
         </>
       )}
       {!isConfirmed && <div>Next step You need setup pincode for wallet</div>}
