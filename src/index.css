@@ -116,3 +116,20 @@
   --asset-receive-bg-color: rgba(248, 186, 0, 0.12);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root{
+    --background-color: #0a0a0a;  
+    --background-selected-color: #232328;
+    --text-color: #F7F9FB;
+    --text-secondary-color: #76787A;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root{
+    --background-color: #ffffff;  
+    --background-selected-color:#F7F9FB;
+    --text-color: #232328;
+    --text-secondary-color: #8e8e93;
+  }
+}
