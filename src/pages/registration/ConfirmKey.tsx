@@ -16,13 +16,14 @@ import useLocalStorage from "../../hooks/useLocalStorage.ts";
 import { WalletsState } from "../../types/auth.ts";
 import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
 import { showAlert } from "../../features/alert/alertSlice.ts";
+import useRouter from "../../hooks/useRouter.ts";
 
 // const randomInt = (min: number, max: number) =>
 //   Math.floor(Math.random() * (max - min + 1)) + min;
 
 const ConfirmKey: React.FC = () => {
   const t = useLanguage("Confirm");
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const page = usePage();
   const ton = useTon();
   const btn = useTmaMainButton();
