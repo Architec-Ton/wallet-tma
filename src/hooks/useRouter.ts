@@ -1,14 +1,19 @@
-import { NavigateOptions, To, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from './useAppDispatch';
-import { setLoading, setTitle } from '../features/page/pageSlice';
-import { setMainButtonVisible } from '../features/tma/mainButtonSlice';
+import { NavigateOptions, To, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "./useAppDispatch";
+import { setLoading, setTitle } from "../features/page/pageSlice";
+import { setMainButtonVisible } from "../features/tma/mainButtonSlice";
+import { useTmaState } from "./useTma";
 
 function useRouter() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { setMainButtonHandler } = useTmaState();
   const navigateFunc = async (url: To | number, options?: NavigateOptions) => {
     //dispatch(setTitle({}));
     dispatch(setMainButtonVisible(false));
+    setMainButtonHandler({
+      onClick: () => {},
+    });
     dispatch(setLoading(true));
     dispatch(setTitle({}));
     const nav = (url: string | number) => {
