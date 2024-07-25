@@ -34,14 +34,14 @@
 
 .pin-button{
     width:  min(17vw, 17vh); 
-    height:   min(17vw, 17vh); 
+    aspect-ratio: 1/1;
     font-size:  min(10vw, 10vh) ;
     font-weight: var(--font-bold);
-    color: var(--background-color);
     border-radius: 50%;
     border-color: var(--third-colour);
     color: var(--text-color); 
     background-color: transparent;
+    text-align: center;
 }
 
 .pin-title {
