@@ -45,7 +45,7 @@
     padding: 0;
     box-sizing : content-box;
     margin: auto;
-    line-height: min(17vw, 17vh); 
+    /* line-height: min(17vw, 17vh);  */
 }
 
 .pin-title {
