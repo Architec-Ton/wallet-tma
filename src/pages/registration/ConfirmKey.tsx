@@ -203,7 +203,9 @@ const ConfirmKey: React.FC = () => {
 
   useEffect(() => {
     if (isCompleted) {
+      btn.init(t("next", "button"), () => {});
       navigate("/registration/completed");
+      navigate(0);
     }
   }, [isCompleted]);
 
