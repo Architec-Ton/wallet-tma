@@ -11,6 +11,7 @@ export interface AuthInitTon {
 export interface WalletBalanceData {
   address: Address;
   usdPrice: number;
+  seqno: number | null;
   changePrice: number;
   assets: CoinDto[];
   history: TransactionHistoryItemDto[];

@@ -1,16 +1,16 @@
-import { CSSProperties, ReactNode, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   selectIsLoading,
   selectIsNavbarVisible,
-} from '../../features/page/pageSelectors';
-import { useAppSelector } from '../../hooks/useAppDispatch';
-import BackButton from '../buttons/BackButton.tsx';
-import Loader from '../layout/Loader';
-import Title from '../typography/Title';
-import MainMenu from '../ui/menu/MainMenu.tsx';
-import Container from './Container';
-import './Page.styles.css';
+} from "../../features/page/pageSelectors";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import BackButton from "../buttons/BackButton.tsx";
+import Loader from "../layout/Loader";
+import Title from "../typography/Title";
+import MainMenu from "../ui/menu/MainMenu.tsx";
+import Container from "./Container";
+import "./Page.styles.css";
 
 type Props = {
   children: ReactNode;
@@ -23,11 +23,11 @@ type Props = {
 };
 
 const backButtonExclude: string[] = [
-  '/',
-  '/playground',
-  '/news',
-  '/account',
-  '/registration/welcome',
+  "/",
+  "/playground",
+  "/news",
+  "/account",
+  "/registration/welcome",
 ];
 
 function Page({
@@ -68,11 +68,10 @@ function Page({
             {pageControl}
           </div>
         )}
-
         {children}
       </Container>
 
-      {isNavbarVisible && <div style={{ height: 'var(--spacing-80)' }} />}
+      {isNavbarVisible && <div style={{ height: "var(--spacing-80)" }} />}
       {isNavbarVisible && <MainMenu />}
     </>
   );

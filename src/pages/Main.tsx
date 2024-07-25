@@ -14,6 +14,7 @@ import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { WalletInfoData } from "../types/wallet";
 import { NavLink } from "react-router-dom";
+import { useTon } from "../hooks/useTon";
 
 function Main() {
   const navigate = useRouter();
@@ -26,6 +27,7 @@ function Main() {
   const page = usePage();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);
+  const ton = useTon();
   // const trx = useTrxModalManagement();
   // const [mnemonic] = useLocalStorage<string>('mnemonic', '');
   //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
@@ -35,6 +37,12 @@ function Main() {
       const result = await walletInfoApi(null).unwrap();
       console.log("Wallet result:", result);
       setWalletInfoData(result);
+
+      if (result) {
+        if (result.currentWallet > -1) {
+          ton.setSeqno(result.wallets[result.currentWallet].seqno);
+        }
+      }
     } catch (err) {
       console.error("Failed to get info: ", err);
     } finally {
