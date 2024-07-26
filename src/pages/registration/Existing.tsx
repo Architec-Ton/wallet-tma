@@ -91,7 +91,7 @@ const Existing: React.FC = () => {
             />
           ))}
         </Column>
-        <div className="center p-1">
+        <div className="center p-1" style={{position: 'fixed', bottom: 'var(--spacing-8)'}}>
           <Button
             title={t("paste", "button")}
             icon={iconButtonPaste}
@@ -99,6 +99,7 @@ const Existing: React.FC = () => {
             onClick={handlePaste}
           />
         </div>
+          <div style={{height: 'var(--spacing-64)'}}/>
       </form>
     </Page>
   );
