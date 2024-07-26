@@ -36,7 +36,7 @@ export function TonProvider({ children }: Props) {
     wallets: [],
   });
   useEffect(() => {
-    console.log(bcData);
+    console.log("bcData", bcData);
     if (bcData.currentWallet < 0) {
       dispatch(
         setAddress({

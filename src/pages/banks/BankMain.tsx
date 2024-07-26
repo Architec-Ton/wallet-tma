@@ -97,7 +97,7 @@ function BankMain() {
     }
     if (bankInfoData) {
       bnk += BigInt(bankInfoData.bnkAmount);
-      arc += toNano(bankInfoData.arcAmount);
+      arc += toNano(bankInfoData.arcAmount.toString());
     }
 
     setBnk(bnk);

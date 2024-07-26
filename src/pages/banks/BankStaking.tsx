@@ -99,7 +99,7 @@ function BankStaking() {
         if (walletAddress) {
           const tx = await contracts.bank.stake(walletAddress, BigInt(amount));
           console.log("Transaction:", tx);
-          navigate("/bank");
+          navigate("/bank", {replace: true});
         }
       } catch (e) {
         console.log("Error", e);
@@ -165,7 +165,7 @@ function BankStaking() {
         console.error(e);
       }
 
-      navigate("/bank");
+      navigate("/bank", {replace: true});
     }
   };
 
@@ -185,7 +185,7 @@ function BankStaking() {
       } catch (e) {
         console.error(e);
       }
-      navigate("/bank");
+      navigate("/bank", {replace: true});
     }
   };
 
@@ -291,7 +291,6 @@ function BankStaking() {
   const transactionUnstakeHandler = async () => {
     try {
       await handleUnstake();
-      navigate("/bank");
     } catch (e) {
       console.error(e);
     }
@@ -305,7 +304,6 @@ function BankStaking() {
       const transactionSuccessHandler = async () => {
         try {
           await handleStake(Number(value));
-          navigate("/bank");
         } catch (e) {
           console.error(e);
         }
