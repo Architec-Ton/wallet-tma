@@ -22,6 +22,7 @@ import { TransactionDto } from "../../types/transaction";
 import { iconTon } from "../../assets/icons/jettons";
 import { RootState } from "../../store";
 import { showAlert } from "../../features/alert/alertSlice";
+import { useTmaMainButton } from "../useTma";
 
 export const useSender = (): Sender => {
   const address = useAppSelector(selectAddress);
@@ -32,6 +33,7 @@ export const useSender = (): Sender => {
   const client = useTonClient();
   const pincode = usePinCodeModalManagement();
   const trxModal = useTrxModalManagement();
+  const btn = useTmaMainButton();
   const dispatch = useAppDispatch();
 
   const seqno = useAppSelector((state: RootState) => state.ton.seqno);
@@ -54,6 +56,8 @@ export const useSender = (): Sender => {
       );
       return;
     }
+
+    btn.setVisible(false);
 
     if (privateHashKey === undefined) return;
     const pin = await pincode.open();

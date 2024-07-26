@@ -30,7 +30,7 @@ function Assets({ children, assets }: Props) {
                     : `data:image;base64, ${asset.meta?.imageData}`
                 }
                 title={asset.meta?.name}
-                description={`${asset.amount.toLocaleString(undefined, {
+                description={`${asset.amount?.toLocaleString(undefined, {
                   maximumFractionDigits: 5, //asset.meta?.decimals,
                   minimumFractionDigits: 2,
                 })} ${asset.meta?.symbol}`}
@@ -39,7 +39,7 @@ function Assets({ children, assets }: Props) {
                 {asset.usdPrice > 0 && (
                   <div className="list-block__right">
                     <div className="list-block__title">
-                      {asset.usdPrice.toLocaleString(undefined, {
+                      {asset.usdPrice?.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}

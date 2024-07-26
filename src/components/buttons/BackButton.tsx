@@ -18,7 +18,7 @@ function BackButtonTMA({ visible }: Props) {
 
   useEffect(() => {
     const handleBackClick = () => {
-      navigate(-1);
+      navigate("/");
     };
 
     if (visible) {

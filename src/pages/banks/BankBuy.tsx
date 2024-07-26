@@ -1,40 +1,43 @@
-import { useEffect, useState } from 'react';
-import Page from '../../components/containers/Page';
-import useLanguage from '../../hooks/useLanguage';
-import { usePage } from '../../hooks/usePage';
-import Delimiter from '../../components/typography/Delimiter';
+import { useEffect, useState } from "react";
+import Page from "../../components/containers/Page";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+import Delimiter from "../../components/typography/Delimiter";
 
-import { useAppSelector } from '../../hooks/useAppDispatch';
-import { selectAuthIsReady } from '../../features/auth/authSelector';
-import { useApiGetBankBuyMutation } from '../../features/bank/bankApi';
-import useContracts from '../../hooks/useContracts';
-import { toNano } from '@ton/core';
-import SendAssetInput from '../../components/ui/assets/SendAssets';
-import { CoinDto } from '../../types/assest';
-import RecvAssetInput from '../../components/ui/assets/RecvAssets';
-import { iconInfoButton, iconReverseButton } from '../../assets/icons/buttons';
-import { useTmaMainButton } from '../../hooks/useTma';
-import useRouter from '../../hooks/useRouter';
-import FormatMessage from '../../components/typography/FormatMessage';
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import { selectAuthIsReady } from "../../features/auth/authSelector";
+import { useApiGetBankBuyMutation } from "../../features/bank/bankApi";
+import useContracts from "../../hooks/useContracts";
+import { toNano, Address } from "@ton/core";
+import SendAssetInput from "../../components/ui/assets/SendAssets";
+import { CoinDto } from "../../types/assest";
+import RecvAssetInput from "../../components/ui/assets/RecvAssets";
+import { iconInfoButton, iconReverseButton } from "../../assets/icons/buttons";
+import { useTmaMainButton } from "../../hooks/useTma";
+import useRouter from "../../hooks/useRouter";
+import FormatMessage from "../../components/typography/FormatMessage";
 // import Column from '../../components/containers/Column';
-import Row from '../../components/containers/Row';
+import Row from "../../components/containers/Row";
 
-import './BankBuy.styles.css';
+import "./BankBuy.styles.css";
+import { selectReferral } from "../../features/tma/tmaSelector";
 
 function BankBuy() {
   const bnkPrice = 1.5;
   const page = usePage();
   const isReady = useAppSelector(selectAuthIsReady);
-  const t = useLanguage('bank-buy');
+  const t = useLanguage("bank-buy");
   const navigate = useRouter();
   const [sendAsset, setSendAsset] = useState<CoinDto | undefined>(undefined);
   const [recvAsset, setRecvAsset] = useState<CoinDto | undefined>(undefined);
   const [bankBuyApi] = useApiGetBankBuyMutation();
   const btn = useTmaMainButton();
 
-  const [sendAmount, setSendAmount] = useState<string>('');
-  const [recvAmount, setRecvAmount] = useState<string>('');
+  const [sendAmount, setSendAmount] = useState<string>("");
+  const [recvAmount, setRecvAmount] = useState<string>("");
   const [recvMaxAmount, setRecvMaxAmount] = useState<number>(0);
+
+  const refAddress = useAppSelector(selectReferral);
 
   useEffect(() => {
     const btnVisible =
@@ -54,7 +57,7 @@ function BankBuy() {
       setRecvAsset(result.bnk);
       setRecvMaxAmount(Math.trunc(result.ton.amount / bnkPrice));
     } catch (err) {
-      console.error('Failed to get info: ', err);
+      console.error("Failed to get info: ", err);
     } finally {
       page.setLoading(false, false);
       // btn.init(t('buy', 'button'), () => handleBuyBank, true);
@@ -77,14 +80,16 @@ function BankBuy() {
       recvMaxAmount >= Number(recvAmount) &&
       Number(sendAmount) <= sendAsset?.amount;
     if (isReady) {
+      console.log("update number ton: ", Number(bnkAmount * bnkPrice));
       btn.init(
-        `${t('buy', 'button')} (${Number(bnkAmount * bnkPrice).toLocaleString(
+        `${t("buy", "button")} (${Number(bnkAmount * bnkPrice).toLocaleString(
           undefined,
           {
             maximumFractionDigits: 1,
           }
         )} TON)`,
         () => {
+          console.log("number ton: ", Number(bnkAmount * bnkPrice));
           handleBuyBank(Number(bnkAmount * bnkPrice));
         },
         btnVisible
@@ -106,7 +111,7 @@ function BankBuy() {
     if (!isNaN(tonAmount)) {
       const bnkAmount = Math.trunc(tonAmount / bnkPrice);
       if (bnkAmount <= recvMaxAmount)
-        setRecvAmount(() => (bnkAmount ? bnkAmount.toString() : ''));
+        setRecvAmount(() => (bnkAmount ? bnkAmount.toString() : ""));
       //setSendAmount((bnkAmount * bnkPrice).toString());
       setSendAmount(value);
     }
@@ -118,9 +123,9 @@ function BankBuy() {
       const bnkTAmount = Math.trunc(bnkAmount);
       if (bnkAmount <= recvMaxAmount) {
         setSendAmount(() =>
-          bnkAmount ? (bnkTAmount * bnkPrice).toString() : ''
+          bnkAmount ? (bnkTAmount * bnkPrice).toString() : ""
         );
-        setRecvAmount(() => (bnkAmount ? bnkTAmount.toString() : ''));
+        setRecvAmount(() => (bnkAmount ? bnkTAmount.toString() : ""));
       }
     }
   };
@@ -128,16 +133,24 @@ function BankBuy() {
   const handleBuyBank = async (amount: number) => {
     console.log(sendAmount);
     try {
-      const tx = await contracts.bank.buy(toNano(amount));
-      console.log('transaction:', tx);
-      navigate('/bank');
+      if (refAddress) {
+        const tx = await contracts.bank.buyWithReferral(
+          Address.parse(refAddress),
+          toNano(amount)
+        );
+        console.log("transaction:", tx);
+      } else {
+        const tx = await contracts.bank.buy(toNano(amount));
+        console.log("transaction:", tx);
+      }
+      navigate("/bank");
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <Page title={t('title')}>
+    <Page title={t("title")}>
       <Delimiter />
       <SendAssetInput
         asset={sendAsset}
@@ -160,7 +173,7 @@ function BankBuy() {
       <Row className="mint-info">
         <div>
           <FormatMessage components={{ span: <span /> }}>
-            {t('info')}
+            {t("info")}
           </FormatMessage>
         </div>
         <img src={iconInfoButton} alt="" />

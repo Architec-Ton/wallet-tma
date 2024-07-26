@@ -114,6 +114,7 @@ function useContracts() {
           sender,
           { value: amount + toNano(BANK_GAS_AMOUNT) },
           {
+            $$type: "ReferralAddress",
             referral: referralAddress,
           } as ReferralAddress
         ),

@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { CoinDto } from '../../../types/assest';
-import AssetInput from '../../inputs/AssetInput';
-import useLanguage from '../../../hooks/useLanguage';
+import { useState } from "react";
+import { CoinDto } from "../../../types/assest";
+import AssetInput from "../../inputs/AssetInput";
+import useLanguage from "../../../hooks/useLanguage";
 
 interface AssetInputProps {
   asset?: CoinDto;
@@ -12,7 +12,13 @@ interface AssetInputProps {
   isSelectable?: boolean;
 }
 
-const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetInputProps) => {
+const SendAssetInput = ({
+  asset,
+  value,
+  isSelectable,
+  onChange,
+  onBlur,
+}: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
 
   const handlerOnChange = (value: string) => {
@@ -27,17 +33,17 @@ const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetI
     }
   };
 
-  const t = useLanguage('input');
+  const t = useLanguage("input");
 
   return (
     <AssetInput
-      title={t('send')}
+      title={t("send")}
       subTitle={
         asset
-          ? `${t('balance')}: ${asset?.amount?.toLocaleString(undefined, {
+          ? `${t("balance")}: ${asset?.amount?.toLocaleString(undefined, {
               maximumFractionDigits: 3,
             })}`
-          : ''
+          : ""
       }
       asset={asset}
       //   className={className}
@@ -45,24 +51,27 @@ const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetI
       value={value}
       isSelectable={isSelectable}
       onChange={handlerOnChange}
-      onBlur={onBlur}>
+      onBlur={onBlur}
+    >
       <button
         className="rounded-button control-button"
         onClick={() => {
-          if (asset && onChange) onChange('0');
+          if (asset && onChange) onChange("0");
         }}
-        disabled={!asset}>
-        {t('clear')}
+        disabled={!asset}
+      >
+        {t("clear")}
       </button>
       <button
         className="rounded-button control-button"
         onClick={() => {
           if (asset) {
-            console.log('clicl', asset?.amount / 2);
+            console.log("clicl", asset?.amount / 2);
             if (asset && onChange) onChange((asset?.amount / 2).toString());
           }
         }}
-        disabled={error}>
+        disabled={error}
+      >
         50%
       </button>
       <button
@@ -70,8 +79,9 @@ const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetI
         onClick={() => {
           if (asset && onChange) onChange(asset?.amount.toString());
         }}
-        disabled={error}>
-        {t('max')}
+        disabled={error}
+      >
+        {t("max")}
       </button>
     </AssetInput>
   );

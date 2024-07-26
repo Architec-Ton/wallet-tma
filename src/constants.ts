@@ -9,7 +9,13 @@ export const MANIFEST_URL =
   "https://architecton.site/tonconnect-manifest.json";
 
 export const TA_URL =
-  import.meta.env.VITE_TA_URL || "https://ton.architecton.site/api/v2/";
+  import.meta.env.VITE_TA_URL || "https://testnet.toncenter.com/api/v2/"; // "https://ton.architecton.site/api/v2/";
+
+export const APP_URL =
+  import.meta.env.VITE_APP_URL || "https://t.me/architec_ton_bot/wallet";
+
+import.meta.env.VITE_MANIFEST_URL ||
+  "https://architecton.site/tonconnect-manifest.json";
 
 export const TONAPI_KEY =
   import.meta.env.VITE_TONAPI_KEY ||

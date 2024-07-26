@@ -1,32 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { isTMA, useInitDataRaw } from '@tma.js/sdk-react';
-import { ReactNode, useEffect, useState } from 'react';
-import { useApiAuthMutation } from '../../features/auth/authApi';
+import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
+import { ReactNode, useEffect, useState } from "react";
+import { useApiAuthMutation } from "../../features/auth/authApi";
 import {
   selectAuth,
   selectAuthIsTmaReady,
   selectAuthIsTonReady,
-} from '../../features/auth/authSelector';
+} from "../../features/auth/authSelector";
 import {
   AccountState,
   setAccessToken,
   setAccount,
   setIsTmaReady,
-} from '../../features/auth/authSlice';
+} from "../../features/auth/authSlice";
 import {
   selectMainButtonIsVisible,
   selectMainButtonTitle,
-} from '../../features/tma/mainButtonSelector';
+} from "../../features/tma/mainButtonSelector";
 import {
   selectIsTma,
   selectIsTmaLoading,
-} from '../../features/tma/tmaSelector';
-import { setTma, setTmaLoading } from '../../features/tma/tmaSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
-import { TmaMainButton, TmaStateContext } from '../../hooks/useTma';
-import { useTon } from '../../hooks/useTon';
-import { AuthInitData, AuthInitTon } from '../../types/auth';
-import MainButton from '../buttons/MainButton';
+} from "../../features/tma/tmaSelector";
+import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { TmaMainButton, TmaStateContext } from "../../hooks/useTma";
+import { useTon } from "../../hooks/useTon";
+import { AuthInitData, AuthInitTon } from "../../types/auth";
+import MainButton from "../buttons/MainButton";
+import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
 
 type Props = {
   children: ReactNode;
@@ -41,6 +42,7 @@ export function TmaProvider({ children }: Props) {
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
   const isTma = useAppSelector(selectIsTma);
   const ton = useTon();
+  const pincode = usePinCodeModalManagement();
   const auth = useAppSelector(selectAuth);
   const [authApi] = useApiAuthMutation();
   const [mainButtonHandler, setMainButtonHandler] = useState<TmaMainButton>({
@@ -59,10 +61,10 @@ export function TmaProvider({ children }: Props) {
     isTMA()
       .then((tma) => dispatch(setTma(tma)))
       .finally(() => {
-        console.log('setTmaLoading', isTmaLoading);
+        console.log("setTmaLoading", isTmaLoading);
         dispatch(setTmaLoading(false));
-        console.log('setTmaLoading', isTmaLoading);
-        console.log('setTmaLoisTmaading isTma', isTma);
+        console.log("setTmaLoading", isTmaLoading);
+        console.log("setTmaLoisTmaading isTma", isTma);
         // setTimeout(() => {
         //   dispatch(setTmaLoading(false));
         // }, 2000);
@@ -72,14 +74,14 @@ export function TmaProvider({ children }: Props) {
   const handleAuth = async (auth?: AccountState, initTon?: AuthInitTon) => {
     try {
       const result = await authApi({
-        authType: auth ? 'telegram' : 'web',
+        authType: auth ? "telegram" : "web",
         initDataRaw: auth?.account,
         initTon: initTon,
       }).unwrap();
-      console.log('Auth result:', result);
+      console.log("Auth result:", result);
       dispatch(setAccessToken(result.access_token));
     } catch (err) {
-      console.error('Failed to login: ', err);
+      console.error("Failed to login: ", err);
     }
   };
 
@@ -137,7 +139,7 @@ export function TmaProvider({ children }: Props) {
 
   useEffect(() => {
     if (isTmaReady && isTonReady && ton.wallet?.address) {
-      console.log('final auth request:', auth);
+      console.log("final auth request:", auth);
       const initTon = ton.wallet
         ? ({
             network: ton.wallet.network,
@@ -155,7 +157,7 @@ export function TmaProvider({ children }: Props) {
       {
         <MainButton
           title={mainButtonTitle}
-          visible={mainButtonIsVisible && !isTmaLoading}
+          visible={mainButtonIsVisible && !isTmaLoading && !pincode.isOpened}
           onClick={mainButtonHandler?.onClick}
         />
       }

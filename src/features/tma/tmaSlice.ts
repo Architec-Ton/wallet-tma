@@ -1,8 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TmaState {
   isTma: boolean;
   isTmaLoading: boolean;
+  referral?: string;
 }
 
 const initialState: TmaState = {
@@ -11,7 +12,7 @@ const initialState: TmaState = {
 };
 
 const tmaSlice = createSlice({
-  name: 'tma',
+  name: "tma",
   initialState,
   reducers: {
     setTmaLoading(state, action: PayloadAction<boolean>) {
@@ -20,9 +21,12 @@ const tmaSlice = createSlice({
     setTma(state, action: PayloadAction<boolean>) {
       state.isTma = action.payload;
     },
+    setReferral(state, action: PayloadAction<string | undefined>) {
+      state.referral = action.payload;
+    },
   },
 });
 
-export const { setTma, setTmaLoading } = tmaSlice.actions;
+export const { setTma, setTmaLoading, setReferral } = tmaSlice.actions;
 
 export default tmaSlice.reducer;

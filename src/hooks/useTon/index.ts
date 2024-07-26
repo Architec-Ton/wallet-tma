@@ -9,10 +9,12 @@ import { useEffect, useState } from "react";
 import { useWalletInitData } from "./useWalletInitData";
 import { WalletsState } from "../../types/auth";
 import { useSender } from "./sender";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 export function useTon() {
   const dispatch = useAppDispatch();
   const wallet = useWalletInitData();
+  const [tonConnectUI] = useTonConnectUI();
   const [bcData, setBcData] = useLocalStorage<WalletsState>("wData", {
     currentWallet: -1,
     wallets: [],
@@ -68,6 +70,7 @@ export function useTon() {
         // network: 'ton',
         // mode: 'disconnect',
       });
+      if (tonConnectUI) tonConnectUI.disconnect();
       if (localStorage)
         localStorage.removeItem("ton-connect-storage_bridge-connection");
       setTonMode("disconnect");
