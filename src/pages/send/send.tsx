@@ -67,7 +67,7 @@ const SendPage = () => {
       !isNaN(amount) &&
       amount > 0 &&
       asset &&
-      amount < asset?.amount
+      amount <= asset?.amount
     ) {
       btn.init(
         t("continue", "button"),
