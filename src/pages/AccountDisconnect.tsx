@@ -13,6 +13,7 @@ import TileButton from '../components/buttons/TileButton.tsx';
 import Address from '../components/ui/balance/Address.tsx';
 import { useApiWalletInfoMutation } from '../features/wallet/walletApi.ts';
 import { WalletInfoData } from '../types/wallet.ts';
+import {useTonConnectUI} from "@tonconnect/ui-react";
 
 function AccountDisconnect() {
   // const popup = initPopup()
@@ -23,6 +24,7 @@ function AccountDisconnect() {
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
   const ton = useTon();
+  const [tonConnectUI] = useTonConnectUI();
   const [walletInfoData, setWalletInfoData] = useState<WalletInfoData | null>(
     null
   );
@@ -56,6 +58,7 @@ function AccountDisconnect() {
   }, [isTonLoading, tonMode]);
 
   const onClick = () => {
+    tonConnectUI.disconnect();
     ton.setDisconnect();
   };
 
