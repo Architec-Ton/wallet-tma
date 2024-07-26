@@ -14,6 +14,8 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import useRouter from "../../hooks/useRouter";
 import { useTonAddress, useTonConnectModal } from "@tonconnect/ui-react";
 import { useTon } from "../../hooks/useTon";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { WalletsState } from "../../types/auth";
 
 function AddWallet() {
   const t = useLanguage("AddWallet");
@@ -24,18 +26,32 @@ function AddWallet() {
 
   const { state, open } = useTonConnectModal();
 
+  const [_, setStoredValue] = useLocalStorage<WalletsState>("wData", {
+    currentWallet: -1,
+    wallets: [],
+  });
+
   const handleTonConnect = async () => {
     open();
   };
 
   useEffect(() => {
-    console.log(state, address);
+    console.log("addWalletvardan", state, address);
     if (
       state.status == "closed" &&
       state.closeReason == "wallet-selected" &&
       address
     ) {
       ton.setAddress(address, "tonconnect");
+
+      setStoredValue({
+        currentWallet: 0,
+        wallets: [{
+          network: "ton",
+          mode: "tonconnect",
+          address: address
+        }],
+      });
     }
   }, [state]);
 
