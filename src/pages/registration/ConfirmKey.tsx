@@ -171,7 +171,7 @@ const ConfirmKey: React.FC = () => {
       uniqueNumbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
     }
     return Array.from(uniqueNumbers) as number[];
-  }
+  };
 
   useEffect(() => {
     const randomIdx = generateUniqueRandomNumbers(3, 0, 23);
@@ -181,7 +181,7 @@ const ConfirmKey: React.FC = () => {
     console.log("rand:", randomIdx);
     setMnemonicsVerifyIdx(randomIdx);
     if (!state || state.mnemonic === null) {
-      navigate("/");
+      navigate("/", { replace: true });
       return;
     }
 
@@ -204,8 +204,7 @@ const ConfirmKey: React.FC = () => {
   useEffect(() => {
     if (isCompleted) {
       btn.init(t("next", "button"), () => {});
-      navigate("/registration/completed");
-      navigate(0);
+      navigate("/registration/completed", { replace: true });
     }
   }, [isCompleted]);
 

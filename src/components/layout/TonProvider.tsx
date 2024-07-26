@@ -13,8 +13,6 @@ import ModalPinCode from "../ui/modals/modalPinCode";
 import ModalTrx from "../ui/modals/trxModal";
 import useTrxModalManagement from "../../hooks/useTon/useTrxModalManagment";
 import { RootState } from "../../store";
-import { useTmaMainButton } from "../../hooks/useTma";
-// import { selectTonMode } from "../../features/ton/tonSelector";
 
 type Props = {
   children: ReactNode;
@@ -25,7 +23,6 @@ export function TonProvider({ children }: Props) {
   const dispatch = useAppDispatch();
   const ton = useTon();
   const pincode = usePinCodeModalManagement();
-  const btn = useTmaMainButton();
   const trx = useTrxModalManagement();
   const trxHash = useAppSelector((state: RootState) => state.trx.trxHash);
   const trxInitData = useAppSelector(
@@ -38,7 +35,7 @@ export function TonProvider({ children }: Props) {
     wallets: [],
   });
   useEffect(() => {
-    console.log("bcData", bcData);
+    console.log(bcData);
     if (bcData.currentWallet < 0) {
       dispatch(
         setAddress({

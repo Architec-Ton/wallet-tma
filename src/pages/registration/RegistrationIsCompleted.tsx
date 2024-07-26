@@ -29,7 +29,7 @@ const RegistrationIsCompleted = () => {
     btn.init(
       t("next", "button"),
       () => {
-        navigate("/");
+        navigate("/", { replace: true });
       },
       true
     );
