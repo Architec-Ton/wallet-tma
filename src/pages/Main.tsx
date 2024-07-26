@@ -35,7 +35,7 @@ function Main() {
   const handleInfo = async () => {
     try {
       const result = await walletInfoApi(null).unwrap();
-      console.log("Wallet result:", result);
+      // console.log("Wallet result:", result);
       setWalletInfoData(result);
 
       if (result) {
@@ -70,7 +70,7 @@ function Main() {
   }, []);
 
   useEffect(() => {
-    console.log("walletInfoData", walletInfoData);
+    // console.log("walletInfoData", walletInfoData);
   }, [walletInfoData]);
 
   useEffect(() => {
