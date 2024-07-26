@@ -170,8 +170,8 @@ const ConfirmKey: React.FC = () => {
     while (uniqueNumbers.size < count) {
       uniqueNumbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
     }
-    return Array.from(uniqueNumbers);
-  };
+    return Array.from(uniqueNumbers) as number[];
+  }
 
   useEffect(() => {
     const randomIdx = generateUniqueRandomNumbers(3, 0, 23);
