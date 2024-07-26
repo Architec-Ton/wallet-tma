@@ -3,7 +3,6 @@ import Column from "../components/containers/Column";
 import Page from "../components/containers/Page";
 import Assets from "../components/ui/balance/Assets";
 import Balance from "../components/ui/balance/Balance";
-import History from "../components/ui/balance/History";
 import WalletMenu from "../components/ui/menu/WalletMenu";
 import { selectAuthIsReady } from "../features/auth/authSelector";
 import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
@@ -15,6 +14,7 @@ import useRouter from "../hooks/useRouter";
 import { WalletInfoData } from "../types/wallet";
 import { NavLink } from "react-router-dom";
 import { useTon } from "../hooks/useTon";
+import HistoryWidget from "../components/ui/balance/HistoryWidget";
 
 function Main() {
   const navigate = useRouter();
@@ -106,13 +106,13 @@ function Main() {
         {walletInfoData &&
           walletInfoData.wallets[walletInfoData.currentWallet].history.length >
             0 && (
-            <History
+            <HistoryWidget
               items={
                 walletInfoData.wallets[walletInfoData.currentWallet].history
               }
             >
               <NavLink to="/histories">See more</NavLink>
-            </History>
+            </HistoryWidget>
           )}
       </Column>
     </Page>

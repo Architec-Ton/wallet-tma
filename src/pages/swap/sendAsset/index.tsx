@@ -49,7 +49,12 @@ const SendAsset = ({ asset, coin, disabled, onChange, onClick, forceChange, valu
   return (
     <Section
       title={t("send")}
-      readMore={`${t("balance")}: ${coin && (Number(coin?.amount) - Number(assetValue)).toLocaleString(undefined, { maximumFractionDigits: coin?.meta?.decimals }) || 0}`}
+      readMore={
+        `${t("balance")}: 
+        ${coin && (
+          Number(coin?.amount) >= Number(assetValue) ? Number(coin?.amount) - Number(assetValue) : 0
+        ).toLocaleString(undefined, { maximumFractionDigits: coin?.meta?.decimals }) || 0}`
+      }
     >
       <Row className="justify-between asset-row">
         <Row className="asset-button asset-send-button" onClick={onClick}>

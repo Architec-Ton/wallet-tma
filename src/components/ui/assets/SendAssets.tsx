@@ -34,7 +34,7 @@ const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetI
       title={t('send')}
       subTitle={
         asset
-          ? `${t('balance')}: ${asset?.amount.toLocaleString(undefined, {
+          ? `${t('balance')}: ${asset?.amount?.toLocaleString(undefined, {
               maximumFractionDigits: 3,
             })}`
           : ''
