@@ -11,6 +11,8 @@ import { Address as Addr } from "@ton/core";
 import useRouter from "../../../hooks/useRouter";
 import { iconInputScan } from "../../../assets/icons/inputs";
 import { parseTonTransferUrl } from "../../../utils/formatter";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { showAlert } from "../../../features/alert/alertSlice";
 
 type Props = {
   walletInfoData: WalletInfoData | null;
@@ -20,18 +22,20 @@ type Props = {
 function Balance({ children, walletInfoData }: Props) {
   const [qrText, setQrText] = useState<string | undefined>();
   const navigate = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     try {
       if (qrText) {
         const address = parseTonTransferUrl(qrText);
         if (address) {
-          Addr.parse(qrText);
+          Addr.parse(address);
           navigate("/send", { state: qrText });
         }
       }
     } catch (e) {
       console.log("Wrong link");
+      dispatch(showAlert({ message: `Can not parse qr code`, duration: 8000 }));
     }
   }, [qrText]);
 
