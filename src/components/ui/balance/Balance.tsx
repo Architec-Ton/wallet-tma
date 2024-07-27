@@ -10,6 +10,7 @@ import QrButton from "../../buttons/qrButton";
 import { Address as Addr } from "@ton/core";
 import useRouter from "../../../hooks/useRouter";
 import { iconInputScan } from "../../../assets/icons/inputs";
+import { parseTonTransferUrl } from "../../../utils/formatter";
 
 type Props = {
   walletInfoData: WalletInfoData | null;
@@ -23,8 +24,11 @@ function Balance({ children, walletInfoData }: Props) {
   useEffect(() => {
     try {
       if (qrText) {
-        Addr.parse(qrText);
-        navigate("/send", { state: qrText });
+        const address = parseTonTransferUrl(qrText);
+        if (address) {
+          Addr.parse(qrText);
+          navigate("/send", { state: qrText });
+        }
       }
     } catch (e) {
       console.log("Wrong link");
