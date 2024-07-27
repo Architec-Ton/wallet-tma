@@ -9,7 +9,7 @@ import Address from "./Address";
 import QrButton from "../../buttons/qrButton";
 import { Address as Addr } from "@ton/core";
 import useRouter from "../../../hooks/useRouter";
-import { iconButtonScan } from "../../../assets/icons/buttons";
+import { iconInputScan } from "../../../assets/icons/inputs";
 
 type Props = {
   walletInfoData: WalletInfoData | null;
@@ -46,9 +46,9 @@ function Balance({ children, walletInfoData }: Props) {
           </div>
           <div>
             <QrButton
-              icon={iconButtonScan}
+              icon={iconInputScan}
               onChange={(s: string | undefined) => setQrText(s)}
-            />{" "}
+            />
           </div>
           {/* <h1>
             <span>Wallet</span> Architec.TON
