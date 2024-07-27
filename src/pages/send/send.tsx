@@ -21,6 +21,7 @@ import ListBaseItem from "../../components/ui/listBlock/ListBaseItem";
 import { useTon } from "../../hooks/useTon";
 import useContracts from "../../hooks/useContracts";
 import useRouter from "../../hooks/useRouter";
+import { useLocation } from "react-router-dom";
 
 interface ItemInfo {
   title: string;
@@ -45,6 +46,7 @@ const SendPage = () => {
   const ton = useTon();
   const contracts = useContracts();
   const [confirmInfo, setConfirmInfo] = useState<ItemInfo[]>([]);
+  const { state } = useLocation(); // state is any or unknown
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
@@ -67,7 +69,7 @@ const SendPage = () => {
       !isNaN(amount) &&
       amount > 0 &&
       asset &&
-      amount < asset?.amount
+      amount <= asset?.amount
     ) {
       btn.init(
         t("continue", "button"),
@@ -152,6 +154,15 @@ const SendPage = () => {
   };
 
   const handlerClick = (asset: CoinDto) => {
+    if (address) {
+      try {
+        Address.parse(address);
+        setIsButtonEnabled(true);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     setStep(1);
     setAsset(asset);
   };
@@ -170,6 +181,10 @@ const SendPage = () => {
 
   useEffect(() => {
     page.setTitle(t("choose-asset"));
+    if (state) {
+      setAddress(state);
+    }
+
     if (isReady) handleInfo();
   }, [isReady]);
 
