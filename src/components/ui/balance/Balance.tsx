@@ -30,7 +30,7 @@ function Balance({ children, walletInfoData }: Props) {
         const address = parseTonTransferUrl(qrText);
         if (address) {
           Addr.parse(address);
-          navigate("/send", { state: qrText });
+          navigate("/send", { state: address });
         }
       }
     } catch (e) {
