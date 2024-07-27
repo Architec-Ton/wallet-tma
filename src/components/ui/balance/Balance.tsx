@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";
 import Block from "../../typography/Block";
@@ -6,6 +6,10 @@ import Block from "../../typography/Block";
 import "./Balance.styles.css";
 import { WalletInfoData } from "../../../types/wallet";
 import Address from "./Address";
+import QrButton from "../../buttons/qrButton";
+import { Address as Addr } from "@ton/core";
+import useRouter from "../../../hooks/useRouter";
+import { iconButtonScan } from "../../../assets/icons/buttons";
 
 type Props = {
   walletInfoData: WalletInfoData | null;
@@ -13,6 +17,20 @@ type Props = {
 };
 
 function Balance({ children, walletInfoData }: Props) {
+  const [qrText, setQrText] = useState<string | undefined>();
+  const navigate = useRouter();
+
+  useEffect(() => {
+    try {
+      if (qrText) {
+        Addr.parse(qrText);
+        navigate("/send", { state: qrText });
+      }
+    } catch (e) {
+      console.log("Wrong link");
+    }
+  }, [qrText]);
+
   return (
     <Block className="balance-block space-between">
       <Column className="w-100">
@@ -26,7 +44,12 @@ function Balance({ children, walletInfoData }: Props) {
                 minimumFractionDigits: 2,
               })}`}
           </div>
-          <div> Control </div>
+          <div>
+            <QrButton
+              icon={iconButtonScan}
+              onChange={(s: string | undefined) => setQrText(s)}
+            />{" "}
+          </div>
           {/* <h1>
             <span>Wallet</span> Architec.TON
           </h1>
