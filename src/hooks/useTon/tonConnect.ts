@@ -1,7 +1,7 @@
-import { CHAIN } from '@tonconnect/protocol';
-import { Sender, SenderArguments } from '@ton/core';
-import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
-import { useAppTonConnectUi } from '../useAppTonConnectUi';
+import { CHAIN } from "@tonconnect/protocol";
+import { Sender, SenderArguments } from "@ton/core";
+import { useTonWallet } from "@tonconnect/ui-react";
+import { useAppTonConnectUi } from "../useAppTonConnectUi";
 
 export function useTonConnect(): {
   sender: Sender;
@@ -20,7 +20,7 @@ export function useTonConnect(): {
             {
               address: args.to.toString(),
               amount: args.value.toString(),
-              payload: args.body?.toBoc().toString('base64'),
+              payload: args.body?.toBoc().toString("base64"),
             },
           ],
           validUntil: Date.now() + 10 * 60 * 1000, // 10 minutes for user to approve
