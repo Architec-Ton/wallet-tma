@@ -23,11 +23,11 @@ export const TONAPI_KEY =
 
 export const BANK_JETTON_MASTER_ADDRESS =
   import.meta.env.VITE_BANK_JETTON_MASTER_ADDRESS ||
-  "kQCkaGQTCUMUzu5b9IDYY4EjGI4hLIrnnKa5oAhgymxp9pES";
+  "kQBuFWV6jW_9F69A3qjn5rpqfG4eIMBJs9GFSrZU7d33EmIG";
 
 export const BANK_CROWDSALE_ADDRESS =
   import.meta.env.VITE_BANK_CROWDSALE_ADDRESS ||
-  "kQBmuTZSqNFw0qe2gcJV1bl_abjxlR9mTIPHeB-4HEXn2dVY";
+  "kQCGPhwK3XWC32jQ3neY2_TFQP6UxHybUz_5cN3_ufScxBHr";
 
 export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT || "0.07";
 
