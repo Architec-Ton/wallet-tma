@@ -6,7 +6,7 @@ export const useAppTonConnectUi = (): [TonConnectUI, (options: TonConnectUiOptio
 
   useEffect(() => {
     tonConnectUiOptions({actionsConfiguration: {twaReturnUrl: window.location.href as `${string}://${string}`}})
-  }, [])
+  }, [window.location.href])
 
   return [tonConnectUI, tonConnectUiOptions]
 }
