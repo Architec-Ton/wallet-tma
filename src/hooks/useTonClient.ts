@@ -22,7 +22,7 @@ export function useTonClient() {
   return {
     testnet: testnet,
     mainnet: mainnet,
-    client: testnet,
+    client: TON_CLIENT_NETWORK == "mainnet" ? mainnet : testnet,
     network: TON_CLIENT_NETWORK,
   };
 }
