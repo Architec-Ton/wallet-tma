@@ -1,0 +1,23 @@
+.referals-block {
+  align-items: flex-start;
+}
+
+.referals-info {
+  gap: 0;
+}
+
+.referals-info h1 {
+  display: flex;
+  align-items: center;
+  line-height: var(--font-size-medium);
+  font-size: var(--font-size-medium);
+}
+
+.referals-info h1 img {
+  width: var(--font-size-medium);
+  height: var(--font-size-medium);
+}
+
+.referals-info .mini-block {
+  margin-bottom: var(--spacing-32);
+}

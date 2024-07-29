@@ -1,0 +1,27 @@
+.category-header {
+  justify-content: space-between;
+  padding: 0 var(--spacing-12);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-small);
+  padding-bottom: 0;
+}
+
+.category-header__title {
+  font-weight: var(--font-medium);
+  font-size: var(--font-size-large);
+}
+
+.category-header__all {
+  color: var(--link-color);
+  margin-right: var(--spacing-12);
+  text-decoration: none;
+}
+
+.swiper.list-swipe {
+  padding-bottom: var(--spacing-16);
+}
+
+.swiper-slide.list-slide {
+  width: 85%;
+  padding-left: var(--spacing-12);
+}

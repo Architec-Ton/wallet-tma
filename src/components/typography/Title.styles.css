@@ -1,0 +1,15 @@
+.title {
+    margin: var(--spacing-12) 0  ;
+}
+
+.icon-start .tile-icon {
+    align-self: flex-start;
+}
+
+.icon-start .tile-body h2 {
+    margin-top: var(--spacing-4);
+}
+
+.icon-start .tile-iconaction {
+    opacity: 0.4;
+}

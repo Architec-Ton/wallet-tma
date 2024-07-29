@@ -1,23 +1,23 @@
-import Page from '../../components/containers/Page';
-import Tile from '../../components/typography/Tile';
+import { useEffect } from "react";
 import {
   iconPageStartCoin,
   iconPageStartGameboy,
   iconPageStartShieldTick,
-} from '../../assets/icons/pages/start';
-import Column from '../../components/containers/Column';
-import useLanguage from '../../hooks/useLanguage';
-import { useNavigate } from 'react-router-dom';
-import { useTmaMainButton } from '../../hooks/useTma';
-import { useEffect } from 'react';
-import { usePage } from '../../hooks/usePage';
+} from "../../assets/icons/pages/start";
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
+import Tile from "../../components/typography/Tile";
+import useLanguage from "../../hooks/useLanguage";
+import useRouter from "../../hooks/useRouter";
+import { useTmaMainButton } from "../../hooks/useTma";
+import { usePage } from "../../hooks/usePage";
 
 function Welcome() {
-  const navigate = useNavigate();
-  const btn = useTmaMainButton();
+  const navigate = useRouter();
   const page = usePage();
-  const t = useLanguage('Welcome');
+  const btn = useTmaMainButton();
 
+  const t = useLanguage("Welcome");
   const welcomeIcons = [
     iconPageStartCoin,
     iconPageStartGameboy,
@@ -25,12 +25,18 @@ function Welcome() {
   ];
 
   useEffect(() => {
-    btn.init(t('next'), () => navigate('/registration/add-wallet'), true);
-    page.setTitle({ title: t('welcome-to'), titleAccent: 'Architec.TON' });
+    page.setLoading(false);
+    btn.init(
+      t("next", "button"),
+      () => {
+        navigate("/registration/add-wallet");
+      },
+      true
+    );
   }, []);
 
   return (
-    <Page>
+    <Page title={t("welcome-to")} titleAccent={"Architec.TON"}>
       <Column>
         {welcomeIcons.map((icon, index: number) => (
           <Tile
@@ -38,6 +44,7 @@ function Welcome() {
             icon={icon}
             title={t(`${index}-title`)}
             description={t(`${index}-description`)}
+            className="icon-start"
           />
         ))}
       </Column>

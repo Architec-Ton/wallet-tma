@@ -1,41 +1,79 @@
-import { CSSProperties, ReactNode, useEffect } from 'react';
-import './Page.styles.css';
-import Container from './Container';
-import { usePageState } from '../../hooks/usePage';
-import Title from '../typography/Title';
-import Loader from '../layout/Loader';
-import { useTmaState } from '../../hooks/useTma';
+import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  selectIsLoading,
+  selectIsNavbarVisible,
+} from "../../features/page/pageSelectors";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import BackButton from "../buttons/BackButton.tsx";
+import Loader from "../layout/Loader";
+import Title from "../typography/Title";
+import MainMenu from "../ui/menu/MainMenu.tsx";
+import Container from "./Container";
+import "./Page.styles.css";
 
 type Props = {
   children: ReactNode;
   style?: CSSProperties;
   className?: string;
+  title?: string;
+  titleAccent?: string;
+  hintMessage?: string;
+  pageControl?: ReactNode;
 };
 
-function Page({ children, style, className }: Props) {
-  const { title, setTitle, setIsLoading, isLoading } = usePageState();
-  const { isTmaLoading } = useTmaState();
-  useEffect(() => {
-    console.log('isTmaLoading', isTmaLoading, isLoading);
-    setTitle({});
-  }, []);
-  useEffect(() => setIsLoading(isTmaLoading), [setIsLoading, isTmaLoading]);
+const backButtonExclude: string[] = [
+  "/",
+  "/playground",
+  "/news",
+  "/account",
+  "/registration/welcome",
+];
 
+function Page({
+  children,
+  style,
+  className,
+  title,
+  titleAccent,
+  hintMessage,
+  pageControl,
+}: Props) {
+  const location = useLocation();
+  const [backButtonIsVisible, setBackButtonIsVisible] =
+    useState<boolean>(false);
+  const isLoading = useAppSelector(selectIsLoading);
+  const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
+
+  useEffect(() => {
+    setBackButtonIsVisible(
+      !backButtonExclude.includes(location.pathname) && !isLoading
+    );
+  }, [location, isLoading]);
   if (isLoading) return <Loader />;
 
-  console.log('page ok', isLoading);
-
   return (
-    <Container style={style} className={className}>
-      {title.title && (
-        <Title
-          title={title.title}
-          titleAccent={title.titleAccent}
-          hintMessage={title.hintMessage}
-        />
-      )}
-      {children}
-    </Container>
+    <>
+      <BackButton visible={backButtonIsVisible} />
+      <Container style={style} className={className} key={location.key}>
+        {(title || pageControl) && (
+          <div className="page-header">
+            {title && (
+              <Title
+                title={title}
+                titleAccent={titleAccent}
+                hintMessage={hintMessage}
+              />
+            )}
+            {pageControl}
+          </div>
+        )}
+        {children}
+      </Container>
+
+      {isNavbarVisible && <div style={{ height: "var(--spacing-80)" }} />}
+      {isNavbarVisible && <MainMenu />}
+    </>
   );
 }
 

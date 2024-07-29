@@ -6,12 +6,13 @@ import classNames from 'classnames';
 
 type Props = {
   icon?: string;
-  title: string;
+  title?: string;
   description?: string;
   iconAction?: string;
   style?: CSSProperties;
   className?: string;
   onClick?: MouseEventHandler;
+  children?: React.ReactNode;
 };
 
 function TileButton({
@@ -22,6 +23,7 @@ function TileButton({
   style,
   className,
   onClick,
+  children,
 }: Props) {
   return (
     <button
@@ -32,8 +34,9 @@ function TileButton({
         icon={icon}
         title={title}
         description={description}
-        iconAction={iconAction}
-      />
+        iconAction={iconAction}>
+        {children}
+      </Tile>
     </button>
   );
 }

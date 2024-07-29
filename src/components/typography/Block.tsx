@@ -1,19 +1,21 @@
 import classNames from 'classnames';
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import './Block.styles.css';
 
-type Props = {
+interface OwnProps<T> extends HTMLAttributes<T> {
   children: ReactNode;
   direction?: string;
   style?: CSSProperties;
   className?: string;
 };
 
-function Block({ children, style, className, direction = 'column' }: Props) {
+function Block({ children, style, className, direction = 'column', ...divProps }: OwnProps<HTMLDivElement>) {
   return (
     <div
       style={style}
-      className={classNames('block', `block-${direction}`, className)}>
+      className={classNames('block', `block-${direction}`, className)}
+      {...divProps}
+    >
       {children}
     </div>
   );

@@ -1,0 +1,9 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-header .title {
+  color: var(--text-color);
+}

@@ -1,0 +1,7 @@
+.change-up{
+    color: var(--success-color);
+}
+
+.change-down{
+    color: var(--error-color);
+}

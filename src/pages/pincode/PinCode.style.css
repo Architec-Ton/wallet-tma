@@ -1,0 +1,55 @@
+.pin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--background-color);
+    /* height: 95vh; */
+    height: 100%;
+}
+
+
+.pin-title {
+    /* margin-top: 10vh; */
+}
+
+.pin-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--spacing-32) 0;
+}
+
+
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-32);
+    place-items: center;
+    justify-content: space-between;
+    align-content: space-between;
+    margin: var(--spacing-32) 0;
+    /* position: sticky; */
+}
+
+.pin-button{
+    width:  min(17vw, 17vh); 
+    aspect-ratio: 1/1;
+    font-size:  min(10vw, 10vh) ;
+    font-weight: var(--font-bold);
+    border-radius: 50%;
+    border-color: var(--third-colour);
+    color: var(--text-color); 
+    background-color: transparent;
+    text-align: center;
+    padding: 0;
+    box-sizing : content-box;
+    margin: auto;
+    /* line-height: min(17vw, 17vh);  */
+}
+
+.pin-title {
+    margin:  var(--spacing-12) auto;;
+}
+
+

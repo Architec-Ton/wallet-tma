@@ -1,0 +1,12 @@
+
+
+input.transfer-input{
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: var(--spasing-16) 0;
+}
+
+.inputWrapper .suffix{
+    color: var(--text-secondary-color);
+}

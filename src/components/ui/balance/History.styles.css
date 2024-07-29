@@ -1,0 +1,7 @@
+.history-list-block {
+  margin-bottom: var(--spacing-12);
+}
+
+.history-list-section .section__header h2 {
+  font-size: var(--font-size-mlarge);
+}

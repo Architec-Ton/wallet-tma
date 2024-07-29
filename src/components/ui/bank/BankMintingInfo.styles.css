@@ -1,0 +1,49 @@
+.minting-info__block {
+  align-items: stretch;
+}
+
+.minting-info {
+  font-size: var(--font-size-small);
+}
+
+.minting-percent {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 44px;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--spacing-12);
+  margin-right: var(--spacing-4);
+  overflow: hidden;
+}
+
+.percent-progress {
+  align-content: center;
+  text-align: center;
+  min-height: 50%;
+  background-color: var(--primary-color);
+  border-radius: var(--spacing-12);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: var(--text-primary-color);
+  font-size: var(--font-size-small);
+}
+
+.minting-info .bankers,
+.minting-info .free-banks {
+  margin-left: var(--spacing-4);
+  font-weight: var(--font-medium);
+}
+
+.minting-info .bankers {
+  margin-bottom: var(--spacing-32);
+}
+
+.minting-info .bankers div:last-child {
+  color: var(--text-secondary-color);
+  font-weight: var(--font-regular);
+}
+
+.minting-info .free-banks span {
+  font-weight: var(--font-regular);
+}

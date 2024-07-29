@@ -1,0 +1,122 @@
+.modal__container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: fixed;
+    height: 100svh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 2rem;
+    box-sizing: border-box;
+    background-color: var(--background-transparent-color);
+    overscroll-behavior: contain;
+    z-index: 1000;
+}
+
+.modal__container.animated {
+  animation: modal_placeholder .3s;
+  transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .3s;
+}
+
+@keyframes modal_placeholder {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 0%;
+    height: fit-content;
+    background-color: var(--background-color);
+    width: 100%;
+    left: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.modal.animated {
+  animation: open .3s;
+  transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .3s;
+}
+
+@keyframes open {
+  from {
+    transform: translateY(100%);
+    bottom: -100%;
+  }  
+  to {
+    transform: translateY(0%);
+    bottom: 0%;
+  }
+}
+
+.modal.full-screen {
+    top: 0svh;
+    height: 100svh;
+    border-radius: 0;
+    background-color: var(--background-color);
+}
+
+.modal__before {
+    display: block;
+    border-top: 3px solid white;
+    position: relative;
+    width: 1.5rem;
+    margin: 0 auto;
+    top: -1.5rem;
+    z-index: 1000;
+}
+
+.modal.full-screen .modal__before {
+    display: none;
+}
+
+.modal__header {
+    position: relative;
+}
+
+.modal__header .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-8);
+}
+
+.modal__header .header.justify-end {
+  justify-content: flex-end;
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.modal__row {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.close-button {
+    cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .close-button {
+    filter: invert(1);
+  }
+}

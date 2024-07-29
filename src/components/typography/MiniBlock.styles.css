@@ -1,0 +1,23 @@
+.mini-block {
+  display: flex;
+  align-items: stretch;
+  align-content: stretch;
+  height: var(--spacing-48);
+  max-height: 44px;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius-12);
+  overflow: hidden;
+  gap: 0;
+}
+
+.mini-block-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-48);
+  padding: var(--spacing-4) var(--spacing-8);
+  background-color: var(--primary-color);
+}
+
+.mini-block-content {
+}

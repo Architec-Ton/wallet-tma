@@ -1,0 +1,55 @@
+.referral-block {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-medium);
+}
+
+.referral-earn-more {
+  font-weight: var(--font-medium);
+}
+
+.referal-earn-desc {
+  color: var(--text-secondary-color);
+}
+
+.referral-link-row {
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: var(--spacing-12);
+}
+
+.referral-link {
+  align-content: center;
+  padding: var(--spacing-12);
+  background-color: var(--background-color);
+  border-radius: var(--spacing-12);
+  color: var(--text-secondary-color);
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.copy-button {
+  border-radius: var(--spacing-12);
+  padding: var(--spacing-12);
+  width: 48px;
+}
+
+.referral-data {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+}
+
+.referral-data .block-column {
+  align-items: stretch;
+}
+
+.referral-count {
+  margin-top: var(--spacing-32);
+  line-height: var(--line-height-medium);
+  font-size: var(--font-size-small);
+}
+
+.referral-count div:last-child {
+  color: var(--text-secondary-color);
+}

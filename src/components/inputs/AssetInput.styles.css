@@ -1,0 +1,12 @@
+.asset-section h2{
+    font-size: var(--font-size-base);
+    font-weight: var(--font-medium);
+}
+
+.not-selectable {
+    padding-right: var(--spacing-22);
+}
+
+.asset-section .section__read-more {
+    color: var(--text-secondary-color);
+}

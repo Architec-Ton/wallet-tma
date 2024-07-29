@@ -1,0 +1,7 @@
+.search-bar {
+  padding-left: var(--spacing-20);
+}
+
+.search-bar input::placeholder {
+  color: var(--text-secondary-color);
+}

@@ -6,6 +6,7 @@ body {
 
 h1 {
     font-size: var(--font-size-large);
+    /*margin: var(--spacing-12) auto;*/
     margin: var(--spacing-12) 0;
     font-weight: var(--font-medium);
 }
@@ -14,6 +15,10 @@ h2 {
     font-size: var(--font-size-medium);
     font-weight: var(--font-regular);
     margin: var(--spacing-8) 0;
+}
+
+h3 {
+
 }
 
 p {
@@ -30,6 +35,11 @@ button {
     border-style: solid;
 }
 
+main{
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
 .primary-btn {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
@@ -39,7 +49,7 @@ button {
 }
 
 .mainbutton-container {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -48,6 +58,8 @@ button {
 
 .mainbutton-container button {
     width: 100%;
+    color: var(--text-primary-color);
+    font-weight: var(--font-medium);
 }
 
 .mainbutton-container button:hover {
@@ -56,26 +68,39 @@ button {
 
 .mainbutton-container button:active {
     background-color: var(--selected-color);
+    border-color: var(--selected-color);
 }
 
 
 input {
-    border: none;
-    background: none;
-    font-size: 16px;
-    width: 100%;
-    caret-color: transparent;
+    border-radius: var(--border-radius-16);
+    background-color: var(--background-selected-color);
+    border-color: var(--background-selected-color);
+    padding: var(--spacing-12);
+    border-style: solid;
+    font-size: var(--font-size-medium);
+    color: var(--text-secondary-color);
+    outline: none;
 }
 
-input:focus {
-    outline: none;
+a{
+    color: var(--primary-color);
+}
+
+input:focus, input:focus-visible,input:active, input:visited {
+    border-color: var(--background-selected-color);
+    /* var(--primary-color);  */
 }
 
 
 .number {
-    margin-right: 7.5px;
-    color: #65656A;
-    font-size: 16px;
+    margin-right: var(--spacing-8);
+    color: var(--secondary-color);
+    font-size: var(--font-size-medium);
+}
+
+.hint-message {
+    font-size: var(--font-size-small);
 }
 
 
@@ -92,4 +117,33 @@ input:focus {
 
 .w-100 {
     width: 100%;
+}
+
+.m-1{
+    margin: var(--spacing-16) var(--spacing-16);
+}
+.p-1 {
+    padding: var(--spacing-16) var(--spacing-16);
+}
+
+.center{
+    display: grid;
+    place-items: center;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.start{
+    text-align: start;
+    align-items: start;
+    justify-content: start;
+    margin-left: 0;
+    margin-right: 0;
+
+}
+
+.text-small{
+    font-size: var(--font-size-small);
 }

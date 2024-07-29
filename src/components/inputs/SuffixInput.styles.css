@@ -1,0 +1,46 @@
+.inputWrapper {
+    display: flex;
+    width: 400px;
+    height: 80px;
+    position: relative;
+    font-size: var(--font-size-large);
+    font-family: sans-serif;
+}
+
+.inputSuffix {
+    font-size: var(--font-size-large);
+    line-height: inherit;
+    font-family: inherit;
+    width: 100%;
+    /* background-color: #FFFFFF; */
+    outline: none;
+    /* border: 1px solid #007BFF; */
+    /* border-radius: 10px; */
+}
+
+.inputFakeValueWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+    user-select: none;
+    pointer-events: none;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+}
+
+.inputFakeValue {
+    overflow: hidden;
+}
+
+.suffix {
+    visibility: visible;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

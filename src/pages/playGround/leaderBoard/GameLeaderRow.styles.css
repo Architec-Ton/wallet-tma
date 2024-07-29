@@ -1,0 +1,33 @@
+.leaders-section .section__body {
+  font-size: 0.75rem;
+  color: var(--text-secondary-color);
+}
+
+.leader-data {
+  grid-column: span 11;
+}
+
+.leader-row > div {
+  padding: 0 var(--spacing-8);
+}
+
+.leader-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leaders-section .total-coins {
+  flex-grow: 1;
+}
+
+.leaders-section .name {
+  width: 4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaders-section .time {
+  width: 2rem;
+}
