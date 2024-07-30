@@ -21,7 +21,7 @@ function App() {
         manifestUrl={MANIFEST_URL}
         // uiPreferences={{ theme: THEME.LIGHT }}
         actionsConfiguration={{
-          twaReturnUrl: FE_URL,
+          twaReturnUrl: "https://t.me/ArchitectonWallet_Bot/app",
         }}
       >
         <Provider store={store}>
