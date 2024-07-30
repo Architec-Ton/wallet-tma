@@ -45,26 +45,34 @@ export function TonProvider({ children }: Props) {
       dispatch(setIsTonReady(true));
     } else if (bcData.wallets[bcData.currentWallet].mode == "tonconnect") {
       let resetTonConnect = true;
-      tonConnectUI.onStatusChange((wallet) => {
-        resetTonConnect = false;
-        if (wallet && wallet.account.address) {
-          ton.setAddress(
-            wallet.account.address,
-            "tonconnect",
-            wallet.account.publicKey
-          );
-        } else {
-          ton.setDisconnect();
-        }
-        dispatch(setIsTonReady(true));
-      });
-      const timer = setTimeout(() => {
-        if (resetTonConnect) {
-          ton.setDisconnect();
+      if (tonConnectUI.account && tonConnectUI.account.address) {
+        ton.setAddress(
+          tonConnectUI.account.address,
+          "tonconnect",
+          tonConnectUI.account.publicKey
+        );
+      } else {
+        tonConnectUI.onStatusChange((wallet) => {
+          resetTonConnect = false;
+          if (wallet && wallet.account.address) {
+            ton.setAddress(
+              wallet.account.address,
+              "tonconnect",
+              wallet.account.publicKey
+            );
+          } else {
+            ton.setDisconnect();
+          }
           dispatch(setIsTonReady(true));
-        }
-      }, 20000);
-      return () => clearTimeout(timer);
+        });
+        const timer = setTimeout(() => {
+          if (resetTonConnect) {
+            ton.setDisconnect();
+            dispatch(setIsTonReady(true));
+          }
+        }, 20000);
+        return () => clearTimeout(timer);
+      }
     } else if (bcData.wallets[bcData.currentWallet].mode == "mnemonics") {
       ton.setAddress(
         bcData.wallets[bcData.currentWallet].address || "",
