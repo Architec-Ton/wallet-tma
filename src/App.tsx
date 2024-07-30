@@ -13,9 +13,9 @@ import AlertContainer from "./components/ui/alert/AlertContainer.tsx";
 
 // import { Buffer } from "buffer/";
 // window.Buffer = Buffer;
-import ReactGA from 'react-ga4';
+import ReactGA from "react-ga4";
 
-ReactGA.initialize('G-R0B900V0LM');
+ReactGA.initialize("G-G09LBL852");
 
 function App() {
   return (
