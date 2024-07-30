@@ -1,31 +1,38 @@
-import { formatDate } from "date-fns"
-import Section from "../../containers/Section"
-import Block from "../../typography/Block"
-import ListBlock from "../listBlock"
-import ListBaseItem from "../listBlock/ListBaseItem"
+import { formatDate } from "date-fns";
+import Section from "../../containers/Section";
+import Block from "../../typography/Block";
+import ListBlock from "../listBlock";
+import ListBaseItem from "../listBlock/ListBaseItem";
 
-import "./BankStakingHistorySection.styles.css"
-import useLanguage from "../../../hooks/useLanguage"
+import "./BankStakingHistorySection.styles.css";
+import useLanguage from "../../../hooks/useLanguage";
 
 export type StakeHistoryType = {
-  date: string
-  rewards: number
-  deposit: number
-  claimAvailable?: boolean
-}
+  date: string;
+  rewards: number;
+  deposit: number;
+  claimAvailable?: boolean;
+};
 
 type OwnPropsType = {
-  stakeHistory: StakeHistoryType | null
-  title?: string
-  readMore?: React.ReactNode
-  onClaim?: () => void
-}
+  stakeHistory: StakeHistoryType | null | undefined;
+  title?: string;
+  readMore?: React.ReactNode;
+  onClaim?: () => void;
+};
 
-const BankStakingHistorySection = ({stakeHistory, title, readMore, onClaim}: OwnPropsType) => {
-  const t = useLanguage("bank-stake-history")
+const BankStakingHistorySection = ({
+  stakeHistory,
+  title,
+  readMore,
+  onClaim,
+}: OwnPropsType) => {
+  const t = useLanguage("bank-stake-history");
   return (
     <Section title={title} readMore={readMore}>
-      {!stakeHistory && <Block className="stake-history-loss">{t("empty-description")}</Block>}
+      {!stakeHistory && (
+        <Block className="stake-history-loss">{t("empty-description")}</Block>
+      )}
       {stakeHistory && (
         <ListBlock>
           <ListBaseItem>
@@ -48,7 +55,7 @@ const BankStakingHistorySection = ({stakeHistory, title, readMore, onClaim}: Own
         </ListBlock>
       )}
     </Section>
-  )
-}
+  );
+};
 
-export default BankStakingHistorySection
+export default BankStakingHistorySection;

@@ -6,6 +6,7 @@ import { useAsyncInitialize } from "./useAsyncInitialize";
 export function useTonClient() {
   const testnet = useAsyncInitialize(async (): Promise<TonClient> => {
     return new TonClient({
+      // endpoint: "https://testnet.toncenter.com/api/v2",
       endpoint: await getHttpEndpoint({
         network: "testnet",
       }),
@@ -14,7 +15,10 @@ export function useTonClient() {
   });
   const mainnet = useAsyncInitialize(async (): Promise<TonClient> => {
     return new TonClient({
-      endpoint: await getHttpEndpoint(),
+      // endpoint: "https://toncenter.com/api/v2",
+      endpoint: await getHttpEndpoint({
+        network: "mainnet",
+      }),
       apiKey: TONAPI_KEY,
     });
   });
@@ -22,7 +26,7 @@ export function useTonClient() {
   return {
     testnet: testnet,
     mainnet: mainnet,
-    client: TON_CLIENT_NETWORK == "mainnet" ? mainnet : testnet,
+    client: mainnet, //TON_CLIENT_NETWORK == "mainnet" ? mainnet : testnet,
     network: TON_CLIENT_NETWORK,
   };
 }
