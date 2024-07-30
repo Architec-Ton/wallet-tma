@@ -140,21 +140,21 @@ const Swap = () => {
 
   const combinedAssets = useMemo(() => {
     if (assets && stonFiAssets) {
-      const _stonFiAssets = stonFiAssets.filter((stonFiAsset) => {
-        return !assets.find(
-          (asset) =>
-            asset.meta?.symbol?.toLowerCase() ===
-            stonFiAsset?.meta?.symbol?.toLowerCase()
-        );
-      });
-      const testAssets = network === "testnet" ? testnetAssets : [];
-      const _assets = new Array().concat(assets, testAssets, _stonFiAssets);
-      return _assets;
+      // const _stonFiAssets = stonFiAssets.filter((stonFiAsset) => {
+      //   return !assets.find(
+      //     (asset) =>
+      //       asset.meta?.symbol?.toLowerCase() ===
+      //       stonFiAsset?.meta?.symbol?.toLowerCase()
+      //   );
+      // });
+      // const testAssets = network === "testnet" ? testnetAssets : [];
+      // const _assets = new Array().concat(assets, testAssets, _stonFiAssets);
+      return stonFiAssets as CoinDto[];
     }
     return [] as CoinDto[];
   }, [assets, stonFiAssets, network]);
 
-  const sendingAsset: CoinDto = useMemo(() => {
+  const sendingAsset: CoinDto | undefined = useMemo(() => {
     if (combinedAssets.length) {
       return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.send.address
@@ -162,7 +162,7 @@ const Swap = () => {
     }
   }, [swapAssets, combinedAssets]);
 
-  const receivingAsset: CoinDto = useMemo(() => {
+  const receivingAsset: CoinDto | undefined = useMemo(() => {
     if (combinedAssets.length) {
       return combinedAssets.find(
         (asset) => asset.meta?.address === swapAssets.receive.address
@@ -188,16 +188,16 @@ const Swap = () => {
   ) => {
     const _value = Number(value);
     if (mode === "send") {
-      return receivingAsset
-        ? (Number(sendingAsset?.usdPrice) * _value) /
-            Number(receivingAsset?.usdPrice)
-        : undefined;
+      return receivingAsset;
+      // ? (Number(sendingAsset?.usdPrice) * _value) /
+      //     Number(receivingAsset?.usdPrice)
+      // : undefined;
     }
     if (mode === "receive") {
-      return sendingAsset
-        ? (Number(receivingAsset?.usdPrice) * _value) /
-            Number(sendingAsset?.usdPrice)
-        : undefined;
+      return sendingAsset;
+      // ? (Number(receivingAsset?.usdPrice) * _value) /
+      //     Number(sendingAsset?.usdPrice)
+      // : undefined;
     }
   };
 
@@ -347,7 +347,7 @@ const Swap = () => {
       to: swapTxParams.to,
       body: swapTxParams.body,
     });
-    navigate("/bank/buy", {replace: true});
+    navigate("/bank/buy", { replace: true });
   };
 
   const jettonToJettonTransaction = async () => {
@@ -377,7 +377,7 @@ const Swap = () => {
       to: swapTxParams.to,
       body: swapTxParams.body,
     });
-    navigate("/bank/buy", {replace: true});
+    navigate("/bank/buy", { replace: true });
   };
 
   const tonToJettonTransaction = async () => {
@@ -407,7 +407,7 @@ const Swap = () => {
       to: swapTxParams.to,
       body: swapTxParams.body,
     });
-    navigate("/bank/buy", {replace: true});
+    navigate("/bank/buy", { replace: true });
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
@@ -422,6 +422,7 @@ const Swap = () => {
       !!swapAssets.send.value &&
       !!swapAssets.receive.value;
     setIsValidSwapp(isValid);
+    setIsValidSwapp(true);
   }, [sendingAsset, receivingAsset, swapAssets]);
 
   useEffect(() => {
@@ -470,7 +471,8 @@ const Swap = () => {
                 (swapAssets.send.value
                   ? Number(swapAssets.send.value) -
                     Number(swapAssets.send.value) * 0.17
-                  : 0) * sendingAsset.usdPrice
+                  : 0) *
+                (sendingAsset.amount / sendingAsset.usdPrice)
               ).toLocaleString(undefined, {
                 style: "currency",
                 currency: "USD",
