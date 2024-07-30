@@ -347,7 +347,7 @@ const Swap = () => {
       to: swapTxParams.to,
       body: swapTxParams.body,
     });
-    navigate("/bank/buy", {replace: true});
+    navigate("/bank/buy", { replace: true });
   };
 
   const jettonToJettonTransaction = async () => {
@@ -377,7 +377,7 @@ const Swap = () => {
       to: swapTxParams.to,
       body: swapTxParams.body,
     });
-    navigate("/bank/buy", {replace: true});
+    navigate("/bank/buy", { replace: true });
   };
 
   const tonToJettonTransaction = async () => {
@@ -407,7 +407,7 @@ const Swap = () => {
       to: swapTxParams.to,
       body: swapTxParams.body,
     });
-    navigate("/bank/buy", {replace: true});
+    navigate("/bank/buy", { replace: true });
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
