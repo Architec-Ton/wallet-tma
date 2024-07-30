@@ -32,6 +32,7 @@ import BankStakingHistorySection, {
 
 // import PartialContent from "../../components/ui/modals/PartialContent";
 import classNames from "classnames";
+import { Address } from "@ton/core";
 // import { useAppSelector } from '../../hooks/useAppDispatch';
 // import { selectAuthIsReady } from '../../features/auth/authSelector';
 // import { useAppSelector } from "../../hooks/useAppDispatch";
@@ -89,9 +90,11 @@ function BankStaking() {
     if (ton.wallet.address && receivingValue == 0) handleStakeInfo();
   }, [ton]);
 
-  const handleStake = async (amount: number) => {
-    if (ton.wallet.address) {
-      const ownerAddress = ton.wallet.address;
+  const handleStake = async (
+    amount: number,
+    ownerAddress: Address | undefined
+  ) => {
+    if (ownerAddress) {
       //Get BNK Wallet address
       try {
         const walletAddress = await contracts.bank.getWallet(ownerAddress);
@@ -99,7 +102,7 @@ function BankStaking() {
         if (walletAddress) {
           const tx = await contracts.bank.stake(walletAddress, BigInt(amount));
           console.log("Transaction:", tx);
-          navigate("/bank", {replace: true});
+          navigate("/bank", { replace: true });
         }
       } catch (e) {
         console.log("Error", e);
@@ -116,11 +119,15 @@ function BankStaking() {
         console.log("stakeAddress", stakeAddress);
         if (stakeAddress) {
           // setStakeAddress(stakeAddress.toString());
-
-          const stakeInfo = await contracts.bank.getStakeInfo(
-            stakeAddress,
-            ownerAddress
-          );
+          let stakeInfo = undefined;
+          try {
+            stakeInfo = await contracts.bank.getStakeInfo(
+              stakeAddress,
+              ownerAddress
+            );
+          } catch (e) {
+            console.log("not have staking", e);
+          }
 
           console.log("stakeInfo", stakeInfo);
           if (stakeInfo && stakeInfo.stakedAmount > 0) {
@@ -139,6 +146,7 @@ function BankStaking() {
             //   (rewards * Number(arcAsset?.usdPrice)) / tonUsdPrice
             // );
             // setIsStakeAvailable(false);
+          } else {
           }
         }
       } catch (e) {
@@ -149,24 +157,24 @@ function BankStaking() {
   };
 
   const handleUnstake = async () => {
-    if (ton.wallet.address) {
-      //Get BNK Wallet address
-      btn.setVisible(false);
-      if (stakeHistory) {
-        setStakeHistory({
-          ...stakeHistory,
-          claimAvailable: false,
-        });
-      }
-      try {
-        const tx = await contracts.bank.unstake();
-        console.log("Unstake", tx);
-      } catch (e) {
-        console.error(e);
-      }
-
-      navigate("/bank", {replace: true});
+    //if (ton.wallet.address) {
+    //Get BNK Wallet address
+    btn.setVisible(false);
+    if (stakeHistory) {
+      setStakeHistory({
+        ...stakeHistory,
+        claimAvailable: false,
+      });
     }
+    try {
+      const tx = await contracts.bank.unstake();
+      console.log("Unstake", tx);
+    } catch (e) {
+      console.error(e);
+    }
+
+    navigate("/bank", { replace: true });
+    //}
   };
 
   const handleClaim = async () => {
@@ -185,7 +193,7 @@ function BankStaking() {
       } catch (e) {
         console.error(e);
       }
-      navigate("/bank", {replace: true});
+      navigate("/bank", { replace: true });
     }
   };
 
@@ -303,14 +311,14 @@ function BankStaking() {
     } else if (Number(value) > 0) {
       const transactionSuccessHandler = async () => {
         try {
-          await handleStake(Number(value));
+          await handleStake(Number(value), ton.wallet.address);
         } catch (e) {
           console.error(e);
         }
       };
       btn.init(t("stake", "button"), transactionSuccessHandler, true);
     }
-  }, [value, stakingValue]);
+  }, [value, stakingValue, ton]);
 
   // const onComplete = () => {
   //   navigate("/bank");
