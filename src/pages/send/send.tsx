@@ -10,7 +10,7 @@ import { useAppSelector } from "../../hooks/useAppDispatch";
 import { selectAuthIsReady } from "../../features/auth/authSelector";
 import AddressInput from "../../components/inputs/AddressInput";
 import { useTmaMainButton } from "../../hooks/useTma";
-import { Address, SendMode, toNano } from "@ton/core";
+import { Address, toNano } from "@ton/core";
 import Delimiter from "../../components/typography/Delimiter";
 import Row from "../../components/containers/Row";
 import { iconPageSend } from "../../assets/icons/pages/send";
@@ -85,9 +85,9 @@ const SendPage = () => {
                 const tx = await ton.sender.send({
                   value: toNano(amount),
                   to: Address.parse(address),
-                  bounce: false,
-                  sendMode:
-                    SendMode.PAY_GAS_SEPARATELY | SendMode.IGNORE_ERRORS,
+                  // bounce: false,
+                  // sendMode:
+                  //   SendMode.PAY_GAS_SEPARATELY | SendMode.IGNORE_ERRORS,
                 });
                 console.log("Ton TX:", tx);
               } else if (asset.type == "jetton") {
