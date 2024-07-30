@@ -85,7 +85,7 @@ const SendPage = () => {
                 const tx = await ton.sender.send({
                   value: toNano(amount),
                   to: Address.parse(address),
-                  // bounce: false,
+                  bounce: false,
                   // sendMode:
                   //   SendMode.PAY_GAS_SEPARATELY | SendMode.IGNORE_ERRORS,
                 });
