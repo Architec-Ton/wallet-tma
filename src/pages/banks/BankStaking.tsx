@@ -33,6 +33,7 @@ import BankStakingHistorySection, {
 // import PartialContent from "../../components/ui/modals/PartialContent";
 import classNames from "classnames";
 import { Address } from "@ton/core";
+import { BANK_CROWDSALE_ADDRESS } from "../../constants";
 // import { useAppSelector } from '../../hooks/useAppDispatch';
 // import { selectAuthIsReady } from '../../features/auth/authSelector';
 // import { useAppSelector } from "../../hooks/useAppDispatch";
@@ -59,9 +60,9 @@ function BankStaking() {
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>();
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>();
   // const [stakeAddress, setStakeAddress] = useState<string>();
-  const [stakeHistory, setStakeHistory] = useState<StakeHistoryType | null>(
-    null
-  );
+  const [stakeHistory, setStakeHistory] = useState<
+    StakeHistoryType | null | undefined
+  >(undefined);
   // const isReady = useAppSelector(selectAuthIsReady);
   // const [isStakeAvailable, setIsStakeAvailable] = useState<boolean>(true);
 
@@ -87,8 +88,8 @@ function BankStaking() {
   }, []);
 
   useEffect(() => {
-    if (ton.wallet.address && receivingValue == 0) handleStakeInfo();
-  }, [ton]);
+    if (stakeHistory === undefined) handleStakeInfo();
+  }, [stakeHistory, ton]);
 
   const handleStake = async (
     amount: number,
@@ -97,6 +98,8 @@ function BankStaking() {
     if (ownerAddress) {
       //Get BNK Wallet address
       try {
+        console.log("ownerAddress", ownerAddress.toString());
+        console.log("contracts.bank", BANK_CROWDSALE_ADDRESS);
         const walletAddress = await contracts.bank.getWallet(ownerAddress);
         console.log("BNK Wallet", walletAddress?.toString());
         if (walletAddress) {
@@ -147,6 +150,7 @@ function BankStaking() {
             // );
             // setIsStakeAvailable(false);
           } else {
+            setStakeHistory(null);
           }
         }
       } catch (e) {
@@ -318,7 +322,7 @@ function BankStaking() {
       };
       btn.init(t("stake", "button"), transactionSuccessHandler, true);
     }
-  }, [value, stakingValue, ton]);
+  }, [value, stakingValue]);
 
   // const onComplete = () => {
   //   navigate("/bank");
