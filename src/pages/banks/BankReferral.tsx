@@ -38,7 +38,7 @@ const BankReferral = () => {
       setReferralLink(
         `${APP_URL}?startapp=${ton.wallet.address.toString({
           urlSafe: true,
-          bounceable: true,
+          // bounceable: true,
         })}`
       );
     }

@@ -6,7 +6,7 @@ import { useAsyncInitialize } from "./useAsyncInitialize";
 export function useTonClient() {
   const testnet = useAsyncInitialize(async (): Promise<TonClient> => {
     return new TonClient({
-      // endpoint: "https://testnet.toncenter.com/api/v2",
+      // endpoint: "https://testnet.toncenter.com/api/v2/",
       endpoint: await getHttpEndpoint({
         network: "testnet",
       }),
@@ -15,7 +15,7 @@ export function useTonClient() {
   });
   const mainnet = useAsyncInitialize(async (): Promise<TonClient> => {
     return new TonClient({
-      // endpoint: "https://toncenter.com/api/v2",
+      // endpoint: "https://toncenter.com/api/v2/",
       endpoint: await getHttpEndpoint({
         network: "mainnet",
       }),

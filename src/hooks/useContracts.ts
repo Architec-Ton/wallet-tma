@@ -87,7 +87,7 @@ function useContracts() {
           sender,
           {
             value: toNano(BANK_GAS_AMOUNT),
-            bounce: true,
+            // bounce: true,
           },
           {
             $$type: "JettonTransfer",
