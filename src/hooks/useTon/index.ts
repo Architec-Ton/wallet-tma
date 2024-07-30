@@ -10,6 +10,7 @@ import { useWalletInitData } from "./useWalletInitData";
 import { WalletsState } from "../../types/auth";
 import { useSender } from "./sender";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import { Address } from "@ton/core";
 
 export function useTon() {
   const dispatch = useAppDispatch();
@@ -50,7 +51,12 @@ export function useTon() {
       setTonMode(mode);
       dispatch(
         setAddress({
-          address: address,
+          address: address
+            ? Address.parse(address).toString({
+                urlSafe: true,
+                bounceable: false,
+              })
+            : undefined,
           mode:
             mode == "tonconnect"
               ? TonConnectionMode.tonconnect
