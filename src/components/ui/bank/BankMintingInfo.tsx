@@ -5,7 +5,7 @@ import "./BankMintingInfo.styles.css";
 
 const bankers = 6350;
 const freeBanks = 64267; //271719;
-const progress = Math.round((100 * freeBanks) / 500000);
+const progress = Math.round(100 - (100 * freeBanks) / 500000);
 
 const BankMintingInfo = () => {
   const t = useLanguage("bank");
