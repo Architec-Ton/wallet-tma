@@ -103,6 +103,9 @@
     "history-title": "History",
     "history-in": "Received",
     "history-out": "Sent",
+    "history-stack": "Stack",
+    "history-unstack": "Unstack",
+    "history-claim": "Claim",
 
 
     "bank-staking": "Staking",

@@ -69,7 +69,7 @@ function History({ items = [] }: Props) {
                           className={`list-block__title ${
                             h.type == "in" ? "change-up" : ""
                           } `}
-                        >{`${h.value} ${h.symbol}`}</div>
+                        >{`${h.value ? h.value : ""} ${h.symbol}`}</div>
                         <div className="list-block__description">
                           {new Date(h.utime * 1000).toLocaleString()}
                         </div>
