@@ -1,4 +1,4 @@
-export const BE_URL = "http://localhost:8000/api/v2/wallet"; //"https://app.architecton.site/api/v2/wallet";
+export const BE_URL = "https://app.architecton.site/api/v2/wallet";
 // import.meta.env.VITE_BE_URL ||
 // "https://dev.architecton.site/api/v2/wallet"; /*"http://localhost:8000/api/v2/wallet"*/
 
