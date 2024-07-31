@@ -24,7 +24,7 @@ import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
 import { WalletInfoData } from "../../types/wallet";
 import { CoinDto } from "../../types/assest";
 // import bankIcon from "../../assets/images/bank.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BankStakingHistorySection, {
   StakeHistoryType,
 } from "../../components/ui/bank/BankStakingHistorySection";
@@ -384,7 +384,7 @@ function BankStaking() {
         <BankStakingHistorySection
           stakeHistory={stakeHistory}
           title={t("history-title")}
-          readMore={<Link to="/bank/stake/history">{t("see-all")}</Link>}
+          // readMore={<Link to="/bank/stake/history">{t("see-all")}</Link>}
           onClaim={handleClaim}
         />
       </Column>
