@@ -18,6 +18,7 @@ import {
   ArcJettonWallet,
   JettonTransfer,
 } from "../contracts/tact_ArcJettonWallet";
+import { useCallback, useMemo } from "react";
 
 function useContracts() {
   const { client } = useTonClient();
@@ -27,58 +28,65 @@ function useContracts() {
   //   return null;
   // }
 
-  const jettonWallet = (
-    address: Address
-  ): OpenedContract<ArcJettonWallet> | undefined => {
-    if (!client) return;
-    const contract = ArcJettonWallet.fromAddress(address);
-    return client.open(contract) as OpenedContract<ArcJettonWallet>;
-  };
-  const jettonMaster = (
-    address: Address
-  ): OpenedContract<ArcJetton> | undefined => {
-    if (!client) return;
-    const contract = ArcJetton.fromAddress(address);
-    return client.open(contract) as OpenedContract<ArcJetton>;
-  };
+  const jettonWallet = useMemo(() => {
+    return (address: Address): OpenedContract<ArcJettonWallet> | undefined => {
+      if (!client) return;
+      const contract = ArcJettonWallet.fromAddress(address);
+      return client.open(contract) as OpenedContract<ArcJettonWallet>;
+    };
+  }, [client]);
+  const jettonMaster = useMemo(() => {
+    return (address: Address): OpenedContract<ArcJetton> | undefined => {
+      if (!client) return;
+      const contract = ArcJetton.fromAddress(address);
+      return client.open(contract) as OpenedContract<ArcJetton>;
+    };
+  }, [client]);
 
-  const bankJettonWallet = (
-    address: Address
-  ): OpenedContract<BankJettonWallet> | undefined => {
-    if (!client) return;
-    const contract = BankJettonWallet.fromAddress(address);
-    return client.open(contract) as OpenedContract<BankJettonWallet>;
-  };
-  const bankJettonMaster = (): OpenedContract<BankJetton> | undefined => {
-    if (!client) return;
-    const contract = BankJetton.fromAddress(
-      Address.parse(BANK_JETTON_MASTER_ADDRESS)
-    );
-    return client.open(contract) as OpenedContract<BankJetton>;
-  };
+  const bankJettonWallet = useMemo(() => {
+    return (address: Address): OpenedContract<BankJettonWallet> | undefined => {
+      if (!client) return;
+      const contract = BankJettonWallet.fromAddress(address);
+      return client.open(contract) as OpenedContract<BankJettonWallet>;
+    };
+  }, [client]);
+  const bankJettonMaster = useMemo(() => {
+    return (): OpenedContract<BankJetton> | undefined => {
+      if (!client) {
+        console.log("bankJettonMaster null", client);
+        return;
+      }
+      const contract = BankJetton.fromAddress(
+        Address.parse(BANK_JETTON_MASTER_ADDRESS)
+      );
+      return client.open(contract) as OpenedContract<BankJetton>;
+    };
+  }, [client]);
 
-  const bankCrowdSale = (): OpenedContract<BanksCrowdSale> | undefined => {
-    if (!client) return;
-    const contract = BanksCrowdSale.fromAddress(
-      Address.parse(BANK_CROWDSALE_ADDRESS)
-    );
-    return client.open(contract) as OpenedContract<BanksCrowdSale>;
-  };
+  const bankCrowdSale = useMemo(() => {
+    return (): OpenedContract<BanksCrowdSale> | undefined => {
+      if (!client) return;
+      const contract = BanksCrowdSale.fromAddress(
+        Address.parse(BANK_CROWDSALE_ADDRESS)
+      );
+      return client.open(contract) as OpenedContract<BanksCrowdSale>;
+    };
+  }, [client]);
 
-  const bankStakeStorage = (
-    address: Address
-  ): OpenedContract<StakeStorage> | undefined => {
-    if (!client) return;
-    const contract = StakeStorage.fromAddress(address);
-    return client.open(contract) as OpenedContract<StakeStorage>;
-  };
+  const bankStakeStorage = useMemo(() => {
+    return (address: Address): OpenedContract<StakeStorage> | undefined => {
+      if (!client) return;
+      const contract = StakeStorage.fromAddress(address);
+      return client.open(contract) as OpenedContract<StakeStorage>;
+    };
+  }, [client]);
 
   return {
     jetton: {
-      getWallet: async (jettonMasterAddress: Address, ownerAddress: Address) =>
+      getWallet: (jettonMasterAddress: Address, ownerAddress: Address) =>
         jettonMaster(jettonMasterAddress)?.getGetWalletAddress(ownerAddress),
 
-      transfer: async (
+      transfer: (
         walletAddress: Address,
         destinationAddress: Address,
         amount: bigint
