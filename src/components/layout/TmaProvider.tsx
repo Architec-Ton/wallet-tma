@@ -14,7 +14,6 @@ import {
   setAccount,
   setIsReady,
   setIsTmaReady,
-  setIsTonReady,
 } from "../../features/auth/authSlice";
 import {
   selectMainButtonIsVisible,
