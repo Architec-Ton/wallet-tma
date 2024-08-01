@@ -3,11 +3,6 @@ import Column from "../../components/containers/Column";
 import Page from "../../components/containers/Page";
 import History from "../../components/ui/balance/History";
 import { selectAuthIsReady } from "../../features/auth/authSelector";
-import {
-  selectIsTonLoading,
-  selectTonMode,
-} from "../../features/ton/tonSelector";
-import { TonConnectionMode } from "../../features/ton/tonSlice";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
@@ -39,8 +34,8 @@ function BankMain() {
 
   const [bankInfoData, setBankInfoData] = useState<BankInfoDto | null>(null);
   const [stakeInfoData, setStakeInfoData] = useState<StakeInfo | undefined>();
-  const isTonLoading = useAppSelector(selectIsTonLoading);
-  const tonMode = useAppSelector(selectTonMode);
+  // const isTonLoading = useAppSelector(selectIsTonLoading);
+  // const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
   const [bankInfoApi] = useApiGetBankInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);

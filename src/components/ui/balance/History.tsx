@@ -45,7 +45,7 @@ function History({ items = [] }: Props) {
     <>
       {groupedItems && (
         <Section title={t("title")}>
-          {Object.keys(groupedItems).map((key, index) => {
+          {Object.keys(groupedItems).map((key) => {
             const dataList = groupedItems[key] as TransactionHistoryItemDto[];
             return (
               <Section
