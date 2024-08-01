@@ -83,10 +83,10 @@ function useContracts() {
 
   return {
     jetton: {
-      getWallet: (jettonMasterAddress: Address, ownerAddress: Address) =>
+      getWallet: async (jettonMasterAddress: Address, ownerAddress: Address) =>
         jettonMaster(jettonMasterAddress)?.getGetWalletAddress(ownerAddress),
 
-      transfer: (
+      transfer: async (
         walletAddress: Address,
         destinationAddress: Address,
         amount: bigint
@@ -111,13 +111,13 @@ function useContracts() {
     },
 
     bank: {
-      buy: (amount: bigint) =>
+      buy: async (amount: bigint) =>
         bankCrowdSale()?.send(
           sender,
           { value: amount + toNano(BANK_GAS_AMOUNT) },
           "buyBank"
         ),
-      buyWithReferral: (referralAddress: Address, amount: bigint) =>
+      buyWithReferral: async (referralAddress: Address, amount: bigint) =>
         bankCrowdSale()?.send(
           sender,
           { value: amount + toNano(BANK_GAS_AMOUNT) },
@@ -126,7 +126,7 @@ function useContracts() {
             referral: referralAddress,
           } as ReferralAddress
         ),
-      stake: (walletAddress: Address, amount: bigint) =>
+      stake: async (walletAddress: Address, amount: bigint) =>
         bankJettonWallet(walletAddress)?.send(
           sender,
           { value: toNano(5 * BANK_GAS_AMOUNT) },
@@ -136,25 +136,25 @@ function useContracts() {
             amount: amount,
           } as Stake
         ),
-      unstake: () =>
+      unstake: async () =>
         bankJettonMaster()?.send(
           sender,
           { value: toNano(BANK_GAS_AMOUNT) },
           "Unstake"
         ),
-      claim: () =>
+      claim: async () =>
         bankJettonMaster()?.send(
           sender,
           { value: toNano(BANK_GAS_AMOUNT) },
           "Claim"
         ),
-      getWallet: (ownerAddress: Address) =>
+      getWallet: async (ownerAddress: Address) =>
         bankJettonMaster()?.getGetWalletAddress(ownerAddress),
 
-      getStakeAddress: (ownerAddress: Address) =>
+      getStakeAddress: async (ownerAddress: Address) =>
         bankJettonMaster()?.getCalculateStakeAddress(ownerAddress),
 
-      getStakeInfo: (stakeAddress: Address, ownerAddress: Address) =>
+      getStakeInfo: async (stakeAddress: Address, ownerAddress: Address) =>
         bankStakeStorage(stakeAddress)?.getAmountTime(ownerAddress),
     },
   };
