@@ -26,13 +26,16 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setIsReady(state: AuthState, action: PayloadAction<boolean>) {
+      state.isReady = action.payload;
+    },
     setAccessToken(
       state: AuthState,
       action: PayloadAction<string | undefined>
     ) {
       state.accessToken = action.payload;
-      state.isReady =
-        state.isTmaReady && state.isTonReady && !!state.accessToken;
+      // state.isReady =
+      //   state.isTmaReady && state.isTonReady && !!state.accessToken;
     },
     clearAccessToken(state: AuthState) {
       state.accessToken = undefined;
@@ -72,6 +75,7 @@ export const {
   setAccount,
   setIsTmaReady,
   setIsTonReady,
+  setIsReady,
 } = authSlice.actions;
 
 export default authSlice.reducer;
