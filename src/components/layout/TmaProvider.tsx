@@ -96,6 +96,17 @@ export function TmaProvider({ children }: Props) {
       "Ready:",
       isTonReady && isTmaReady && !!accessToken && !!client
     );
+    console.log(
+      "isTonReady:",
+      isTonReady,
+      "isTmaReady",
+      isTmaReady,
+      "accessToken",
+      !!accessToken,
+      "client",
+      !!client
+    );
+
     dispatch(setIsReady(isTonReady && isTmaReady && !!accessToken && !!client));
   }, [isTonReady, isTmaReady, accessToken, client]);
 
