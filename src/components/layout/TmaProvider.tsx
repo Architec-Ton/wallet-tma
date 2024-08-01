@@ -3,6 +3,7 @@ import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
 import { ReactNode, useEffect, useState } from "react";
 import { useApiAuthMutation } from "../../features/auth/authApi";
 import {
+  selectAccessToken,
   selectAuth,
   selectAuthIsTmaReady,
   selectAuthIsTonReady,
@@ -11,7 +12,9 @@ import {
   AccountState,
   setAccessToken,
   setAccount,
+  setIsReady,
   setIsTmaReady,
+  setIsTonReady,
 } from "../../features/auth/authSlice";
 import {
   selectMainButtonIsVisible,
@@ -28,6 +31,7 @@ import { useTon } from "../../hooks/useTon";
 import { AuthInitData, AuthInitTon } from "../../types/auth";
 import MainButton from "../buttons/MainButton";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
+import { useTonClient } from "../../hooks/useTonClient";
 
 type Props = {
   children: ReactNode;
@@ -48,9 +52,11 @@ export function TmaProvider({ children }: Props) {
   const [mainButtonHandler, setMainButtonHandler] = useState<TmaMainButton>({
     onClick: () => {},
   });
+  const { client } = useTonClient();
 
   const isTmaReady = useAppSelector(selectAuthIsTmaReady);
   const isTonReady = useAppSelector(selectAuthIsTonReady);
+  const accessToken = useAppSelector(selectAccessToken);
 
   //const launchParams = useLaunchParams()
 
@@ -86,10 +92,23 @@ export function TmaProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    if (isTma) {
-      // swipeBehavior.disableVerticalSwipe()
-    }
-  }, [isTma]);
+    console.log(
+      "Ready:",
+      isTonReady && isTmaReady && !!accessToken && !!client
+    );
+    console.log(
+      "isTonReady:",
+      isTonReady,
+      "isTmaReady",
+      isTmaReady,
+      "accessToken",
+      !!accessToken,
+      "client",
+      !!client
+    );
+
+    dispatch(setIsReady(isTonReady && isTmaReady && !!accessToken && !!client));
+  }, [isTonReady, isTmaReady, accessToken, client]);
 
   useEffect(() => {
     if (!isTmaLoading) {

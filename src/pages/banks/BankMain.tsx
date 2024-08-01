@@ -55,6 +55,7 @@ function BankMain() {
       const result = await bankInfoApi(null).unwrap();
       console.log("Wallet result:", result);
       setBankInfoData(result);
+      await handleStakeInfo(ton.wallet.address);
     } catch (err) {
       console.error("Failed to get info: ", err);
     } finally {
@@ -64,6 +65,8 @@ function BankMain() {
 
   const handleStakeInfo = async (ownerAddress: Address | undefined) => {
     if (ownerAddress) {
+      // console.log("handleStakeInfo", ownerAddress.toString(), client);
+      // console.log("client ", await client?.getBalance(ownerAddress));
       // const ownerAddress = ton.wallet.address;
       //Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
@@ -80,6 +83,8 @@ function BankMain() {
         // if (stakeInfo) setBnk(stakeInfo?.stakedAmount);
         console.log("getStakeInfo:", stakeInfo);
       }
+    } else {
+      console.error("handleStakeInfo: Owner fail:", ownerAddress);
     }
   };
 
@@ -103,29 +108,36 @@ function BankMain() {
     setArc(arc);
   }, [stakeInfoData, bankInfoData]);
 
-  useEffect(() => {
-    if (isReady && client) {
-      handleStakeInfo(ton.wallet.address);
-    }
-  }, [isReady, client]);
+  // useEffect(() => {
+  //   if (isReady && client) {
+  //     handleStakeInfo(ton.wallet.address);
+  //   }
+  // }, [isReady, client]);
 
   useEffect(() => {
     console.log("walletInfoData", bankInfoData);
   }, [bankInfoData]);
 
+  // useEffect(() => {
+  //   console.log("isTonLoading", isTonLoading);
+  //   console.log("Ready:", isReady, client);
+
+  //   if (!isTonLoading) {
+  //     // console.log("Call ", isTonLoading, tonMode);
+  //     if (tonMode == TonConnectionMode.disconnect) {
+  //       // console.log("mode disconnect");
+  //       navigate("/registration/welcome");
+  //     } else {
+  //       // TODO: Get Balance data
+  //       if (isReady && !!client) handleInfo();
+  //     }
+  //   }
+  // }, [isTonLoading, tonMode, isReady, client]);
+
   useEffect(() => {
-    console.log("isTonLoading", isTonLoading);
-    if (!isTonLoading) {
-      // console.log("Call ", isTonLoading, tonMode);
-      if (tonMode == TonConnectionMode.disconnect) {
-        // console.log("mode disconnect");
-        navigate("/registration/welcome");
-      } else {
-        // TODO: Get Balance data
-        if (isReady) handleInfo();
-      }
-    }
-  }, [isTonLoading, tonMode, isReady]);
+    console.log("Ready:", isReady, client);
+    if (isReady && !!client) handleInfo();
+  }, [isReady, client]);
 
   return (
     <Page>
