@@ -119,7 +119,7 @@ const ConfirmKey: React.FC = () => {
         ],
       });
       ton.setAddress(
-        wallet.address.toString({ urlSafe: true, bounceable: true }),
+        wallet.address.toString({ urlSafe: true, bounceable: false }),
         "mnemonics",
         keyPair.publicKey.toString("hex"),
         privateHash
