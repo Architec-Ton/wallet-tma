@@ -18,7 +18,7 @@ import {
   ArcJettonWallet,
   JettonTransfer,
 } from "../contracts/tact_ArcJettonWallet";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 function useContracts() {
   const { client } = useTonClient();
