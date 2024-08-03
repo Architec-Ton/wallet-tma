@@ -9,12 +9,10 @@ import fireWorkData from "../../../../assets/loties/firework.json"
 import "./index.css"
 import useLanguage from "../../../../hooks/useLanguage"
 import { useSubscribeTournamentMutation } from "../../../../features/gaming/gamingApi"
-import { useAppDispatch } from "../../../../hooks/useAppDispatch"
 
 
 const Tournament = ({id}: {id?: string}) => {
   const t = useLanguage("game-tournament")
-  const dispatch = useAppDispatch()
   const [subscribe] = useSubscribeTournamentMutation()
   const [isSended, setIsSended] = useState(false)
   const [showFireWork, setShowFireWork] = useState(false)
