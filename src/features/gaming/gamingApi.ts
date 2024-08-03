@@ -38,6 +38,12 @@ export const gamingApi = createApi({
     getTopRateGames: builder.mutation<GameListItemType[], URLSearchParams | undefined>({
       query: (params) => (!params ? "top" : `top?${params.toString()}`),
     }),
+    subscribeTournament: builder.mutation<unknown, string>({
+      query: (id) => ({
+        url: `apps/tour/${id}`,
+        method: 'GET',
+      })
+    }),
   }),
 });
 
@@ -48,4 +54,5 @@ export const {
   useSearchGamesMutation,
   useGetCategoriesMutation,
   useGetTopRateGamesMutation,
+  useSubscribeTournamentMutation,
 } = gamingApi;
