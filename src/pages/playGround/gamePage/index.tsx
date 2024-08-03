@@ -13,6 +13,7 @@ import Section from "../../../components/containers/Section";
 import Block from "../../../components/typography/Block";
 import Tile from "../../../components/typography/Tile";
 import TypedTile from "../../../components/typography/TypedTile";
+import Tournament from "../../../components/ui/games/tournament";
 import Slider from "../../../components/ui/slider";
 import { useGetGameQuery } from "../../../features/gaming/gamingApi";
 import { setLoading } from "../../../features/page/pageSlice";
@@ -144,12 +145,13 @@ const GamePage = () => {
           className="list-swipe"
         >
           {game?.gallery.map((url, index) => (
-              <SwiperSlide key={`${url}-${index}`} className="gallery-slide">
-                <img src={url} alt="" className="game-gallery-img round-large" />
-              </SwiperSlide>
-            ))}
+            <SwiperSlide key={`${url}-${index}`} className="gallery-slide">
+              <img src={url} alt="" className="game-gallery-img round-large" />
+            </SwiperSlide>
+          ))}
         </Slider>
       </Row>
+      <Tournament id={game?.id} />
       <Section title={t("description")} readMore={t("read-more")} readMoreHandle={readMoreHandler}>
         <Block>
           <div
@@ -180,19 +182,19 @@ const GamePage = () => {
       {game?.resources && game.resources.length > 0 && (
         <Section title={t("project-resources")}>
           {game?.resources.map((resource) => (
-              <LinkButton to={resource.url} key={resource.url}>
-                <TypedTile
-                  key={`${resource.type}-${game.id}`}
-                  icon={resource.icon}
-                  typeIcon={typedIcons[resource.type]}
-                  title={resource.type}
-                  description={resource.title}
-                  // link={resource.url}
-                  className="game-resource__block telegram"
-                  // onClick={resourceHandler(resource)}
-                />
-              </LinkButton>
-            ))}
+            <LinkButton to={resource.url} key={resource.url}>
+              <TypedTile
+                key={`${resource.type}-${game.id}`}
+                icon={resource.icon}
+                typeIcon={typedIcons[resource.type]}
+                title={resource.type}
+                description={resource.title}
+                // link={resource.url}
+                className="game-resource__block telegram"
+                // onClick={resourceHandler(resource)}
+              />
+            </LinkButton>
+          ))}
         </Section>
       )}
       {/* {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}

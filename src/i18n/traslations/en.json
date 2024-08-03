@@ -78,6 +78,11 @@
     "game-top-rated-title": "Top Rated",
     "game-tab-top": "Top",
     "game-tab-categories": "Categories",
+    "game-tournament-title": "Take part in a competition",
+    "game-tournament-description": "Become a participant in weekly prize distribution! Each week, you stand a chance to win exciting prizes just by joining.",
+    "game-tournament-button": "Participate",
+    "game-tournament-success": "You are in!",
+    "game-tournament-info": "Woo Hoo!!!",
 
     "add-crypto-your-coin-address": "Your {{coin}} Address",
     "add-crypto-description": "Send only <strong>{{coinInfo}}</strong> to this address. Sending other assets, such as jettons or NFTs will result in permanent loss.",
