@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   server: {
     host: "architecton.local",
-    port: 443,
+    port: 1111,
   },
   resolve: {
     alias: {
