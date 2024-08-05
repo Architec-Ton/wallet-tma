@@ -28,6 +28,31 @@ export type AssetInfo = {
   wallet_address?: string | null;
 };
 
+export type SimulateDataType = {
+  offer_address: string;
+  ask_address: string;
+  units: string | number;
+  slippage_tolerance: string;
+}
+
+export type SimulateResponseDataType = {
+  offer_address: string;
+  ask_address: string;
+  offer_jetton_wallet: string;
+  ask_jetton_wallet: string;
+  router_address: string;
+  pool_address: string;
+  offer_units: string;
+  ask_units: string;
+  slippage_tolerance: string;
+  min_ask_units: string;
+  swap_rate: string;
+  price_impact: string;
+  fee_address: string;
+  fee_units: string;
+  fee_percent: string;
+}
+
 export const stonFiApi = createApi({
   reducerPath: "stonFiApi",
   baseQuery: fetchBaseQuery({
@@ -44,7 +69,7 @@ export const stonFiApi = createApi({
           acc.push({
             type: AssetKind[asset.kind],
             amount: 0,
-            usdPrice: Number(asset.dex_usd_price),
+            usdPrice: Number(asset.dex_usd_price) || 0,
             changePrice: 0,
             meta: {
               name: asset.display_name as string,
@@ -60,7 +85,19 @@ export const stonFiApi = createApi({
         return transformedAssets as CoinDto[]
       }
     }),
+    simulate: builder.mutation<SimulateResponseDataType, SimulateDataType>({
+      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateDataType) => ({
+        url: `swap/simulate?offer_address=${offer_address}&ask_address=${ask_address}&units=${units}&slippage_tolerance=${slippage_tolerance}`,
+        method: "POST"
+      })
+    }),
+    reverseSimulate: builder.mutation<SimulateResponseDataType, SimulateDataType>({
+      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateDataType) => ({
+        url: `reverse_swap/simulate?offer_address=${offer_address}&ask_address=${ask_address}&units=${units}&slippage_tolerance=${slippage_tolerance}`,
+        method: "POST"
+      })
+    }),
   }),
 });
 
-export const { useGetStonfiAssetsQuery } = stonFiApi;
+export const { useGetStonfiAssetsQuery, useSimulateMutation, useReverseSimulateMutation } = stonFiApi;
