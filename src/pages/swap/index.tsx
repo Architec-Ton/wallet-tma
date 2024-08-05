@@ -7,13 +7,12 @@ import { iconReverseButton } from "../../assets/icons/buttons";
 import SendAsset from "./sendAsset";
 import ReceiveAsset from "./receiveAsset";
 import AssetsList from "./assetsList";
-import { AddressType, DEX, pTON } from "@ston-fi/sdk";
+import { AddressType, AmountType, DEX, pTON } from "@ston-fi/sdk";
 import { useClosure } from "../../hooks/useClosure";
 import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
 import { WalletInfoData } from "../../types/wallet";
 import { CoinDto } from "../../types/assest";
 import { useTonClient } from "../../hooks/useTonClient";
-import { toNano } from "@ton/core";
 
 import "./index.css";
 import useLanguage from "../../hooks/useLanguage";
@@ -21,7 +20,7 @@ import { usePage } from "../../hooks/usePage";
 import { useTmaMainButton } from "../../hooks/useTma";
 import { useNavigate } from "react-router-dom";
 
-import { useGetStonfiAssetsQuery } from "../../features/stonfi/stonFiApi";
+import { useGetStonfiAssetsQuery, useSimulateMutation } from "../../features/stonfi/stonFiApi";
 import { useTon } from "../../hooks/useTon";
 
 export type AssetDataType = {
@@ -112,6 +111,7 @@ const Swap = () => {
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage("swap");
   const navigate = useNavigate();
+  const [simulate] = useSimulateMutation()
 
   useEffect(() => {
     page.setLoading(isLoading);
@@ -140,15 +140,24 @@ const Swap = () => {
 
   const combinedAssets = useMemo(() => {
     if (assets && stonFiAssets) {
-      const _stonFiAssets = stonFiAssets.filter((stonFiAsset) => {
-        return !assets.find(
+      let excludeAssets: string[] = []
+      const _stonFiAssets = stonFiAssets.map((stonFiAsset) => {
+        const asset = assets.find(
           (asset) =>
             asset.meta?.symbol?.toLowerCase() ===
             stonFiAsset?.meta?.symbol?.toLowerCase()
         );
+        if (asset) {
+          excludeAssets.push(asset.meta?.symbol as string)
+          return { ...stonFiAsset, amount: asset.amount }
+        }
+        return stonFiAsset
       });
       const testAssets = network === "testnet" ? testnetAssets : [];
-      const _assets = new Array().concat(assets, testAssets, _stonFiAssets);
+      const userAssets = assets.filter(
+        (asset) => !excludeAssets.includes(asset.meta?.symbol as string)
+      );
+      const _assets = new Array().concat(userAssets, testAssets, _stonFiAssets);
       return _assets;
     }
     return [] as CoinDto[];
@@ -322,6 +331,19 @@ const Swap = () => {
     }
   };
 
+  const simulateHandler = async () => {
+    const {data} = await simulate({
+      offer_address: sendingAsset.meta?.address as string,
+      ask_address: receivingAsset?.meta?.address as string,
+      units: Math.round(
+        Number(swapAssets.send.value) *
+        Math.pow(10, Number(sendingAsset?.meta?.decimals))
+      ),
+      slippage_tolerance: "0.001"
+    })
+    return data
+  }
+
   const jettonToTonTransaction = async () => {
     if (!tonClient) {
       throw new Error("TonClient doesn't exists");
@@ -329,17 +351,13 @@ const Swap = () => {
     const { dex } = transactionParams();
     const router = tonClient.open(dex);
 
+    const simulateData = await simulateHandler()
     const swapTxParams = await router.getSwapJettonToTonTxParams({
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
-      offerAmount: Math.round(
-        Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number)
-      ),
+      offerAmount: simulateData?.offer_units as string,
       proxyTon: new pTON.v1(),
-      minAskAmount: toNano(
-        Math.round(Number(swapAssets.receive.value) * 0.75 * -1e9)
-      ),
+      minAskAmount: simulateData?.min_ask_units as string,
     });
 
     await ton.sender.send({
@@ -357,19 +375,13 @@ const Swap = () => {
     const { dex } = transactionParams();
     const router = tonClient.open(dex);
 
+    const simulateData = await simulateHandler()
     const swapTxParams = await router.getSwapJettonToJettonTxParams({
       userWalletAddress: wallet,
       offerJettonAddress: sendingAsset?.meta?.address as AddressType,
-      offerAmount: Math.round(
-        Number(swapAssets.send.value) *
-          Math.pow(10, sendingAsset?.meta?.decimals as number)
-      ),
+      offerAmount: simulateData?.offer_units as string,
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
-      minAskAmount: Math.round(
-        Number(swapAssets.receive.value) *
-          0.75 *
-          Math.pow(10, Number(receivingAsset?.meta?.decimals))
-      ),
+      minAskAmount: simulateData?.min_ask_units as string,
     });
 
     await ton.sender.send({
@@ -387,19 +399,13 @@ const Swap = () => {
     const { dex } = transactionParams();
     const router = tonClient.open(dex);
 
+    const simulateData = await simulateHandler()
     const swapTxParams = await router.getSwapTonToJettonTxParams({
       userWalletAddress: wallet,
       askJettonAddress: receivingAsset?.meta?.address as AddressType,
-      offerAmount: Math.round(
-        Number(swapAssets.send.value) *
-          Math.pow(10, Number(sendingAsset?.meta?.decimals))
-      ),
+      offerAmount: simulateData?.offer_units as AmountType,
       proxyTon: new pTON.v1(),
-      minAskAmount: Math.round(
-        Number(swapAssets.receive.value) *
-          0.75 *
-          Math.pow(10, Number(receivingAsset?.meta?.decimals))
-      ),
+      minAskAmount: simulateData?.min_ask_units as AmountType,
     });
 
     await ton.sender.send({
