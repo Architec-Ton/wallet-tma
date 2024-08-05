@@ -3,6 +3,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    top: auto;
     border-top: 1px solid var(--border-color-light);
     padding: var(--spacing-12) 0;
     background-color: var(--background-color);

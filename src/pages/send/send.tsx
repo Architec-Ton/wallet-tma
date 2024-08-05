@@ -60,6 +60,7 @@ const SendPage = () => {
     }
   };
 
+
   const handleAmountInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -170,6 +171,7 @@ const SendPage = () => {
     setAsset(asset);
   };
 
+
   const handleInfo = async () => {
     try {
       const result = await walletApiAssets(null).unwrap();
@@ -210,6 +212,11 @@ const SendPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, isButtonEnabled, step]);
 
+  const setMaxAmount = () => {
+    setAmount(`${asset?.amount}`)
+    console.log('setMaxAmount')
+  }
+
   return (
     <Page>
       {step == 0 && (
@@ -229,13 +236,14 @@ const SendPage = () => {
         <>
           <Row>
             <img src={iconPageSend} />
-            <h2> Send to {shortenString(address)}</h2>
+            <h2 > Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />
           <TransferAsset
             asset={asset}
             value={amount}
             onChange={handleAmountInputChange}
+            setMaxAmount={setMaxAmount}
           />
         </>
       )}
