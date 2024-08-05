@@ -11,13 +11,15 @@ type OwnPropsType = {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
   disabled?: boolean;
+  setMaxAmount?: () => void
 };
 
-const TransferAsset = ({ asset, disabled, onChange, value }: OwnPropsType) => {
+const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount}: OwnPropsType) => {
   // const [assetValue, setAssetValue] = useState<string>('');
   // const [error, setError] = useState<boolean>(false);
 
   const t = useLanguage('input');
+
 
   useEffect(() => {
     // setAssetValue(value || '');
@@ -38,7 +40,7 @@ const TransferAsset = ({ asset, disabled, onChange, value }: OwnPropsType) => {
         style={{
           margin: '0 auto 0 0',
         }}
-        onClick={() => {}}
+        onClick={setMaxAmount}
         disabled={!asset}>
         {t('max')}
       </button>
