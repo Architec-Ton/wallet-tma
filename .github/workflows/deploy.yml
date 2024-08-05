@@ -1,0 +1,24 @@
+---
+name: deploy dev
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /srv/adev/wallet-tma
+            git pull origin dev
+            cd ..
+            docker compose -f docker-compose.dev.yml down
+            docker compose -f docker-compose.dev.yml build
+            docker compose -f docker-compose.dev.yml up
