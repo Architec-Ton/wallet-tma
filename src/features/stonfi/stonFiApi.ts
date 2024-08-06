@@ -28,14 +28,14 @@ export type AssetInfo = {
   wallet_address?: string | null;
 };
 
-export type SimulateDataType = {
+export type SimulateRequestQuery = {
   offer_address: string;
   ask_address: string;
   units: string | number;
   slippage_tolerance: string;
 }
 
-export type SimulateResponseDataType = {
+export type SimulateDTO = {
   offer_address: string;
   ask_address: string;
   offer_jetton_wallet: string;
@@ -85,19 +85,21 @@ export const stonFiApi = createApi({
         return transformedAssets as CoinDto[]
       }
     }),
-    simulate: builder.mutation<SimulateResponseDataType, SimulateDataType>({
-      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateDataType) => ({
-        url: `swap/simulate?offer_address=${offer_address}&ask_address=${ask_address}&units=${units}&slippage_tolerance=${slippage_tolerance}`,
+    simulate: builder.query<SimulateDTO, SimulateRequestQuery>({
+      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateRequestQuery) => ({
+        url: "swap/simulate",
+        params: {offer_address, ask_address, units, slippage_tolerance},
         method: "POST"
       })
     }),
-    reverseSimulate: builder.mutation<SimulateResponseDataType, SimulateDataType>({
-      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateDataType) => ({
-        url: `reverse_swap/simulate?offer_address=${offer_address}&ask_address=${ask_address}&units=${units}&slippage_tolerance=${slippage_tolerance}`,
+    reverseSimulate: builder.query<SimulateDTO, SimulateRequestQuery>({
+      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateRequestQuery) => ({
+        url: "reverse_swap/simulate",
+        params: {offer_address, ask_address, units, slippage_tolerance},
         method: "POST"
       })
     }),
   }),
 });
 
-export const { useGetStonfiAssetsQuery, useSimulateMutation, useReverseSimulateMutation } = stonFiApi;
+export const { useGetStonfiAssetsQuery, useLazySimulateQuery, useLazyReverseSimulateQuery } = stonFiApi;

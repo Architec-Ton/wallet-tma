@@ -20,7 +20,7 @@ import { usePage } from "../../hooks/usePage";
 import { useTmaMainButton } from "../../hooks/useTma";
 import { useNavigate } from "react-router-dom";
 
-import { useGetStonfiAssetsQuery, useSimulateMutation } from "../../features/stonfi/stonFiApi";
+import { useGetStonfiAssetsQuery, useLazySimulateQuery } from "../../features/stonfi/stonFiApi";
 import { useTon } from "../../hooks/useTon";
 
 export type AssetDataType = {
@@ -111,7 +111,7 @@ const Swap = () => {
   const [walletInfoApi] = useApiWalletInfoMutation();
   const t = useLanguage("swap");
   const navigate = useNavigate();
-  const [simulate] = useSimulateMutation()
+  const [simulationTrigger] = useLazySimulateQuery()
 
   useEffect(() => {
     page.setLoading(isLoading);
@@ -332,7 +332,7 @@ const Swap = () => {
   };
 
   const simulateHandler = async () => {
-    const {data} = await simulate({
+    const {data} = await simulationTrigger({
       offer_address: sendingAsset.meta?.address as string,
       ask_address: receivingAsset?.meta?.address as string,
       units: Math.round(
