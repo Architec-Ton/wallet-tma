@@ -28,6 +28,31 @@ export type AssetInfo = {
   wallet_address?: string | null;
 };
 
+export type SimulateRequestQuery = {
+  offer_address: string;
+  ask_address: string;
+  units: string | number;
+  slippage_tolerance: string;
+}
+
+export type SimulateDTO = {
+  offer_address: string;
+  ask_address: string;
+  offer_jetton_wallet: string;
+  ask_jetton_wallet: string;
+  router_address: string;
+  pool_address: string;
+  offer_units: string;
+  ask_units: string;
+  slippage_tolerance: string;
+  min_ask_units: string;
+  swap_rate: string;
+  price_impact: string;
+  fee_address: string;
+  fee_units: string;
+  fee_percent: string;
+}
+
 export const stonFiApi = createApi({
   reducerPath: "stonFiApi",
   baseQuery: fetchBaseQuery({
@@ -44,7 +69,7 @@ export const stonFiApi = createApi({
           acc.push({
             type: AssetKind[asset.kind],
             amount: 0,
-            usdPrice: Number(asset.dex_usd_price),
+            usdPrice: Number(asset.dex_usd_price) || 0,
             changePrice: 0,
             meta: {
               name: asset.display_name as string,
@@ -60,7 +85,21 @@ export const stonFiApi = createApi({
         return transformedAssets as CoinDto[]
       }
     }),
+    simulate: builder.query<SimulateDTO, SimulateRequestQuery>({
+      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateRequestQuery) => ({
+        url: "swap/simulate",
+        params: {offer_address, ask_address, units, slippage_tolerance},
+        method: "POST"
+      })
+    }),
+    reverseSimulate: builder.query<SimulateDTO, SimulateRequestQuery>({
+      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateRequestQuery) => ({
+        url: "reverse_swap/simulate",
+        params: {offer_address, ask_address, units, slippage_tolerance},
+        method: "POST"
+      })
+    }),
   }),
 });
 
-export const { useGetStonfiAssetsQuery } = stonFiApi;
+export const { useGetStonfiAssetsQuery, useLazySimulateQuery, useLazyReverseSimulateQuery } = stonFiApi;
