@@ -58,6 +58,7 @@ const ConfirmKey: React.FC = () => {
   const setupPinCode = async (mnemonics: string[]) => {
     page.setLoading(false, false);
     btn.setVisible(false);
+
     const pin1 = await pincode.open();
 
     if (!pin1) {
@@ -83,7 +84,8 @@ const ConfirmKey: React.FC = () => {
           duration: 8000,
         })
       );
-      navigate("/");
+
+      setupPinCode(mnemonics);
       return;
     }
 
