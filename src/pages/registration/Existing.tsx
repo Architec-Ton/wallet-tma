@@ -56,6 +56,30 @@ const Existing: React.FC = () => {
     );
   };
 
+  const handleInputPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const clipboardData = event.clipboardData.getData("Text");
+    const words = clipboardData.trim().split(/\s+/);
+
+    if (words.length === 24) {
+      event.preventDefault();
+
+      const newInputs = [...inputs];
+      const newErrors = [...errors];
+
+      for (let i = 0; i < Math.min(words.length, newInputs.length); i++) {
+        newInputs[i] = words[i].toLowerCase();
+        newErrors[i] = words[i].includes(" ");
+      }
+
+      setInputs(newInputs);
+      setErrors(newErrors);
+      setIsButtonEnabled(
+        newInputs.every((input) => input.trim() !== "") &&
+          !newErrors.some((error) => error)
+      );
+    }
+  };
+
   useEffect(() => {
     page.setLoading(false);
   }, []);
@@ -67,7 +91,7 @@ const Existing: React.FC = () => {
         console.log(inputs);
         const mnemonic = inputs.join(" ");
         navigate("/registration/confirm-secret-key", {
-          state: { mnemonic: mnemonic, confirm: false },
+          state: { mnemonic: mnemonic, confirm: true },
         });
       },
       isButtonEnabled
@@ -76,7 +100,7 @@ const Existing: React.FC = () => {
   }, [inputs, isButtonEnabled]);
 
   return (
-    <Page title={t("enter-key")} hintMessage={t('enter-key-hint')}>
+    <Page title={t("enter-key")} hintMessage={t("enter-key-hint")}>
       <form className="center">
         <Column columns={2}>
           {inputs.map((value, index) => (
@@ -88,10 +112,14 @@ const Existing: React.FC = () => {
               className={`registration-mnemonic-word ${
                 errors[index] ? "input-error" : ""
               }`}
+              onPaste={handleInputPaste}
             />
           ))}
         </Column>
-        <div className="center p-1" style={{position: 'fixed', bottom: 'var(--spacing-8)'}}>
+        <div
+          className="center p-1"
+          style={{ position: "fixed", bottom: "var(--spacing-8)" }}
+        >
           <Button
             title={t("paste", "button")}
             icon={iconButtonPaste}
@@ -99,7 +127,7 @@ const Existing: React.FC = () => {
             onClick={handlePaste}
           />
         </div>
-          <div style={{height: 'var(--spacing-64)'}}/>
+        <div style={{ height: "var(--spacing-64)" }} />
       </form>
     </Page>
   );

@@ -25,7 +25,9 @@ const SecretKey = () => {
   useEffect(() => {
     mnemonicNew(24).then((m) => {
       setMnemonic(m.join(" "));
+
       page.setLoading(false, false);
+
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
           state: { mnemonic: m.join(" "), confirm: true },
@@ -38,7 +40,7 @@ const SecretKey = () => {
     if (mnemonic) {
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
-          state: { mnemonic: mnemonic, confirm: true },
+          state: { mnemonic: mnemonic, confirm: false },
         })
       );
     }
