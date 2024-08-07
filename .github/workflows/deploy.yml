@@ -3,7 +3,7 @@ name: deploy dev
 on:
   push:
     branches:
-      - dev
+      - "dev"
 jobs:
   docker:
     runs-on: ubuntu-latest
