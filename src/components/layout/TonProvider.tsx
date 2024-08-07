@@ -43,12 +43,14 @@ export function TonProvider({ children }: Props) {
         })
       );
       dispatch(setIsTonReady(true));
-    } else if (bcData.wallets[bcData.currentWallet].mode == "tonconnect") {
+    } else if (
+      bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.tonconnect
+    ) {
       let resetTonConnect = true;
       if (tonConnectUI.account && tonConnectUI.account.address) {
         ton.setAddress(
           tonConnectUI.account.address,
-          "tonconnect",
+          TonConnectionMode.tonconnect,
           tonConnectUI.account.publicKey
         );
       } else {
@@ -57,7 +59,7 @@ export function TonProvider({ children }: Props) {
           if (wallet && wallet.account.address) {
             ton.setAddress(
               wallet.account.address,
-              "tonconnect",
+              TonConnectionMode.tonconnect,
               wallet.account.publicKey
             );
           } else {
@@ -73,10 +75,12 @@ export function TonProvider({ children }: Props) {
         }, 20000);
         return () => clearTimeout(timer);
       }
-    } else if (bcData.wallets[bcData.currentWallet].mode == "mnemonics") {
+    } else if (
+      bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.mnemonics
+    ) {
       ton.setAddress(
         bcData.wallets[bcData.currentWallet].address || "",
-        "mnemonics",
+        TonConnectionMode.mnemonics,
         bcData.wallets[bcData.currentWallet].publicKey,
         bcData.wallets[bcData.currentWallet].privateKey
       );

@@ -1,4 +1,3 @@
-import { createContext, useContext } from "react";
 import { useAppDispatch } from "./useAppDispatch";
 import {
   setLoading,
@@ -12,20 +11,6 @@ export interface PageTitle {
   hintMessage?: string;
   description?: string;
 }
-
-export const PageStateContext = createContext<{
-  isLoading: boolean;
-  title: PageTitle;
-  setTitle: React.Dispatch<React.SetStateAction<PageTitle>>;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}>({
-  isLoading: true,
-  title: { title: "Ok" },
-  setTitle: () => {},
-  setIsLoading: () => {},
-});
-
-export const usePageState = () => useContext(PageStateContext);
 
 export function usePage() {
   const dispatch = useAppDispatch();

@@ -23,17 +23,15 @@ export function useTon() {
 
   const sender = useSender();
 
-  const [tonMode, setTonMode] = useState<
-    "disconnect" | "tonconnect" | "mnemonics"
-  >("disconnect");
+  const [tonMode, setTonMode] = useState<TonConnectionMode>(
+    TonConnectionMode.disconnect
+  );
 
   useEffect(() => {
     if (bcData.currentWallet < 0) {
-      setTonMode("disconnect");
-    } else if (bcData.wallets[bcData.currentWallet].mode == "tonconnect") {
-      setTonMode("tonconnect");
-    } else if (bcData.wallets[bcData.currentWallet].mode == "mnemonics") {
-      setTonMode("mnemonics");
+      setTonMode(TonConnectionMode.disconnect);
+    } else {
+      setTonMode(bcData.wallets[bcData.currentWallet].mode);
     }
   }, []);
 
@@ -44,11 +42,12 @@ export function useTon() {
     setSeqno: (seqno: number | null) => dispatch(setSeqno(seqno)),
     setAddress: (
       address: string,
-      mode: "disconnect" | "tonconnect" | "mnemonics",
+      mode: TonConnectionMode,
       publicKey?: string,
       privateKey?: string
     ) => {
       setTonMode(mode);
+
       dispatch(
         setAddress({
           address: address
@@ -57,16 +56,12 @@ export function useTon() {
                 bounceable: false,
               })
             : undefined,
-          mode:
-            mode == "tonconnect"
-              ? TonConnectionMode.tonconnect
-              : mode == "mnemonics"
-              ? TonConnectionMode.mnemonics
-              : TonConnectionMode.disconnect,
+          mode,
           publicKey: publicKey,
           privateKey: privateKey,
         })
       );
+
       console.log("useTon.setAddress", mode, address, publicKey);
     },
     setDisconnect: () => {
@@ -79,7 +74,7 @@ export function useTon() {
       if (tonConnectUI) tonConnectUI.disconnect();
       if (localStorage)
         localStorage.removeItem("ton-connect-storage_bridge-connection");
-      setTonMode("disconnect");
+      setTonMode(TonConnectionMode.disconnect);
       dispatch(
         setAddress({
           mode: TonConnectionMode.disconnect,
