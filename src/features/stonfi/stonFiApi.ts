@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CoinDto } from "../../types/assest";
+import { Address } from "@ton/core";
+import { GetStonFiAssetDTO } from "./types";
 
 export const AssetKind = {
   Ton: "ton",
@@ -33,7 +35,7 @@ export type SimulateRequestQuery = {
   ask_address: string;
   units: string | number;
   slippage_tolerance: string;
-}
+};
 
 export type SimulateDTO = {
   offer_address: string;
@@ -51,20 +53,22 @@ export type SimulateDTO = {
   fee_address: string;
   fee_units: string;
   fee_percent: string;
-}
+};
 
 export const stonFiApi = createApi({
   reducerPath: "stonFiApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.ston.fi/v1"
+    baseUrl: "https://api.ston.fi/v1",
   }),
   endpoints: (builder) => ({
     getStonfiAssets: builder.query<CoinDto[], unknown>({
       query: () => `assets`,
-      transformResponse: (response: { asset_list: AssetInfo[]}) => {
-        const assets = response.asset_list.filter(asset => asset.default_symbol === true && !asset.blacklisted)
+      transformResponse: (response: { asset_list: AssetInfo[] }) => {
+        const assets = response.asset_list.filter(
+          (asset) => asset.default_symbol === true && !asset.blacklisted
+        );
         // return assets
-        const transformedAssets: CoinDto[] = []
+        const transformedAssets: CoinDto[] = [];
         assets.reduce((acc, asset: AssetInfo): CoinDto[] => {
           acc.push({
             type: AssetKind[asset.kind],
@@ -77,29 +81,52 @@ export const stonFiApi = createApi({
               address: asset.contract_address,
               image: asset.image_url as string,
               decimals: asset.decimals,
-              symbol: asset.symbol
-            }
-          })
-          return acc
-        }, transformedAssets as CoinDto[])
-        return transformedAssets as CoinDto[]
-      }
+              symbol: asset.symbol,
+            },
+          });
+          return acc;
+        }, transformedAssets as CoinDto[]);
+        return transformedAssets as CoinDto[];
+      },
+    }),
+
+    getStonFiAsset: builder.query<GetStonFiAssetDTO, string | undefined>({
+      query: (addr?: string) => ({
+        url: `assets/${addr}`,
+        keepUnusedDataFor: 300, // 5min
+      }),
     }),
     simulate: builder.query<SimulateDTO, SimulateRequestQuery>({
-      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateRequestQuery) => ({
+      query: ({
+        offer_address,
+        ask_address,
+        units,
+        slippage_tolerance,
+      }: SimulateRequestQuery) => ({
         url: "swap/simulate",
-        params: {offer_address, ask_address, units, slippage_tolerance},
-        method: "POST"
-      })
+        params: { offer_address, ask_address, units, slippage_tolerance },
+        method: "POST",
+      }),
     }),
     reverseSimulate: builder.query<SimulateDTO, SimulateRequestQuery>({
-      query: ({offer_address, ask_address, units, slippage_tolerance}: SimulateRequestQuery) => ({
+      query: ({
+        offer_address,
+        ask_address,
+        units,
+        slippage_tolerance,
+      }: SimulateRequestQuery) => ({
         url: "reverse_swap/simulate",
-        params: {offer_address, ask_address, units, slippage_tolerance},
-        method: "POST"
-      })
+        params: { offer_address, ask_address, units, slippage_tolerance },
+        method: "POST",
+      }),
     }),
   }),
 });
 
-export const { useGetStonfiAssetsQuery, useLazySimulateQuery, useLazyReverseSimulateQuery } = stonFiApi;
+export const {
+  useGetStonfiAssetsQuery,
+  useGetStonFiAssetQuery,
+  useLazyGetStonFiAssetQuery,
+  useLazySimulateQuery,
+  useLazyReverseSimulateQuery,
+} = stonFiApi;
