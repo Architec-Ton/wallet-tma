@@ -37,3 +37,5 @@ export const TON_CLIENT_NETWORK = "mainnet";
 // import.meta.env.VITE_TON_CLIENT_NETWORK || "testnet";
 
 export const TON_PINCODE_SALT = import.meta.env.VITE_TON_PINCODE_SALT || "salt";
+
+export const TON_JETTON = "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c";
