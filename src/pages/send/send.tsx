@@ -214,7 +214,6 @@ const SendPage = () => {
 
   const setMaxAmount = () => {
     setAmount(`${asset?.amount}`)
-    console.log('setMaxAmount')
   }
 
   return (
