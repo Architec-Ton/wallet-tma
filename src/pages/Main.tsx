@@ -28,14 +28,10 @@ function Main() {
   const [walletInfoApi] = useApiWalletInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);
   const ton = useTon();
-  // const trx = useTrxModalManagement();
-  // const [mnemonic] = useLocalStorage<string>('mnemonic', '');
-  //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
 
   const handleInfo = async () => {
     try {
       const result = await walletInfoApi(null).unwrap();
-      // console.log("Wallet result:", result);
       setWalletInfoData(result);
 
       if (result) {
@@ -52,37 +48,11 @@ function Main() {
 
   useEffect(() => {
     page.setTitle("Main", "Page");
-
-    // const handle = async () => {
-    //   const tx = await trx.open(
-    //     "4551436b6147515443554d557a753562394944595934456a474934684c49726e6e4b61356f416867796d7870396971592e3233393334383430303030303032",
-    //     {
-    //       amount: 54554,
-    //       source: "dfsfdssdf",
-    //     } as TransactionDto
-    //   );
-
-    //   navigate(0);
-
-    //   console.log("tx", tx);
-    // };
-    // handle();
   }, []);
 
   useEffect(() => {
-    // console.log("walletInfoData", walletInfoData);
-  }, [walletInfoData]);
-
-  useEffect(() => {
-    // console.log("isTonLoading", isTonLoading);
-    // if (mnemonic.length !== 0) {
-    //   // TODO load data from blockchain
-    //   console.log(mnemonic)
-    // } else
     if (!isTonLoading) {
-      // console.log("Call ", isTonLoading, tonMode);
       if (tonMode == TonConnectionMode.disconnect) {
-        // console.log("mode disconnect");
         navigate("/registration/welcome");
       } else {
         // TODO: Get Balance data
