@@ -16,6 +16,9 @@ type Props = {
 
 function Assets({ children, assets }: Props) {
   const t = useLanguage("assets");
+
+  console.log({ assets });
+
   if (assets) {
     return (
       <Section title={t("title")} className="add-crypto__container">

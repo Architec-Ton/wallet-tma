@@ -17,6 +17,7 @@ import { WalletsState } from "../../types/auth.ts";
 import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
 import { showAlert } from "../../features/alert/alertSlice.ts";
 import useRouter from "../../hooks/useRouter.ts";
+import { TonConnectionMode } from "../../features/ton/tonSlice.ts";
 
 // const randomInt = (min: number, max: number) =>
 //   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -110,7 +111,7 @@ const ConfirmKey: React.FC = () => {
         wallets: [
           {
             network: "ton",
-            mode: "mnemonics",
+            mode: TonConnectionMode.mnemonics,
             publicKey: keyPair.publicKey.toString("hex"),
             address: wallet.address.toString({
               urlSafe: true,
@@ -122,7 +123,7 @@ const ConfirmKey: React.FC = () => {
       });
       ton.setAddress(
         wallet.address.toString({ urlSafe: true, bounceable: false }),
-        "mnemonics",
+        TonConnectionMode.mnemonics,
         keyPair.publicKey.toString("hex"),
         privateHash
       );

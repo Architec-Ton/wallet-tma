@@ -14,6 +14,7 @@ import AlertContainer from "./components/ui/alert/AlertContainer.tsx";
 // import { Buffer } from "buffer/";
 // window.Buffer = Buffer;
 import ReactGA from "react-ga4";
+import { TmaProvider } from "./components/layout/TmaProvider.tsx";
 
 ReactGA.initialize("G-G09LBL852");
 
@@ -30,10 +31,12 @@ function App() {
         <Provider store={store}>
           <SDKProvider acceptCustomStyles>
             <TonProvider>
-              <Layout>
-                <AlertContainer />
-                <RouterProvider router={router} />
-              </Layout>
+              <TmaProvider>
+                <Layout>
+                  <AlertContainer />
+                  <RouterProvider router={router} />
+                </Layout>
+              </TmaProvider>
             </TonProvider>
           </SDKProvider>
         </Provider>

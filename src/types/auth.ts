@@ -1,10 +1,11 @@
-import { UserInfo } from './user';
+import { TonConnectionMode } from "../features/ton/tonSlice";
+import { UserInfo } from "./user";
 
-export type TAuthType = 'telegram' | 'web';
+export type TAuthType = "telegram" | "web";
 
 export interface WalletState {
   network: string;
-  mode: string;
+  mode: TonConnectionMode;
   address?: string;
   publicKey?: string;
   privateKey?: string;

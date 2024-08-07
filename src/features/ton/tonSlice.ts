@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum TonConnectionMode {
-  disconnect = 0,
-  tonconnect,
-  mnemonics,
+  disconnect = "disconnect",
+  tonconnect = "tonconnect",
+  mnemonics = "mnemonics",
 }
 
 interface TonState {
