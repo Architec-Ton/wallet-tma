@@ -179,18 +179,6 @@ const Swap = () => {
     }
   }, [swapAssets, combinedAssets]);
 
-  // useEffect(() => {
-  //   if (sendingAsset && receivingAsset) {
-  //     transaction.init({
-  //       commission: 0.17,
-  //       returnValue: 0.125,
-  //       address: receivingAsset.meta?.address as string,
-  //       completeIcon: congratulateImg,
-  //       completeTitle: t("transaction-complete-title"),
-  //     });
-  //   }
-  // }, [sendingAsset, receivingAsset]);
-
   const calculateSwappValues = (
     value: number | string,
     mode: "send" | "receive"
@@ -297,14 +285,6 @@ const Swap = () => {
   const swapHanler = () => {
     transactionSuccessHandler();
   };
-
-  // const delay = (time: number) => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(true);
-  //     }, time);
-  //   });
-  // };
 
   const transactionParams = () => {
     const dex =
@@ -437,9 +417,6 @@ const Swap = () => {
     }
   }, [isValidSwapp]);
 
-  // const onComplete = () => {
-  //   navigate("/bank/buy");
-  // };
   return (
     <Page title={t("page-title")} className="swap">
       <Delimiter />
