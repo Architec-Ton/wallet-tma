@@ -1,4 +1,5 @@
-import { ReactNode, useEffect, useState } from "react";
+import type { ReactNode} from "react";
+import { useEffect, useState } from "react";
 
 import { Address as Addr } from "@ton/core";
 
@@ -6,7 +7,7 @@ import { iconInputScan } from "../../../assets/icons/inputs";
 import { showAlert } from "../../../features/alert/alertSlice";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import useRouter from "../../../hooks/useRouter";
-import { WalletInfoData } from "../../../types/wallet";
+import type { WalletInfoData } from "../../../types/wallet";
 import { parseTonTransferUrl } from "../../../utils/formatter";
 import QrButton from "../../buttons/qrButton";
 import Column from "../../containers/Column";

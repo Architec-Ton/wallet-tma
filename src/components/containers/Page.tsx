@@ -1,4 +1,5 @@
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import type { CSSProperties, ReactNode} from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { selectIsLoading, selectIsNavbarVisible } from "../../features/page/pageSelectors";

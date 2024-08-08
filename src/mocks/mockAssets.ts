@@ -1,6 +1,6 @@
 import { iconLogo } from "../assets/icons/globals";
 import { iconPepe, iconTon, iconUsdt } from "../assets/icons/jettons";
-import { CoinDto } from "../types/assest";
+import type { CoinDto } from "../types/assest";
 
 export const initialAssets: CoinDto[] = [
   {

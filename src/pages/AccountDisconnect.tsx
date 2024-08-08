@@ -13,7 +13,7 @@ import useLanguage from "../hooks/useLanguage.ts";
 import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { useTon } from "../hooks/useTon";
-import { WalletInfoData } from "../types/wallet.ts";
+import type { WalletInfoData } from "../types/wallet.ts";
 
 function AccountDisconnect() {
   // const popup = initPopup()

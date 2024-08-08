@@ -1,8 +1,9 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { AuthInitData } from "../../types/auth";
-import { UserInfo } from "../../types/user";
-import { AuthInitTon } from "../../types/wallet";
+import type { AuthInitData } from "../../types/auth";
+import type { UserInfo } from "../../types/user";
+import type { AuthInitTon } from "../../types/wallet";
 
 export interface AccountState {
   account?: AuthInitData;

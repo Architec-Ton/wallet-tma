@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import classNames from "classnames";
@@ -26,7 +26,7 @@ function Menu({ menuItems, style, className }: MenuProps) {
 
   const handlerClick = useClosure((to: string) => {
     if (location.pathname !== to) {
-      //page.setLoading(true, false);
+      // page.setLoading(true, false);
       navigate(to);
     }
   });

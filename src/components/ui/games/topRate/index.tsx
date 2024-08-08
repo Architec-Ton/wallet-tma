@@ -1,5 +1,5 @@
 import useLanguage from "../../../../hooks/useLanguage";
-import { GameListItemType } from "../../../../types/gameTypes";
+import type { GameListItemType } from "../../../../types/gameTypes";
 import GameListSection from "../listSection";
 
 type TopRatePropsType = {

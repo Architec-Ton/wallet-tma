@@ -1,5 +1,5 @@
 import ListBlock from ".";
-import { ItemDto } from "../../../types/list";
+import type { ItemDto } from "../../../types/list";
 import Column from "../../containers/Column";
 import ListBaseItem from "./ListBaseItem";
 import "./ListItem.styles.css";
@@ -9,8 +9,7 @@ type OwnPropsType = {
   onClick?: (item: ItemDto) => void;
 };
 
-const ListItem = ({ items, onClick }: OwnPropsType) => {
-  return (
+const ListItem = ({ items, onClick }: OwnPropsType) => (
     <>
       {items && items.length > 0 && (
         <ListBlock className="listitem-info-block">
@@ -32,6 +31,5 @@ const ListItem = ({ items, onClick }: OwnPropsType) => {
       )}
     </>
   );
-};
 
 export default ListItem;

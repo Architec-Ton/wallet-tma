@@ -4,7 +4,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper/modules";
-import { Swiper, SwiperProps } from "swiper/react";
+import type { SwiperProps } from "swiper/react";
+import { Swiper } from "swiper/react";
 
 import "./index.css";
 
@@ -14,12 +15,10 @@ type SliderPropsType = {
   className?: string;
 };
 
-const Slider = ({ children, settings = {}, className }: SliderPropsType) => {
-  return (
+const Slider = ({ children, settings = {}, className }: SliderPropsType) => (
     <Swiper className={className} modules={[Pagination]} {...settings}>
       {children}
     </Swiper>
   );
-};
 
 export default Slider;

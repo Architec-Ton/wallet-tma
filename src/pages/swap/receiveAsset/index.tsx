@@ -1,11 +1,11 @@
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 
-import { AssetDataType } from "..";
+import type { AssetDataType } from "..";
 import { iconOpenButton } from "../../../assets/icons/buttons";
 import Row from "../../../components/containers/Row";
 import Section from "../../../components/containers/Section";
 import useLanguage from "../../../hooks/useLanguage";
-import { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "../../../types/assest";
 
 type OwnPropsType = {
   asset: AssetDataType;
@@ -19,7 +19,7 @@ type OwnPropsType = {
 
 const ReceiveAsset = ({ asset, coin, sendedCoin, disabled, onChange, onClick, value }: OwnPropsType) => {
   const t = useLanguage("swap");
-  const decimals = Math.pow(10, coin?.meta?.decimals ? coin?.meta?.decimals : 0);
+  const decimals = 10**(coin?.meta?.decimals ? coin?.meta?.decimals : 0);
   const receivedCoinPrice =
     sendedCoin && coin && Math.round((sendedCoin.usdPrice / coin.usdPrice) * decimals) / decimals;
   return (

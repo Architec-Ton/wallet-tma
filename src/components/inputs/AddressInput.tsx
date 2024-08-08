@@ -1,4 +1,5 @@
-import { CSSProperties, ChangeEventHandler, useEffect, useState } from "react";
+import type { CSSProperties, ChangeEventHandler} from "react";
+import { useEffect, useState } from "react";
 
 import classNames from "classnames";
 

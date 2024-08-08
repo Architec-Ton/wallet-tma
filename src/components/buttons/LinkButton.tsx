@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useUtils } from "@tma.js/sdk-react";
@@ -28,7 +28,7 @@ function LinkButtonTMA({ to, children, style, className, visible }: Props) {
               utils.openLink(to);
             }
           }}
-          href={`#`}
+          href="#"
           style={style}
           className={className}
         >

@@ -1,4 +1,4 @@
-import { CSSProperties, HTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes } from "react";
 
 import classNames from "classnames";
 
@@ -21,7 +21,7 @@ function PriceChanges({ style, className, changePrice }: Props<HTMLDivElement>) 
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,
       })}
-      {"%"}
+      %
     </div>
   );
 }

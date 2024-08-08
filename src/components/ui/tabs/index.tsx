@@ -9,12 +9,10 @@ type TabsPropsType = {
   className?: string;
 };
 
-const Tabs = ({ children, className }: TabsPropsType) => {
-  return (
+const Tabs = ({ children, className }: TabsPropsType) => (
     <Block className="tabs-block">
       <Grid className={classNames("tabs", className)}>{children}</Grid>
     </Block>
   );
-};
 
 export default Tabs;

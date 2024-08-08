@@ -8,8 +8,6 @@ type OwnPropsType = {
   className?: string;
 };
 
-const ListBlock = ({ children, className }: OwnPropsType) => {
-  return <Block className={classNames("w-full list-block__block", className)}>{children}</Block>;
-};
+const ListBlock = ({ children, className }: OwnPropsType) => <Block className={classNames("w-full list-block__block", className)}>{children}</Block>;
 
 export default ListBlock;

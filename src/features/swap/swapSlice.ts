@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { AssetInfo } from "@ston-fi/api";
+import type { AssetInfo } from "@ston-fi/api";
 
 export interface SwapState {
   assets: AssetInfo[];

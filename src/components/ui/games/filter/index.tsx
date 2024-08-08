@@ -1,4 +1,5 @@
-import { ChangeEventHandler, useMemo } from "react";
+import type { ChangeEventHandler} from "react";
+import { useMemo } from "react";
 
 import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
 import { clearFilter, setFilter } from "../../../../features/gaming/gamingSlice";
@@ -11,13 +12,11 @@ const GameListFilter = () => {
   const dispatch = useAppDispatch();
   const filter = useAppSelector(selectGamesFilter);
 
-  const filtersStatus = useMemo(() => {
-    return {
+  const filtersStatus = useMemo(() => ({
       name: filter.name ? t("filter-on") : t("filter-off"),
       rate: filter.rate ? t("filter-on") : t("filter-off"),
       date: filter.date ? t("filter-on") : t("filter-off"),
-    };
-  }, [filter]);
+    }), [filter]);
 
   const filterHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const target = e.currentTarget;

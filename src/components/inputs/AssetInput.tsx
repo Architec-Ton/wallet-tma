@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import classNames from "classnames";
 
@@ -6,7 +6,7 @@ import { iconOpenButton } from "../../assets/icons/buttons";
 import Row from "../../components/containers/Row";
 import Section from "../../components/containers/Section";
 import useLanguage from "../../hooks/useLanguage";
-import { CoinDto } from "../../types/assest";
+import type { CoinDto } from "../../types/assest";
 import "./AssetInput.styles.css";
 
 interface AssetInputProps {

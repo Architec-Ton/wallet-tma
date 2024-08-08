@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { hideAlert } from "../../../features/alert/alertSlice.ts";
 import useLanguage from "../../../hooks/useLanguage.ts";
-import { RootState } from "../../../store";
+import type { RootState } from "../../../store";
 import Alert from "./Alert.tsx";
 
 const AlertContainer: React.FC = () => {

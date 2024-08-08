@@ -10,7 +10,7 @@ import FormatMessage from "../../components/typography/FormatMessage";
 import { showAlert } from "../../features/alert/alertSlice.ts";
 import useLanguage from "../../hooks/useLanguage";
 import { useTon } from "../../hooks/useTon";
-import { AssetType } from "./ReceiveAsset";
+import type { AssetType } from "./ReceiveAsset";
 
 const AddCryptoAddress = () => {
   const t = useLanguage("add-crypto");

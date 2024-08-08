@@ -1,7 +1,7 @@
-import { Address } from "@ton/core";
+import type { Address } from "@ton/core";
 
-import { CoinDto } from "./assest";
-import { TransactionHistoryItemDto } from "./history";
+import type { CoinDto } from "./assest";
+import type { TransactionHistoryItemDto } from "./history";
 
 export interface AuthInitTon {
   address: string;

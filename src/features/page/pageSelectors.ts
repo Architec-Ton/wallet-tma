@@ -1,4 +1,4 @@
-import { RootState } from "../../store";
+import type { RootState } from "../../store";
 
 export const selectTitle = (state: RootState) => state.page.title;
 export const selectIsLoading = (state: RootState) => state.page.isLoading;

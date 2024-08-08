@@ -9,7 +9,7 @@ import { selectGamesFilter } from "../../../features/gaming/gamingSelectors";
 import { setLoading } from "../../../features/page/pageSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppDispatch";
 import useDebounce from "../../../hooks/useDebounce";
-import { GameCategoryType, GameFilterType, GameListItemType } from "../../../types/gameTypes";
+import type { GameCategoryType, GameFilterType, GameListItemType } from "../../../types/gameTypes";
 import "./index.css";
 
 type SearchParamsType = {

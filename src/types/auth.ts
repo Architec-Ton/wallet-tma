@@ -1,5 +1,5 @@
-import { TonConnectionMode } from "../features/ton/tonSlice";
-import { UserInfo } from "./user";
+import type { TonConnectionMode } from "../features/ton/tonSlice";
+import type { UserInfo } from "./user";
 
 export type TAuthType = "telegram" | "web";
 

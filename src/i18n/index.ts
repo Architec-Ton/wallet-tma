@@ -17,7 +17,7 @@ const resources = {
 
 i18n.use(initReactI18next).use(LanguageDetector).init({
   resources,
-  //lng: 'ru',
+  // lng: 'ru',
   debug: false,
   fallbackLng: "en",
 });

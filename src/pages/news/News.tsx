@@ -46,7 +46,7 @@ const News = () => {
 
   return (
     <Page title={t("title")}>
-      <Hashtags hashtags={cardData.hashtags} className={"news-top-bar"} />
+      <Hashtags hashtags={cardData.hashtags} className="news-top-bar" />
       <NewsCard cardData={cardData} />
     </Page>
   );

@@ -1,13 +1,14 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import type { ChangeEvent} from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import classNames from "classnames";
 
-import { AssetDataType } from "..";
+import type { AssetDataType } from "..";
 import { iconOpenButton } from "../../../assets/icons/buttons";
 import Row from "../../../components/containers/Row";
 import Section from "../../../components/containers/Section";
 import useLanguage from "../../../hooks/useLanguage";
-import { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "../../../types/assest";
 
 type OwnPropsType = {
   asset: AssetDataType;
@@ -28,9 +29,7 @@ const SendAsset = ({ asset, coin, disabled, onChange, onClick, forceChange, valu
     setAssetValue(value || "");
   }, [value]);
 
-  const isInsuffucientBalance = useMemo(() => {
-    return coin && coin.amount - Number(assetValue) < 0;
-  }, [coin, assetValue]);
+  const isInsuffucientBalance = useMemo(() => coin && coin.amount - Number(assetValue) < 0, [coin, assetValue]);
 
   const clearHandler = () => {
     setAssetValue("");

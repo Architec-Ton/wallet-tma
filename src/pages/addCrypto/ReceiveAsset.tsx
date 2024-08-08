@@ -47,8 +47,7 @@ const ReceiveAsset = () => {
     <>
       <Section title={t("choose-asset")} className="add-crypto__container">
         <ListBlock>
-          {assets.map((asset, index) => {
-            return (
+          {assets.map((asset, index) => (
               <ListBlockItem
                 key={`${asset.title}-${index}`}
                 thumb={asset.thumb}
@@ -56,8 +55,7 @@ const ReceiveAsset = () => {
                 description={asset.description}
                 onClick={assetClickHandler(asset)}
               />
-            );
-          })}
+            ))}
         </ListBlock>
       </Section>
       <Delimiter />

@@ -9,8 +9,7 @@ type OwnPropsType = {
   onClick?: CallableFunction;
 };
 
-const ListBlockItem = ({ thumb, title, description, iconAction, onClick }: OwnPropsType) => {
-  return (
+const ListBlockItem = ({ thumb, title, description, iconAction, onClick }: OwnPropsType) => (
     <ListBaseItem onClick={onClick}>
       {thumb && <img src={thumb} alt="" className="list-block__icon" />}
       <Column className="list-block__info">
@@ -20,6 +19,5 @@ const ListBlockItem = ({ thumb, title, description, iconAction, onClick }: OwnPr
       {iconAction && <img src={iconAction} alt="" className="list-block__button" />}
     </ListBaseItem>
   );
-};
 
 export default ListBlockItem;
