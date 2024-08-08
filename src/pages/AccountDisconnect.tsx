@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 
 import { logOutIcon } from "../assets/icons/buttons";
-import TileButton from "../components/buttons/TileButton.tsx";
+import TileButton from "../components/buttons/TileButton";
 import Column from "../components/containers/Column";
 import Page from "../components/containers/Page";
-import Address from "../components/ui/balance/Address.tsx";
+import Address from "../components/ui/balance/Address";
 import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
 import { TonConnectionMode } from "../features/ton/tonSlice";
-import { useApiWalletInfoMutation } from "../features/wallet/walletApi.ts";
+import { useApiWalletInfoMutation } from "../features/wallet/walletApi";
 import { useAppSelector } from "../hooks/useAppDispatch";
-import useLanguage from "../hooks/useLanguage.ts";
+import useLanguage from "../hooks/useLanguage";
 import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { useTon } from "../hooks/useTon";
-import type { WalletInfoData } from "../types/wallet.ts";
+import type { WalletInfoData } from "../types/wallet";
 
 function AccountDisconnect() {
   // const popup = initPopup()

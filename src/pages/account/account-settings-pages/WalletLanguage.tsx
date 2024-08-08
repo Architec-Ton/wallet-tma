@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-import Page from "../../../components/containers/Page.tsx";
-import SelectorTile from "../../../components/ui/selector-tile/SelectorTile.tsx";
-import useLanguage from "../../../hooks/useLanguage.ts";
-import { usePage } from "../../../hooks/usePage.ts";
+import Page from "../../../components/containers/Page";
+import SelectorTile from "../../../components/ui/selector-tile/SelectorTile";
+import useLanguage from "../../../hooks/useLanguage";
+import { usePage } from "../../../hooks/usePage";
 
 const WalletLanguage = () => {
   const languages = [

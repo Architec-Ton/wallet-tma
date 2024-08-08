@@ -9,7 +9,6 @@ import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import "./BankStakingHistorySection.styles.css";
 
-import React from "react";
 
 export type StakeHistoryType = {
   date: string;

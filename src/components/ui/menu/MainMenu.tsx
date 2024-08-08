@@ -5,7 +5,7 @@ import {
   iconMenuMainApps,
   iconMenuMainNews,
   iconMenuMainWallet,
-} from "../../../assets/icons/menus/main/index.ts";
+} from "../../../assets/icons/menus/main/index";
 import useLanguage from "../../../hooks/useLanguage";
 import "./MainMenu.styles.css";
 import type { MenuItem } from "./Menu";

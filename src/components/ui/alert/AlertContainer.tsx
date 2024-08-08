@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { hideAlert } from "../../../features/alert/alertSlice.ts";
-import useLanguage from "../../../hooks/useLanguage.ts";
+import { hideAlert } from "../../../features/alert/alertSlice";
+import useLanguage from "../../../hooks/useLanguage";
 import type { RootState } from "../../../store";
-import Alert from "./Alert.tsx";
+import Alert from "./Alert";
 
 const AlertContainer: React.FC = () => {
   const dispatch = useDispatch();

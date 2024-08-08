@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import alertReducer from "../features/alert/alertSlice.ts";
+import alertReducer from "../features/alert/alertSlice";
 import { authApi } from "../features/auth/authApi";
 import authSlice from "../features/auth/authSlice";
 import { bankApi } from "../features/bank/bankApi";
 import { gamingApi } from "../features/gaming/gamingApi";
 import gamingSlice from "../features/gaming/gamingSlice";
-import pinCodeModalReducer from "../features/modal/pinModalSlice.ts";
-import { trxApi } from "../features/modal/trxModalApi.ts";
-import trxModalReducer from "../features/modal/trxModalSlice.ts";
+import pinCodeModalReducer from "../features/modal/pinModalSlice";
+import { trxApi } from "../features/modal/trxModalApi";
+import trxModalReducer from "../features/modal/trxModalSlice";
 import pageReducer from "../features/page/pageSlice";
 import { stonFiApi } from "../features/stonfi/stonFiApi";
 import swapSlice from "../features/swap/swapSlice";
