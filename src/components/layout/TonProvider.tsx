@@ -29,13 +29,11 @@ export function TonProvider({ children }: Props) {
   const trxHash = useAppSelector((state: RootState) => state.trx.trxHash);
   const trxInitData = useAppSelector((state: RootState) => state.trx.trxInitData);
 
-  // const tonMode = useAppSelector(selectTonMode);
   const [bcData] = useLocalStorage<WalletsState>("wData", {
     currentWallet: -1,
     wallets: [],
   });
   useEffect(() => {
-    console.log(bcData);
     if (bcData.currentWallet < 0) {
       dispatch(
         setAddress({

@@ -98,7 +98,6 @@ const BankStakingHistory = () => {
 
   const sortedData = useMemo(() => {
     if (historyData) {
-      console.log(direction);
       const data = historyData.sort((a, b) => {
         const aDate = new Date(a.date);
         const bDate = new Date(b.date);
@@ -129,11 +128,10 @@ const BankStakingHistory = () => {
       const ownerAddress = ton.wallet.address;
       // Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
-      console.log("BNK Stake Wallet", stakeAddress?.toString());
+
       if (stakeAddress) {
         const stakeInfo = await contracts.bank.getStakeInfo(stakeAddress, ownerAddress);
         // if (stakeInfo) setArc(fromNano(stakeInfo.calculatedAmount));
-        console.log("getStakeInfo:", stakeInfo);
       }
     }
   };
@@ -142,7 +140,6 @@ const BankStakingHistory = () => {
     if (ton.wallet.address) {
       // Get BNK Wallet address
       const tx = await contracts.bank.claim();
-      console.log("Unstake", tx);
     }
   };
 

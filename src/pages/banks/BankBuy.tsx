@@ -80,13 +80,11 @@ function BankBuy() {
       recvMaxAmount >= Number(recvAmount) &&
       Number(sendAmount) <= sendAsset?.amount;
     if (isReady) {
-      console.log("update number ton: ", Number(bnkAmount * bnkPrice));
       btn.init(
         `${t("buy", "button")} (${Number(bnkAmount * bnkPrice).toLocaleString(undefined, {
           maximumFractionDigits: 1,
         })} TON)`,
         () => {
-          console.log("number ton: ", Number(bnkAmount * bnkPrice));
           handleBuyBank(Number(bnkAmount * bnkPrice));
         },
         btnVisible,
@@ -105,7 +103,7 @@ function BankBuy() {
 
   const handleSendOnChange = (value: string) => {
     const tonAmount = Number(value);
-    if (!isNaN(tonAmount)) {
+    if (!Number.isNaN(tonAmount)) {
       const bnkAmount = Math.trunc(tonAmount / bnkPrice);
       if (bnkAmount <= recvMaxAmount) setRecvAmount(() => (bnkAmount ? bnkAmount.toString() : ""));
       // setSendAmount((bnkAmount * bnkPrice).toString());
@@ -115,7 +113,7 @@ function BankBuy() {
 
   const handleRecvOnChange = (value: string) => {
     const bnkAmount = Number(value);
-    if (!isNaN(bnkAmount)) {
+    if (!Number.isNaN(bnkAmount)) {
       const bnkTAmount = Math.trunc(bnkAmount);
       if (bnkAmount <= recvMaxAmount) {
         setSendAmount(() => (bnkAmount ? (bnkTAmount * bnkPrice).toString() : ""));
@@ -125,7 +123,6 @@ function BankBuy() {
   };
 
   const handleBuyBank = async (amount: number) => {
-    console.log(sendAmount);
     try {
       if (refAddress) {
         const tx = await contracts.bank.buyWithReferral(Address.parse(refAddress), toNano(amount));
@@ -136,7 +133,7 @@ function BankBuy() {
       }
       navigate("/bank");
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

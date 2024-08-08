@@ -63,7 +63,7 @@ const SendPage = () => {
 
   const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const amount = Number(event.target.value);
-    if (step === 2 && !isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
+    if (step === 2 && !Number.isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
       btn.init(
         t("continue", "button"),
         () => {
@@ -72,7 +72,7 @@ const SendPage = () => {
             `${t("confirm", "button")} (${amount} ${asset.meta?.symbol})`,
             async () => {
               // Transfer
-              console.log(address, asset.type);
+
               btn.setVisible(false);
               if (asset.type === "ton") {
                 const tx = await ton.sender.send({
@@ -82,9 +82,7 @@ const SendPage = () => {
                   // sendMode:
                   //   SendMode.PAY_GAS_SEPARATELY | SendMode.IGNORE_ERRORS,
                 });
-                console.log("Ton TX:", tx);
               } else if (asset.type === "jetton") {
-                console.log(ton.wallet.address, asset.meta?.address, asset.meta?.decimals);
                 if (
                   ton.wallet.address &&
                   asset.meta?.address &&
@@ -96,9 +94,8 @@ const SendPage = () => {
                     ton.wallet.address,
                   );
 
-                  console.log("walletJetton:", walletAddress);
                   const jettonAmount = BigInt(amount * 10 ** asset.meta.decimals);
-                  console.log("jettonAmount:", jettonAmount);
+
                   if (walletAddress) {
                     const tx = await contracts.jetton.transfer(walletAddress, Address.parse(address), jettonAmount);
                     console.log("Jetton TX:", tx);
@@ -143,7 +140,7 @@ const SendPage = () => {
         Address.parse(address);
         setIsButtonEnabled(true);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
 
@@ -154,7 +151,7 @@ const SendPage = () => {
   const handleInfo = async () => {
     try {
       const result = await walletApiAssets(null).unwrap();
-      // console.log('Wallet result:', result);
+
       setAssets(result);
     } catch (err) {
       console.error("Failed to get info: ", err);
@@ -177,8 +174,6 @@ const SendPage = () => {
       btn.init(
         t("continue", "button"),
         () => {
-          console.log(address);
-          console.log(asset);
           btn.setVisible(false);
           setStep(2);
         },

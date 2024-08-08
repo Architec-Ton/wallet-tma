@@ -30,7 +30,7 @@ function AccountDisconnect() {
   const handleInfo = async () => {
     try {
       const result = await walletInfoApi(null).unwrap();
-      console.log("Wallet result:", result);
+
       setWalletInfoData(result);
     } catch (err) {
       console.error("Failed to get info: ", err);
@@ -40,11 +40,8 @@ function AccountDisconnect() {
   useEffect(() => {
     page.setTitle("Account", "Page");
     handleInfo().then(() => {
-      console.log("isTonLoading", isTonLoading);
       if (!isTonLoading) {
-        console.log("Call ", isTonLoading, tonMode);
         if (tonMode === TonConnectionMode.disconnect) {
-          console.log("mode disconnect");
           navigate("/registration/welcome");
         } else {
           // TODO: Получение данных баланса

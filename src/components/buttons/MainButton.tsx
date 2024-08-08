@@ -24,19 +24,14 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
 
   useEffect(() => {
     if (rmListener) {
-      console.log("rm on", rmListener);
       rmListener();
       setRmListener(() => {});
     }
     if (onClick !== undefined) {
       const rmfn = mb.on("click", () => {
-        // mb.showLoader();
-        console.log("Just click ", onClick);
         onClick();
       });
-      console.log("set on", rmfn);
       setRmListener(() => rmfn);
-      // tma?.expand();
     }
   }, [onClick]);
 
@@ -70,7 +65,7 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
             Address.parse(ref);
             dispatch(setReferral(ref));
           } catch (e) {
-            console.log("Refferal wrong", e);
+            console.error("Refferal wrong", e);
           }
         }
       }

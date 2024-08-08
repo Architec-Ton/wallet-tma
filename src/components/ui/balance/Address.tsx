@@ -30,7 +30,6 @@ function Address({ address, copy = true }: Props) {
         .writeText(address)
         .then(() => {
           dispatch(showAlert({ message: "copy", duration: 1500 }));
-          console.log("coped");
         })
         .catch((err) => console.error("Failed to copy text: ", err));
     }

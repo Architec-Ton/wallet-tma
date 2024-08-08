@@ -20,7 +20,7 @@ const RecvAssetInput = ({ asset, value, maxValue, isSelectable, subTitle, onChan
 
   const handlerOnChange = (value: string) => {
     const sValue = Number(value);
-    if (isNaN(sValue) || (maxValue && sValue > maxValue)) {
+    if (Number.isNaN(sValue) || (maxValue && sValue > maxValue)) {
       setError(true);
     } else {
       setError(false);

@@ -83,7 +83,6 @@ const CategoryGames = () => {
 
     if (filterParams.length) {
       filterParams.forEach((param) => {
-        console.log(param);
         _apps = _apps.sort((a, b) => {
           switch (param) {
             case "name":

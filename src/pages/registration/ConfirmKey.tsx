@@ -43,7 +43,6 @@ const ConfirmKey: React.FC = () => {
     wallets: [],
   });
 
-  console.log("storedValue", storedValue);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
@@ -63,7 +62,6 @@ const ConfirmKey: React.FC = () => {
 
     if (!pin1) {
       // Wrong
-      console.log("Something wrong");
       dispatch(
         showAlert({
           message: "Pincode wrong.",
@@ -89,15 +87,9 @@ const ConfirmKey: React.FC = () => {
       return;
     }
 
-    // console.log("pin:", pin1);
     try {
-      console.log("mnemonics", mnemonics);
-
       const keyPair = await mnemonicToPrivateKey(mnemonics);
       const privateHash = encodePrivateKeyByPin(mnemonics, pin1);
-
-      // console.log("keyPair", keyPair);
-      // console.log("privateHash", privateHash);
 
       // Use v4 by default
       const workchain = 0; // Usually you need a workchain 0
@@ -128,7 +120,7 @@ const ConfirmKey: React.FC = () => {
       );
       setIsCompleted(true);
     } catch (e) {
-      console.log("Coding wrong", e);
+      console.error("Coding wrong", e);
       dispatch(
         showAlert({
           message: `Coding wrong. (${(e as Error).message})`,
@@ -142,10 +134,9 @@ const ConfirmKey: React.FC = () => {
 
   const confirmHandler = (mnemonics: string[]) => {
     // if (verificationStep === 0) {
-    console.log("mnemonicsVerifyIdx", mnemonicsVerifyIdx);
+
     const checkMnemonics = mnemonicsVerifyIdx.map((v, index) => mnemonics[v] === inputs[index].toLowerCase());
     if (!checkMnemonics.every((v) => Boolean(v))) {
-      console.log("Wrong inputs", checkMnemonics, inputs, mnemonicsVerifyIdx);
       // return;
     }
     setupPinCode(mnemonics);
@@ -173,7 +164,7 @@ const ConfirmKey: React.FC = () => {
     // const randomIdx = Array(3)
     //   .fill(0)
     //   .map(() => randomInt(0, 23));
-    console.log("rand:", randomIdx);
+
     setMnemonicsVerifyIdx(randomIdx);
     if (!state || state.mnemonic === null) {
       navigate("/", { replace: true });
@@ -182,10 +173,8 @@ const ConfirmKey: React.FC = () => {
 
     const mnemonics = state.mnemonic.split(" ");
     if (state) {
-      console.log("state", state.mnemonic.split(" "));
       setMnemonics(mnemonics);
     } else {
-      console.log("no state", state);
     }
     page.setLoading(false, false);
     btn.init(t("next", "button"), () => {

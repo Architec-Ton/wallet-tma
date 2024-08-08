@@ -33,7 +33,6 @@ function History({ items = [] }: Props) {
         new Map() as Map<string, TransactionHistoryItemDto[]>,
       );
 
-      // console.log("results", Object.fromEntries(groupedData));
       return Object.fromEntries(groupedData);
     }
   }, [items]);

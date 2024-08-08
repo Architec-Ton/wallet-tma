@@ -26,7 +26,6 @@ function QrButtonTMA({ icon, title, style, className, onChange }: Props) {
         text: "Scan QR code",
       })
       .then((qr: string | null) => {
-        console.log(qr);
         if (onChange && qr) onChange(qr);
       });
   };

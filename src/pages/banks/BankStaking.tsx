@@ -1,5 +1,6 @@
 import type { ChangeEventHandler } from "react";
-import React, { useEffect, useMemo, useRef, useState } from "react"; // useCallback,
+import React, { useEffect, useMemo, useRef, useState } from "react";
+// useCallback,
 // import bankIcon from "../../assets/images/bank.png";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +17,6 @@ import Delimiter from "../../components/typography/Delimiter";
 import type { StakeHistoryType } from "../../components/ui/bank/BankStakingHistorySection";
 import BankStakingHistorySection from "../../components/ui/bank/BankStakingHistorySection";
 import BankStakingInfo from "../../components/ui/bank/BankStakingInfo";
-import { BANK_CROWDSALE_ADDRESS } from "../../constants";
 import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
 import useContracts from "../../hooks/useContracts";
 import useLanguage from "../../hooks/useLanguage";
@@ -87,17 +87,15 @@ function BankStaking() {
     if (ownerAddress) {
       // Get BNK Wallet address
       try {
-        console.log("ownerAddress", ownerAddress.toString());
-        console.log("contracts.bank", BANK_CROWDSALE_ADDRESS);
         const walletAddress = await contracts.bank.getWallet(ownerAddress);
-        console.log("BNK Wallet", walletAddress?.toString());
+
         if (walletAddress) {
           const tx = await contracts.bank.stake(walletAddress, BigInt(amount));
-          console.log("Transaction:", tx);
+          console.log({ tx });
           navigate("/bank", { replace: true });
         }
       } catch (e) {
-        console.log("Error", e);
+        console.error("Error", e);
       }
     }
   };
@@ -108,17 +106,16 @@ function BankStaking() {
       // Get BNK Wallet address
       try {
         const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
-        console.log("stakeAddress", stakeAddress);
+
         if (stakeAddress) {
           // setStakeAddress(stakeAddress.toString());
           let stakeInfo;
           try {
             stakeInfo = await contracts.bank.getStakeInfo(stakeAddress, ownerAddress);
           } catch (e) {
-            console.log("not have staking", e);
+            console.error("not have staking", e);
           }
 
-          console.log("stakeInfo", stakeInfo);
           if (stakeInfo && stakeInfo.stakedAmount > 0) {
             const rewards = Number((stakeInfo.calculatedAmount * 100n) / 1_000_00n) / 100_000_0;
             setStakeHistory({
@@ -141,7 +138,6 @@ function BankStaking() {
         console.error(e);
       }
     }
-    console.log("handleStakeInfo");
   };
 
   const handleUnstake = async () => {
@@ -156,7 +152,7 @@ function BankStaking() {
     }
     try {
       const tx = await contracts.bank.unstake();
-      console.log("Unstake", tx);
+      console.log("Unstake tx", tx);
     } catch (e) {
       console.error(e);
     }
@@ -177,7 +173,6 @@ function BankStaking() {
       }
       try {
         const tx = await contracts.bank.claim();
-        console.log("claim", tx);
       } catch (e) {
         console.error(e);
       }
@@ -210,7 +205,7 @@ function BankStaking() {
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.currentTarget;
-    if (!isNaN(Number(value)) && value.length <= 7) {
+    if (!Number.isNaN(Number(value)) && value.length <= 7) {
       setValue(value);
     }
   };
@@ -226,7 +221,6 @@ function BankStaking() {
     if (Number(bnkAsset?.amount) > 0) {
       setValue(Number(bnkAsset?.amount).toString());
     }
-    console.log(arcAsset);
   };
 
   // const isValid = useMemo(() => {
@@ -293,7 +287,6 @@ function BankStaking() {
   };
 
   useEffect(() => {
-    console.log("My super:", value, stakingValue);
     if (stakingValue > 0) {
       btn.init(t("unstake", "button"), transactionUnstakeHandler, true);
     } else if (Number(value) > 0) {
@@ -311,8 +304,6 @@ function BankStaking() {
   // const onComplete = () => {
   //   navigate("/bank");
   // };
-
-  // console.log('stakingValue', stakingValue);
 
   return (
     <Page title={t("title")} className="staking-page">
