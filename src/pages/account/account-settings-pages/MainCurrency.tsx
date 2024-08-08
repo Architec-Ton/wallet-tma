@@ -1,7 +1,5 @@
 // import React from 'react';
 
-const MainCurrency = () => {
-  return <div></div>;
-};
+const MainCurrency = () => <div />;
 
 export default MainCurrency;

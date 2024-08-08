@@ -1,15 +1,15 @@
 // authApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { CoinDto } from "../../types/assest";
-import { TransactionHistoryItemDto } from "../../types/history";
-import { WalletInfoData } from "../../types/wallet";
+import type { CoinDto } from "../../types/assest";
+import type { TransactionHistoryItemDto } from "../../types/history";
+import type { WalletInfoData } from "../../types/wallet";
 import baseQuery from "../api/api";
 import { setTonUsdPrice } from "./walletSlice";
 
 export const walletApi = createApi({
   reducerPath: "walletApi",
-  baseQuery: baseQuery,
+  baseQuery,
   endpoints: (builder) => ({
     apiWalletInfo: builder.mutation<WalletInfoData, null>({
       query: () => ({

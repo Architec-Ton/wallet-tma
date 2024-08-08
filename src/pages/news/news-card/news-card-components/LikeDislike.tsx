@@ -1,5 +1,3 @@
-const LikeDislike = () => {
-  return <div></div>;
-};
+const LikeDislike = () => <div />;
 
 export default LikeDislike;

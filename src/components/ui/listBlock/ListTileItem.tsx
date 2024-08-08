@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import Column from "../../containers/Column";
 import ListBaseItem from "./ListBaseItem";
@@ -11,8 +11,7 @@ type OwnPropsType = {
   onClick?: CallableFunction;
 };
 
-const ListTileItem = ({ icon, title, description, children, onClick }: OwnPropsType) => {
-  return (
+const ListTileItem = ({ icon, title, description, children, onClick }: OwnPropsType) => (
     <ListBaseItem onClick={onClick}>
       {icon && <img src={icon} alt="" className="list-block__icon" />}
       <Column className="list-block__info">
@@ -22,6 +21,5 @@ const ListTileItem = ({ icon, title, description, children, onClick }: OwnPropsT
       {children}
     </ListBaseItem>
   );
-};
 
 export default ListTileItem;

@@ -7,14 +7,12 @@ interface AlertProps {
   isVisible: boolean;
 }
 
-const Alert: React.FC<AlertProps> = ({ text, isVisible }) => {
-  return (
+const Alert: React.FC<AlertProps> = ({ text, isVisible }) => (
     isVisible && (
       <div className="alert-container">
         <div className="alert">{text}</div>
       </div>
     )
   );
-};
 
 export default Alert;

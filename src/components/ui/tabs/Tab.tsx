@@ -8,12 +8,10 @@ type TabPropsType = {
   onClick: () => void;
 };
 
-const Tab = ({ children, isActive, onClick }: TabPropsType) => {
-  return (
+const Tab = ({ children, isActive, onClick }: TabPropsType) => (
     <div className={classNames("tab round-medium", { "active-tab": isActive })} onClick={onClick}>
       {children}
     </div>
   );
-};
 
 export default Tab;

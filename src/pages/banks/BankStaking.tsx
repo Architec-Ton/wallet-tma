@@ -1,5 +1,6 @@
-import {
-  ChangeEventHandler, // useCallback,
+import type {
+  ChangeEventHandler} from "react";
+import { // useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -8,7 +9,7 @@ import {
 // import bankIcon from "../../assets/images/bank.png";
 import { useNavigate } from "react-router-dom";
 
-import { Address } from "@ton/core";
+import type { Address } from "@ton/core";
 // import { formatDate } from "date-fns";
 // import PartialContent from "../../components/ui/modals/PartialContent";
 import classNames from "classnames";
@@ -18,7 +19,8 @@ import Page from "../../components/containers/Page";
 import Row from "../../components/containers/Row";
 import Section from "../../components/containers/Section";
 import Delimiter from "../../components/typography/Delimiter";
-import BankStakingHistorySection, { StakeHistoryType } from "../../components/ui/bank/BankStakingHistorySection";
+import type { StakeHistoryType } from "../../components/ui/bank/BankStakingHistorySection";
+import BankStakingHistorySection from "../../components/ui/bank/BankStakingHistorySection";
 import BankStakingInfo from "../../components/ui/bank/BankStakingInfo";
 import { BANK_CROWDSALE_ADDRESS } from "../../constants";
 import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
@@ -28,8 +30,8 @@ import { usePage } from "../../hooks/usePage";
 // import useRouter from '../../hooks/useRouter';
 import { useTmaMainButton } from "../../hooks/useTma";
 import { useTon } from "../../hooks/useTon";
-import { CoinDto } from "../../types/assest";
-import { WalletInfoData } from "../../types/wallet";
+import type { CoinDto } from "../../types/assest";
+import type { WalletInfoData } from "../../types/wallet";
 import "./BankStaking.styles.css";
 
 // import { useAppSelector } from '../../hooks/useAppDispatch';
@@ -89,7 +91,7 @@ function BankStaking() {
 
   const handleStake = async (amount: number, ownerAddress: Address | undefined) => {
     if (ownerAddress) {
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       try {
         console.log("ownerAddress", ownerAddress.toString());
         console.log("contracts.bank", BANK_CROWDSALE_ADDRESS);
@@ -109,13 +111,13 @@ function BankStaking() {
   const handleStakeInfo = async () => {
     if (ton.wallet.address) {
       const ownerAddress = ton.wallet.address;
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       try {
         const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
         console.log("stakeAddress", stakeAddress);
         if (stakeAddress) {
           // setStakeAddress(stakeAddress.toString());
-          let stakeInfo = undefined;
+          let stakeInfo;
           try {
             stakeInfo = await contracts.bank.getStakeInfo(stakeAddress, ownerAddress);
           } catch (e) {
@@ -128,7 +130,7 @@ function BankStaking() {
             setStakeHistory({
               date: new Date(Number(stakeInfo.time) * 1000).toString(),
               deposit: Number(stakeInfo.stakedAmount),
-              rewards: rewards,
+              rewards,
               claimAvailable: true,
             });
             setStakingValue(Number(stakeInfo.stakedAmount));
@@ -149,8 +151,8 @@ function BankStaking() {
   };
 
   const handleUnstake = async () => {
-    //if (ton.wallet.address) {
-    //Get BNK Wallet address
+    // if (ton.wallet.address) {
+    // Get BNK Wallet address
     btn.setVisible(false);
     if (stakeHistory) {
       setStakeHistory({
@@ -166,12 +168,12 @@ function BankStaking() {
     }
 
     navigate("/bank", { replace: true });
-    //}
+    // }
   };
 
   const handleClaim = async () => {
     if (ton.wallet.address) {
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       btn.setVisible(false);
       if (stakeHistory) {
         setStakeHistory({
@@ -213,7 +215,7 @@ function BankStaking() {
   // }, [value, arcAsset]);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value;
+    const {value} = e.currentTarget;
     if (!isNaN(Number(value)) && value.length <= 7) {
       setValue(value);
     }
@@ -266,7 +268,7 @@ function BankStaking() {
     } else {
       parameter = 3;
     }
-    return parameter; //(/* self.amount *  */self.durationTime() * parameter / 86400);  // 60sec*60min*24hour  )
+    return parameter; // (/* self.amount *  */self.durationTime() * parameter / 86400);  // 60sec*60min*24hour  )
   };
 
   const infoItems = useMemo(() => {

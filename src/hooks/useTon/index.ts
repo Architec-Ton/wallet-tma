@@ -4,7 +4,7 @@ import { Address } from "@ton/core";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 
 import { TonConnectionMode, setAddress, setSeqno } from "../../features/ton/tonSlice";
-import { WalletsState } from "../../types/auth";
+import type { WalletsState } from "../../types/auth";
 import { useAppDispatch } from "../useAppDispatch";
 import useLocalStorage from "../useLocalStorage";
 import { useSender } from "./sender";
@@ -33,8 +33,8 @@ export function useTon() {
 
   return {
     mode: tonMode,
-    wallet: wallet,
-    sender: sender,
+    wallet,
+    sender,
     setSeqno: (seqno: number | null) => dispatch(setSeqno(seqno)),
     setAddress: (address: string, mode: TonConnectionMode, publicKey?: string, privateKey?: string) => {
       setTonMode(mode);
@@ -48,8 +48,8 @@ export function useTon() {
               })
             : undefined,
           mode,
-          publicKey: publicKey,
-          privateKey: privateKey,
+          publicKey,
+          privateKey,
         }),
       );
 

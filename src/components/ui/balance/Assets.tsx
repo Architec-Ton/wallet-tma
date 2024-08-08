@@ -1,10 +1,11 @@
-import { ReactNode, useMemo } from "react";
+import type { ReactNode} from "react";
+import { useMemo } from "react";
 
 import { TON_JETTON } from "../../../constants";
 import { useGetStonFiAssetQuery } from "../../../features/stonfi/stonFiApi";
 // import { NavLink } from 'react-router-dom';
 import useLanguage from "../../../hooks/useLanguage";
-import { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "../../../types/assest";
 import Section from "../../containers/Section";
 import PriceChanges from "../../typography/PriceChanges";
 import ListBlock from "../listBlock";

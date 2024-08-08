@@ -23,7 +23,7 @@ import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
 import { useTmaMainButton } from "../../hooks/useTma";
 import { useTon } from "../../hooks/useTon";
-import { CoinDto } from "../../types/assest";
+import type { CoinDto } from "../../types/assest";
 
 interface ItemInfo {
   title: string;
@@ -72,7 +72,7 @@ const SendPage = () => {
           btn.init(
             `${t("confirm", "button")} (${amount} ${asset.meta?.symbol})`,
             async () => {
-              //Transfer
+              // Transfer
               console.log(address, asset.type);
               btn.setVisible(false);
               if (asset.type == "ton") {
@@ -98,7 +98,7 @@ const SendPage = () => {
                   );
 
                   console.log("walletJetton:", walletAddress);
-                  const jettonAmount = BigInt(amount * Math.pow(10, asset.meta.decimals));
+                  const jettonAmount = BigInt(amount * 10**asset.meta.decimals);
                   console.log("jettonAmount:", jettonAmount);
                   if (walletAddress) {
                     const tx = await contracts.jetton.transfer(walletAddress, Address.parse(address), jettonAmount);

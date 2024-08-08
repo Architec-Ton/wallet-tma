@@ -32,9 +32,7 @@ const SelectorTile: React.FC<SelectedItems> = ({ selectItems, onItemSelected }) 
     onItemSelected(itemValue);
   };
 
-  const getItemDisplay = (item: ListItem) => {
-    return item.type === "string" ? item.value : item.value.language;
-  };
+  const getItemDisplay = (item: ListItem) => item.type === "string" ? item.value : item.value.language;
 
   return (
     <Block>

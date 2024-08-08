@@ -80,7 +80,7 @@ const Existing: React.FC = () => {
         console.log(inputs);
         const mnemonic = inputs.join(" ");
         navigate("/registration/confirm-secret-key", {
-          state: { mnemonic: mnemonic, confirm: true },
+          state: { mnemonic, confirm: true },
         });
       },
       isButtonEnabled,

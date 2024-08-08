@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import classNames from "classnames";
 
@@ -16,7 +16,7 @@ function Column({ children, style, className, columns }: Props) {
     style = {
       ...style,
       display: "grid",
-      gridTemplateColumns: "1fr 1fr", //`repeat(${columns}, 0.5fr)`,
+      gridTemplateColumns: "1fr 1fr", // `repeat(${columns}, 0.5fr)`,
     };
   }
 

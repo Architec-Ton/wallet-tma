@@ -15,7 +15,7 @@ import { useAppSelector } from "../hooks/useAppDispatch";
 import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
 import { useTon } from "../hooks/useTon";
-import { WalletInfoData } from "../types/wallet";
+import type { WalletInfoData } from "../types/wallet";
 
 function Main() {
   const navigate = useRouter();
@@ -63,7 +63,7 @@ function Main() {
   return (
     <Page>
       <Column>
-        <Balance walletInfoData={walletInfoData}></Balance>
+        <Balance walletInfoData={walletInfoData} />
         <WalletMenu />
         <Assets assets={walletInfoData ? walletInfoData.wallets[walletInfoData.currentWallet].assets : []} />
         {walletInfoData && walletInfoData.wallets[walletInfoData.currentWallet].history.length > 0 && (

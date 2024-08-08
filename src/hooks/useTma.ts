@@ -20,34 +20,32 @@ export const TmaStateContext = createContext<{
 export const useTmaState = () => useContext(TmaStateContext);
 
 export function useTmaMainButton() {
-  //const { setMainButton } = useTmaState();
+  // const { setMainButton } = useTmaState();
   const dispatch = useAppDispatch();
   const { setMainButtonHandler } = useTmaState();
 
-  useEffect(() => {
-    return () => {
+  useEffect(() => () => {
       dispatch(setMainButtonVisible(false));
       setMainButtonHandler({
         onClick: () => {},
       });
-    };
-  }, []);
+    }, []);
 
   return {
     init: (title: string, onClick: () => void, visible: boolean = true) => {
       setMainButtonHandler({
-        onClick: onClick,
+        onClick,
       });
       dispatch(setMainButtonTitle(title));
       dispatch(setMainButtonVisible(visible));
 
-      //console.log('call init', visible);
+      // console.log('call init', visible);
 
-      //setMainButton({ title: title, onClick: onClick, visible: visible });
+      // setMainButton({ title: title, onClick: onClick, visible: visible });
     },
     refresh: (onClick: () => void) => {
       setMainButtonHandler({
-        onClick: onClick,
+        onClick,
       });
     },
     setVisible: (visible: boolean) => {

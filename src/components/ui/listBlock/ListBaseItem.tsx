@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEventHandler, ReactNode } from "react";
+import type { CSSProperties, MouseEventHandler, ReactNode } from "react";
 
 import classNames from "classnames";
 

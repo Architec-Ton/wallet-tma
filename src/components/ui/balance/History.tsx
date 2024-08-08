@@ -4,7 +4,7 @@ import { formatDate } from "date-fns";
 
 import { iconTrxRecv, iconTrxSend } from "../../../assets/icons/jettons";
 import useLanguage from "../../../hooks/useLanguage";
-import { TransactionHistoryItemDto } from "../../../types/history";
+import type { TransactionHistoryItemDto } from "../../../types/history";
 import Section from "../../containers/Section";
 import ListBlock from "../listBlock";
 import ListTileItem from "../listBlock/ListTileItem";

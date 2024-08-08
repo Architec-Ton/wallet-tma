@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import pinCodeModalThunkActions from "../../features/modal/pinModal";
 import { pinCodeModalActions } from "../../features/modal/pinModalSlice";
-import { AppDispatch, RootState } from "../../store";
+import type { AppDispatch, RootState } from "../../store";
 
 function usePinCodeModalManagement() {
   const dispatch: AppDispatch = useDispatch();
@@ -15,13 +15,9 @@ function usePinCodeModalManagement() {
     return payload as string | undefined;
   };
 
-  const confirm = (value: string | undefined) => {
-    return dispatch(pinCodeModalActions.confirm(value));
-  };
+  const confirm = (value: string | undefined) => dispatch(pinCodeModalActions.confirm(value));
 
-  const decline = () => {
-    return dispatch(pinCodeModalActions.decline());
-  };
+  const decline = () => dispatch(pinCodeModalActions.decline());
 
   return {
     isOpened,

@@ -13,8 +13,7 @@ type OwnProps = {
   children: React.ReactNode;
 };
 
-const Grid = ({ children, gap, columns, colSpan, rowSpan, rows, isOrderedList, className }: OwnProps) => {
-  return (
+const Grid = ({ children, gap, columns, colSpan, rowSpan, rows, isOrderedList, className }: OwnProps) => (
     <div
       className={classNames("grid", className, {
         "grid-columns": columns,
@@ -33,6 +32,5 @@ const Grid = ({ children, gap, columns, colSpan, rowSpan, rows, isOrderedList, c
       {children}
     </div>
   );
-};
 
 export default Grid;

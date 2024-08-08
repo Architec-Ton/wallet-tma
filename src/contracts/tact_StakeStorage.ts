@@ -1,31 +1,29 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
-//@ts-ignore
+// @ts-nocheck
+// @ts-ignore
 
 /* eslint-disable prefer-const */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* tslint:disable:no-unused-variable */
-import {
+import type {
   ABIGetter,
   ABIReceiver,
   ABIType,
   Address,
-  Builder,
-  Cell,
-  ComputeError,
   Contract,
   ContractABI,
   ContractProvider,
-  Dictionary,
   DictionaryValue,
   Sender,
+  TupleReader} from "@ton/core";
+import {
+  Builder,
+  Cell,
   Slice,
   TupleBuilder,
-  TupleItem,
-  TupleReader,
   beginCell,
   contractAddress,
 } from "@ton/core";
@@ -69,9 +67,7 @@ function dictValueParserStateInit(): DictionaryValue<StateInit> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeStateInit(src)).endCell());
     },
-    parse: (src) => {
-      return loadStateInit(src.loadRef().beginParse());
-    },
+    parse: (src) => loadStateInit(src.loadRef().beginParse()),
   };
 }
 
@@ -136,9 +132,7 @@ function dictValueParserContext(): DictionaryValue<Context> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeContext(src)).endCell());
     },
-    parse: (src) => {
-      return loadContext(src.loadRef().beginParse());
-    },
+    parse: (src) => loadContext(src.loadRef().beginParse()),
   };
 }
 
@@ -236,9 +230,7 @@ function dictValueParserSendParameters(): DictionaryValue<SendParameters> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeSendParameters(src)).endCell());
     },
-    parse: (src) => {
-      return loadSendParameters(src.loadRef().beginParse());
-    },
+    parse: (src) => loadSendParameters(src.loadRef().beginParse()),
   };
 }
 
@@ -293,9 +285,7 @@ function dictValueParserPassScoreToRoundContract(): DictionaryValue<PassScoreToR
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storePassScoreToRoundContract(src)).endCell());
     },
-    parse: (src) => {
-      return loadPassScoreToRoundContract(src.loadRef().beginParse());
-    },
+    parse: (src) => loadPassScoreToRoundContract(src.loadRef().beginParse()),
   };
 }
 
@@ -346,9 +336,7 @@ function dictValueParserStakingData(): DictionaryValue<StakingData> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeStakingData(src)).endCell());
     },
-    parse: (src) => {
-      return loadStakingData(src.loadRef().beginParse());
-    },
+    parse: (src) => loadStakingData(src.loadRef().beginParse()),
   };
 }
 
@@ -399,9 +387,7 @@ function dictValueParserStakeRecord(): DictionaryValue<StakeRecord> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeStakeRecord(src)).endCell());
     },
-    parse: (src) => {
-      return loadStakeRecord(src.loadRef().beginParse());
-    },
+    parse: (src) => loadStakeRecord(src.loadRef().beginParse()),
   };
 }
 
@@ -469,9 +455,7 @@ function dictValueParserAmountTime(): DictionaryValue<AmountTime> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeAmountTime(src)).endCell());
     },
-    parse: (src) => {
-      return loadAmountTime(src.loadRef().beginParse());
-    },
+    parse: (src) => loadAmountTime(src.loadRef().beginParse()),
   };
 }
 
@@ -514,9 +498,7 @@ function dictValueParserPrevNextCells(): DictionaryValue<PrevNextCells> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storePrevNextCells(src)).endCell());
     },
-    parse: (src) => {
-      return loadPrevNextCells(src.loadRef().beginParse());
-    },
+    parse: (src) => loadPrevNextCells(src.loadRef().beginParse()),
   };
 }
 
@@ -578,9 +560,7 @@ function dictValueParserTransferEvent(): DictionaryValue<TransferEvent> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeTransferEvent(src)).endCell());
     },
-    parse: (src) => {
-      return loadTransferEvent(src.loadRef().beginParse());
-    },
+    parse: (src) => loadTransferEvent(src.loadRef().beginParse()),
   };
 }
 
@@ -627,9 +607,7 @@ function dictValueParserMint(): DictionaryValue<Mint> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeMint(src)).endCell());
     },
-    parse: (src) => {
-      return loadMint(src.loadRef().beginParse());
-    },
+    parse: (src) => loadMint(src.loadRef().beginParse()),
   };
 }
 
@@ -676,9 +654,7 @@ function dictValueParserStake(): DictionaryValue<Stake> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeStake(src)).endCell());
     },
-    parse: (src) => {
-      return loadStake(src.loadRef().beginParse());
-    },
+    parse: (src) => loadStake(src.loadRef().beginParse()),
   };
 }
 
@@ -726,9 +702,7 @@ function dictValueParserAddingJettonAddress(): DictionaryValue<AddingJettonAddre
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeAddingJettonAddress(src)).endCell());
     },
-    parse: (src) => {
-      return loadAddingJettonAddress(src.loadRef().beginParse());
-    },
+    parse: (src) => loadAddingJettonAddress(src.loadRef().beginParse()),
   };
 }
 
@@ -776,9 +750,7 @@ function dictValueParserUnstake(): DictionaryValue<Unstake> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeUnstake(src)).endCell());
     },
-    parse: (src) => {
-      return loadUnstake(src.loadRef().beginParse());
-    },
+    parse: (src) => loadUnstake(src.loadRef().beginParse()),
   };
 }
 
@@ -840,9 +812,7 @@ function dictValueParserRedeem(): DictionaryValue<Redeem> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeRedeem(src)).endCell());
     },
-    parse: (src) => {
-      return loadRedeem(src.loadRef().beginParse());
-    },
+    parse: (src) => loadRedeem(src.loadRef().beginParse()),
   };
 }
 
@@ -918,9 +888,7 @@ function dictValueParserAdd(): DictionaryValue<Add> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeAdd(src)).endCell());
     },
-    parse: (src) => {
-      return loadAdd(src.loadRef().beginParse());
-    },
+    parse: (src) => loadAdd(src.loadRef().beginParse()),
   };
 }
 
@@ -968,9 +936,7 @@ function dictValueParserGetWeighted(): DictionaryValue<GetWeighted> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeGetWeighted(src)).endCell());
     },
-    parse: (src) => {
-      return loadGetWeighted(src.loadRef().beginParse());
-    },
+    parse: (src) => loadGetWeighted(src.loadRef().beginParse()),
   };
 }
 
@@ -1012,9 +978,7 @@ function dictValueParserUpdateNext(): DictionaryValue<UpdateNext> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeUpdateNext(src)).endCell());
     },
-    parse: (src) => {
-      return loadUpdateNext(src.loadRef().beginParse());
-    },
+    parse: (src) => loadUpdateNext(src.loadRef().beginParse()),
   };
 }
 
@@ -1069,9 +1033,7 @@ function dictValueParserChangeMinter(): DictionaryValue<ChangeMinter> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeChangeMinter(src)).endCell());
     },
-    parse: (src) => {
-      return loadChangeMinter(src.loadRef().beginParse());
-    },
+    parse: (src) => loadChangeMinter(src.loadRef().beginParse()),
   };
 }
 
@@ -1165,9 +1127,7 @@ function dictValueParserJettonTransfer(): DictionaryValue<JettonTransfer> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonTransfer(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonTransfer(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonTransfer(src.loadRef().beginParse()),
   };
 }
 
@@ -1236,9 +1196,7 @@ function dictValueParserJettonTransferNotification(): DictionaryValue<JettonTran
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonTransferNotification(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonTransferNotification(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonTransferNotification(src.loadRef().beginParse()),
   };
 }
 
@@ -1311,9 +1269,7 @@ function dictValueParserJettonBurn(): DictionaryValue<JettonBurn> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonBurn(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonBurn(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonBurn(src.loadRef().beginParse()),
   };
 }
 
@@ -1355,9 +1311,7 @@ function dictValueParserJettonExcesses(): DictionaryValue<JettonExcesses> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonExcesses(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonExcesses(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonExcesses(src.loadRef().beginParse()),
   };
 }
 
@@ -1440,9 +1394,7 @@ function dictValueParserJettonInternalTransfer(): DictionaryValue<JettonInternal
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonInternalTransfer(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonInternalTransfer(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonInternalTransfer(src.loadRef().beginParse()),
   };
 }
 
@@ -1511,9 +1463,7 @@ function dictValueParserJettonBurnNotification(): DictionaryValue<JettonBurnNoti
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonBurnNotification(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonBurnNotification(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonBurnNotification(src.loadRef().beginParse()),
   };
 }
 
@@ -1578,9 +1528,7 @@ function dictValueParserWalletData(): DictionaryValue<WalletData> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeWalletData(src)).endCell());
     },
-    parse: (src) => {
-      return loadWalletData(src.loadRef().beginParse());
-    },
+    parse: (src) => loadWalletData(src.loadRef().beginParse()),
   };
 }
 
@@ -2249,7 +2197,7 @@ export class StakeStorage implements Contract {
       throw new Error("Invalid message type");
     }
 
-    await provider.internal(via, { ...args, body: body });
+    await provider.internal(via, { ...args, body });
   }
 
   async getAmountTime(provider: ContractProvider, _for: Address) {

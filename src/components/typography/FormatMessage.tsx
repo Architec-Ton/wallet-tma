@@ -5,8 +5,6 @@ type FormatMessageProps = {
   components?: any;
 };
 
-const FormatMessage = ({ children, components }: FormatMessageProps) => {
-  return <Trans components={components}>{children}</Trans>;
-};
+const FormatMessage = ({ children, components }: FormatMessageProps) => <Trans components={components}>{children}</Trans>;
 
 export default FormatMessage;

@@ -1,5 +1,3 @@
-const WalletSafety = () => {
-  return <div></div>;
-};
+const WalletSafety = () => <div />;
 
 export default WalletSafety;

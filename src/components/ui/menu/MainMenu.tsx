@@ -6,7 +6,8 @@ import {
 } from "../../../assets/icons/menus/main/index.ts";
 import useLanguage from "../../../hooks/useLanguage";
 import "./MainMenu.styles.css";
-import Menu, { MenuItem } from "./Menu";
+import type { MenuItem } from "./Menu";
+import Menu from "./Menu";
 
 function MainMenu() {
   const t = useLanguage("menu-main");

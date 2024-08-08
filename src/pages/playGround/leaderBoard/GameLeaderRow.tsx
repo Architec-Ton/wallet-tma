@@ -10,8 +10,7 @@ type OwnProps = {
   isHeader?: boolean;
 };
 
-const GameLeaderRow = ({ num, name, totalCoins, asset, time, isHeader }: OwnProps) => {
-  return (
+const GameLeaderRow = ({ num, name, totalCoins, asset, time, isHeader }: OwnProps) => (
     <>
       <div>{num}</div>
       <div className="leader-data">
@@ -24,6 +23,5 @@ const GameLeaderRow = ({ num, name, totalCoins, asset, time, isHeader }: OwnProp
       </div>
     </>
   );
-};
 
 export default GameLeaderRow;

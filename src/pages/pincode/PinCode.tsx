@@ -71,7 +71,7 @@ const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
 
         <button onClick={handleBiometry} className="pin-button">
           {" "}
-          {<img src={bioButtonKeybord} style={{ marginTop: 8, blockSize: "50%" }} alt={"Bio"} />}
+          <img src={bioButtonKeybord} style={{ marginTop: 8, blockSize: "50%" }} alt="Bio" />
         </button>
 
         <button onClick={() => handleClick(0)} className="pin-button">
@@ -79,7 +79,7 @@ const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
         </button>
 
         <button onClick={handleDelete} className="pin-button">
-          <img src={delButtonKeybord} style={{ marginTop: 8, blockSize: "50%" }} alt={"Del"} />
+          <img src={delButtonKeybord} style={{ marginTop: 8, blockSize: "50%" }} alt="Del" />
         </button>
       </div>
     </div>

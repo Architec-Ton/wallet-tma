@@ -5,12 +5,10 @@ type OwnPropsType = {
   modalHandler: () => void;
 };
 
-const GameFilterModal = ({ modalHandler }: OwnPropsType) => {
-  return (
+const GameFilterModal = ({ modalHandler }: OwnPropsType) => (
     <Modal title="Filter settings" onClose={modalHandler}>
       <GameListFilter />
     </Modal>
   );
-};
 
 export default GameFilterModal;

@@ -11,8 +11,7 @@ type TransactionCompleteModalProps = {
   title: string;
 };
 
-const TransactionCompleteModal = ({ onClose, thumb, title, children }: TransactionCompleteModalProps) => {
-  return (
+const TransactionCompleteModal = ({ onClose, thumb, title, children }: TransactionCompleteModalProps) => (
     <Modal onClose={onClose}>
       <Column className="complete-modal__content">
         <Block className="circle-block">
@@ -24,6 +23,5 @@ const TransactionCompleteModal = ({ onClose, thumb, title, children }: Transacti
       </Column>
     </Modal>
   );
-};
 
 export default TransactionCompleteModal;

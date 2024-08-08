@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { Address, toNano } from "@ton/core";
+import type { Address} from "@ton/core";
+import { toNano } from "@ton/core";
 
 import { iconStakeButton, iconTasksButton } from "../../assets/icons/buttons";
 import Button from "../../components/buttons/Button";
@@ -20,7 +21,7 @@ import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
 import { useTon } from "../../hooks/useTon";
 import { useTonClient } from "../../hooks/useTonClient";
-import { BankInfoDto } from "../../types/banks";
+import type { BankInfoDto } from "../../types/banks";
 
 type StakeInfo = {
   for: Address;
@@ -45,7 +46,7 @@ function BankMain() {
   const [bnk, setBnk] = useState<bigint>(0n);
   const contracts = useContracts();
   const ton = useTon();
-  //const isTmaReady = useAppSelector(selectAuthIsTmaReady);
+  // const isTmaReady = useAppSelector(selectAuthIsTmaReady);
 
   const handleInfo = async () => {
     try {
@@ -65,7 +66,7 @@ function BankMain() {
       // console.log("handleStakeInfo", ownerAddress.toString(), client);
       // console.log("client ", await client?.getBalance(ownerAddress));
       // const ownerAddress = ton.wallet.address;
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
       console.log("BNK Stake Wallet", stakeAddress?.toString());
       if (stakeAddress) {
@@ -140,7 +141,7 @@ function BankMain() {
           address={ton.wallet.address?.toString({ urlSafe: true })}
           arcAmount={arc}
           bnkAmount={bnk}
-        ></BankBalance>
+         />
         <Column columns={2}>
           <BlockWithTitle title={t("Staking")} hintMessage={t("Staking-hint")}>
             <Button
@@ -149,7 +150,7 @@ function BankMain() {
                   ? `${t("Unstake")}` // (${stakeInfoData.stakedAmount})
                   : t("Stake")
               }
-              disabled={bankInfoData && !bankInfoData.canStake ? true : false}
+              disabled={!!(bankInfoData && !bankInfoData.canStake)}
               className="w-100 center"
               icon={iconStakeButton}
               onClick={() => navigate("/bank/stake")}

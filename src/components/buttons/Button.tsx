@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 
 import classNames from "classnames";
 
@@ -22,7 +22,7 @@ function Button({ icon, title, style, className, primary = true, onClick, childr
       onClick={onClick}
       className={classNames(className, {
         button: true,
-        primary: primary,
+        primary,
       })}
       style={style}
     >

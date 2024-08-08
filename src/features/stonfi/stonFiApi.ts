@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { Address } from "@ton/core";
 
-import { CoinDto } from "../../types/assest";
-import { GetStonFiAssetDTO } from "./types";
+import type { CoinDto } from "../../types/assest";
+import type { GetStonFiAssetDTO } from "./types";
 
 export const AssetKind = {
   Ton: "ton",

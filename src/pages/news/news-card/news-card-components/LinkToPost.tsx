@@ -1,5 +1,3 @@
-const LinkToPost = () => {
-  return <div></div>;
-};
+const LinkToPost = () => <div />;
 
 export default LinkToPost;

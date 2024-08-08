@@ -6,7 +6,7 @@ import { selectAuthIsReady } from "../../features/auth/authSelector";
 import { useApiWalletHistoryMutation } from "../../features/wallet/walletApi";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import { usePage } from "../../hooks/usePage";
-import { TransactionHistoryItemDto } from "../../types/history";
+import type { TransactionHistoryItemDto } from "../../types/history";
 
 function Histories() {
   //   const t = useLanguage("history");

@@ -7,7 +7,7 @@ function Loader() {
   return (
     <>
       <div className="loader">
-        <Lottie animationData={loaderAnimationData} loop={true} />
+        <Lottie animationData={loaderAnimationData} loop />
       </div>
     </>
   );
