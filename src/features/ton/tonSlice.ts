@@ -1,4 +1,4 @@
-import type { PayloadAction} from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 export enum TonConnectionMode {
@@ -40,7 +40,7 @@ const tonSlice = createSlice({
       state.publicKey = action.payload.publicKey;
       state.privateKey = action.payload.privateKey;
       state.mode = action.payload.mode;
-      if (action.payload.mode == TonConnectionMode.disconnect) {
+      if (action.payload.mode === TonConnectionMode.disconnect) {
         state.address = undefined;
         state.publicKey = undefined;
       }

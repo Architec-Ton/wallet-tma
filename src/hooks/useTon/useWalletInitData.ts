@@ -19,12 +19,15 @@ export const useWalletInitData = (): Wallet => {
   const walletAddress = useAppSelector(selectAddress);
   const walletAddressPublicKey = useAppSelector(selectAddressPublicKey);
   const walletMode = useAppSelector(selectTonMode);
-  const initData = useMemo(() => ({
-      network: (walletMode == TonConnectionMode.disconnect ? "undefined" : "ton") as BlockchainNetwork,
+  const initData = useMemo(
+    () => ({
+      network: (walletMode === TonConnectionMode.disconnect ? "undefined" : "ton") as BlockchainNetwork,
       mode: walletMode,
       address: walletAddress ? Address.parse(walletAddress) : undefined,
       publicKey: walletAddressPublicKey,
-    }), [walletAddress, walletMode]);
+    }),
+    [walletAddress, walletMode],
+  );
 
   // console.log("walletMode", walletMode, walletAddress, initData)
   return initData;

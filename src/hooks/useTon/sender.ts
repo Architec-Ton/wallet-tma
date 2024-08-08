@@ -1,6 +1,6 @@
-import type { Sender, SenderArguments} from "@ton/core";
+import type { Sender, SenderArguments } from "@ton/core";
 import { Address, internal } from "@ton/core";
-import type { KeyPair} from "@ton/crypto";
+import type { KeyPair } from "@ton/crypto";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
 
@@ -75,7 +75,7 @@ export const useSender = (): Sender => {
       return;
     }
     const privateKey = keyPair.secretKey;
-    const {publicKey} = keyPair;
+    const { publicKey } = keyPair;
 
     // Create wallet contract
     const workchain = 0; // Usually you need a workchain 0
@@ -98,7 +98,7 @@ export const useSender = (): Sender => {
           // Create a transfer
           const seqno_current: number = await contract.getSeqno();
 
-          if (seqno == seqno_current) {
+          if (seqno === seqno_current) {
             dispatch(
               showAlert({
                 message:
@@ -159,7 +159,6 @@ export const useSender = (): Sender => {
         }
       } catch (e) {
         if (e instanceof Error) dispatch(showAlert({ message: `${e.name} ${e.message}`, duration: 8000 }));
-        
       }
     }
 
@@ -170,12 +169,10 @@ export const useSender = (): Sender => {
     //   .storeBuffer(signature)
     //   .storeBuilder(signingMessage)
     //   .endCell();
-
-    
   };
 
   const commonSend = async (args: SenderArguments): Promise<void> => {
-    if (walletMode == TonConnectionMode.tonconnect) {
+    if (walletMode === TonConnectionMode.tonconnect) {
       await sender.send(args);
     } else {
       await tonSend(args, seqno);

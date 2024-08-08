@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 import { useEffect } from "react";
 
 import { useTonConnectUI } from "@tonconnect/ui-react";
@@ -43,7 +43,7 @@ export function TonProvider({ children }: Props) {
         }),
       );
       dispatch(setIsTonReady(true));
-    } else if (bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.tonconnect) {
+    } else if (bcData.wallets[bcData.currentWallet].mode === TonConnectionMode.tonconnect) {
       let resetTonConnect = true;
       if (tonConnectUI.account && tonConnectUI.account.address) {
         ton.setAddress(tonConnectUI.account.address, TonConnectionMode.tonconnect, tonConnectUI.account.publicKey);
@@ -65,7 +65,7 @@ export function TonProvider({ children }: Props) {
         }, 20000);
         return () => clearTimeout(timer);
       }
-    } else if (bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.mnemonics) {
+    } else if (bcData.wallets[bcData.currentWallet].mode === TonConnectionMode.mnemonics) {
       ton.setAddress(
         bcData.wallets[bcData.currentWallet].address || "",
         TonConnectionMode.mnemonics,

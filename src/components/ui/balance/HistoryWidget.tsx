@@ -25,21 +25,21 @@ function HistoryWidget({ children, items = [] }: Props) {
         <Section title={t("title")} className="add-crypto__container">
           <ListBlock>
             {items.map((h, index) => (
-                <ListTileItem
-                  key={index}
-                  icon={h.type == "in" ? iconTrxRecv : iconTrxSend}
-                  title={t(h.type)}
-                  description={shortenString(h.addressTo)}
-                  // onClick={assetClickHandler(asset)}
-                >
-                  <div className="list-block__right">
-                    <div
-                      className={`list-block__title ${h.type == "in" ? "change-up" : ""} `}
-                    >{`${h.value} ${h.symbol}`}</div>
-                    <div className="list-block__description">{new Date(h.utime * 1000).toLocaleString()}</div>
-                  </div>
-                </ListTileItem>
-              ))}
+              <ListTileItem
+                key={index}
+                icon={h.type === "in" ? iconTrxRecv : iconTrxSend}
+                title={t(h.type)}
+                description={shortenString(h.addressTo)}
+                // onClick={assetClickHandler(asset)}
+              >
+                <div className="list-block__right">
+                  <div
+                    className={`list-block__title ${h.type === "in" ? "change-up" : ""} `}
+                  >{`${h.value} ${h.symbol}`}</div>
+                  <div className="list-block__description">{new Date(h.utime * 1000).toLocaleString()}</div>
+                </div>
+              </ListTileItem>
+            ))}
             {children && <ListBaseItem className="center">{children}</ListBaseItem>}
           </ListBlock>
         </Section>

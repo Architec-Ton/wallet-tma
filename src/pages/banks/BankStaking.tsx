@@ -1,6 +1,6 @@
-import type {
-  ChangeEventHandler} from "react";
-import { // useCallback,
+import type { ChangeEventHandler } from "react";
+import {
+  // useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -215,7 +215,7 @@ function BankStaking() {
   // }, [value, arcAsset]);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const {value} = e.currentTarget;
+    const { value } = e.currentTarget;
     if (!isNaN(Number(value)) && value.length <= 7) {
       setValue(value);
     }
@@ -324,7 +324,7 @@ function BankStaking() {
     <Page title={t("title")} className="staking-page">
       <Delimiter />
       <Column>
-        {stakingValue == 0 && (
+        {stakingValue === 0 && (
           <Section>
             <Row className="staking-form-container">
               <Column className="">
