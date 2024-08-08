@@ -12,11 +12,11 @@ const Circle: React.FC<CircleProps> = ({ pin, index, status }) => {
   const circleClassName = `${status}-animation`;
 
   const fillColor =
-    status == "normal"
+    status === "normal"
       ? isFilled
         ? "var(--primary-color)"
         : "var(--third-colour)"
-      : status == "success"
+      : status === "success"
         ? "var(--success-color)"
         : "var(--error-color)";
 

@@ -1,4 +1,4 @@
-import type { NavigateOptions, To} from "react-router-dom";
+import type { NavigateOptions, To } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { setLoading, setTitle } from "../features/page/pageSlice";
@@ -19,7 +19,7 @@ function useRouter() {
     dispatch(setLoading(true));
     dispatch(setTitle({}));
     const nav = (url: string | number) => {
-      if (url == -1) {
+      if (url === -1) {
         navigate(url as number);
       } else {
         navigate(url as To, options);

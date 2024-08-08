@@ -141,9 +141,9 @@ const ConfirmKey: React.FC = () => {
   };
 
   const confirmHandler = (mnemonics: string[]) => {
-    // if (verificationStep == 0) {
+    // if (verificationStep === 0) {
     console.log("mnemonicsVerifyIdx", mnemonicsVerifyIdx);
-    const checkMnemonics = mnemonicsVerifyIdx.map((v, index) => mnemonics[v] == inputs[index].toLowerCase());
+    const checkMnemonics = mnemonicsVerifyIdx.map((v, index) => mnemonics[v] === inputs[index].toLowerCase());
     if (!checkMnemonics.every((v) => Boolean(v))) {
       console.log("Wrong inputs", checkMnemonics, inputs, mnemonicsVerifyIdx);
       // return;

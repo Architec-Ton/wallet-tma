@@ -66,7 +66,7 @@ function AccountDisconnect() {
         <TileButton title={t("my-wallet")} onClick={onClick} iconAction={logOutIcon}>
           <Address address={address} copy={false} />
         </TileButton>
-        {/* {tonMode == TonConnectionMode.tonconnect && <TonConnectButton />} */}
+        {/* {tonMode === TonConnectionMode.tonconnect && <TonConnectButton />} */}
       </Column>
     </Page>
   );
