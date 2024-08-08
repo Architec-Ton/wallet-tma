@@ -2,26 +2,28 @@ import React, { useEffect, useState } from "react";
 
 import type { Address } from "@ton/core";
 import { toNano } from "@ton/core";
+import { selectAuthIsReady } from "features/auth/authSelector";
+import { useApiGetBankInfoMutation } from "features/bank/bankApi";
+import type { BankInfoDto } from "types/banks";
 
-import { iconStakeButton, iconTasksButton } from "../../assets/icons/buttons";
-import Button from "../../components/buttons/Button";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import BlockWithTitle from "../../components/typography/BlockWithTitle";
-import BankBalance from "../../components/ui/balance/BankBalance";
-import History from "../../components/ui/balance/History";
-import BankMintingInfo from "../../components/ui/bank/BankMintingInfo";
-import ReferralsInfo from "../../components/ui/bank/ReferralsInfo";
-import { selectAuthIsReady } from "../../features/auth/authSelector";
-import { useApiGetBankInfoMutation } from "../../features/bank/bankApi";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import useContracts from "../../hooks/useContracts";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import useRouter from "../../hooks/useRouter";
-import { useTon } from "../../hooks/useTon";
-import { useTonClient } from "../../hooks/useTonClient";
-import type { BankInfoDto } from "../../types/banks";
+import { iconStakeButton, iconTasksButton } from "assets/icons/buttons";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+import useContracts from "hooks/useContracts";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTon } from "hooks/useTon";
+import { useTonClient } from "hooks/useTonClient";
+
+import Button from "components/buttons/Button";
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import BlockWithTitle from "components/typography/BlockWithTitle";
+import BankBalance from "components/ui/balance/BankBalance";
+import History from "components/ui/balance/History";
+import BankMintingInfo from "components/ui/bank/BankMintingInfo";
+import ReferralsInfo from "components/ui/bank/ReferralsInfo";
 
 type StakeInfo = {
   for: Address;

@@ -1,7 +1,8 @@
 // authApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import type { AuthInitData, AuthInitTon, TAuthType } from "../../types/auth";
+import type { AuthInitData, AuthInitTon, TAuthType } from "types/auth";
+
 import baseQuery from "../api/api";
 
 export const authApi = createApi({

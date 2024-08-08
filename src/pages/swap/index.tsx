@@ -4,22 +4,25 @@ import { useNavigate } from "react-router-dom";
 
 import type { AddressType, AmountType } from "@ston-fi/sdk";
 import { DEX, pTON } from "@ston-fi/sdk";
+import { useGetStonfiAssetsQuery, useLazySimulateQuery } from "features/stonfi/stonFiApi";
+import { useApiWalletInfoMutation } from "features/wallet/walletApi";
+import type { CoinDto } from "types/assest";
+import type { WalletInfoData } from "types/wallet";
 
-import { iconReverseButton } from "../../assets/icons/buttons";
-import Page from "../../components/containers/Page";
-import Row from "../../components/containers/Row";
-import Section from "../../components/containers/Section";
-import Delimiter from "../../components/typography/Delimiter";
-import { useGetStonfiAssetsQuery, useLazySimulateQuery } from "../../features/stonfi/stonFiApi";
-import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
-import { useClosure } from "../../hooks/useClosure";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import { useTmaMainButton } from "../../hooks/useTma";
-import { useTon } from "../../hooks/useTon";
-import { useTonClient } from "../../hooks/useTonClient";
-import type { CoinDto } from "../../types/assest";
-import type { WalletInfoData } from "../../types/wallet";
+import { iconReverseButton } from "assets/icons/buttons";
+
+import { useClosure } from "hooks/useClosure";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import { useTmaMainButton } from "hooks/useTma";
+import { useTon } from "hooks/useTon";
+import { useTonClient } from "hooks/useTonClient";
+
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
+import Delimiter from "components/typography/Delimiter";
+
 import AssetsList from "./assetsList";
 import "./index.css";
 import ReceiveAsset from "./receiveAsset";
@@ -159,13 +162,13 @@ const Swap = () => {
     return [] as CoinDto[];
   }, [assets, stonFiAssets, network]);
 
-  const sendingAsset: CoinDto = useMemo(() => {
+  const sendingAsset = useMemo(() => {
     if (combinedAssets.length) {
       return combinedAssets.find((asset) => asset.meta?.address === swapAssets.send.address);
     }
   }, [swapAssets, combinedAssets]);
 
-  const receivingAsset: CoinDto = useMemo(() => {
+  const receivingAsset = useMemo(() => {
     if (combinedAssets.length) {
       return combinedAssets.find((asset) => asset.meta?.address === swapAssets.receive.address);
     }
@@ -369,7 +372,6 @@ const Swap = () => {
   };
 
   const [isValidSwapp, setIsValidSwapp] = useState<boolean>(false);
-  const [pinCode] = useState<string>("");
 
   useEffect(() => {
     const isValid: boolean =

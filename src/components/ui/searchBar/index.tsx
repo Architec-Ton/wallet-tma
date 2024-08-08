@@ -2,7 +2,8 @@ import type { ChangeEventHandler } from "react";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { SearchIcon } from "../../../assets/icons/inputs/index";
+import { SearchIcon } from "assets/icons/inputs/index";
+
 import Input from "../../inputs/Input";
 import "./index.css";
 

@@ -3,16 +3,17 @@ import type { ReactNode } from "react";
 import React, { useEffect } from "react";
 
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import { setIsTonReady } from "features/auth/authSlice";
+import { TonConnectionMode, setAddress } from "features/ton/tonSlice";
+import type { WalletsState } from "types/auth";
 
-import { setIsTonReady } from "../../features/auth/authSlice";
-import { TonConnectionMode, setAddress } from "../../features/ton/tonSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { useTon } from "../../hooks/useTon";
-import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
-import useTrxModalManagement from "../../hooks/useTon/useTrxModalManagment";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import useLocalStorage from "hooks/useLocalStorage";
+import { useTon } from "hooks/useTon";
+import usePinCodeModalManagement from "hooks/useTon/usePinCodeModal";
+import useTrxModalManagement from "hooks/useTon/useTrxModalManagment";
+
 import type { RootState } from "../../store";
-import type { WalletsState } from "../../types/auth";
 import ModalPinCode from "../ui/modals/modalPinCode";
 import ModalTrx from "../ui/modals/trxModal";
 

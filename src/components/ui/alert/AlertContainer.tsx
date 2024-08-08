@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { hideAlert } from "../../../features/alert/alertSlice";
-import useLanguage from "../../../hooks/useLanguage";
+import { hideAlert } from "features/alert/alertSlice";
+
+import useLanguage from "hooks/useLanguage";
+
 import type { RootState } from "../../../store";
 import Alert from "./Alert";
 

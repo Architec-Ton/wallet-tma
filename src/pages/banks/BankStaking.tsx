@@ -1,38 +1,40 @@
 import type { ChangeEventHandler } from "react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 // useCallback,
-// import bankIcon from "../../assets/images/bank.png";
+// import bankIcon from "assets/images/bank.png";
 import { useNavigate } from "react-router-dom";
 
 import type { Address } from "@ton/core";
 // import { formatDate } from "date-fns";
-// import PartialContent from "../../components/ui/modals/PartialContent";
+// import PartialContent from "components/ui/modals/PartialContent";
 import classNames from "classnames";
+import { useApiWalletInfoMutation } from "features/wallet/walletApi";
+import type { CoinDto } from "types/assest";
+import type { WalletInfoData } from "types/wallet";
 
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import Row from "../../components/containers/Row";
-import Section from "../../components/containers/Section";
-import Delimiter from "../../components/typography/Delimiter";
-import type { StakeHistoryType } from "../../components/ui/bank/BankStakingHistorySection";
-import BankStakingHistorySection from "../../components/ui/bank/BankStakingHistorySection";
-import BankStakingInfo from "../../components/ui/bank/BankStakingInfo";
-import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
-import useContracts from "../../hooks/useContracts";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-// import useRouter from '../../hooks/useRouter';
-import { useTmaMainButton } from "../../hooks/useTma";
-import { useTon } from "../../hooks/useTon";
-import type { CoinDto } from "../../types/assest";
-import type { WalletInfoData } from "../../types/wallet";
+import useContracts from "hooks/useContracts";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+// import useRouter from 'hooks/useRouter';
+import { useTmaMainButton } from "hooks/useTma";
+import { useTon } from "hooks/useTon";
+
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
+import Delimiter from "components/typography/Delimiter";
+import type { StakeHistoryType } from "components/ui/bank/BankStakingHistorySection";
+import BankStakingHistorySection from "components/ui/bank/BankStakingHistorySection";
+import BankStakingInfo from "components/ui/bank/BankStakingInfo";
+
 import "./BankStaking.styles.css";
 
-// import { useAppSelector } from '../../hooks/useAppDispatch';
-// import { selectAuthIsReady } from '../../features/auth/authSelector';
-// import { useAppSelector } from "../../hooks/useAppDispatch";
-// import { selectTonUsdPrice } from "../../features/wallet/walletSelector";
-// import { useTonClient } from '../../hooks/useTonClient';
+// import { useAppSelector } from 'hooks/useAppDispatch';
+// import { selectAuthIsReady } from 'features/auth/authSelector';
+// import { useAppSelector } from "hooks/useAppDispatch";
+// import { selectTonUsdPrice } from "features/wallet/walletSelector";
+// import { useTonClient } from 'hooks/useTonClient';
 
 function BankStaking() {
   //   const navigate = useRouter();

@@ -3,26 +3,22 @@ import type { ReactNode } from "react";
 import React, { useEffect, useState } from "react";
 
 import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
+import { useApiAuthMutation } from "features/auth/authApi";
+import { selectAccessToken, selectAuth, selectAuthIsTmaReady, selectAuthIsTonReady } from "features/auth/authSelector";
+import type { AccountState } from "features/auth/authSlice";
+import { setAccessToken, setAccount, setIsReady, setIsTmaReady } from "features/auth/authSlice";
+import { selectMainButtonIsVisible, selectMainButtonTitle } from "features/tma/mainButtonSelector";
+import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
+import { setTma, setTmaLoading } from "features/tma/tmaSlice";
+import type { AuthInitData, AuthInitTon } from "types/auth";
 
-import { useApiAuthMutation } from "../../features/auth/authApi";
-import {
-  selectAccessToken,
-  selectAuth,
-  selectAuthIsTmaReady,
-  selectAuthIsTonReady,
-} from "../../features/auth/authSelector";
-import type { AccountState } from "../../features/auth/authSlice";
-import { setAccessToken, setAccount, setIsReady, setIsTmaReady } from "../../features/auth/authSlice";
-import { selectMainButtonIsVisible, selectMainButtonTitle } from "../../features/tma/mainButtonSelector";
-import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
-import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import type { TmaMainButton } from "../../hooks/useTma";
-import { TmaStateContext } from "../../hooks/useTma";
-import { useTon } from "../../hooks/useTon";
-import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
-import { useTonClient } from "../../hooks/useTonClient";
-import type { AuthInitData, AuthInitTon } from "../../types/auth";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import type { TmaMainButton } from "hooks/useTma";
+import { TmaStateContext } from "hooks/useTma";
+import { useTon } from "hooks/useTon";
+import usePinCodeModalManagement from "hooks/useTon/usePinCodeModal";
+import { useTonClient } from "hooks/useTonClient";
+
 import MainButton from "../buttons/MainButton";
 
 type Props = {

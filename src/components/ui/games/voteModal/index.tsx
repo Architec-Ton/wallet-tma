@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-import architecton from "../../../../assets/images/architecton.svg";
-import hearthImage from "../../../../assets/images/hearth.png";
-import Column from "../../../containers/Column";
-import Row from "../../../containers/Row";
-import Block from "../../../typography/Block";
+import architecton from "assets/images/architecton.svg";
+import hearthImage from "assets/images/hearth.png";
+
+import Column from "components/containers/Column";
+import Row from "components/containers/Row";
+import Block from "components/typography/Block";
+
 import Modal from "../../modal";
 import "./index.css";
 

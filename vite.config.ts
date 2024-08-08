@@ -34,10 +34,8 @@ export default defineConfig({
       i18n: path.resolve(__dirname, "./src/i18n"),
       mocks: path.resolve(__dirname, "./src/mocks"),
       pages: path.resolve(__dirname, "./src/pages"),
-      store: path.resolve(__dirname, "./src/store"),
       types: path.resolve(__dirname, "./src/types"),
       utils: path.resolve(__dirname, "./src/utils"),
-      constants: path.resolve(__dirname, "./src/constants"),
     },
   },
 });

@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import type { TransactionCreateDto, TransactionCreateDtoOut, TransactionDto } from "../../types/transaction";
+import type { TransactionCreateDto, TransactionCreateDtoOut, TransactionDto } from "types/transaction";
+
 import baseQuery from "../api/api";
 
 export const trxApi = createApi({

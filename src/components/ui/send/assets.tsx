@@ -1,6 +1,7 @@
 import React from "react";
 
-import type { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "types/assest";
+
 import Section from "../../containers/Section";
 import ListBlock from "../listBlock";
 import ListTileItem from "../listBlock/ListTileItem";

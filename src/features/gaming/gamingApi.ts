@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import type { AppsList, GameCategoryType, GameListItemType, IGame, TGameLeader } from "../../types/gameTypes";
+import type { AppsList, GameCategoryType, GameListItemType, IGame, TGameLeader } from "types/gameTypes";
+
 import baseQuery from "../api/api";
 import { setCategories } from "./gamingSlice";
 

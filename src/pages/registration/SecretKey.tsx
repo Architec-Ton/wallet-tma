@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { mnemonicNew } from "@ton/crypto";
+import { showAlert } from "features/alert/alertSlice";
 
-import { iconButtonCopyColor } from "../../assets/icons/buttons/index";
-import Button from "../../components/buttons/Button";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import Block from "../../components/typography/Block";
-import { showAlert } from "../../features/alert/alertSlice";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import useRouter from "../../hooks/useRouter";
-import { useTmaMainButton } from "../../hooks/useTma";
+import { iconButtonCopyColor } from "assets/icons/buttons/index";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTmaMainButton } from "hooks/useTma";
+
+import Button from "components/buttons/Button";
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import Block from "components/typography/Block";
+
 import "./SecretKey.styles.css";
 
 const SecretKey = () => {

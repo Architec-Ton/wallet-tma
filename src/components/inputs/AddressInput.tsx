@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 
 import classNames from "classnames";
 
-import { iconInputScan } from "../../assets/icons/inputs";
-import useLanguage from "../../hooks/useLanguage";
-import { parseTonTransferUrl } from "../../utils/formatter";
+import { iconInputScan } from "assets/icons/inputs";
+
+import useLanguage from "hooks/useLanguage";
+
+import { parseTonTransferUrl } from "utils/formatter";
+
 import QrButton from "../buttons/qrButton";
 import Row from "../containers/Row";
 import Block from "../typography/Block";

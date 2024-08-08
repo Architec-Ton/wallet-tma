@@ -1,11 +1,11 @@
 import React from "react";
 
+import type { ItemDto } from "types/list";
+
 import ListBlock from ".";
-import type { ItemDto } from "../../../types/list";
 import Column from "../../containers/Column";
 import ListBaseItem from "./ListBaseItem";
 import "./ListItem.styles.css";
-
 
 type OwnPropsType = {
   items: ItemDto[];

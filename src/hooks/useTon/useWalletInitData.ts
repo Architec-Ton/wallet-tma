@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
 import { Address } from "@ton/core";
+import { selectAddress, selectAddressPublicKey, selectTonMode } from "features/ton/tonSelector";
+import { TonConnectionMode } from "features/ton/tonSlice";
 
-import { selectAddress, selectAddressPublicKey, selectTonMode } from "../../features/ton/tonSelector";
-import { TonConnectionMode } from "../../features/ton/tonSlice";
 import { useAppSelector } from "../useAppDispatch";
 
 type BlockchainNetwork = "ton" | "undefined";

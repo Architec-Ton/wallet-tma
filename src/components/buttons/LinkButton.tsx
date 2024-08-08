@@ -3,9 +3,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import { useUtils } from "@tma.js/sdk-react";
+import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
 
-import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "hooks/useAppDispatch";
 
 type Props = {
   title?: string;

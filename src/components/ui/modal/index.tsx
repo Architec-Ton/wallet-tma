@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import classNames from "classnames";
 
-import { iconCloseButton } from "../../../assets/icons/buttons";
+import { iconCloseButton } from "assets/icons/buttons";
+
 import "./index.css";
 
 type OwnPropsType = {

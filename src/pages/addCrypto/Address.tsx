@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useDispatch } from "react-redux";
 
-import { iconTon } from "../../assets/icons/jettons";
-import Column from "../../components/containers/Column";
-import Section from "../../components/containers/Section";
-import Block from "../../components/typography/Block";
-import FormatMessage from "../../components/typography/FormatMessage";
-import { showAlert } from "../../features/alert/alertSlice";
-import useLanguage from "../../hooks/useLanguage";
-import { useTon } from "../../hooks/useTon";
+import { showAlert } from "features/alert/alertSlice";
+
+import { iconTon } from "assets/icons/jettons";
+
+import useLanguage from "hooks/useLanguage";
+import { useTon } from "hooks/useTon";
+
+import Column from "components/containers/Column";
+import Section from "components/containers/Section";
+import Block from "components/typography/Block";
+import FormatMessage from "components/typography/FormatMessage";
+
 import type { AssetType } from "./ReceiveAsset";
 
 const AddCryptoAddress = () => {

@@ -2,27 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { Address, toNano } from "@ton/core";
+import { selectAuthIsReady } from "features/auth/authSelector";
+import { useApiWalletAssetsMutation } from "features/wallet/walletApi";
+import type { CoinDto } from "types/assest";
 
-import { iconPageSend } from "../../assets/icons/pages/send";
-import Page from "../../components/containers/Page";
-import Row from "../../components/containers/Row";
-import AddressInput from "../../components/inputs/AddressInput";
-import Delimiter from "../../components/typography/Delimiter";
-import TransferAsset from "../../components/ui/assets/TransferAssets";
-import { shortenString } from "../../components/ui/balance/Address";
-import ListBlock from "../../components/ui/listBlock";
-import ListBaseItem from "../../components/ui/listBlock/ListBaseItem";
-import AssetsList from "../../components/ui/send/assets";
-import { selectAuthIsReady } from "../../features/auth/authSelector";
-import { useApiWalletAssetsMutation } from "../../features/wallet/walletApi";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import useContracts from "../../hooks/useContracts";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import useRouter from "../../hooks/useRouter";
-import { useTmaMainButton } from "../../hooks/useTma";
-import { useTon } from "../../hooks/useTon";
-import type { CoinDto } from "../../types/assest";
+import { iconPageSend } from "assets/icons/pages/send";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+import useContracts from "hooks/useContracts";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTmaMainButton } from "hooks/useTma";
+import { useTon } from "hooks/useTon";
+
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import AddressInput from "components/inputs/AddressInput";
+import Delimiter from "components/typography/Delimiter";
+import TransferAsset from "components/ui/assets/TransferAssets";
+import { shortenString } from "components/ui/balance/Address";
+import ListBlock from "components/ui/listBlock";
+import ListBaseItem from "components/ui/listBlock/ListBaseItem";
+import AssetsList from "components/ui/send/assets";
 
 interface ItemInfo {
   title: string;
@@ -82,6 +84,7 @@ const SendPage = () => {
                   // sendMode:
                   //   SendMode.PAY_GAS_SEPARATELY | SendMode.IGNORE_ERRORS,
                 });
+                console.log({ tx });
               } else if (asset.type === "jetton") {
                 if (
                   ton.wallet.address &&

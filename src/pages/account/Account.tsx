@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 
-import Page from "../../components/containers/Page";
-import Block from "../../components/typography/Block";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
 
-// import TileButton from '../../components/buttons/TileButton.tsx';
+import Page from "components/containers/Page";
+import Block from "components/typography/Block";
+
+// import TileButton from 'components/buttons/TileButton.tsx';
 // import createSettingsButtons from './settings-buttons.ts';
 
 function Account() {

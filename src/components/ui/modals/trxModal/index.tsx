@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { useApiGetTransactionMutation } from "../../../../features/modal/trxModalApi";
-import { trxModalActions } from "../../../../features/modal/trxModalSlice";
-import { useAppDispatch } from "../../../../hooks/useAppDispatch";
-import { useTmaMainButton } from "../../../../hooks/useTma";
-import type { TransactionDto, TransactionModalInit } from "../../../../types/transaction";
+import { useApiGetTransactionMutation } from "features/modal/trxModalApi";
+import { trxModalActions } from "features/modal/trxModalSlice";
+import type { TransactionDto, TransactionModalInit } from "types/transaction";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import { useTmaMainButton } from "hooks/useTma";
+
 import TransactionModal from "../transactionModal";
 
 const ModalTrx = ({ trxHash, trxInitData }: TransactionModalInit) => {

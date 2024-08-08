@@ -5,8 +5,10 @@ import {
   iconMenuWalletBank,
   iconMenuWalletSend,
   iconMenuWalletSwap,
-} from "../../../assets/icons/menus/wallet/index";
-import useLanguage from "../../../hooks/useLanguage";
+} from "assets/icons/menus/wallet/index";
+
+import useLanguage from "hooks/useLanguage";
+
 import type { MenuItem } from "./Menu";
 import Menu from "./Menu";
 import "./WalletMenu.styles.css";

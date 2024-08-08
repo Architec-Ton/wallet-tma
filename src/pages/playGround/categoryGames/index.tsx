@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import Page from "../../../components/containers/Page";
-import GameListSection from "../../../components/ui/games/listSection";
-import SearchBar from "../../../components/ui/searchBar";
-import { useGetCategoryGamesQuery, useSearchGamesMutation } from "../../../features/gaming/gamingApi";
-import { selectGamesFilter } from "../../../features/gaming/gamingSelectors";
-import { setLoading } from "../../../features/page/pageSlice";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useAppDispatch";
-import useDebounce from "../../../hooks/useDebounce";
-import type { GameCategoryType, GameFilterType, GameListItemType } from "../../../types/gameTypes";
+import { useGetCategoryGamesQuery, useSearchGamesMutation } from "features/gaming/gamingApi";
+import { selectGamesFilter } from "features/gaming/gamingSelectors";
+import { setLoading } from "features/page/pageSlice";
+import type { GameCategoryType, GameFilterType, GameListItemType } from "types/gameTypes";
+
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import useDebounce from "hooks/useDebounce";
+
+import Page from "components/containers/Page";
+import GameListSection from "components/ui/games/listSection";
+import SearchBar from "components/ui/searchBar";
+
 import "./index.css";
 
 type SearchParamsType = {

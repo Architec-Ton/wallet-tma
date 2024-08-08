@@ -2,13 +2,16 @@ import type { ChangeEvent } from "react";
 import React, { useEffect, useMemo, useState } from "react";
 
 import classNames from "classnames";
+import type { CoinDto } from "types/assest";
+
+import { iconOpenButton } from "assets/icons/buttons";
+
+import useLanguage from "hooks/useLanguage";
+
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
 
 import type { AssetDataType } from "..";
-import { iconOpenButton } from "../../../assets/icons/buttons";
-import Row from "../../../components/containers/Row";
-import Section from "../../../components/containers/Section";
-import useLanguage from "../../../hooks/useLanguage";
-import type { CoinDto } from "../../../types/assest";
 
 type OwnPropsType = {
   asset: AssetDataType;

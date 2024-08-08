@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 
-import { iconTimer } from "../../assets/icons/globals";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import BlockWithTitle from "../../components/typography/BlockWithTitle";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
+import { iconTimer } from "assets/icons/globals";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import BlockWithTitle from "components/typography/BlockWithTitle";
 
 function BankingTasks() {
   const page = usePage();

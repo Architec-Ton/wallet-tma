@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 
-import SHIELD from "../../assets/icons/pages/registration-complete/shield-tick.svg";
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import useRouter from "../../hooks/useRouter";
-import { useTmaMainButton } from "../../hooks/useTma";
+import SHIELD from "assets/icons/pages/registration-complete/shield-tick.svg";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTmaMainButton } from "hooks/useTma";
+
+import Page from "components/containers/Page";
+
 import "./RegistrationCompleted.style.css";
 
 const RegistrationIsCompleted = () => {
