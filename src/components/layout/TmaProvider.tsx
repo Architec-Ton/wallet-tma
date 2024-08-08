@@ -50,8 +50,6 @@ export function TmaProvider({ children }: Props) {
   const isTonReady = useAppSelector(selectAuthIsTonReady);
   const accessToken = useAppSelector(selectAccessToken);
 
-  // const launchParams = useLaunchParams()
-
   const initDataRaw = useInitDataRaw();
 
   useEffect(() => {
@@ -59,13 +57,7 @@ export function TmaProvider({ children }: Props) {
     isTMA()
       .then((tma) => dispatch(setTma(tma)))
       .finally(() => {
-        console.log("setTmaLoading", isTmaLoading);
         dispatch(setTmaLoading(false));
-        console.log("setTmaLoading", isTmaLoading);
-        console.log("setTmaLoisTmaading isTma", isTma);
-        // setTimeout(() => {
-        //   dispatch(setTmaLoading(false));
-        // }, 2000);
       });
   }, []);
 
@@ -76,7 +68,7 @@ export function TmaProvider({ children }: Props) {
         initDataRaw: auth?.account,
         initTon,
       }).unwrap();
-      console.log("Auth result:", result);
+
       dispatch(setAccessToken(result.access_token));
     } catch (err) {
       console.error("Failed to login: ", err);
@@ -84,9 +76,6 @@ export function TmaProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    console.log("Ready:", isTonReady && isTmaReady && !!accessToken && !!client);
-    console.log("isTonReady:", isTonReady, "isTmaReady", isTmaReady, "accessToken", !!accessToken, "client", !!client);
-
     dispatch(setIsReady(isTonReady && isTmaReady && !!accessToken && !!client));
   }, [isTonReady, isTmaReady, accessToken, client]);
 
@@ -138,7 +127,6 @@ export function TmaProvider({ children }: Props) {
 
   useEffect(() => {
     if (isTmaReady && isTonReady && ton.wallet?.address) {
-      console.log("final auth request:", auth);
       const initTon = ton.wallet
         ? ({
             network: ton.wallet.network,

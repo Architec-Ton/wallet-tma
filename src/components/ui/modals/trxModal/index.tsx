@@ -14,7 +14,6 @@ const ModalTrx = ({ trxHash, trxInitData }: TransactionModalInit) => {
   const dispatch = useAppDispatch();
 
   const handlerOnClose = () => {
-    console.log("onclose");
     dispatch(trxModalActions.decline());
   };
 
@@ -24,14 +23,13 @@ const ModalTrx = ({ trxHash, trxInitData }: TransactionModalInit) => {
         try {
           const transactionData = await trxApi(trx).unwrap();
           if (transactionData) setTrxData(transactionData);
-        } catch {
-          console.log("cath error");
-        }
+        } catch {}
       };
       fetchData(trxHash);
     }
     btn.setVisible(false);
   }, [trxHash]);
+
   return (
     <>
       <TransactionModal trx={trxData} onClose={handlerOnClose} />

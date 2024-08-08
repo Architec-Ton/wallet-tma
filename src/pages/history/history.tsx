@@ -19,10 +19,10 @@ function Histories() {
   const handleInfo = async () => {
     try {
       const result = await walletHistoryApi(null).unwrap();
-      //   console.log("Wallet result:", result);
+
       setWalletItemsData(result);
       const result2 = await walletHistoryApi(null).unwrap();
-      //   console.log("Wallet result:", result);
+
       setWalletItemsData(result2);
     } catch (err) {
       console.error("Failed to get info: ", err);

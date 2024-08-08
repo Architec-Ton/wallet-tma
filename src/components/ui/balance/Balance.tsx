@@ -36,7 +36,6 @@ function Balance({ children, walletInfoData }: Props) {
         }
       }
     } catch (e) {
-      console.log("Wrong link");
       dispatch(showAlert({ message: `Can not parse qr code`, duration: 8000 }));
     }
   }, [qrText]);

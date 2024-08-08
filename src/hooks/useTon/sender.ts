@@ -34,8 +34,6 @@ export const useSender = (): Sender => {
   const expiration = useAppSelector((state: RootState) => state.ton.expiration);
 
   const tonSend = async (args: SenderArguments, seqno: number | null): Promise<any> => {
-    console.log("sender: ", args);
-
     if (expiration != null && new Date(expiration) > new Date()) {
       dispatch(
         showAlert({
@@ -54,18 +52,13 @@ export const useSender = (): Sender => {
 
     if (pin === undefined) return;
 
-    console.log("privateHashKeyL:", privateHashKey, pin);
     let keyPair: KeyPair | null = null;
     try {
       const mnemonics = decodePrivateKeyByPin(privateHashKey, pin);
 
-      console.log("mnemonics:", mnemonics);
-
       keyPair = await mnemonicToPrivateKey(mnemonics);
-
-      console.log("keyPair:", keyPair);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       dispatch(showAlert({ message: `Pincode wrong. Try again`, duration: 8000 }));
       return;
     }
@@ -74,8 +67,6 @@ export const useSender = (): Sender => {
 
     // Create wallet contract
     const workchain = 0; // Usually you need a workchain 0
-
-    console.log("tonSend", publicKey, privateKey);
 
     if (publicKey && privateKey) {
       const wallet = WalletContractV4.create({
@@ -118,10 +109,7 @@ export const useSender = (): Sender => {
             );
             return;
           }
-          dispatch(setSeqno(seqno_current)), console.log("balance", balance);
-          console.log("seqno", seqno, seqno_current);
-          console.log("privateKey", privateKey);
-          console.log("args", args);
+          dispatch(setSeqno(seqno_current));
 
           const transfer = await contract.createTransfer({
             seqno: seqno_current,
@@ -136,15 +124,8 @@ export const useSender = (): Sender => {
             ],
           });
 
-          console.log("Transfer", transfer.toBoc().toString("hex"));
-
-          console.log("hash", transfer.hash().toString("hex"));
-          console.log("Transfer2", transfer.toString("hex"));
-
           try {
             const trx = await contract.send(transfer);
-
-            console.log("trx", trx);
 
             const hash = Buffer.from(`${args.to.toString()}.${seqno}`, "utf-8").toString("hex");
 
@@ -158,7 +139,6 @@ export const useSender = (): Sender => {
               commissionAmount: 0.00247,
             } as TransactionDto);
 
-            console.log("txModel:", txModal);
             dispatch(setExpiration());
           } catch (e) {
             if (e instanceof Error) dispatch(showAlert({ message: e.message, duration: 8000 }));

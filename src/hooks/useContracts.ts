@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import type { OpenedContract} from "@ton/core";
+import type { OpenedContract } from "@ton/core";
 import { Address, beginCell, toNano } from "@ton/core";
 
 import { BANK_CROWDSALE_ADDRESS, BANK_GAS_AMOUNT, BANK_JETTON_MASTER_ADDRESS } from "../constants";
@@ -20,43 +20,64 @@ function useContracts() {
   const { client } = useTonClient();
   const { sender } = useTon();
 
-  const jettonWallet = useMemo(() => (address: Address): OpenedContract<ArcJettonWallet> | undefined => {
-      if (!client) return;
-      const contract = ArcJettonWallet.fromAddress(address);
-      return client.open(contract) as OpenedContract<ArcJettonWallet>;
-    }, [client]);
+  const jettonWallet = useMemo(
+    () =>
+      (address: Address): OpenedContract<ArcJettonWallet> | undefined => {
+        if (!client) return;
+        const contract = ArcJettonWallet.fromAddress(address);
+        return client.open(contract) as OpenedContract<ArcJettonWallet>;
+      },
+    [client],
+  );
 
-  const jettonMaster = useMemo(() => (address: Address): OpenedContract<ArcJetton> | undefined => {
-      if (!client) return;
-      const contract = ArcJetton.fromAddress(address);
-      return client.open(contract) as OpenedContract<ArcJetton>;
-    }, [client]);
+  const jettonMaster = useMemo(
+    () =>
+      (address: Address): OpenedContract<ArcJetton> | undefined => {
+        if (!client) return;
+        const contract = ArcJetton.fromAddress(address);
+        return client.open(contract) as OpenedContract<ArcJetton>;
+      },
+    [client],
+  );
 
-  const bankJettonWallet = useMemo(() => (address: Address): OpenedContract<BankJettonWallet> | undefined => {
-      if (!client) return;
-      const contract = BankJettonWallet.fromAddress(address);
-      return client.open(contract) as OpenedContract<BankJettonWallet>;
-    }, [client]);
-  const bankJettonMaster = useMemo(() => (): OpenedContract<BankJetton> | undefined => {
+  const bankJettonWallet = useMemo(
+    () =>
+      (address: Address): OpenedContract<BankJettonWallet> | undefined => {
+        if (!client) return;
+        const contract = BankJettonWallet.fromAddress(address);
+        return client.open(contract) as OpenedContract<BankJettonWallet>;
+      },
+    [client],
+  );
+  const bankJettonMaster = useMemo(
+    () => (): OpenedContract<BankJetton> | undefined => {
       if (!client) {
-        console.log("bankJettonMaster null", client);
         return;
       }
       const contract = BankJetton.fromAddress(Address.parse(BANK_JETTON_MASTER_ADDRESS));
       return client.open(contract) as OpenedContract<BankJetton>;
-    }, [client]);
+    },
+    [client],
+  );
 
-  const bankCrowdSale = useMemo(() => (): OpenedContract<BanksCrowdSale> | undefined => {
+  const bankCrowdSale = useMemo(
+    () => (): OpenedContract<BanksCrowdSale> | undefined => {
       if (!client) return;
       const contract = BanksCrowdSale.fromAddress(Address.parse(BANK_CROWDSALE_ADDRESS));
       return client.open(contract) as OpenedContract<BanksCrowdSale>;
-    }, [client]);
+    },
+    [client],
+  );
 
-  const bankStakeStorage = useMemo(() => (address: Address): OpenedContract<StakeStorage> | undefined => {
-      if (!client) return;
-      const contract = StakeStorage.fromAddress(address);
-      return client.open(contract) as OpenedContract<StakeStorage>;
-    }, [client]);
+  const bankStakeStorage = useMemo(
+    () =>
+      (address: Address): OpenedContract<StakeStorage> | undefined => {
+        if (!client) return;
+        const contract = StakeStorage.fromAddress(address);
+        return client.open(contract) as OpenedContract<StakeStorage>;
+      },
+    [client],
+  );
 
   return {
     jetton: {

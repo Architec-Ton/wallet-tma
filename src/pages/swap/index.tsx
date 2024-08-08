@@ -276,7 +276,6 @@ const Swap = () => {
   const transactionSuccessHandler = async () => {
     const types = [sendingAsset?.type, receivingAsset?.type];
     try {
-      console.log(pinCode);
       if (types.includes("ton")) {
         types[0] === "ton" ? await tonToJettonTransaction() : await jettonToTonTransaction();
       } else {

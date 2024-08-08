@@ -2,3 +2,5 @@ node_modules/**/*
 .deploy/**/*
 cert/**/*
 dist/**/*
+package.json
+pnpm-lock.yaml

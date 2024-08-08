@@ -77,7 +77,6 @@ const Existing: React.FC = () => {
     btn.init(
       t("next", "button"),
       () => {
-        console.log(inputs);
         const mnemonic = inputs.join(" ");
         navigate("/registration/confirm-secret-key", {
           state: { mnemonic, confirm: true },

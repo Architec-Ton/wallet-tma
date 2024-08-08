@@ -2,13 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import pinCodeModalThunkActions from "../../features/modal/pinModal";
 import { pinCodeModalActions } from "../../features/modal/pinModalSlice";
-import type { AppDispatch, RootState } from "../../store";
+import { pincodeIsOpenedSelector } from "../../features/modal/pinSelector";
+import type { AppDispatch } from "../../store";
 
 function usePinCodeModalManagement() {
   const dispatch: AppDispatch = useDispatch();
-  const { isOpened } = useSelector((state: RootState) => ({
-    isOpened: state.pincode.isOpened,
-  }));
+  const isOpened = useSelector(pincodeIsOpenedSelector);
 
   const open = async () => {
     const { payload } = await dispatch(pinCodeModalThunkActions.open());

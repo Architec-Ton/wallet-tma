@@ -26,6 +26,9 @@ const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
         setTimeout(() => setStatus("normal"), 300);
         if (onFailure) onFailure();
         break;
+
+      default:
+        break;
     }
   }, [status, pin]);
 
