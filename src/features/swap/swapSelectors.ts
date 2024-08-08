@@ -1,3 +1,3 @@
 import { RootState } from "../../store";
 
-export const selectAssets = (state: RootState) => state.swap.assets
+export const selectAssets = (state: RootState) => state.swap.assets;

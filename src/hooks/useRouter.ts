@@ -1,7 +1,8 @@
 import { NavigateOptions, To, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "./useAppDispatch";
+
 import { setLoading, setTitle } from "../features/page/pageSlice";
 import { setMainButtonVisible } from "../features/tma/mainButtonSlice";
+import { useAppDispatch } from "./useAppDispatch";
 import { useTmaState } from "./useTma";
 
 function useRouter() {

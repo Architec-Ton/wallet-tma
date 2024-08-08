@@ -1,14 +1,16 @@
 import { ReactNode, useMemo } from "react";
+
+import { TON_JETTON } from "../../../constants";
+import { useGetStonFiAssetQuery } from "../../../features/stonfi/stonFiApi";
 // import { NavLink } from 'react-router-dom';
 import useLanguage from "../../../hooks/useLanguage";
-import Section from "../../containers/Section";
-import ListBlock from "../listBlock";
-import "./Balance.styles.css";
 import { CoinDto } from "../../../types/assest";
-import ListTileItem from "../listBlock/ListTileItem";
+import Section from "../../containers/Section";
 import PriceChanges from "../../typography/PriceChanges";
-import { useGetStonFiAssetQuery } from "../../../features/stonfi/stonFiApi";
-import { TON_JETTON } from "../../../constants";
+import ListBlock from "../listBlock";
+import ListTileItem from "../listBlock/ListTileItem";
+import "./Balance.styles.css";
+
 // import ListBaseItem from '../listBlock/ListBaseItem';
 
 type Props = {
@@ -45,8 +47,7 @@ const Asset = ({ asset }: { asset: CoinDto }) => {
   const fullPriceUsd = useMemo(() => {
     if (!data || !data.asset || !isSuccess) return undefined;
 
-    const assetPriceUsd =
-      data.asset.dex_usd_price || data.asset.third_party_price_usd;
+    const assetPriceUsd = data.asset.dex_usd_price || data.asset.third_party_price_usd;
 
     if (!assetPriceUsd) return undefined;
 
@@ -57,11 +58,7 @@ const Asset = ({ asset }: { asset: CoinDto }) => {
 
   return (
     <ListTileItem
-      icon={
-        asset.meta?.image
-          ? asset.meta?.image
-          : `data:image;base64, ${asset.meta?.imageData}`
-      }
+      icon={asset.meta?.image ? asset.meta?.image : `data:image;base64, ${asset.meta?.imageData}`}
       title={asset.meta?.name}
       description={`${asset.amount?.toLocaleString(undefined, {
         maximumFractionDigits: 5,

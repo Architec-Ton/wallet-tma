@@ -1,18 +1,13 @@
 import { useState } from "react";
-import Section from "../../../containers/Section";
-import GameListItemGroup from "../listItemGroup";
-import { GameListItemType } from "../../../../types/gameTypes";
-import {
-  iconFilterSquareButton,
-  iconSortButton,
-} from "../../../../assets/icons/buttons";
-import GameFilterModal from "../filterModal";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/useAppDispatch";
+
+import { iconFilterSquareButton, iconSortButton } from "../../../../assets/icons/buttons";
 import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
 import { setFilter } from "../../../../features/gaming/gamingSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/useAppDispatch";
+import { GameListItemType } from "../../../../types/gameTypes";
+import Section from "../../../containers/Section";
+import GameFilterModal from "../filterModal";
+import GameListItemGroup from "../listItemGroup";
 
 type OwnPropsType = {
   title?: string;

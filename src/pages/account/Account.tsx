@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
-import Page from '../../components/containers/Page.tsx';
-import { usePage } from '../../hooks/usePage.ts';
-import useLanguage from '../../hooks/useLanguage.ts';
-import Block from '../../components/typography/Block.tsx';
+import { useEffect } from "react";
+
+import Page from "../../components/containers/Page.tsx";
+import Block from "../../components/typography/Block.tsx";
+import useLanguage from "../../hooks/useLanguage.ts";
+import { usePage } from "../../hooks/usePage.ts";
+
 // import TileButton from '../../components/buttons/TileButton.tsx';
 // import createSettingsButtons from './settings-buttons.ts';
 
 function Account() {
-  const t = useLanguage('account');
+  const t = useLanguage("account");
   const page = usePage();
 
   useEffect(() => {
@@ -17,9 +19,9 @@ function Account() {
   // const initialSettings = createSettingsButtons();
 
   return (
-    <Page title={t('account')}>
+    <Page title={t("account")}>
       <Block>AccountTile</Block>
-      <h1>{t('settings')}</h1>
+      <h1>{t("settings")}</h1>
       {/* {initialSettings.map((btn, index) => {
         return (
           <TileButton

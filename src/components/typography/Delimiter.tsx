@@ -1,12 +1,9 @@
-import classNames from "classnames"
-import "./Delimiter.styles.css"
+import classNames from "classnames";
 
-const Delimiter = ({ children, className }: { children?: React.ReactNode, className?: string}) => {
-  return (
-    <div className={classNames("w-screen delimiter-line", className)}>
-      {children}
-    </div>
-  )
-}
+import "./Delimiter.styles.css";
 
-export default Delimiter
+const Delimiter = ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+  return <div className={classNames("w-screen delimiter-line", className)}>{children}</div>;
+};
+
+export default Delimiter;

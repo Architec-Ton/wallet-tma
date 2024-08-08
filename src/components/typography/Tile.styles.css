@@ -1,9 +1,7 @@
-.tile{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: var(--spacing-12);
+.tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--spacing-12);
 }
-
-

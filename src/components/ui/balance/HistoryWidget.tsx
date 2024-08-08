@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
-import Section from "../../containers/Section";
-import ListBlock from "../listBlock";
+
 import { iconTrxRecv, iconTrxSend } from "../../../assets/icons/jettons";
 import useLanguage from "../../../hooks/useLanguage";
-
-import ListTileItem from "../listBlock/ListTileItem";
 import { TransactionHistoryItemDto } from "../../../types/history";
-import { shortenString } from "./Address";
+import Section from "../../containers/Section";
+import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
+import ListTileItem from "../listBlock/ListTileItem";
+import { shortenString } from "./Address";
 
 type Props = {
   children?: ReactNode;
@@ -35,20 +35,14 @@ function HistoryWidget({ children, items = [] }: Props) {
                 >
                   <div className="list-block__right">
                     <div
-                      className={`list-block__title ${
-                        h.type == "in" ? "change-up" : ""
-                      } `}
+                      className={`list-block__title ${h.type == "in" ? "change-up" : ""} `}
                     >{`${h.value} ${h.symbol}`}</div>
-                    <div className="list-block__description">
-                      {new Date(h.utime * 1000).toLocaleString()}
-                    </div>
+                    <div className="list-block__description">{new Date(h.utime * 1000).toLocaleString()}</div>
                   </div>
                 </ListTileItem>
               );
             })}
-            {children && (
-              <ListBaseItem className="center">{children}</ListBaseItem>
-            )}
+            {children && <ListBaseItem className="center">{children}</ListBaseItem>}
           </ListBlock>
         </Section>
       )}

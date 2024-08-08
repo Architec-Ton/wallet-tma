@@ -1,9 +1,10 @@
-import classNames from "classnames"
-import inlineLoader from "../../../assets/loties/inline-loader.svg"
-import "./index.css"
+import classNames from "classnames";
 
-const InlineLoader = ({className}: {className?: string}) => {
-  return <img src={inlineLoader} alt="" className={classNames("inline-loader", className)} />
-}
+import inlineLoader from "../../../assets/loties/inline-loader.svg";
+import "./index.css";
 
-export default InlineLoader
+const InlineLoader = ({ className }: { className?: string }) => {
+  return <img src={inlineLoader} alt="" className={classNames("inline-loader", className)} />;
+};
+
+export default InlineLoader;

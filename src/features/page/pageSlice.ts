@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface PageTitleState {
   title?: string;
@@ -40,11 +40,10 @@ const pageSlice = createSlice({
     },
     setNavbarVisible(state, action: PayloadAction<boolean>) {
       state.isNavbarVisible = action.payload;
-    }
+    },
   },
 });
 
-export const { setTitle, setLoading, setLibraryInitialized, setApiLoading , setNavbarVisible} =
-  pageSlice.actions;
+export const { setTitle, setLoading, setLibraryInitialized, setApiLoading, setNavbarVisible } = pageSlice.actions;
 
 export default pageSlice.reducer;

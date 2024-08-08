@@ -1,19 +1,21 @@
-import './App.css'
-import { RouterProvider } from 'react-router-dom'
-import ReactGA from 'react-ga4'
-import router from './Routes'
-import './i18n'
-import { SDKProvider } from '@tma.js/sdk-react'
-import Layout from './components/layout/Layout'
-import { Provider } from 'react-redux'
-import { store } from './store'
-import { TonConnectUIProvider } from '@tonconnect/ui-react'
-import { FE_URL, GA_ID, MANIFEST_URL } from './constants'
-import { TonProvider } from './components/layout/TonProvider'
-import AlertContainer from './components/ui/alert/AlertContainer.tsx'
-import { TmaProvider } from './components/layout/TmaProvider.tsx'
+import ReactGA from "react-ga4";
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
 
-if (GA_ID) ReactGA.initialize(GA_ID)
+import { SDKProvider } from "@tma.js/sdk-react";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
+
+import "./App.css";
+import router from "./Routes";
+import Layout from "./components/layout/Layout";
+import { TmaProvider } from "./components/layout/TmaProvider.tsx";
+import { TonProvider } from "./components/layout/TonProvider";
+import AlertContainer from "./components/ui/alert/AlertContainer.tsx";
+import { FE_URL, GA_ID, MANIFEST_URL } from "./constants";
+import "./i18n";
+import { store } from "./store";
+
+if (GA_ID) ReactGA.initialize(GA_ID);
 
 function App() {
   return (
@@ -39,7 +41,7 @@ function App() {
         </Provider>
       </TonConnectUIProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

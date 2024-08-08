@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import Delimiter from "../../components/typography/Delimiter";
 
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import { selectAuthIsReady } from "../../features/auth/authSelector";
-import { useApiGetBankBuyMutation } from "../../features/bank/bankApi";
-import useContracts from "../../hooks/useContracts";
-import { toNano, Address } from "@ton/core";
-import SendAssetInput from "../../components/ui/assets/SendAssets";
-import { CoinDto } from "../../types/assest";
-import RecvAssetInput from "../../components/ui/assets/RecvAssets";
+import { Address, toNano } from "@ton/core";
+
 import { iconInfoButton, iconReverseButton } from "../../assets/icons/buttons";
-import { useTmaMainButton } from "../../hooks/useTma";
-import useRouter from "../../hooks/useRouter";
-import FormatMessage from "../../components/typography/FormatMessage";
+import Page from "../../components/containers/Page";
 // import Column from '../../components/containers/Column';
 import Row from "../../components/containers/Row";
-
-import "./BankBuy.styles.css";
+import Delimiter from "../../components/typography/Delimiter";
+import FormatMessage from "../../components/typography/FormatMessage";
+import RecvAssetInput from "../../components/ui/assets/RecvAssets";
+import SendAssetInput from "../../components/ui/assets/SendAssets";
+import { selectAuthIsReady } from "../../features/auth/authSelector";
+import { useApiGetBankBuyMutation } from "../../features/bank/bankApi";
 import { selectReferral } from "../../features/tma/tmaSelector";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import useContracts from "../../hooks/useContracts";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+import useRouter from "../../hooks/useRouter";
+import { useTmaMainButton } from "../../hooks/useTma";
+import { CoinDto } from "../../types/assest";
+import "./BankBuy.styles.css";
 
 function BankBuy() {
   const bnkPrice = 1.5;
@@ -82,17 +82,14 @@ function BankBuy() {
     if (isReady) {
       console.log("update number ton: ", Number(bnkAmount * bnkPrice));
       btn.init(
-        `${t("buy", "button")} (${Number(bnkAmount * bnkPrice).toLocaleString(
-          undefined,
-          {
-            maximumFractionDigits: 1,
-          }
-        )} TON)`,
+        `${t("buy", "button")} (${Number(bnkAmount * bnkPrice).toLocaleString(undefined, {
+          maximumFractionDigits: 1,
+        })} TON)`,
         () => {
           console.log("number ton: ", Number(bnkAmount * bnkPrice));
           handleBuyBank(Number(bnkAmount * bnkPrice));
         },
-        btnVisible
+        btnVisible,
       );
     }
   }, [sendAmount, isReady, recvAmount, recvMaxAmount, isReady, sendAsset]);
@@ -110,8 +107,7 @@ function BankBuy() {
     const tonAmount = Number(value);
     if (!isNaN(tonAmount)) {
       const bnkAmount = Math.trunc(tonAmount / bnkPrice);
-      if (bnkAmount <= recvMaxAmount)
-        setRecvAmount(() => (bnkAmount ? bnkAmount.toString() : ""));
+      if (bnkAmount <= recvMaxAmount) setRecvAmount(() => (bnkAmount ? bnkAmount.toString() : ""));
       //setSendAmount((bnkAmount * bnkPrice).toString());
       setSendAmount(value);
     }
@@ -122,9 +118,7 @@ function BankBuy() {
     if (!isNaN(bnkAmount)) {
       const bnkTAmount = Math.trunc(bnkAmount);
       if (bnkAmount <= recvMaxAmount) {
-        setSendAmount(() =>
-          bnkAmount ? (bnkTAmount * bnkPrice).toString() : ""
-        );
+        setSendAmount(() => (bnkAmount ? (bnkTAmount * bnkPrice).toString() : ""));
         setRecvAmount(() => (bnkAmount ? bnkTAmount.toString() : ""));
       }
     }
@@ -134,10 +128,7 @@ function BankBuy() {
     console.log(sendAmount);
     try {
       if (refAddress) {
-        const tx = await contracts.bank.buyWithReferral(
-          Address.parse(refAddress),
-          toNano(amount)
-        );
+        const tx = await contracts.bank.buyWithReferral(Address.parse(refAddress), toNano(amount));
         console.log("transaction:", tx);
       } else {
         const tx = await contracts.bank.buy(toNano(amount));
@@ -152,12 +143,7 @@ function BankBuy() {
   return (
     <Page title={t("title")}>
       <Delimiter />
-      <SendAssetInput
-        asset={sendAsset}
-        value={sendAmount}
-        onChange={handleSendOnChange}
-        onBlur={handleSendOnBlur}
-      />
+      <SendAssetInput asset={sendAsset} value={sendAmount} onChange={handleSendOnChange} onBlur={handleSendOnBlur} />
       {/* {sendAsset && <AssetInput asset={sendAsset} value="00" />} */}
       <Delimiter>
         <img src={iconReverseButton} alt="" />
@@ -172,9 +158,7 @@ function BankBuy() {
       <Delimiter />
       <Row className="mint-info">
         <div>
-          <FormatMessage components={{ span: <span /> }}>
-            {t("info")}
-          </FormatMessage>
+          <FormatMessage components={{ span: <span /> }}>{t("info")}</FormatMessage>
         </div>
         <img src={iconInfoButton} alt="" />
       </Row>

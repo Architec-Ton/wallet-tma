@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CoinDto } from "../../types/assest";
+
 import { Address } from "@ton/core";
+
+import { CoinDto } from "../../types/assest";
 import { GetStonFiAssetDTO } from "./types";
 
 export const AssetKind = {
@@ -64,9 +66,7 @@ export const stonFiApi = createApi({
     getStonfiAssets: builder.query<CoinDto[], unknown>({
       query: () => `assets`,
       transformResponse: (response: { asset_list: AssetInfo[] }) => {
-        const assets = response.asset_list.filter(
-          (asset) => asset.default_symbol === true && !asset.blacklisted
-        );
+        const assets = response.asset_list.filter((asset) => asset.default_symbol === true && !asset.blacklisted);
         // return assets
         const transformedAssets: CoinDto[] = [];
         assets.reduce((acc, asset: AssetInfo): CoinDto[] => {
@@ -97,24 +97,14 @@ export const stonFiApi = createApi({
       }),
     }),
     simulate: builder.query<SimulateDTO, SimulateRequestQuery>({
-      query: ({
-        offer_address,
-        ask_address,
-        units,
-        slippage_tolerance,
-      }: SimulateRequestQuery) => ({
+      query: ({ offer_address, ask_address, units, slippage_tolerance }: SimulateRequestQuery) => ({
         url: "swap/simulate",
         params: { offer_address, ask_address, units, slippage_tolerance },
         method: "POST",
       }),
     }),
     reverseSimulate: builder.query<SimulateDTO, SimulateRequestQuery>({
-      query: ({
-        offer_address,
-        ask_address,
-        units,
-        slippage_tolerance,
-      }: SimulateRequestQuery) => ({
+      query: ({ offer_address, ask_address, units, slippage_tolerance }: SimulateRequestQuery) => ({
         url: "reverse_swap/simulate",
         params: { offer_address, ask_address, units, slippage_tolerance },
         method: "POST",

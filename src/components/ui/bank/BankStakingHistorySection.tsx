@@ -1,11 +1,11 @@
 import { formatDate } from "date-fns";
+
+import useLanguage from "../../../hooks/useLanguage";
 import Section from "../../containers/Section";
 import Block from "../../typography/Block";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
-
 import "./BankStakingHistorySection.styles.css";
-import useLanguage from "../../../hooks/useLanguage";
 
 export type StakeHistoryType = {
   date: string;
@@ -21,18 +21,11 @@ type OwnPropsType = {
   onClaim?: () => void;
 };
 
-const BankStakingHistorySection = ({
-  stakeHistory,
-  title,
-  readMore,
-  onClaim,
-}: OwnPropsType) => {
+const BankStakingHistorySection = ({ stakeHistory, title, readMore, onClaim }: OwnPropsType) => {
   const t = useLanguage("bank-stake-history");
   return (
     <Section title={title} readMore={readMore}>
-      {!stakeHistory && (
-        <Block className="stake-history-loss">{t("empty-description")}</Block>
-      )}
+      {!stakeHistory && <Block className="stake-history-loss">{t("empty-description")}</Block>}
       {stakeHistory && (
         <ListBlock>
           <ListBaseItem>

@@ -1,14 +1,14 @@
-import { ReactNode } from 'react';
-import Column from '../../containers/Column';
-import Row from '../../containers/Row';
-import Block from '../../typography/Block';
+import { ReactNode } from "react";
 
-import './Balance.styles.css';
-import Address from './Address';
-import Button from '../../buttons/Button';
-import { iconBankButton } from '../../../assets/icons/buttons';
-import useRouter from '../../../hooks/useRouter';
-import useLanguage from '../../../hooks/useLanguage';
+import { iconBankButton } from "../../../assets/icons/buttons";
+import useLanguage from "../../../hooks/useLanguage";
+import useRouter from "../../../hooks/useRouter";
+import Button from "../../buttons/Button";
+import Column from "../../containers/Column";
+import Row from "../../containers/Row";
+import Block from "../../typography/Block";
+import Address from "./Address";
+import "./Balance.styles.css";
 
 type Props = {
   address?: string;
@@ -19,7 +19,7 @@ type Props = {
 
 function BankBalance({ children, arcAmount, bnkAmount, address }: Props) {
   const navigate = useRouter();
-  const t = useLanguage('bank-balance');
+  const t = useLanguage("bank-balance");
   return (
     <Block className="balance-block space-between">
       <Column className="w-100 start">
@@ -41,13 +41,11 @@ function BankBalance({ children, arcAmount, bnkAmount, address }: Props) {
         </Row>
         <Row
           style={{
-            margin: 'var(--spacing-16) 0',
-          }}>
-          <Button
-            icon={iconBankButton}
-            onClick={() => navigate('/bank/buy')}
-            className="buy-button">
-            {t('Buy', 'button')}
+            margin: "var(--spacing-16) 0",
+          }}
+        >
+          <Button icon={iconBankButton} onClick={() => navigate("/bank/buy")} className="buy-button">
+            {t("Buy", "button")}
           </Button>
         </Row>
 

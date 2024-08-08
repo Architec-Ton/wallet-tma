@@ -1,41 +1,41 @@
 import { createBrowserRouter } from "react-router-dom";
-import PlayGround from "./pages/playGround";
-// import AddWallet from "./components/start-page/AddWallet/AddWallet.tsx";
-// import YourSecretKey from "./components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx";
 
-import Welcome from "./pages/registration/Welcome.tsx";
-import ConfirmKey from "./pages/registration/ConfirmKey.tsx";
-import AddWallet from "./pages/registration/AddWallet.tsx";
-import SecretKey from "./pages/registration/SecretKey.tsx";
-import RegistrationIsCompleted from "./pages/registration/RegistrationIsCompleted.tsx";
-import Existing from "./pages/registration/Existing.tsx";
+import BankStakingHistory from "./components/ui/bank/BankStakingHistory.tsx";
+import AccountDisconnect from "./pages/AccountDisconnect.tsx";
 import Main from "./pages/Main.tsx";
-import GamePage from "./pages/playGround/gamePage";
-import LeaderBoard from "./pages/playGround/leaderBoard";
-import CategoryGames from "./pages/playGround/categoryGames";
+import ApplicationSubmit from "./pages/account/account-settings-pages/ApplicationSubmit.tsx";
+import MainCurrency from "./pages/account/account-settings-pages/MainCurrency.tsx";
+import Notifications from "./pages/account/account-settings-pages/Notifications.tsx";
+import WalletLanguage from "./pages/account/account-settings-pages/WalletLanguage.tsx";
+import WalletSafety from "./pages/account/account-settings-pages/WalletSafety.tsx";
 import AddCrypto from "./pages/addCrypto";
-import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
 import ChooseAddMethod from "./pages/addCrypto/AddCrypto.tsx";
 import AddCryptoAddress from "./pages/addCrypto/Address.tsx";
+import ReceiveAsset from "./pages/addCrypto/ReceiveAsset.tsx";
+import BankBuy from "./pages/banks/BankBuy.tsx";
+import BankMain from "./pages/banks/BankMain.tsx";
+import BankReferral from "./pages/banks/BankReferral.tsx";
+import BankStaking from "./pages/banks/BankStaking.tsx";
+import BankingTasks from "./pages/banks/BankingTasks.tsx";
+import Histories from "./pages/history/history.tsx";
 // import Account from './pages/account/Account.tsx';
 import News from "./pages/news/News.tsx";
-import WalletLanguage from "./pages/account/account-settings-pages/WalletLanguage.tsx";
-import MainCurrency from "./pages/account/account-settings-pages/MainCurrency.tsx";
-import ApplicationSubmit from "./pages/account/account-settings-pages/ApplicationSubmit.tsx";
-import WalletSafety from "./pages/account/account-settings-pages/WalletSafety.tsx";
-import Notifications from "./pages/account/account-settings-pages/Notifications.tsx";
-import BankMain from "./pages/banks/BankMain.tsx";
-import BankingTasks from "./pages/banks/BankingTasks.tsx";
-import BankStaking from "./pages/banks/BankStaking.tsx";
-import Swap from "./pages/swap";
+import PlayGround from "./pages/playGround";
+import CategoryGames from "./pages/playGround/categoryGames";
+import GamePage from "./pages/playGround/gamePage";
+import LeaderBoard from "./pages/playGround/leaderBoard";
+import AddWallet from "./pages/registration/AddWallet.tsx";
+import ConfirmKey from "./pages/registration/ConfirmKey.tsx";
+import Existing from "./pages/registration/Existing.tsx";
+import RegistrationIsCompleted from "./pages/registration/RegistrationIsCompleted.tsx";
+import SecretKey from "./pages/registration/SecretKey.tsx";
+// import AddWallet from "./components/start-page/AddWallet/AddWallet.tsx";
+// import YourSecretKey from "./components/start-page/AddWallet/create-wallet/your-secret-key/YourSecretKey.tsx";
+import Welcome from "./pages/registration/Welcome.tsx";
 // import SelectAddress from './pages/send/SelectAddress.tsx';
 // import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from "./pages/send/send.tsx";
-import AccountDisconnect from "./pages/AccountDisconnect.tsx";
-import BankBuy from "./pages/banks/BankBuy.tsx";
-import BankStakingHistory from "./components/ui/bank/BankStakingHistory.tsx";
-import BankReferral from "./pages/banks/BankReferral.tsx";
-import Histories from "./pages/history/history.tsx";
+import Swap from "./pages/swap";
 
 const router = createBrowserRouter(
   [
@@ -169,7 +169,7 @@ const router = createBrowserRouter(
       element: <BankReferral />,
     },
   ],
-  { basename: "/wallet" }
+  { basename: "/wallet" },
 );
 
 export default router;

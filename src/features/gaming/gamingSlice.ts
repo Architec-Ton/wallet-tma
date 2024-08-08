@@ -1,5 +1,6 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { AppsList, GameFilterType } from '../../types/gameTypes';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+import { AppsList, GameFilterType } from "../../types/gameTypes";
 
 export interface GamingState {
   games: AppsList;
@@ -19,7 +20,7 @@ const initialState: GamingState = {
 } satisfies GamingState;
 
 const gamingSlice = createSlice({
-  name: 'gaming',
+  name: "gaming",
   initialState,
   reducers: {
     setCategories(state: GamingState, action: PayloadAction<AppsList>) {

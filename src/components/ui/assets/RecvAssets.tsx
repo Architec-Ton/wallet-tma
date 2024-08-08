@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { CoinDto } from '../../../types/assest';
-import AssetInput from '../../inputs/AssetInput';
-import useLanguage from '../../../hooks/useLanguage';
+import { useState } from "react";
+
+import useLanguage from "../../../hooks/useLanguage";
+import { CoinDto } from "../../../types/assest";
+import AssetInput from "../../inputs/AssetInput";
 
 interface AssetInputProps {
   asset?: CoinDto;
@@ -14,15 +15,7 @@ interface AssetInputProps {
   subTitle: string;
 }
 
-const RecvAssetInput = ({
-  asset,
-  value,
-  maxValue,
-  isSelectable,
-  subTitle,
-  onChange,
-  onBlur,
-}: AssetInputProps) => {
+const RecvAssetInput = ({ asset, value, maxValue, isSelectable, subTitle, onChange, onBlur }: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
 
   const handlerOnChange = (value: string) => {
@@ -37,11 +30,11 @@ const RecvAssetInput = ({
     }
   };
 
-  const t = useLanguage('input');
+  const t = useLanguage("input");
 
   return (
     <AssetInput
-      title={t('recv')}
+      title={t("recv")}
       subTitle={subTitle}
       asset={asset}
       //   className={className}
@@ -49,7 +42,8 @@ const RecvAssetInput = ({
       value={value}
       isSelectable={isSelectable}
       onChange={handlerOnChange}
-      onBlur={onBlur}></AssetInput>
+      onBlur={onBlur}
+    ></AssetInput>
   );
 };
 

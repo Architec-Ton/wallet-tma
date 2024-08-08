@@ -1,21 +1,20 @@
 .menu {
-    display: flex;
-    justify-content: space-around;
-    justify-items: center;
-    align-items: center;
-
+  display: flex;
+  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
 }
 
-.menu.block{
+.menu.block {
   padding: var(--spacing-12) 0;
 }
 
-.menu a{
-    text-align: center;
-    font-weight: var(--font-medium);
-    font-size: var(--font-size-medium);
+.menu a {
+  text-align: center;
+  font-weight: var(--font-medium);
+  font-size: var(--font-size-medium);
 }
-.menu a p{
-    margin: var(--spacing-2) 0;
-    white-space: nowrap;
+.menu a p {
+  margin: var(--spacing-2) 0;
+  white-space: nowrap;
 }

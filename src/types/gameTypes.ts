@@ -45,7 +45,7 @@ export interface GameResource {
   title: string;
   description: string;
   url: string;
-  type: 'website' | 'telegram' | 'jetton';
+  type: "website" | "telegram" | "jetton";
 }
 
 export type TGameLeader = {

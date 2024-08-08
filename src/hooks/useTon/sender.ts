@@ -1,28 +1,21 @@
-import { Address, internal, Sender, SenderArguments, toNano } from "@ton/core";
-import { useAppDispatch, useAppSelector } from "../useAppDispatch";
+import type { Sender, SenderArguments } from "@ton/core";
+import { Address, internal, toNano } from "@ton/core";
+
 import {
   selectAddress,
-  selectAddressPrivateKey,
-  // selectAddressPublicKey,
+  selectAddressPrivateKey, // selectAddressPublicKey,
   selectTonMode,
 } from "../../features/ton/tonSelector";
-import {
-  setExpiration,
-  setSeqno,
-  TonConnectionMode,
-} from "../../features/ton/tonSlice";
-import { useTonConnect } from "./tonConnect";
-import { WalletContractV4 } from "@ton/ton";
-import { useTonClient } from "../useTonClient";
-import usePinCodeModalManagement from "./usePinCodeModal";
+import { TonConnectionMode, setExpiration, setSeqno } from "../../features/ton/tonSlice";
+import type { RootState } from "../../store";
+import type { TransactionDto } from "../../types/transaction";
 import { decodePrivateKeyByPin } from "../../utils/pincode";
-import { KeyPair, mnemonicToPrivateKey } from "@ton/crypto";
-import useTrxModalManagement from "./useTrxModalManagment";
-import { TransactionDto } from "../../types/transaction";
-import { iconTon } from "../../assets/icons/jettons";
-import { RootState } from "../../store";
-import { showAlert } from "../../features/alert/alertSlice";
+import { useAppDispatch, useAppSelector } from "../useAppDispatch";
 import { useTmaMainButton } from "../useTma";
+import { useTonClient } from "../useTonClient";
+import { useTonConnect } from "./tonConnect";
+import usePinCodeModalManagement from "./usePinCodeModal";
+import useTrxModalManagement from "./useTrxModalManagment";
 
 export const useSender = (): Sender => {
   const address = useAppSelector(selectAddress);
@@ -40,10 +33,7 @@ export const useSender = (): Sender => {
 
   const expiration = useAppSelector((state: RootState) => state.ton.expiration);
 
-  const tonSend = async (
-    args: SenderArguments,
-    seqno: number | null
-  ): Promise<any> => {
+  const tonSend = async (args: SenderArguments, seqno: number | null): Promise<any> => {
     console.log("sender: ", args);
 
     if (expiration != null && new Date(expiration) > new Date()) {
@@ -52,7 +42,7 @@ export const useSender = (): Sender => {
           message:
             "The TON network cannot process multiple transactions at the same time. Please wait a bit and try again.",
           duration: 8000,
-        })
+        }),
       );
       return;
     }
@@ -76,13 +66,11 @@ export const useSender = (): Sender => {
       console.log("keyPair:", keyPair);
     } catch (e) {
       console.log(e);
-      dispatch(
-        showAlert({ message: `Pincode wrong. Try again`, duration: 8000 })
-      );
+      dispatch(showAlert({ message: `Pincode wrong. Try again`, duration: 8000 }));
       return;
     }
     const privateKey = keyPair.secretKey;
-    const publicKey = keyPair.publicKey;
+    const { publicKey } = keyPair;
 
     // Create wallet contract
     const workchain = 0; // Usually you need a workchain 0
@@ -92,14 +80,14 @@ export const useSender = (): Sender => {
     if (publicKey && privateKey) {
       const wallet = WalletContractV4.create({
         workchain,
-        publicKey: publicKey,
+        publicKey,
       });
 
       try {
         if (client.client) {
           const contract = client.client?.open(wallet);
 
-          //Get balance
+          // Get balance
           const balance: bigint = await contract.getBalance();
 
           // NOTE: Temporary check, for avoid infinite tries
@@ -111,7 +99,7 @@ export const useSender = (): Sender => {
                 message:
                   "You have an insufficient amount of TON tokens to complete the transfer transaction, including blockchain fees",
                 duration: 8000,
-              })
+              }),
             );
 
             return;
@@ -126,7 +114,7 @@ export const useSender = (): Sender => {
                 message:
                   "The TON network cannot process multiple transactions at the same time. Please wait a bit and try again.",
                 duration: 8000,
-              })
+              }),
             );
             return;
           }
@@ -158,10 +146,7 @@ export const useSender = (): Sender => {
 
             console.log("trx", trx);
 
-            const hash = Buffer.from(
-              `${args.to.toString()}.${seqno}`,
-              "utf-8"
-            ).toString("hex");
+            const hash = Buffer.from(`${args.to.toString()}.${seqno}`, "utf-8").toString("hex");
 
             const txModal = await trxModal.open(hash, {
               amount: Number(args.value / 1000_000n) / 1000,
@@ -176,19 +161,14 @@ export const useSender = (): Sender => {
             console.log("txModel:", txModal);
             dispatch(setExpiration());
           } catch (e) {
-            if (e instanceof Error)
-              dispatch(showAlert({ message: e.message, duration: 8000 }));
+            if (e instanceof Error) dispatch(showAlert({ message: e.message, duration: 8000 }));
             return;
           }
 
           return transfer;
         }
       } catch (e) {
-        if (e instanceof Error)
-          dispatch(
-            showAlert({ message: `${e.name} ${e.message}`, duration: 8000 })
-          );
-        return;
+        if (e instanceof Error) dispatch(showAlert({ message: `${e.name} ${e.message}`, duration: 8000 }));
       }
     }
 
@@ -199,8 +179,6 @@ export const useSender = (): Sender => {
     //   .storeBuffer(signature)
     //   .storeBuilder(signingMessage)
     //   .endCell();
-
-    return;
   };
 
   const commonSend = async (args: SenderArguments): Promise<void> => {
@@ -210,7 +188,7 @@ export const useSender = (): Sender => {
       await tonSend(args, seqno);
     }
 
-    //TODO: open transaction screen here
+    // TODO: open transaction screen here
   };
 
   return {

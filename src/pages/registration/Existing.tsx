@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+
 import { iconButtonPaste } from "../../assets/icons/buttons/index.ts";
 import Button from "../../components/buttons/Button.tsx";
 import Column from "../../components/containers/Column.tsx";
 import Page from "../../components/containers/Page.tsx";
 import Input from "../../components/inputs/Input.tsx";
 import useLanguage from "../../hooks/useLanguage.ts";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
-import "./Existing.styles.css";
 import { usePage } from "../../hooks/usePage.ts";
 import useRouter from "../../hooks/useRouter.ts";
+import { useTmaMainButton } from "../../hooks/useTma.ts";
+import "./Existing.styles.css";
 
 const Existing: React.FC = () => {
   const t = useLanguage("Existing");
@@ -19,23 +20,17 @@ const Existing: React.FC = () => {
   const [errors, setErrors] = useState<boolean[]>(Array(24).fill(false));
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
-  const handleInputChange =
-    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newInputs = [...inputs];
-      const newErrors = [...errors];
-      newInputs[index] = event.target.value;
-      setInputs(newInputs);
-      newErrors[index] = event.target.value.includes(" ");
-      setErrors(newErrors);
-      setIsButtonEnabled(
-        newInputs.every((input) => input.trim() !== "") &&
-          !newErrors.some((error) => error)
-      );
-    };
+  const handleInputChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newInputs = [...inputs];
+    const newErrors = [...errors];
+    newInputs[index] = event.target.value;
+    setInputs(newInputs);
+    newErrors[index] = event.target.value.includes(" ");
+    setErrors(newErrors);
+    setIsButtonEnabled(newInputs.every((input) => input.trim() !== "") && !newErrors.some((error) => error));
+  };
 
-  const handlePaste = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handlePaste = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     const clipboardData = await navigator.clipboard.readText();
     const words = clipboardData.trim().split(/\s+/);
@@ -50,10 +45,7 @@ const Existing: React.FC = () => {
 
     setInputs(newInputs);
     setErrors(newErrors);
-    setIsButtonEnabled(
-      newInputs.every((input) => input.trim() !== "") &&
-        !newErrors.some((error) => error)
-    );
+    setIsButtonEnabled(newInputs.every((input) => input.trim() !== "") && !newErrors.some((error) => error));
   };
 
   const handleInputPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
@@ -73,10 +65,7 @@ const Existing: React.FC = () => {
 
       setInputs(newInputs);
       setErrors(newErrors);
-      setIsButtonEnabled(
-        newInputs.every((input) => input.trim() !== "") &&
-          !newErrors.some((error) => error)
-      );
+      setIsButtonEnabled(newInputs.every((input) => input.trim() !== "") && !newErrors.some((error) => error));
     }
   };
 
@@ -94,7 +83,7 @@ const Existing: React.FC = () => {
           state: { mnemonic: mnemonic, confirm: true },
         });
       },
-      isButtonEnabled
+      isButtonEnabled,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputs, isButtonEnabled]);
@@ -109,23 +98,13 @@ const Existing: React.FC = () => {
               key={index}
               onChange={handleInputChange(index)}
               value={value}
-              className={`registration-mnemonic-word ${
-                errors[index] ? "input-error" : ""
-              }`}
+              className={`registration-mnemonic-word ${errors[index] ? "input-error" : ""}`}
               onPaste={handleInputPaste}
             />
           ))}
         </Column>
-        <div
-          className="center p-1"
-          style={{ position: "fixed", bottom: "var(--spacing-8)" }}
-        >
-          <Button
-            title={t("paste", "button")}
-            icon={iconButtonPaste}
-            primary={false}
-            onClick={handlePaste}
-          />
+        <div className="center p-1" style={{ position: "fixed", bottom: "var(--spacing-8)" }}>
+          <Button title={t("paste", "button")} icon={iconButtonPaste} primary={false} onClick={handlePaste} />
         </div>
         <div style={{ height: "var(--spacing-64)" }} />
       </form>

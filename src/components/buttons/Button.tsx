@@ -1,6 +1,8 @@
-import { CSSProperties } from 'react';
-import './Button.styles.css';
-import classNames from 'classnames';
+import { CSSProperties } from "react";
+
+import classNames from "classnames";
+
+import "./Button.styles.css";
 
 type Props = {
   icon?: string;
@@ -13,16 +15,7 @@ type Props = {
   disabled?: boolean;
 };
 
-function Button({
-  icon,
-  title,
-  style,
-  className,
-  primary = true,
-  onClick,
-  children,
-  disabled,
-}: Props) {
+function Button({ icon, title, style, className, primary = true, onClick, children, disabled }: Props) {
   return (
     <button
       disabled={disabled}
@@ -31,7 +24,8 @@ function Button({
         button: true,
         primary: primary,
       })}
-      style={style}>
+      style={style}
+    >
       {icon && <img src={icon} alt={title} />}
       {title && <div>{title}</div>}
       {children}

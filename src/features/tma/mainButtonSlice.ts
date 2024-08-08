@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface MainButtonState {
   title: string;
@@ -7,13 +7,13 @@ interface MainButtonState {
 }
 
 const initialState: MainButtonState = {
-  title: 'Default Title',
+  title: "Default Title",
   isLoading: false,
   isVisible: false,
 };
 
 const mainButtonSlice = createSlice({
-  name: 'btn',
+  name: "btn",
   initialState,
   reducers: {
     setMainButtonTitle(state, action: PayloadAction<string>) {
@@ -28,10 +28,6 @@ const mainButtonSlice = createSlice({
   },
 });
 
-export const {
-  setMainButtonTitle,
-  setMainButtonLoading,
-  setMainButtonVisible,
-} = mainButtonSlice.actions;
+export const { setMainButtonTitle, setMainButtonLoading, setMainButtonVisible } = mainButtonSlice.actions;
 
 export default mainButtonSlice.reducer;

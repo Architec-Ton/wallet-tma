@@ -1,16 +1,13 @@
 import { useEffect } from "react";
-import {
-  iconPageStartCoin,
-  iconPageStartGameboy,
-  iconPageStartShieldTick,
-} from "../../assets/icons/pages/start";
+
+import { iconPageStartCoin, iconPageStartGameboy, iconPageStartShieldTick } from "../../assets/icons/pages/start";
 import Column from "../../components/containers/Column";
 import Page from "../../components/containers/Page";
 import Tile from "../../components/typography/Tile";
 import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
 import { useTmaMainButton } from "../../hooks/useTma";
-import { usePage } from "../../hooks/usePage";
 
 function Welcome() {
   const navigate = useRouter();
@@ -18,11 +15,7 @@ function Welcome() {
   const btn = useTmaMainButton();
 
   const t = useLanguage("Welcome");
-  const welcomeIcons = [
-    iconPageStartCoin,
-    iconPageStartGameboy,
-    iconPageStartShieldTick,
-  ];
+  const welcomeIcons = [iconPageStartCoin, iconPageStartGameboy, iconPageStartShieldTick];
 
   useEffect(() => {
     page.setLoading(false);
@@ -31,7 +24,7 @@ function Welcome() {
       () => {
         navigate("/registration/add-wallet");
       },
-      true
+      true,
     );
   }, []);
 

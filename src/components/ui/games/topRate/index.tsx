@@ -1,20 +1,18 @@
-import GameListSection from "../listSection"
-import { GameListItemType } from "../../../../types/gameTypes"
-import useLanguage from "../../../../hooks/useLanguage"
+import useLanguage from "../../../../hooks/useLanguage";
+import { GameListItemType } from "../../../../types/gameTypes";
+import GameListSection from "../listSection";
 
 type TopRatePropsType = {
-  games?: GameListItemType[]
-}
+  games?: GameListItemType[];
+};
 
 const TopRate = ({ games }: TopRatePropsType) => {
-  const t = useLanguage("game")
+  const t = useLanguage("game");
   if (!games) {
-    return null
+    return null;
   }
-  
-  return (
-    <GameListSection title={t("top-rated-title")} list={games} />
-  )
-}
 
-export default TopRate
+  return <GameListSection title={t("top-rated-title")} list={games} />;
+};
+
+export default TopRate;

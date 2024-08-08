@@ -1,9 +1,11 @@
 import { CSSProperties } from "react";
-import "./Button.styles.css";
-import classNames from "classnames";
+
 import { useQRScanner } from "@tma.js/sdk-react";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+import classNames from "classnames";
+
 import { selectIsTma } from "../../features/tma/tmaSelector";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import "./Button.styles.css";
 
 type Props = {
   icon?: string;
@@ -39,8 +41,7 @@ function QrButtonTMA({ icon, title, style, className, onChange }: Props) {
 function QrButton({ icon, title, onChange }: Props) {
   const isTma = useAppSelector(selectIsTma);
 
-  if (isTma)
-    return <QrButtonTMA icon={icon} title={title} onChange={onChange} />;
+  if (isTma) return <QrButtonTMA icon={icon} title={title} onChange={onChange} />;
 
   return <></>;
 }

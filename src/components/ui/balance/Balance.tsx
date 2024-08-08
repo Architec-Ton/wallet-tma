@@ -1,18 +1,19 @@
 import { ReactNode, useEffect, useState } from "react";
+
+import { Address as Addr } from "@ton/core";
+
+import { iconInputScan } from "../../../assets/icons/inputs";
+import { showAlert } from "../../../features/alert/alertSlice";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import useRouter from "../../../hooks/useRouter";
+import { WalletInfoData } from "../../../types/wallet";
+import { parseTonTransferUrl } from "../../../utils/formatter";
+import QrButton from "../../buttons/qrButton";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";
 import Block from "../../typography/Block";
-
-import "./Balance.styles.css";
-import { WalletInfoData } from "../../../types/wallet";
 import Address from "./Address";
-import QrButton from "../../buttons/qrButton";
-import { Address as Addr } from "@ton/core";
-import useRouter from "../../../hooks/useRouter";
-import { iconInputScan } from "../../../assets/icons/inputs";
-import { parseTonTransferUrl } from "../../../utils/formatter";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { showAlert } from "../../../features/alert/alertSlice";
+import "./Balance.styles.css";
 
 type Props = {
   walletInfoData: WalletInfoData | null;
@@ -45,18 +46,13 @@ function Balance({ children, walletInfoData }: Props) {
         <Row className="space-between">
           <div className="balance-block-value">
             {walletInfoData &&
-              `$ ${walletInfoData.wallets[
-                walletInfoData.currentWallet
-              ].usdPrice.toLocaleString(undefined, {
+              `$ ${walletInfoData.wallets[walletInfoData.currentWallet].usdPrice.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
                 minimumFractionDigits: 2,
               })}`}
           </div>
           <div>
-            <QrButton
-              icon={iconInputScan}
-              onChange={(s: string | undefined) => setQrText(s)}
-            />
+            <QrButton icon={iconInputScan} onChange={(s: string | undefined) => setQrText(s)} />
           </div>
           {/* <h1>
             <span>Wallet</span> Architec.TON
@@ -67,13 +63,7 @@ function Balance({ children, walletInfoData }: Props) {
         {children}
       </Column>
       <Address
-        address={
-          walletInfoData
-            ? walletInfoData.wallets[
-                walletInfoData.currentWallet
-              ].address.toString()
-            : undefined
-        }
+        address={walletInfoData ? walletInfoData.wallets[walletInfoData.currentWallet].address.toString() : undefined}
       />
     </Block>
   );

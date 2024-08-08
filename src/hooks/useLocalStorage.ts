@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function useLocalStorage<T>(
-  key: string,
-  initialValue: T
-): [T, React.Dispatch<React.SetStateAction<T>>] {
+function useLocalStorage<T>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
   const getItem = (): T => {
     const savedItem = localStorage.getItem(key);
     return savedItem ? JSON.parse(savedItem) : initialValue;

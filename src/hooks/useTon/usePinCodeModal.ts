@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import pinCodeModalThunkActions from "../../features/modal/pinModal";
-import { AppDispatch, RootState } from "../../store";
 import { pinCodeModalActions } from "../../features/modal/pinModalSlice";
+import { AppDispatch, RootState } from "../../store";
 
 function usePinCodeModalManagement() {
   const dispatch: AppDispatch = useDispatch();

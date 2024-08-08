@@ -1,11 +1,10 @@
-import { useUtils } from '@tma.js/sdk-react';
-import { CSSProperties } from 'react';
-import { NavLink } from 'react-router-dom';
-import {
-  selectIsTma,
-  selectIsTmaLoading,
-} from '../../features/tma/tmaSelector';
-import { useAppSelector } from '../../hooks/useAppDispatch';
+import { CSSProperties } from "react";
+import { NavLink } from "react-router-dom";
+
+import { useUtils } from "@tma.js/sdk-react";
+
+import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   title?: string;
@@ -23,7 +22,7 @@ function LinkButtonTMA({ to, children, style, className, visible }: Props) {
       {visible && (
         <a
           onClick={() => {
-            if (to.startsWith('https://t.me')) {
+            if (to.startsWith("https://t.me")) {
               utils.openTelegramLink(to);
             } else {
               utils.openLink(to);
@@ -31,7 +30,8 @@ function LinkButtonTMA({ to, children, style, className, visible }: Props) {
           }}
           href={`#`}
           style={style}
-          className={className}>
+          className={className}
+        >
           {children}
         </a>
       )}

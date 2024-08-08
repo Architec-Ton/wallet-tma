@@ -1,9 +1,5 @@
+import { setLoading, setNavbarVisible, setTitle } from "../features/page/pageSlice";
 import { useAppDispatch } from "./useAppDispatch";
-import {
-  setLoading,
-  setNavbarVisible,
-  setTitle,
-} from "../features/page/pageSlice";
 
 export interface PageTitle {
   title?: string;
@@ -21,7 +17,7 @@ export function usePage() {
           title: title,
           titleAccent: titleAccent,
           hintMessage: hintMessage,
-        })
+        }),
       ),
     setNavbarVisible: (visible: boolean) => dispatch(setNavbarVisible(visible)),
     setLoading: (state: boolean, navbar: boolean = false) => {

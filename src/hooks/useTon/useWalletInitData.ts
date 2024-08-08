@@ -1,14 +1,12 @@
-import { useMemo } from 'react';
-import {
-  selectAddress,
-  selectAddressPublicKey,
-  selectTonMode,
-} from '../../features/ton/tonSelector';
-import { TonConnectionMode } from '../../features/ton/tonSlice';
-import { useAppSelector } from '../useAppDispatch';
-import { Address } from '@ton/core';
+import { useMemo } from "react";
 
-type BlockchainNetwork = 'ton' | 'undefined';
+import { Address } from "@ton/core";
+
+import { selectAddress, selectAddressPublicKey, selectTonMode } from "../../features/ton/tonSelector";
+import { TonConnectionMode } from "../../features/ton/tonSlice";
+import { useAppSelector } from "../useAppDispatch";
+
+type BlockchainNetwork = "ton" | "undefined";
 
 interface Wallet {
   network: BlockchainNetwork;
@@ -23,9 +21,7 @@ export const useWalletInitData = (): Wallet => {
   const walletMode = useAppSelector(selectTonMode);
   const initData = useMemo(() => {
     return {
-      network: (walletMode == TonConnectionMode.disconnect
-        ? 'undefined'
-        : 'ton') as BlockchainNetwork,
+      network: (walletMode == TonConnectionMode.disconnect ? "undefined" : "ton") as BlockchainNetwork,
       mode: walletMode,
       address: walletAddress ? Address.parse(walletAddress) : undefined,
       publicKey: walletAddressPublicKey,
