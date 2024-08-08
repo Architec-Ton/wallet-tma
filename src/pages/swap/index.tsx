@@ -68,7 +68,7 @@ const swapData: SwapDataType = {
   } satisfies AssetDataType,
 };
 
-const testnetAssets = [
+const testnetAssets: CoinDto[] = [
   {
     type: "jetton",
     amount: 100,
@@ -79,7 +79,7 @@ const testnetAssets = [
       description: "Only for test",
       address: "kQDLvsZol3juZyOAVG8tWsJntOxeEZWEaWCbbSjYakQpuYN5",
       image: "",
-      decimals: "6",
+      decimals: 6,
       symbol: "TestRED",
     },
   },
@@ -93,7 +93,7 @@ const testnetAssets = [
       description: "Only for test",
       address: "kQB_TOJSB7q3-Jm1O8s0jKFtqLElZDPjATs5uJGsujcjznq3",
       image: "",
-      decimals: "6",
+      decimals: 6,
       symbol: "TestBlue",
     },
   },
@@ -156,7 +156,7 @@ const Swap = () => {
       });
       const testAssets = network === "testnet" ? testnetAssets : [];
       const userAssets = assets.filter((asset) => !excludeAssets.includes(asset.meta?.symbol as string));
-      const _assets = [].concat(userAssets, testAssets, _stonFiAssets);
+      const _assets: CoinDto[] = [...userAssets, ...testAssets, ..._stonFiAssets];
       return _assets;
     }
     return [] as CoinDto[];
@@ -291,7 +291,7 @@ const Swap = () => {
 
   const simulateHandler = async () => {
     const { data } = await simulationTrigger({
-      offer_address: sendingAsset.meta?.address as string,
+      offer_address: sendingAsset?.meta?.address as string,
       ask_address: receivingAsset?.meta?.address as string,
       units: Math.round(Number(swapAssets.send.value) * 10 ** Number(sendingAsset?.meta?.decimals)),
       slippage_tolerance: "0.001",
