@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import useLanguage from "../../../hooks/useLanguage";
 import type { CoinDto } from "../../../types/assest";
@@ -43,7 +43,7 @@ const RecvAssetInput = ({ asset, value, maxValue, isSelectable, subTitle, onChan
       isSelectable={isSelectable}
       onChange={handlerOnChange}
       onBlur={onBlur}
-     />
+    />
   );
 };
 

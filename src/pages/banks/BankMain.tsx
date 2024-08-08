@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import type { Address } from "@ton/core";
 import { toNano } from "@ton/core";

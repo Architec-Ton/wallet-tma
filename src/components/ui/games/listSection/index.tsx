@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { iconFilterSquareButton, iconSortButton } from "../../../../assets/icons/buttons";
 import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
@@ -32,11 +32,11 @@ const GameListSection = ({ title, list }: OwnPropsType) => {
   };
 
   const readMore = () => (
-      <div className="read-more__component">
-        <img src={iconSortButton} onClick={sortHandler} alt="" />
-        <img src={iconFilterSquareButton} onClick={modalHandler} alt="" />
-      </div>
-    );
+    <div className="read-more__component">
+      <img src={iconSortButton} onClick={sortHandler} alt="" />
+      <img src={iconFilterSquareButton} onClick={modalHandler} alt="" />
+    </div>
+  );
 
   return (
     <Section title={title as string} readMore={readMore()}>

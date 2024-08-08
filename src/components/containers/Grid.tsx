@@ -1,6 +1,10 @@
+import React from "react";
+
 import classNames from "classnames";
 
 import "./Grid.styles.css";
+
+import React from "react";
 
 type OwnProps = {
   gap?: number;
@@ -14,23 +18,23 @@ type OwnProps = {
 };
 
 const Grid = ({ children, gap, columns, colSpan, rowSpan, rows, isOrderedList, className }: OwnProps) => (
-    <div
-      className={classNames("grid", className, {
-        "grid-columns": columns,
-        "grid-rows": rows,
-        "grid-ordered-list": isOrderedList,
-      })}
-      style={{
-        // @ts-ignore
-        "--grid-gap": gap || 4,
-        "--grid-cols": columns,
-        "--grid-rows": rows,
-        gridColumn: colSpan ? `span ${colSpan}` : undefined,
-        gridRow: rowSpan ? `span ${rowSpan}` : undefined,
-      }}
-    >
-      {children}
-    </div>
-  );
+  <div
+    className={classNames("grid", className, {
+      "grid-columns": columns,
+      "grid-rows": rows,
+      "grid-ordered-list": isOrderedList,
+    })}
+    style={{
+      // @ts-ignore
+      "--grid-gap": gap || 4,
+      "--grid-cols": columns,
+      "--grid-rows": rows,
+      gridColumn: colSpan ? `span ${colSpan}` : undefined,
+      gridRow: rowSpan ? `span ${rowSpan}` : undefined,
+    }}
+  >
+    {children}
+  </div>
+);
 
 export default Grid;

@@ -1,3 +1,5 @@
+import React from "react";
+
 import classNames from "classnames";
 
 import "./Section.styles.css";
@@ -11,19 +13,19 @@ type SectionProps = {
 };
 
 const Section = ({ children, title, readMore, className, readMoreHandle }: SectionProps) => (
-    <section className={classNames("section", className)}>
-      {(title || readMore) && (
-        <div className="section__header">
-          {title && <h2>{title}</h2>}
-          {readMore && (
-            <span onClick={readMoreHandle} className="section__read-more">
-              {readMore}
-            </span>
-          )}
-        </div>
-      )}
-      <div className="section__body">{children}</div>
-    </section>
-  );
+  <section className={classNames("section", className)}>
+    {(title || readMore) && (
+      <div className="section__header">
+        {title && <h2>{title}</h2>}
+        {readMore && (
+          <span onClick={readMoreHandle} className="section__read-more">
+            {readMore}
+          </span>
+        )}
+      </div>
+    )}
+    <div className="section__body">{children}</div>
+  </section>
+);
 
 export default Section;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { iconTimer } from "../../assets/icons/globals";
 import Column from "../../components/containers/Column";

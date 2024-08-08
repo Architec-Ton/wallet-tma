@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useApiGetTransactionMutation } from "../../../../features/modal/trxModalApi";
 import { trxModalActions } from "../../../../features/modal/trxModalSlice";

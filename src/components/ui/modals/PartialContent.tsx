@@ -1,5 +1,4 @@
-import type React from "react";
-import { useEffect } from "react";
+import React from "react";
 
 type PartialContentPropsType = {
   children: React.ReactNode;
@@ -8,7 +7,7 @@ type PartialContentPropsType = {
 };
 
 const PartialContent = ({ children, init, wait = [] }: PartialContentPropsType) => {
-  useEffect(() => {
+  React.useEffect(() => {
     init(children);
   }, [...wait]);
   return null;

@@ -1,3 +1,4 @@
+import React from "react";
 import ReactGA from "react-ga4";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";

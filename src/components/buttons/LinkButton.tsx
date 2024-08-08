@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 import { useUtils } from "@tma.js/sdk-react";

@@ -1,3 +1,5 @@
+import React from "react";
+
 import useLanguage from "../../../hooks/useLanguage";
 import Grid from "../../containers/Grid";
 import BlockWithTitle from "../../typography/BlockWithTitle";

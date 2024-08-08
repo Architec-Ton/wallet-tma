@@ -1,4 +1,5 @@
 import type { CSSProperties, ChangeEventHandler, ClipboardEventHandler } from "react";
+import React from "react";
 
 import classNames from "classnames";
 

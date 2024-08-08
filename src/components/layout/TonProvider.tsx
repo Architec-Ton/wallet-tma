@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { useTonConnectUI } from "@tonconnect/ui-react";
 

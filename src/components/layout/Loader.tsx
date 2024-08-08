@@ -1,3 +1,5 @@
+import React from "react";
+
 import Lottie from "lottie-react";
 
 import loaderAnimationData from "../../assets/loties/Loading_animation.json";

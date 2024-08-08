@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import React from "react";
 
 import classNames from "classnames";
 

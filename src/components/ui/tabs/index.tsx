@@ -1,3 +1,5 @@
+import React from "react";
+
 import classNames from "classnames";
 
 import Grid from "../../containers/Grid";
@@ -10,9 +12,9 @@ type TabsPropsType = {
 };
 
 const Tabs = ({ children, className }: TabsPropsType) => (
-    <Block className="tabs-block">
-      <Grid className={classNames("tabs", className)}>{children}</Grid>
-    </Block>
-  );
+  <Block className="tabs-block">
+    <Grid className={classNames("tabs", className)}>{children}</Grid>
+  </Block>
+);
 
 export default Tabs;

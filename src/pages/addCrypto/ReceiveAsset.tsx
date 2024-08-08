@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { iconTon, iconUsdt } from "../../assets/icons/jettons";
@@ -48,14 +49,14 @@ const ReceiveAsset = () => {
       <Section title={t("choose-asset")} className="add-crypto__container">
         <ListBlock>
           {assets.map((asset, index) => (
-              <ListBlockItem
-                key={`${asset.title}-${index}`}
-                thumb={asset.thumb}
-                title={asset.title}
-                description={asset.description}
-                onClick={assetClickHandler(asset)}
-              />
-            ))}
+            <ListBlockItem
+              key={`${asset.title}-${index}`}
+              thumb={asset.thumb}
+              title={asset.title}
+              description={asset.description}
+              onClick={assetClickHandler(asset)}
+            />
+          ))}
         </ListBlock>
       </Section>
       <Delimiter />

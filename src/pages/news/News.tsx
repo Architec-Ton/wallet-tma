@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import NewsAutor from "../../assets/images/News-autor.png";
 import NewsPicture from "../../assets/images/News-picture.png";

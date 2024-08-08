@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   iconMenuWalletAdd,
   iconMenuWalletBank,
@@ -8,6 +10,8 @@ import useLanguage from "../../../hooks/useLanguage";
 import type { MenuItem } from "./Menu";
 import Menu from "./Menu";
 import "./WalletMenu.styles.css";
+
+import React from "react";
 
 function WalletMenu() {
   const t = useLanguage("menu-wallet");

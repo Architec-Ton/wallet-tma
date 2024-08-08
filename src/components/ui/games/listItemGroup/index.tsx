@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { iconButtonArraw } from "../../../../assets/icons/buttons";
@@ -21,15 +22,15 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
   return (
     <ListBlock>
       {group.map((item: GameListItemType) => (
-          <ListBlockItem
-            key={item.id}
-            thumb={item.icon}
-            title={item.title}
-            iconAction={iconButtonArraw}
-            description={item.subtitle}
-            onClick={clickHandler(item.id)}
-          />
-        ))}
+        <ListBlockItem
+          key={item.id}
+          thumb={item.icon}
+          title={item.title}
+          iconAction={iconButtonArraw}
+          description={item.subtitle}
+          onClick={clickHandler(item.id)}
+        />
+      ))}
     </ListBlock>
   );
 };
