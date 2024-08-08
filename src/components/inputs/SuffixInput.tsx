@@ -1,4 +1,5 @@
-import { FC, InputHTMLAttributes, ReactNode, useLayoutEffect, useRef, useState } from "react";
+import type { FC, InputHTMLAttributes, ReactNode} from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import classNames from "classnames";
 
@@ -22,7 +23,7 @@ export const SuffixInput: FC<InputProps> = ({ value, placeholder, suffix, classN
   }, [suffix]);
 
   return (
-    <div className={"inputWrapper"}>
+    <div className="inputWrapper">
       <input
         className={classNames("inputSuffix", className)}
         style={{
@@ -33,9 +34,9 @@ export const SuffixInput: FC<InputProps> = ({ value, placeholder, suffix, classN
         placeholder={placeholder}
         {...props}
       />
-      <div className={"inputFakeValueWrapper"} style={{ gap: suffixGap, padding: inputPadding }}>
-        <span className={"inputFakeValue"}>{value || placeholder}</span>
-        <span ref={suffixRef} className={"suffix"}>
+      <div className="inputFakeValueWrapper" style={{ gap: suffixGap, padding: inputPadding }}>
+        <span className="inputFakeValue">{value || placeholder}</span>
+        <span ref={suffixRef} className="suffix">
           {suffix}
         </span>
       </div>

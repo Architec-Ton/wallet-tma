@@ -22,7 +22,7 @@ const SecretKey = () => {
   const page = usePage();
   const [mnemonic, setMnemonic] = useState<string>("");
   const dispatch = useDispatch();
-  //const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
+  // const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
 
   useEffect(() => {
     mnemonicNew(24).then((m) => {
@@ -42,7 +42,7 @@ const SecretKey = () => {
     if (mnemonic) {
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
-          state: { mnemonic: mnemonic, confirm: false },
+          state: { mnemonic, confirm: false },
         }),
       );
     }

@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch.ts";
 import useDebounce from "../../hooks/useDebounce.ts";
 import useLanguage from "../../hooks/useLanguage.ts";
 import { usePage } from "../../hooks/usePage.ts";
-import { AppsList, GameFilterType } from "../../types/gameTypes.ts";
+import type { AppsList, GameFilterType } from "../../types/gameTypes.ts";
 import "./index.css";
 
 type SearchParamsType = {

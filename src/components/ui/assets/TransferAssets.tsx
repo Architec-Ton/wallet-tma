@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect } from "react";
+import type { ChangeEvent} from "react";
+import { useEffect } from "react";
 
 import useLanguage from "../../../hooks/useLanguage";
-import { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "../../../types/assest";
 import Column from "../../containers/Column";
 import { SuffixInput } from "../../inputs/SuffixInput";
 import "./TransferAssets.styles.css";
@@ -26,7 +27,7 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPr
 
   return (
     <Column className="justify-between asset-row">
-      <div className="trans"></div>
+      <div className="trans" />
       <SuffixInput
         suffix={asset?.meta?.symbol}
         onChange={onChange}

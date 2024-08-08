@@ -1,8 +1,8 @@
 import { iconGlobalButton } from "../../../../assets/icons/buttons";
 // import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
 import useLanguage from "../../../../hooks/useLanguage";
-import { ItemDto } from "../../../../types/list";
-import { TransactionDto } from "../../../../types/transaction";
+import type { ItemDto } from "../../../../types/list";
+import type { TransactionDto } from "../../../../types/transaction";
 import Column from "../../../containers/Column";
 import Row from "../../../containers/Row";
 import { shortenString } from "../../balance/Address";
@@ -88,7 +88,7 @@ TransactionModalPropsType) => {
           </Row>
         )}
       </Column>
-      <ListItem items={items}></ListItem>
+      <ListItem items={items} />
       {trx && trx.hash && (
         <button className="rounded-button control-button transaction-button">
           <Row>

@@ -5,7 +5,8 @@ import {
   iconMenuWalletSwap,
 } from "../../../assets/icons/menus/wallet/index.ts";
 import useLanguage from "../../../hooks/useLanguage";
-import Menu, { MenuItem } from "./Menu";
+import type { MenuItem } from "./Menu";
+import Menu from "./Menu";
 import "./WalletMenu.styles.css";
 
 function WalletMenu() {

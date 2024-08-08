@@ -4,7 +4,7 @@ import { iconFilterSquareButton, iconSortButton } from "../../../../assets/icons
 import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
 import { setFilter } from "../../../../features/gaming/gamingSlice";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useAppDispatch";
-import { GameListItemType } from "../../../../types/gameTypes";
+import type { GameListItemType } from "../../../../types/gameTypes";
 import Section from "../../../containers/Section";
 import GameFilterModal from "../filterModal";
 import GameListItemGroup from "../listItemGroup";
@@ -31,14 +31,12 @@ const GameListSection = ({ title, list }: OwnPropsType) => {
     dispatch(setFilter(newFilter));
   };
 
-  const readMore = () => {
-    return (
+  const readMore = () => (
       <div className="read-more__component">
         <img src={iconSortButton} onClick={sortHandler} alt="" />
         <img src={iconFilterSquareButton} onClick={modalHandler} alt="" />
       </div>
     );
-  };
 
   return (
     <Section title={title as string} readMore={readMore()}>

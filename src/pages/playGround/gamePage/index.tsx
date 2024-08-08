@@ -143,13 +143,11 @@ const GamePage = () => {
           }}
           className="list-swipe"
         >
-          {game?.gallery.map((url, index) => {
-            return (
+          {game?.gallery.map((url, index) => (
               <SwiperSlide key={`${url}-${index}`} className="gallery-slide">
                 <img src={url} alt="" className="game-gallery-img round-large" />
               </SwiperSlide>
-            );
-          })}
+            ))}
         </Slider>
       </Row>
       <Section title={t("description")} readMore={t("read-more")} readMoreHandle={readMoreHandler}>
@@ -181,8 +179,7 @@ const GamePage = () => {
       </Section> */}
       {game?.resources && game.resources.length > 0 && (
         <Section title={t("project-resources")}>
-          {game?.resources.map((resource) => {
-            return (
+          {game?.resources.map((resource) => (
               <LinkButton to={resource.url} key={resource.url}>
                 <TypedTile
                   key={`${resource.type}-${game.id}`}
@@ -195,8 +192,7 @@ const GamePage = () => {
                   // onClick={resourceHandler(resource)}
                 />
               </LinkButton>
-            );
-          })}
+            ))}
         </Section>
       )}
       {/* {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}

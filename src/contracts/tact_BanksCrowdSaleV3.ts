@@ -1,31 +1,29 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
-//@ts-ignore
+// @ts-nocheck
+// @ts-ignore
 
 /* eslint-disable prefer-const */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* tslint:disable:no-unused-variable */
-import {
+import type {
   ABIGetter,
   ABIReceiver,
   ABIType,
   Address,
   Builder,
-  Cell,
-  ComputeError,
   Contract,
   ContractABI,
   ContractProvider,
-  Dictionary,
   DictionaryValue,
   Sender,
+  TupleReader} from "@ton/core";
+import {
+  Cell,
   Slice,
   TupleBuilder,
-  TupleItem,
-  TupleReader,
   beginCell,
   contractAddress,
 } from "@ton/core";
@@ -69,9 +67,7 @@ function dictValueParserStateInit(): DictionaryValue<StateInit> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeStateInit(src)).endCell());
     },
-    parse: (src) => {
-      return loadStateInit(src.loadRef().beginParse());
-    },
+    parse: (src) => loadStateInit(src.loadRef().beginParse()),
   };
 }
 
@@ -136,9 +132,7 @@ function dictValueParserContext(): DictionaryValue<Context> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeContext(src)).endCell());
     },
-    parse: (src) => {
-      return loadContext(src.loadRef().beginParse());
-    },
+    parse: (src) => loadContext(src.loadRef().beginParse()),
   };
 }
 
@@ -236,9 +230,7 @@ function dictValueParserSendParameters(): DictionaryValue<SendParameters> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeSendParameters(src)).endCell());
     },
-    parse: (src) => {
-      return loadSendParameters(src.loadRef().beginParse());
-    },
+    parse: (src) => loadSendParameters(src.loadRef().beginParse()),
   };
 }
 
@@ -280,9 +272,7 @@ function dictValueParserDeploy(): DictionaryValue<Deploy> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeDeploy(src)).endCell());
     },
-    parse: (src) => {
-      return loadDeploy(src.loadRef().beginParse());
-    },
+    parse: (src) => loadDeploy(src.loadRef().beginParse()),
   };
 }
 
@@ -324,9 +314,7 @@ function dictValueParserDeployOk(): DictionaryValue<DeployOk> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeDeployOk(src)).endCell());
     },
-    parse: (src) => {
-      return loadDeployOk(src.loadRef().beginParse());
-    },
+    parse: (src) => loadDeployOk(src.loadRef().beginParse()),
   };
 }
 
@@ -381,9 +369,7 @@ function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeFactoryDeploy(src)).endCell());
     },
-    parse: (src) => {
-      return loadFactoryDeploy(src.loadRef().beginParse());
-    },
+    parse: (src) => loadFactoryDeploy(src.loadRef().beginParse()),
   };
 }
 
@@ -438,9 +424,7 @@ function dictValueParserChangeOwner(): DictionaryValue<ChangeOwner> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeChangeOwner(src)).endCell());
     },
-    parse: (src) => {
-      return loadChangeOwner(src.loadRef().beginParse());
-    },
+    parse: (src) => loadChangeOwner(src.loadRef().beginParse()),
   };
 }
 
@@ -495,9 +479,7 @@ function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeChangeOwnerOk(src)).endCell());
     },
-    parse: (src) => {
-      return loadChangeOwnerOk(src.loadRef().beginParse());
-    },
+    parse: (src) => loadChangeOwnerOk(src.loadRef().beginParse()),
   };
 }
 
@@ -591,9 +573,7 @@ function dictValueParserJettonTransfer(): DictionaryValue<JettonTransfer> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonTransfer(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonTransfer(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonTransfer(src.loadRef().beginParse()),
   };
 }
 
@@ -662,9 +642,7 @@ function dictValueParserJettonTransferNotification(): DictionaryValue<JettonTran
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonTransferNotification(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonTransferNotification(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonTransferNotification(src.loadRef().beginParse()),
   };
 }
 
@@ -737,9 +715,7 @@ function dictValueParserJettonBurn(): DictionaryValue<JettonBurn> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonBurn(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonBurn(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonBurn(src.loadRef().beginParse()),
   };
 }
 
@@ -781,9 +757,7 @@ function dictValueParserJettonExcesses(): DictionaryValue<JettonExcesses> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonExcesses(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonExcesses(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonExcesses(src.loadRef().beginParse()),
   };
 }
 
@@ -866,9 +840,7 @@ function dictValueParserJettonInternalTransfer(): DictionaryValue<JettonInternal
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonInternalTransfer(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonInternalTransfer(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonInternalTransfer(src.loadRef().beginParse()),
   };
 }
 
@@ -937,9 +909,7 @@ function dictValueParserJettonBurnNotification(): DictionaryValue<JettonBurnNoti
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeJettonBurnNotification(src)).endCell());
     },
-    parse: (src) => {
-      return loadJettonBurnNotification(src.loadRef().beginParse());
-    },
+    parse: (src) => loadJettonBurnNotification(src.loadRef().beginParse()),
   };
 }
 
@@ -1004,9 +974,7 @@ function dictValueParserWalletData(): DictionaryValue<WalletData> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeWalletData(src)).endCell());
     },
-    parse: (src) => {
-      return loadWalletData(src.loadRef().beginParse());
-    },
+    parse: (src) => loadWalletData(src.loadRef().beginParse()),
   };
 }
 
@@ -1048,9 +1016,7 @@ function dictValueParserReferralAddress(): DictionaryValue<ReferralAddress> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeReferralAddress(src)).endCell());
     },
-    parse: (src) => {
-      return loadReferralAddress(src.loadRef().beginParse());
-    },
+    parse: (src) => loadReferralAddress(src.loadRef().beginParse()),
   };
 }
 
@@ -1092,9 +1058,7 @@ function dictValueParserSetBankOffset(): DictionaryValue<SetBankOffset> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeSetBankOffset(src)).endCell());
     },
-    parse: (src) => {
-      return loadSetBankOffset(src.loadRef().beginParse());
-    },
+    parse: (src) => loadSetBankOffset(src.loadRef().beginParse()),
   };
 }
 
@@ -1136,9 +1100,7 @@ function dictValueParserSetJettonWallet(): DictionaryValue<SetJettonWallet> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeSetJettonWallet(src)).endCell());
     },
-    parse: (src) => {
-      return loadSetJettonWallet(src.loadRef().beginParse());
-    },
+    parse: (src) => loadSetJettonWallet(src.loadRef().beginParse()),
   };
 }
 
@@ -1180,9 +1142,7 @@ function dictValueParserSetNewOwner(): DictionaryValue<SetNewOwner> {
     serialize: (src, builder) => {
       builder.storeRef(beginCell().store(storeSetNewOwner(src)).endCell());
     },
-    parse: (src) => {
-      return loadSetNewOwner(src.loadRef().beginParse());
-    },
+    parse: (src) => loadSetNewOwner(src.loadRef().beginParse()),
   };
 }
 
@@ -1738,7 +1698,7 @@ export class BanksCrowdSaleV3 implements Contract {
       throw new Error("Invalid message type");
     }
 
-    await provider.internal(via, { ...args, body: body });
+    await provider.internal(via, { ...args, body });
   }
 
   async getTotalBanks(provider: ContractProvider) {

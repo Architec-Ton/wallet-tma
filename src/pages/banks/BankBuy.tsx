@@ -19,7 +19,7 @@ import useLanguage from "../../hooks/useLanguage";
 import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
 import { useTmaMainButton } from "../../hooks/useTma";
-import { CoinDto } from "../../types/assest";
+import type { CoinDto } from "../../types/assest";
 import "./BankBuy.styles.css";
 
 function BankBuy() {
@@ -100,7 +100,7 @@ function BankBuy() {
       const bnkAmount = Math.trunc(amount / bnkPrice);
       setSendAmount((bnkAmount * bnkPrice).toString());
     }
-    //setSendAmount((bnkAmount * bnkPrice).toString());
+    // setSendAmount((bnkAmount * bnkPrice).toString());
   };
 
   const handleSendOnChange = (value: string) => {
@@ -108,7 +108,7 @@ function BankBuy() {
     if (!isNaN(tonAmount)) {
       const bnkAmount = Math.trunc(tonAmount / bnkPrice);
       if (bnkAmount <= recvMaxAmount) setRecvAmount(() => (bnkAmount ? bnkAmount.toString() : ""));
-      //setSendAmount((bnkAmount * bnkPrice).toString());
+      // setSendAmount((bnkAmount * bnkPrice).toString());
       setSendAmount(value);
     }
   };

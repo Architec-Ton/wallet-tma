@@ -10,8 +10,7 @@ type SectionProps = {
   readMoreHandle?: () => void;
 };
 
-const Section = ({ children, title, readMore, className, readMoreHandle }: SectionProps) => {
-  return (
+const Section = ({ children, title, readMore, className, readMoreHandle }: SectionProps) => (
     <section className={classNames("section", className)}>
       {(title || readMore) && (
         <div className="section__header">
@@ -26,6 +25,5 @@ const Section = ({ children, title, readMore, className, readMoreHandle }: Secti
       <div className="section__body">{children}</div>
     </section>
   );
-};
 
 export default Section;

@@ -29,7 +29,7 @@ function Welcome() {
   }, []);
 
   return (
-    <Page title={t("welcome-to")} titleAccent={"Architec.TON"}>
+    <Page title={t("welcome-to")} titleAccent="Architec.TON">
       <Column>
         {welcomeIcons.map((icon, index: number) => (
           <Tile

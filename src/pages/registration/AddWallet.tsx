@@ -18,7 +18,7 @@ import useLanguage from "../../hooks/useLanguage";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useRouter from "../../hooks/useRouter";
 import { useTon } from "../../hooks/useTon";
-import { WalletsState } from "../../types/auth";
+import type { WalletsState } from "../../types/auth";
 
 function AddWallet() {
   const t = useLanguage("AddWallet");
@@ -48,7 +48,7 @@ function AddWallet() {
           {
             network: "ton",
             mode: TonConnectionMode.tonconnect,
-            address: address,
+            address,
           },
         ],
       });

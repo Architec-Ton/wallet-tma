@@ -17,7 +17,7 @@ import useRouter from "../../hooks/useRouter.ts";
 import { useTmaMainButton } from "../../hooks/useTma.ts";
 import { useTon } from "../../hooks/useTon/index.ts";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal.ts";
-import { WalletsState } from "../../types/auth.ts";
+import type { WalletsState } from "../../types/auth.ts";
 import { encodePrivateKeyByPin } from "../../utils/pincode.ts";
 import "./ConfirmKey.styles.css";
 
@@ -99,7 +99,7 @@ const ConfirmKey: React.FC = () => {
       // console.log("keyPair", keyPair);
       // console.log("privateHash", privateHash);
 
-      //Use v4 by default
+      // Use v4 by default
       const workchain = 0; // Usually you need a workchain 0
       const wallet = WalletContractV4.create({
         workchain,
@@ -137,7 +137,7 @@ const ConfirmKey: React.FC = () => {
       );
     }
 
-    //setIsConfirmed(true);
+    // setIsConfirmed(true);
   };
 
   const confirmHandler = (mnemonics: string[]) => {
@@ -149,7 +149,7 @@ const ConfirmKey: React.FC = () => {
       // return;
     }
     setupPinCode(mnemonics);
-  }; //, [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
+  }; // , [mnemonics, mnemonicsVerifyIdx, inputs, verificationStep]);
 
   const description = useMemo(
     () => (

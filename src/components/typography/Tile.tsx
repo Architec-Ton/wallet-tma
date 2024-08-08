@@ -1,4 +1,5 @@
-import React, { CSSProperties, HTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes } from "react";
+import React from "react";
 
 import classNames from "classnames";
 

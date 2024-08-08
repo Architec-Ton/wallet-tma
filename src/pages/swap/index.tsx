@@ -1,7 +1,9 @@
-import { ChangeEventHandler, useEffect, useMemo, useState } from "react";
+import type { ChangeEventHandler} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AddressType, AmountType, DEX, pTON } from "@ston-fi/sdk";
+import type { AddressType, AmountType} from "@ston-fi/sdk";
+import { DEX, pTON } from "@ston-fi/sdk";
 
 import { iconReverseButton } from "../../assets/icons/buttons";
 import Page from "../../components/containers/Page";
@@ -16,8 +18,8 @@ import { usePage } from "../../hooks/usePage";
 import { useTmaMainButton } from "../../hooks/useTma";
 import { useTon } from "../../hooks/useTon";
 import { useTonClient } from "../../hooks/useTonClient";
-import { CoinDto } from "../../types/assest";
-import { WalletInfoData } from "../../types/wallet";
+import type { CoinDto } from "../../types/assest";
+import type { WalletInfoData } from "../../types/wallet";
 import AssetsList from "./assetsList";
 import "./index.css";
 import ReceiveAsset from "./receiveAsset";
@@ -138,7 +140,7 @@ const Swap = () => {
 
   const combinedAssets = useMemo(() => {
     if (assets && stonFiAssets) {
-      let excludeAssets: string[] = [];
+      const excludeAssets: string[] = [];
       const _stonFiAssets = stonFiAssets.map((stonFiAsset) => {
         const asset = assets.find(
           (asset) => asset.meta?.symbol?.toLowerCase() === stonFiAsset?.meta?.symbol?.toLowerCase(),
@@ -151,7 +153,7 @@ const Swap = () => {
       });
       const testAssets = network === "testnet" ? testnetAssets : [];
       const userAssets = assets.filter((asset) => !excludeAssets.includes(asset.meta?.symbol as string));
-      const _assets = new Array().concat(userAssets, testAssets, _stonFiAssets);
+      const _assets = [].concat(userAssets, testAssets, _stonFiAssets);
       return _assets;
     }
     return [] as CoinDto[];
@@ -202,12 +204,10 @@ const Swap = () => {
 
   const changeSendValue = (value: string) => {
     const receivedValue = calculateSwappValues(value, "send") || "";
-    setSwappAssets(({ send, receive }) => {
-      return {
+    setSwappAssets(({ send, receive }) => ({
         send: { ...send, value },
         receive: { ...receive, value: receivedValue?.toString() },
-      } satisfies SwapDataType;
-    });
+      } satisfies SwapDataType));
   };
 
   const changeSendHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -288,7 +288,7 @@ const Swap = () => {
     const { data } = await simulationTrigger({
       offer_address: sendingAsset.meta?.address as string,
       ask_address: receivingAsset?.meta?.address as string,
-      units: Math.round(Number(swapAssets.send.value) * Math.pow(10, Number(sendingAsset?.meta?.decimals))),
+      units: Math.round(Number(swapAssets.send.value) * 10**Number(sendingAsset?.meta?.decimals)),
       slippage_tolerance: "0.001",
     });
     return data;
@@ -433,7 +433,7 @@ const Swap = () => {
           <div>{t("route")}</div>
           {sendingAsset && receivingAsset && (
             <div>
-              {sendingAsset?.meta?.symbol} {"»"} {receivingAsset?.meta?.symbol}
+              {sendingAsset?.meta?.symbol} » {receivingAsset?.meta?.symbol}
             </div>
           )}
         </Row>

@@ -6,7 +6,7 @@ import { Address } from "@ton/core";
 import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
 import { setReferral } from "../../features/tma/tmaSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { EventHandler } from "../../hooks/useTma";
+import type { EventHandler } from "../../hooks/useTma";
 
 type Props = {
   title?: string;
@@ -30,13 +30,13 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
     }
     if (onClick !== undefined) {
       const rmfn = mb.on("click", () => {
-        //mb.showLoader();
+        // mb.showLoader();
         console.log("Just click ", onClick);
         onClick();
       });
       console.log("set on", rmfn);
       setRmListener(() => rmfn);
-      //tma?.expand();
+      // tma?.expand();
     }
   }, [onClick]);
 
@@ -96,7 +96,7 @@ function MainButton({ title, onClick, visible }: Props) {
             style={{
               height: "5rem",
             }}
-          ></div>
+           />
           <div className="mainbutton-container">
             <button onClick={onClick} className="primary-btn">
               {title}

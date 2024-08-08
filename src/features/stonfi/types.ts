@@ -1,4 +1,4 @@
-import { AssetKind } from "./stonFiApi";
+import type { AssetKind } from "./stonFiApi";
 
 export interface StonFiAsset {
   balance: string;

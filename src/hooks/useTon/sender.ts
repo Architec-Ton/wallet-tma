@@ -1,5 +1,7 @@
-import { Address, Sender, SenderArguments, internal } from "@ton/core";
-import { KeyPair, mnemonicToPrivateKey } from "@ton/crypto";
+import type { Sender, SenderArguments} from "@ton/core";
+import { Address, internal } from "@ton/core";
+import type { KeyPair} from "@ton/crypto";
+import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
 
 import { iconTon } from "../../assets/icons/jettons";
@@ -10,8 +12,8 @@ import {
   selectTonMode,
 } from "../../features/ton/tonSelector";
 import { TonConnectionMode, setExpiration, setSeqno } from "../../features/ton/tonSlice";
-import { RootState } from "../../store";
-import { TransactionDto } from "../../types/transaction";
+import type { RootState } from "../../store";
+import type { TransactionDto } from "../../types/transaction";
 import { decodePrivateKeyByPin } from "../../utils/pincode";
 import { useAppDispatch, useAppSelector } from "../useAppDispatch";
 import { useTmaMainButton } from "../useTma";
@@ -73,7 +75,7 @@ export const useSender = (): Sender => {
       return;
     }
     const privateKey = keyPair.secretKey;
-    const publicKey = keyPair.publicKey;
+    const {publicKey} = keyPair;
 
     // Create wallet contract
     const workchain = 0; // Usually you need a workchain 0
@@ -83,14 +85,14 @@ export const useSender = (): Sender => {
     if (publicKey && privateKey) {
       const wallet = WalletContractV4.create({
         workchain,
-        publicKey: publicKey,
+        publicKey,
       });
 
       try {
         if (client.client) {
           const contract = client.client?.open(wallet);
 
-          //Get balance
+          // Get balance
           const balance: bigint = await contract.getBalance();
 
           // Create a transfer
@@ -157,7 +159,7 @@ export const useSender = (): Sender => {
         }
       } catch (e) {
         if (e instanceof Error) dispatch(showAlert({ message: `${e.name} ${e.message}`, duration: 8000 }));
-        return;
+        
       }
     }
 
@@ -169,7 +171,7 @@ export const useSender = (): Sender => {
     //   .storeBuilder(signingMessage)
     //   .endCell();
 
-    return;
+    
   };
 
   const commonSend = async (args: SenderArguments): Promise<void> => {
@@ -179,7 +181,7 @@ export const useSender = (): Sender => {
       await tonSend(args, seqno);
     }
 
-    //TODO: open transaction screen here
+    // TODO: open transaction screen here
   };
 
   return {

@@ -9,7 +9,7 @@ import SearchBar from "../../../components/ui/searchBar";
 import { useClosure } from "../../../hooks/useClosure";
 import useDebounce from "../../../hooks/useDebounce";
 import useLanguage from "../../../hooks/useLanguage";
-import { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "../../../types/assest";
 import "./index.css";
 
 type OwnPropsType = {
@@ -27,9 +27,7 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
   const debounce = useDebounce();
   const [filteredAssets, setFilterdAssets] = useState<typeof assets>(assets);
 
-  const isSameAssets = (a: CoinDto, b: CoinDto) => {
-    return a.meta?.symbol?.toLowerCase() === b?.meta?.symbol?.toLowerCase();
-  };
+  const isSameAssets = (a: CoinDto, b: CoinDto) => a.meta?.symbol?.toLowerCase() === b?.meta?.symbol?.toLowerCase();
 
   useEffect(() => {
     if (assets) {
@@ -44,13 +42,11 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
   const searchHandler = (value: string) => {
     debounce(() => {
       const { send, receive } = excludeAssets;
-      const _assets = assets?.filter((asset) => {
-        return (
+      const _assets = assets?.filter((asset) => (
           asset.meta?.name?.toLowerCase().includes(value.toLowerCase()) &&
           !isSameAssets(asset, send as CoinDto) &&
           !isSameAssets(asset, receive as CoinDto)
-        );
-      });
+        ));
       setFilterdAssets(_assets);
     }, 300);
   };
@@ -71,8 +67,7 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
       <Column className="assets-modal__content">
         <div className="asset-list__content">
           {filteredAssets &&
-            filteredAssets.map((asset) => {
-              return (
+            filteredAssets.map((asset) => (
                 <Block
                   key={asset.meta?.address}
                   className="asset-list__row"
@@ -103,8 +98,7 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
                     </div>
                   </Row>
                 </Block>
-              );
-            })}
+              ))}
         </div>
       </Column>
     </Modal>

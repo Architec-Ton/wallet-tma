@@ -15,7 +15,8 @@ import { usePage } from "../../../hooks/usePage";
 import { useTon } from "../../../hooks/useTon";
 import Page from "../../containers/Page";
 import Section from "../../containers/Section";
-import BankStakingHistorySection, { StakeHistoryType } from "./BankStakingHistorySection";
+import type { StakeHistoryType } from "./BankStakingHistorySection";
+import BankStakingHistorySection from "./BankStakingHistorySection";
 
 // import { fromNano } from "@ton/core";
 
@@ -126,7 +127,7 @@ const BankStakingHistory = () => {
   const handleStakeInfo = async () => {
     if (ton.wallet.address) {
       const ownerAddress = ton.wallet.address;
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
       console.log("BNK Stake Wallet", stakeAddress?.toString());
       if (stakeAddress) {
@@ -139,7 +140,7 @@ const BankStakingHistory = () => {
 
   const handleClaim = async () => {
     if (ton.wallet.address) {
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       const tx = await contracts.bank.claim();
       console.log("Unstake", tx);
     }

@@ -1,4 +1,5 @@
-import React, { CSSProperties } from "react";
+import type { CSSProperties } from "react";
+import React from "react";
 
 import classNames from "classnames";
 
@@ -25,8 +26,7 @@ interface NewsCardProps {
   className?: string;
 }
 
-const NewsCard: React.FC<NewsCardProps> = ({ cardData, style, className }) => {
-  return (
+const NewsCard: React.FC<NewsCardProps> = ({ cardData, style, className }) => (
     <Block>
       <div className={classNames(className, "news-card")} style={style}>
         <div className="news-card-authors">
@@ -46,13 +46,12 @@ const NewsCard: React.FC<NewsCardProps> = ({ cardData, style, className }) => {
           {cardData.description[1]}
         </Column>
 
-        <div>{cardData.hashtags && <Hashtags hashtags={cardData.hashtags} className={"news-card"} />}</div>
+        <div>{cardData.hashtags && <Hashtags hashtags={cardData.hashtags} className="news-card" />}</div>
 
-        {/*    {cardData.likesDislikes && <LikeDislike likesDislikes={cardData.likesDislikes}  className={'news-card'}/>}*/}
-        {/*    {cardData.link && <LinkToPost  className={'news-card'}/>}*/}
+        {/*    {cardData.likesDislikes && <LikeDislike likesDislikes={cardData.likesDislikes}  className={'news-card'}/>} */}
+        {/*    {cardData.link && <LinkToPost  className={'news-card'}/>} */}
       </div>
     </Block>
   );
-};
 
 export default NewsCard;

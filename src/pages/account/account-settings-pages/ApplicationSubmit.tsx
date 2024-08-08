@@ -1,5 +1,3 @@
-const ApplicationSubmit = () => {
-  return <div></div>;
-};
+const ApplicationSubmit = () => <div />;
 
 export default ApplicationSubmit;

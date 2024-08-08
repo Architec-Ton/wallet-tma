@@ -14,9 +14,9 @@ export function usePage() {
     setTitle: (title?: string, titleAccent?: string, hintMessage?: string) =>
       dispatch(
         setTitle({
-          title: title,
-          titleAccent: titleAccent,
-          hintMessage: hintMessage,
+          title,
+          titleAccent,
+          hintMessage,
         }),
       ),
     setNavbarVisible: (visible: boolean) => dispatch(setNavbarVisible(visible)),

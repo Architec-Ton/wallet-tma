@@ -1,4 +1,5 @@
-import { TonConnectUI, TonConnectUiOptions, useTonConnectUI } from "@tonconnect/ui-react";
+import type { TonConnectUI, TonConnectUiOptions} from "@tonconnect/ui-react";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 // import { useEffect } from "react";
 

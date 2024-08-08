@@ -4,7 +4,7 @@ import { useApiGetTransactionMutation } from "../../../../features/modal/trxModa
 import { trxModalActions } from "../../../../features/modal/trxModalSlice";
 import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import { useTmaMainButton } from "../../../../hooks/useTma";
-import { TransactionDto, TransactionModalInit } from "../../../../types/transaction";
+import type { TransactionDto, TransactionModalInit } from "../../../../types/transaction";
 import TransactionModal from "../transactionModal";
 
 const ModalTrx = ({ trxHash, trxInitData }: TransactionModalInit) => {
@@ -34,7 +34,7 @@ const ModalTrx = ({ trxHash, trxInitData }: TransactionModalInit) => {
   }, [trxHash]);
   return (
     <>
-      <TransactionModal trx={trxData} onClose={handlerOnClose}></TransactionModal>
+      <TransactionModal trx={trxData} onClose={handlerOnClose} />
     </>
   );
 };

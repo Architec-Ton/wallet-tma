@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { iconButtonArraw } from "../../../../assets/icons/buttons";
 import { useClosure } from "../../../../hooks/useClosure";
-import { GameListItemType } from "../../../../types/gameTypes";
+import type { GameListItemType } from "../../../../types/gameTypes";
 import ListBlock from "../../listBlock";
 import ListBlockItem from "../../listBlock/ListBlockItem";
 import "./index.css";
@@ -20,8 +20,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
 
   return (
     <ListBlock>
-      {group.map((item: GameListItemType) => {
-        return (
+      {group.map((item: GameListItemType) => (
           <ListBlockItem
             key={item.id}
             thumb={item.icon}
@@ -30,8 +29,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
             description={item.subtitle}
             onClick={clickHandler(item.id)}
           />
-        );
-      })}
+        ))}
     </ListBlock>
   );
 };

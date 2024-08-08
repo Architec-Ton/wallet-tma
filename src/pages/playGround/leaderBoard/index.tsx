@@ -34,8 +34,7 @@ const LeaderBoard = () => {
           />
         </Grid>
         {data &&
-          data.map((leader, index) => {
-            return (
+          data.map((leader, index) => (
               <Grid
                 key={`${leader.name}-${index}`}
                 columns={12}
@@ -51,8 +50,7 @@ const LeaderBoard = () => {
                   time={leader.time}
                 />
               </Grid>
-            );
-          })}
+            ))}
       </Section>
     </Page>
   );

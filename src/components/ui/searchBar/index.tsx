@@ -1,4 +1,5 @@
-import { ChangeEventHandler, useState } from "react";
+import type { ChangeEventHandler} from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { SearchIcon } from "../../../assets/icons/inputs/index.ts";
@@ -17,7 +18,7 @@ const SearchBar = ({ onChange, value }: OwnPropsType) => {
   const [searchValue, setSearchValue] = useState<string>(value || "");
 
   const searchHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value;
+    const {value} = e.currentTarget;
     setSearchValue(value);
     onChange(value);
   };

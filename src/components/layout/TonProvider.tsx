@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode, useEffect } from "react";
+import type { ReactNode} from "react";
+import { useEffect } from "react";
 
 import { useTonConnectUI } from "@tonconnect/ui-react";
 
@@ -10,8 +11,8 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { useTon } from "../../hooks/useTon";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
 import useTrxModalManagement from "../../hooks/useTon/useTrxModalManagment";
-import { RootState } from "../../store";
-import { WalletsState } from "../../types/auth";
+import type { RootState } from "../../store";
+import type { WalletsState } from "../../types/auth";
 import ModalPinCode from "../ui/modals/modalPinCode";
 import ModalTrx from "../ui/modals/trxModal";
 

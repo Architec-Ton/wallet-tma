@@ -1,12 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { BankBuyDto, BankInfoDto } from "../../types/banks";
-import { ReferalsInfo } from "../../types/referals";
+import type { BankBuyDto, BankInfoDto } from "../../types/banks";
+import type { ReferalsInfo } from "../../types/referals";
 import baseQuery from "../api/api";
 
 export const bankApi = createApi({
   reducerPath: "bankApi",
-  baseQuery: baseQuery,
+  baseQuery,
   endpoints: (builder) => ({
     apiGetBankBuy: builder.mutation<BankBuyDto, null>({
       query: () => ({

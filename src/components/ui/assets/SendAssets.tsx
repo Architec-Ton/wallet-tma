@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import useLanguage from "../../../hooks/useLanguage";
-import { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "../../../types/assest";
 import AssetInput from "../../inputs/AssetInput";
 
 interface AssetInputProps {
