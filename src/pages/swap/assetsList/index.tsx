@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Column from "../../../components/containers/Column";
 import Row from "../../../components/containers/Row";
@@ -42,11 +42,12 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
   const searchHandler = (value: string) => {
     debounce(() => {
       const { send, receive } = excludeAssets;
-      const _assets = assets?.filter((asset) => (
+      const _assets = assets?.filter(
+        (asset) =>
           asset.meta?.name?.toLowerCase().includes(value.toLowerCase()) &&
           !isSameAssets(asset, send as CoinDto) &&
-          !isSameAssets(asset, receive as CoinDto)
-        ));
+          !isSameAssets(asset, receive as CoinDto),
+      );
       setFilterdAssets(_assets);
     }, 300);
   };
@@ -68,37 +69,35 @@ export default function AssetsList({ assets, excludeAssets = {}, onJetonSelect, 
         <div className="asset-list__content">
           {filteredAssets &&
             filteredAssets.map((asset) => (
-                <Block
-                  key={asset.meta?.address}
-                  className="asset-list__row"
-                  onClick={clickHandler(asset.meta?.address as string)}
-                >
-                  <Row>
-                    <img
-                      src={asset.meta?.image || `data:image/png;base64, ${asset.meta?.imageData}`}
-                      alt=""
-                      className="asset-icon large"
-                    />
-                    <div className="asset-info">
-                      <div className="asset-symbol">{asset.meta?.symbol}</div>
-                      <div className="asset-dex-price">
-                        {asset.usdPrice.toLocaleString(undefined, { style: "currency", currency: "USD" })}
-                      </div>
+              <Block
+                key={asset.meta?.address}
+                className="asset-list__row"
+                onClick={clickHandler(asset.meta?.address as string)}
+              >
+                <Row>
+                  <img
+                    src={asset.meta?.image || `data:image/png;base64, ${asset.meta?.imageData}`}
+                    alt=""
+                    className="asset-icon large"
+                  />
+                  <div className="asset-info">
+                    <div className="asset-symbol">{asset.meta?.symbol}</div>
+                    <div className="asset-dex-price">
+                      {asset.usdPrice.toLocaleString(undefined, { style: "currency", currency: "USD" })}
                     </div>
-                    <div className="asset-balance">
-                      <div>
-                        {asset.amount.toLocaleString(undefined, { maximumFractionDigits: asset.meta?.decimals })}
-                      </div>
-                      <div className="asset-dex-price">
-                        {(asset.amount * asset.usdPrice).toLocaleString(undefined, {
-                          style: "currency",
-                          currency: "USD",
-                        })}
-                      </div>
+                  </div>
+                  <div className="asset-balance">
+                    <div>{asset.amount.toLocaleString(undefined, { maximumFractionDigits: asset.meta?.decimals })}</div>
+                    <div className="asset-dex-price">
+                      {(asset.amount * asset.usdPrice).toLocaleString(undefined, {
+                        style: "currency",
+                        currency: "USD",
+                      })}
                     </div>
-                  </Row>
-                </Block>
-              ))}
+                  </div>
+                </Row>
+              </Block>
+            ))}
         </div>
       </Column>
     </Modal>

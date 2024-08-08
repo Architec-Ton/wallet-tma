@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import Page from "../../../components/containers/Page.tsx";
 import SelectorTile from "../../../components/ui/selector-tile/SelectorTile.tsx";

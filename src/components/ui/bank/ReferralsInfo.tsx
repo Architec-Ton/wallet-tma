@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { iconReferralsButton } from "../../../assets/icons/buttons";
@@ -9,6 +10,8 @@ import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 // import { useApiGetBankReferralsQuery } from "../../../features/bank/bankApi";
 import "./ReferralsInfo.style.css";
+
+import React from "react";
 
 const ReferralsInfo = () => {
   const t = useLanguage("bank");

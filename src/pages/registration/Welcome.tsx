@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { iconPageStartCoin, iconPageStartGameboy, iconPageStartShieldTick } from "../../assets/icons/pages/start";
 import Column from "../../components/containers/Column";

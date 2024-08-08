@@ -1,3 +1,5 @@
+import React from "react";
+
 import useLanguage from "../../../../hooks/useLanguage";
 import type { GameListItemType } from "../../../../types/gameTypes";
 import GameListSection from "../listSection";

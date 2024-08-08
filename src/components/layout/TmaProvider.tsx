@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { ReactNode} from "react";
-import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import React, { useEffect, useState } from "react";
 
 import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
 
@@ -11,13 +11,13 @@ import {
   selectAuthIsTmaReady,
   selectAuthIsTonReady,
 } from "../../features/auth/authSelector";
-import type { AccountState} from "../../features/auth/authSlice";
+import type { AccountState } from "../../features/auth/authSlice";
 import { setAccessToken, setAccount, setIsReady, setIsTmaReady } from "../../features/auth/authSlice";
 import { selectMainButtonIsVisible, selectMainButtonTitle } from "../../features/tma/mainButtonSelector";
 import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
 import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import type { TmaMainButton} from "../../hooks/useTma";
+import type { TmaMainButton } from "../../hooks/useTma";
 import { TmaStateContext } from "../../hooks/useTma";
 import { useTon } from "../../hooks/useTon";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
@@ -154,10 +154,10 @@ export function TmaProvider({ children }: Props) {
     <TmaStateContext.Provider value={{ setMainButtonHandler }}>
       {children}
       <MainButton
-          title={mainButtonTitle}
-          visible={mainButtonIsVisible && !isTmaLoading && !pincode.isOpened}
-          onClick={mainButtonHandler?.onClick}
-        />
+        title={mainButtonTitle}
+        visible={mainButtonIsVisible && !isTmaLoading && !pincode.isOpened}
+        onClick={mainButtonHandler?.onClick}
+      />
     </TmaStateContext.Provider>
   );
 }

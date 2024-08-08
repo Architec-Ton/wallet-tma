@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Page from "../../components/containers/Page";
 import History from "../../components/ui/balance/History";

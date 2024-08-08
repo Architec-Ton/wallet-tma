@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useCloudStorage, useInitData, useMainButton, useViewport } from "@tma.js/sdk-react";
 import { Address } from "@ton/core";
@@ -96,7 +96,7 @@ function MainButton({ title, onClick, visible }: Props) {
             style={{
               height: "5rem",
             }}
-           />
+          />
           <div className="mainbutton-container">
             <button onClick={onClick} className="primary-btn">
               {title}

@@ -1,3 +1,5 @@
+import React from "react";
+
 import { iconGlobalButton } from "../../../../assets/icons/buttons";
 // import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
 import useLanguage from "../../../../hooks/useLanguage";

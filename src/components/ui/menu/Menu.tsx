@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import classNames from "classnames";
