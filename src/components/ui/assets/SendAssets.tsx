@@ -18,7 +18,7 @@ const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetI
 
   const handlerOnChange = (value: string) => {
     const sValue = Number(value);
-    if (isNaN(sValue) || (asset && sValue > asset?.amount)) {
+    if (Number.isNaN(sValue) || (asset && sValue > asset?.amount)) {
       setError(true);
     } else {
       setError(false);
@@ -61,7 +61,6 @@ const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetI
         className="rounded-button control-button"
         onClick={() => {
           if (asset) {
-            console.log("clicl", asset?.amount / 2);
             if (asset && onChange) onChange((asset?.amount / 2).toString());
           }
         }}

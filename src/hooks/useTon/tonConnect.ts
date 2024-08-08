@@ -26,7 +26,6 @@ export function useTonConnect(): {
           ],
           validUntil: Date.now() + 10 * 60 * 1000, // 10 minutes for user to approve
         });
-        console.log(tx);
       },
     },
     connected: !!wallet?.account.address,

@@ -29,6 +29,5 @@ export const useWalletInitData = (): Wallet => {
     [walletAddress, walletMode],
   );
 
-  // console.log("walletMode", walletMode, walletAddress, initData)
   return initData;
 };

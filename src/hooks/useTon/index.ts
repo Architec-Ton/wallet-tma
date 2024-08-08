@@ -52,8 +52,6 @@ export function useTon() {
           privateKey,
         }),
       );
-
-      console.log("useTon.setAddress", mode, address, publicKey);
     },
     setDisconnect: () => {
       setBcData({

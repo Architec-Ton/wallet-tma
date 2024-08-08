@@ -9,7 +9,6 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, React.Dispatch<Re
   const [storedValue, setStoredValue] = useState<T>(getItem());
 
   useEffect(() => {
-    console.log("Update key:", key, storedValue);
     localStorage.setItem(key, JSON.stringify(storedValue));
   }, [key, storedValue]);
 
