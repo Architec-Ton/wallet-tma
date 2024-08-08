@@ -108,7 +108,7 @@ export const useSender = (): Sender => {
           // Create a transfer
           const seqno_current: number = await contract.getSeqno();
 
-          if (seqno == seqno_current) {
+          if (seqno === seqno_current) {
             dispatch(
               showAlert({
                 message:
@@ -182,7 +182,7 @@ export const useSender = (): Sender => {
   };
 
   const commonSend = async (args: SenderArguments): Promise<void> => {
-    if (walletMode == TonConnectionMode.tonconnect) {
+    if (walletMode === TonConnectionMode.tonconnect) {
       await sender.send(args);
     } else {
       await tonSend(args, seqno);

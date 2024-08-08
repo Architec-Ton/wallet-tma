@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import type { Address} from "@ton/core";
+import type { Address } from "@ton/core";
 import { toNano } from "@ton/core";
 
 import { iconStakeButton, iconTasksButton } from "../../assets/icons/buttons";
@@ -119,7 +119,7 @@ function BankMain() {
 
   //   if (!isTonLoading) {
   //     // console.log("Call ", isTonLoading, tonMode);
-  //     if (tonMode == TonConnectionMode.disconnect) {
+  //     if (tonMode === TonConnectionMode.disconnect) {
   //       // console.log("mode disconnect");
   //       navigate("/registration/welcome");
   //     } else {
@@ -137,11 +137,7 @@ function BankMain() {
   return (
     <Page>
       <Column>
-        <BankBalance
-          address={ton.wallet.address?.toString({ urlSafe: true })}
-          arcAmount={arc}
-          bnkAmount={bnk}
-         />
+        <BankBalance address={ton.wallet.address?.toString({ urlSafe: true })} arcAmount={arc} bnkAmount={bnk} />
         <Column columns={2}>
           <BlockWithTitle title={t("Staking")} hintMessage={t("Staking-hint")}>
             <Button

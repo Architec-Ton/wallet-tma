@@ -51,7 +51,7 @@ function Main() {
 
   useEffect(() => {
     if (!isTonLoading) {
-      if (tonMode == TonConnectionMode.disconnect) {
+      if (tonMode === TonConnectionMode.disconnect) {
         navigate("/registration/welcome");
       } else {
         // TODO: Get Balance data

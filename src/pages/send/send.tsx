@@ -64,7 +64,7 @@ const SendPage = () => {
 
   const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const amount = Number(event.target.value);
-    if (step == 2 && !isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
+    if (step === 2 && !isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
       btn.init(
         t("continue", "button"),
         () => {
@@ -75,7 +75,7 @@ const SendPage = () => {
               // Transfer
               console.log(address, asset.type);
               btn.setVisible(false);
-              if (asset.type == "ton") {
+              if (asset.type === "ton") {
                 const tx = await ton.sender.send({
                   value: toNano(amount),
                   to: Address.parse(address),
@@ -84,7 +84,7 @@ const SendPage = () => {
                   //   SendMode.PAY_GAS_SEPARATELY | SendMode.IGNORE_ERRORS,
                 });
                 console.log("Ton TX:", tx);
-              } else if (asset.type == "jetton") {
+              } else if (asset.type === "jetton") {
                 console.log(ton.wallet.address, asset.meta?.address, asset.meta?.decimals);
                 if (
                   ton.wallet.address &&
@@ -98,7 +98,7 @@ const SendPage = () => {
                   );
 
                   console.log("walletJetton:", walletAddress);
-                  const jettonAmount = BigInt(amount * 10**asset.meta.decimals);
+                  const jettonAmount = BigInt(amount * 10 ** asset.meta.decimals);
                   console.log("jettonAmount:", jettonAmount);
                   if (walletAddress) {
                     const tx = await contracts.jetton.transfer(walletAddress, Address.parse(address), jettonAmount);
@@ -132,7 +132,7 @@ const SendPage = () => {
         },
         true,
       );
-    } else if (step == 2) {
+    } else if (step === 2) {
       btn.setVisible(false);
     }
     setAmount(event.target.value);
@@ -174,7 +174,7 @@ const SendPage = () => {
   }, [isReady]);
 
   useEffect(() => {
-    if (step == 1) {
+    if (step === 1) {
       btn.init(
         t("continue", "button"),
         () => {
@@ -186,7 +186,7 @@ const SendPage = () => {
         isButtonEnabled,
       );
     }
-    if (step == 4) {
+    if (step === 4) {
       navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -198,14 +198,14 @@ const SendPage = () => {
 
   return (
     <Page>
-      {step == 0 && <AssetsList assets={assets} title={t("title")} onClick={handlerClick} />}
-      {step == 1 && (
+      {step === 0 && <AssetsList assets={assets} title={t("title")} onClick={handlerClick} />}
+      {step === 1 && (
         <>
           <AddressInput onChange={handleInputChange} value={address} className={`${error ? "input-error" : ""}`} />
           <Delimiter />
         </>
       )}
-      {step == 2 && (
+      {step === 2 && (
         <>
           <Row>
             <img src={iconPageSend} />
@@ -215,7 +215,7 @@ const SendPage = () => {
           <TransferAsset asset={asset} value={amount} onChange={handleAmountInputChange} setMaxAmount={setMaxAmount} />
         </>
       )}
-      {step == 3 && (
+      {step === 3 && (
         <>
           <Row>
             <img src={iconPageSend} />

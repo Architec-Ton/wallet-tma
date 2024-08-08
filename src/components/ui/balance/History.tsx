@@ -49,14 +49,14 @@ function History({ items = [] }: Props) {
                 {dataList.map((h, index) => (
                   <ListBlock className="history-list-block" key={`${key}-${index}`}>
                     <ListTileItem
-                      icon={h.type == "in" ? iconTrxRecv : iconTrxSend}
+                      icon={h.type === "in" ? iconTrxRecv : iconTrxSend}
                       title={t(h.type)}
                       description={shortenString(h.addressTo)}
                       // onClick={assetClickHandler(asset)}
                     >
                       <div className="list-block__right">
                         <div
-                          className={`list-block__title ${h.type == "in" ? "change-up" : ""} `}
+                          className={`list-block__title ${h.type === "in" ? "change-up" : ""} `}
                         >{`${h.value ? h.value : ""} ${h.symbol}`}</div>
                         <div className="list-block__description">{new Date(h.utime * 1000).toLocaleString()}</div>
                       </div>

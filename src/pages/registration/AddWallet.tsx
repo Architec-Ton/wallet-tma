@@ -39,7 +39,7 @@ function AddWallet() {
   };
 
   useEffect(() => {
-    if (state.status == "closed" && state.closeReason == "wallet-selected" && address) {
+    if (state.status === "closed" && state.closeReason === "wallet-selected" && address) {
       ton.setAddress(address, TonConnectionMode.tonconnect);
 
       setStoredValue({
@@ -56,7 +56,7 @@ function AddWallet() {
   }, [state]);
 
   useEffect(() => {
-    if (ton.mode == TonConnectionMode.tonconnect) {
+    if (ton.mode === TonConnectionMode.tonconnect) {
       navigate("/");
     }
   }, [ton.mode]);
