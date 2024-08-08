@@ -1,10 +1,8 @@
+import { useEffect } from "react";
+
 import { useBackButton } from "@tma.js/sdk-react";
 
-import { useEffect } from "react";
-import {
-  selectIsTma,
-  selectIsTmaLoading,
-} from "../../features/tma/tmaSelector";
+import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import useRouter from "../../hooks/useRouter";
 

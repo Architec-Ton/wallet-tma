@@ -1,22 +1,24 @@
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
+import { useEffect } from "react";
+
+import { useTonAddress, useTonConnectModal } from "@tonconnect/ui-react";
+
 import {
   iconPageAddWalletCircle,
   iconPageAddWalletImport,
   iconPageAddWalletKey,
   iconPageAddWalletNextPage,
 } from "../../assets/icons/pages/add-wallet";
-import Column from "../../components/containers/Column";
 import TileButton from "../../components/buttons/TileButton";
-import { useEffect } from "react";
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
 import { setLoading } from "../../features/page/pageSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import useRouter from "../../hooks/useRouter";
-import { useTonAddress, useTonConnectModal } from "@tonconnect/ui-react";
-import { useTon } from "../../hooks/useTon";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { WalletsState } from "../../types/auth";
 import { TonConnectionMode } from "../../features/ton/tonSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import useLanguage from "../../hooks/useLanguage";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import useRouter from "../../hooks/useRouter";
+import { useTon } from "../../hooks/useTon";
+import { WalletsState } from "../../types/auth";
 
 function AddWallet() {
   const t = useLanguage("AddWallet");
@@ -37,11 +39,7 @@ function AddWallet() {
   };
 
   useEffect(() => {
-    if (
-      state.status == "closed" &&
-      state.closeReason == "wallet-selected" &&
-      address
-    ) {
+    if (state.status == "closed" && state.closeReason == "wallet-selected" && address) {
       ton.setAddress(address, TonConnectionMode.tonconnect);
 
       setStoredValue({

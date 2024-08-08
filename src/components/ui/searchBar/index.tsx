@@ -1,26 +1,26 @@
-import { ChangeEventHandler, useState } from "react"
-import { SearchIcon } from '../../../assets/icons/inputs/index.ts'
-import Input from "../../inputs/Input"
-import { useTranslation } from "react-i18next"
+import { ChangeEventHandler, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import "./index.css"
+import { SearchIcon } from "../../../assets/icons/inputs/index.ts";
+import Input from "../../inputs/Input";
+import "./index.css";
 
 type OwnPropsType = {
-  onChange: (value: string) => void
-  value?: string
-}
+  onChange: (value: string) => void;
+  value?: string;
+};
 
-const SearchIconComponent = () => <img src={SearchIcon} alt="" />
+const SearchIconComponent = () => <img src={SearchIcon} alt="" />;
 
 const SearchBar = ({ onChange, value }: OwnPropsType) => {
-  const { t } = useTranslation()
-  const [searchValue, setSearchValue] = useState<string>(value || '')
+  const { t } = useTranslation();
+  const [searchValue, setSearchValue] = useState<string>(value || "");
 
   const searchHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value
-    setSearchValue(value)
-    onChange(value)
-  }
+    const value = e.currentTarget.value;
+    setSearchValue(value);
+    onChange(value);
+  };
 
   return (
     <Input
@@ -31,7 +31,7 @@ const SearchBar = ({ onChange, value }: OwnPropsType) => {
       prefix={<SearchIconComponent />}
       className="search-bar"
     />
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

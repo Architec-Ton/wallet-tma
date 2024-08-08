@@ -1,10 +1,11 @@
-import { ChangeEvent } from 'react';
-import { AssetDataType } from '..';
-import { iconOpenButton } from '../../../assets/icons/buttons';
-import Row from '../../../components/containers/Row';
-import Section from '../../../components/containers/Section';
-import { CoinDto } from '../../../types/assest';
-import useLanguage from '../../../hooks/useLanguage';
+import { ChangeEvent } from "react";
+
+import { AssetDataType } from "..";
+import { iconOpenButton } from "../../../assets/icons/buttons";
+import Row from "../../../components/containers/Row";
+import Section from "../../../components/containers/Section";
+import useLanguage from "../../../hooks/useLanguage";
+import { CoinDto } from "../../../types/assest";
 
 type OwnPropsType = {
   asset: AssetDataType;
@@ -16,36 +17,20 @@ type OwnPropsType = {
   disabled: boolean;
 };
 
-const ReceiveAsset = ({
-  asset,
-  coin,
-  sendedCoin,
-  disabled,
-  onChange,
-  onClick,
-  value,
-}: OwnPropsType) => {
-  const t = useLanguage('swap');
-  const decimals = Math.pow(
-    10,
-    coin?.meta?.decimals ? coin?.meta?.decimals : 0
-  );
+const ReceiveAsset = ({ asset, coin, sendedCoin, disabled, onChange, onClick, value }: OwnPropsType) => {
+  const t = useLanguage("swap");
+  const decimals = Math.pow(10, coin?.meta?.decimals ? coin?.meta?.decimals : 0);
   const receivedCoinPrice =
-    sendedCoin &&
-    coin &&
-    Math.round((sendedCoin.usdPrice / coin.usdPrice) * decimals) / decimals;
+    sendedCoin && coin && Math.round((sendedCoin.usdPrice / coin.usdPrice) * decimals) / decimals;
   return (
     <Section
-      title={t('receive')}
-      readMore={
-        sendedCoin &&
-        coin &&
-        `1 ${sendedCoin.meta?.symbol} = ${receivedCoinPrice} ${coin.meta?.symbol}`
-      }>
+      title={t("receive")}
+      readMore={sendedCoin && coin && `1 ${sendedCoin.meta?.symbol} = ${receivedCoinPrice} ${coin.meta?.symbol}`}
+    >
       <Row className="justify-between asset-row">
         <Row className="asset-button asset-receive-button" onClick={onClick}>
           {asset.icon && <img src={asset.icon} alt="" className="asset-icon" />}
-          <div className="asset-title">{asset.title || t('select')}</div>
+          <div className="asset-title">{asset.title || t("select")}</div>
           <img src={iconOpenButton} alt="" className="asset-open-icon" />
         </Row>
       </Row>
@@ -61,8 +46,8 @@ const ReceiveAsset = ({
         <div className="asset-feat-value">
           {coin &&
             (coin.usdPrice * Number(value)).toLocaleString(undefined, {
-              style: 'currency',
-              currency: 'USD',
+              style: "currency",
+              currency: "USD",
             })}
         </div>
       </Row>

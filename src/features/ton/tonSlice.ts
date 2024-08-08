@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export enum TonConnectionMode {
   disconnect = "disconnect",
@@ -59,7 +59,6 @@ const tonSlice = createSlice({
   },
 });
 
-export const { setAddress, setLoading, setSeqno, setExpiration } =
-  tonSlice.actions;
+export const { setAddress, setLoading, setSeqno, setExpiration } = tonSlice.actions;
 
 export default tonSlice.reducer;

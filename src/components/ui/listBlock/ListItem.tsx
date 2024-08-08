@@ -24,9 +24,7 @@ const ListItem = ({ items, onClick }: OwnPropsType) => {
               <div>{item.title}</div>
               <Column className="listitem-info-block-body">
                 <div>{item.value}</div>
-                {item.subvalue && (
-                  <div className="secondary-data">{item.subvalue}</div>
-                )}
+                {item.subvalue && <div className="secondary-data">{item.subvalue}</div>}
               </Column>
             </ListBaseItem>
           ))}

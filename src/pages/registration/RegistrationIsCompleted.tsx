@@ -1,13 +1,14 @@
-import Page from "../../components/containers/Page.tsx";
-import useLanguage from "../../hooks/useLanguage.ts";
-import SHIELD from "../../assets/icons/pages/registration-complete/shield-tick.svg";
-import "./RegistrationCompleted.style.css";
 // import {useNavigate} from "react-router-dom";
 // import {useTmaMainButton} from "../../hooks/useTma.ts";
 import { useEffect } from "react";
+
+import SHIELD from "../../assets/icons/pages/registration-complete/shield-tick.svg";
+import Page from "../../components/containers/Page.tsx";
+import useLanguage from "../../hooks/useLanguage.ts";
 import { usePage } from "../../hooks/usePage.ts";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
 import useRouter from "../../hooks/useRouter.ts";
+import { useTmaMainButton } from "../../hooks/useTma.ts";
+import "./RegistrationCompleted.style.css";
 
 const RegistrationIsCompleted = () => {
   const navigate = useRouter();
@@ -31,7 +32,7 @@ const RegistrationIsCompleted = () => {
       () => {
         navigate("/", { replace: true });
       },
-      true
+      true,
     );
     // }
   }, []);

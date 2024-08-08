@@ -1,39 +1,37 @@
 import {
-  ChangeEventHandler,
-  // useCallback,
+  ChangeEventHandler, // useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
-// import useRouter from '../../hooks/useRouter';
-import { useTmaMainButton } from "../../hooks/useTma";
-import { usePage } from "../../hooks/usePage";
-import BankStakingInfo from "../../components/ui/bank/BankStakingInfo";
-import useContracts from "../../hooks/useContracts";
-import { useTon } from "../../hooks/useTon";
-
-import "./BankStaking.styles.css";
-import Section from "../../components/containers/Section";
-import Row from "../../components/containers/Row";
-import Delimiter from "../../components/typography/Delimiter";
-import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
-import { WalletInfoData } from "../../types/wallet";
-import { CoinDto } from "../../types/assest";
 // import bankIcon from "../../assets/images/bank.png";
 import { useNavigate } from "react-router-dom";
-import BankStakingHistorySection, {
-  StakeHistoryType,
-} from "../../components/ui/bank/BankStakingHistorySection";
-// import { formatDate } from "date-fns";
 
+import { Address } from "@ton/core";
+// import { formatDate } from "date-fns";
 // import PartialContent from "../../components/ui/modals/PartialContent";
 import classNames from "classnames";
-import { Address } from "@ton/core";
+
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
+import Row from "../../components/containers/Row";
+import Section from "../../components/containers/Section";
+import Delimiter from "../../components/typography/Delimiter";
+import BankStakingHistorySection, { StakeHistoryType } from "../../components/ui/bank/BankStakingHistorySection";
+import BankStakingInfo from "../../components/ui/bank/BankStakingInfo";
 import { BANK_CROWDSALE_ADDRESS } from "../../constants";
+import { useApiWalletInfoMutation } from "../../features/wallet/walletApi";
+import useContracts from "../../hooks/useContracts";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+// import useRouter from '../../hooks/useRouter';
+import { useTmaMainButton } from "../../hooks/useTma";
+import { useTon } from "../../hooks/useTon";
+import { CoinDto } from "../../types/assest";
+import { WalletInfoData } from "../../types/wallet";
+import "./BankStaking.styles.css";
+
 // import { useAppSelector } from '../../hooks/useAppDispatch';
 // import { selectAuthIsReady } from '../../features/auth/authSelector';
 // import { useAppSelector } from "../../hooks/useAppDispatch";
@@ -60,9 +58,7 @@ function BankStaking() {
   const [bnkAsset, setBnkAsset] = useState<CoinDto | undefined>();
   const [arcAsset, setArcAsset] = useState<CoinDto | undefined>();
   // const [stakeAddress, setStakeAddress] = useState<string>();
-  const [stakeHistory, setStakeHistory] = useState<
-    StakeHistoryType | null | undefined
-  >(undefined);
+  const [stakeHistory, setStakeHistory] = useState<StakeHistoryType | null | undefined>(undefined);
   // const isReady = useAppSelector(selectAuthIsReady);
   // const [isStakeAvailable, setIsStakeAvailable] = useState<boolean>(true);
 
@@ -91,10 +87,7 @@ function BankStaking() {
     if (stakeHistory === undefined) handleStakeInfo();
   }, [stakeHistory, ton]);
 
-  const handleStake = async (
-    amount: number,
-    ownerAddress: Address | undefined
-  ) => {
+  const handleStake = async (amount: number, ownerAddress: Address | undefined) => {
     if (ownerAddress) {
       //Get BNK Wallet address
       try {
@@ -124,19 +117,14 @@ function BankStaking() {
           // setStakeAddress(stakeAddress.toString());
           let stakeInfo = undefined;
           try {
-            stakeInfo = await contracts.bank.getStakeInfo(
-              stakeAddress,
-              ownerAddress
-            );
+            stakeInfo = await contracts.bank.getStakeInfo(stakeAddress, ownerAddress);
           } catch (e) {
             console.log("not have staking", e);
           }
 
           console.log("stakeInfo", stakeInfo);
           if (stakeInfo && stakeInfo.stakedAmount > 0) {
-            const rewards =
-              Number((stakeInfo.calculatedAmount * 100n) / 1_000_00n) /
-              100_000_0;
+            const rewards = Number((stakeInfo.calculatedAmount * 100n) / 1_000_00n) / 100_000_0;
             setStakeHistory({
               date: new Date(Number(stakeInfo.time) * 1000).toString(),
               deposit: Number(stakeInfo.stakedAmount),
@@ -354,21 +342,13 @@ function BankStaking() {
                       inputMode="numeric"
                     />
                     <div className="bank-value">
-                      {value != "" &&
-                        Number(value)
-                          .toLocaleString(undefined)
-                          .replaceAll(",", " ")}
+                      {value != "" && Number(value).toLocaleString(undefined).replaceAll(",", " ")}
                     </div>
                   </div>
-                  <div className="staking-asset-title">
-                    {bnkAsset?.meta?.name}
-                  </div>
+                  <div className="staking-asset-title">{bnkAsset?.meta?.name}</div>
                 </Row>
               </Column>
-              <button
-                className="control-button rounded-button"
-                onClick={stakeAllHandler}
-              >
+              <button className="control-button rounded-button" onClick={stakeAllHandler}>
                 {t("all")}
               </button>
             </Row>

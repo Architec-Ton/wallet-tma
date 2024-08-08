@@ -1,28 +1,24 @@
-import { Address, internal, Sender, SenderArguments } from "@ton/core";
-import { useAppDispatch, useAppSelector } from "../useAppDispatch";
+import { Address, Sender, SenderArguments, internal } from "@ton/core";
+import { KeyPair, mnemonicToPrivateKey } from "@ton/crypto";
+import { WalletContractV4 } from "@ton/ton";
+
+import { iconTon } from "../../assets/icons/jettons";
+import { showAlert } from "../../features/alert/alertSlice";
 import {
   selectAddress,
-  selectAddressPrivateKey,
-  // selectAddressPublicKey,
+  selectAddressPrivateKey, // selectAddressPublicKey,
   selectTonMode,
 } from "../../features/ton/tonSelector";
-import {
-  setExpiration,
-  setSeqno,
-  TonConnectionMode,
-} from "../../features/ton/tonSlice";
-import { useTonConnect } from "./tonConnect";
-import { WalletContractV4 } from "@ton/ton";
-import { useTonClient } from "../useTonClient";
-import usePinCodeModalManagement from "./usePinCodeModal";
-import { decodePrivateKeyByPin } from "../../utils/pincode";
-import { KeyPair, mnemonicToPrivateKey } from "@ton/crypto";
-import useTrxModalManagement from "./useTrxModalManagment";
-import { TransactionDto } from "../../types/transaction";
-import { iconTon } from "../../assets/icons/jettons";
+import { TonConnectionMode, setExpiration, setSeqno } from "../../features/ton/tonSlice";
 import { RootState } from "../../store";
-import { showAlert } from "../../features/alert/alertSlice";
+import { TransactionDto } from "../../types/transaction";
+import { decodePrivateKeyByPin } from "../../utils/pincode";
+import { useAppDispatch, useAppSelector } from "../useAppDispatch";
 import { useTmaMainButton } from "../useTma";
+import { useTonClient } from "../useTonClient";
+import { useTonConnect } from "./tonConnect";
+import usePinCodeModalManagement from "./usePinCodeModal";
+import useTrxModalManagement from "./useTrxModalManagment";
 
 export const useSender = (): Sender => {
   const address = useAppSelector(selectAddress);
@@ -40,10 +36,7 @@ export const useSender = (): Sender => {
 
   const expiration = useAppSelector((state: RootState) => state.ton.expiration);
 
-  const tonSend = async (
-    args: SenderArguments,
-    seqno: number | null
-  ): Promise<any> => {
+  const tonSend = async (args: SenderArguments, seqno: number | null): Promise<any> => {
     console.log("sender: ", args);
 
     if (expiration != null && new Date(expiration) > new Date()) {
@@ -52,7 +45,7 @@ export const useSender = (): Sender => {
           message:
             "The TON network cannot process multiple transactions at the same time. Please wait a bit and try again.",
           duration: 8000,
-        })
+        }),
       );
       return;
     }
@@ -76,9 +69,7 @@ export const useSender = (): Sender => {
       console.log("keyPair:", keyPair);
     } catch (e) {
       console.log(e);
-      dispatch(
-        showAlert({ message: `Pincode wrong. Try again`, duration: 8000 })
-      );
+      dispatch(showAlert({ message: `Pincode wrong. Try again`, duration: 8000 }));
       return;
     }
     const privateKey = keyPair.secretKey;
@@ -111,7 +102,7 @@ export const useSender = (): Sender => {
                 message:
                   "The TON network cannot process multiple transactions at the same time. Please wait a bit and try again.",
                 duration: 8000,
-              })
+              }),
             );
             return;
           }
@@ -143,10 +134,7 @@ export const useSender = (): Sender => {
 
             console.log("trx", trx);
 
-            const hash = Buffer.from(
-              `${args.to.toString()}.${seqno}`,
-              "utf-8"
-            ).toString("hex");
+            const hash = Buffer.from(`${args.to.toString()}.${seqno}`, "utf-8").toString("hex");
 
             const txModal = await trxModal.open(hash, {
               amount: Number(args.value / 1000_000n) / 1000,
@@ -161,18 +149,14 @@ export const useSender = (): Sender => {
             console.log("txModel:", txModal);
             dispatch(setExpiration());
           } catch (e) {
-            if (e instanceof Error)
-              dispatch(showAlert({ message: e.message, duration: 8000 }));
+            if (e instanceof Error) dispatch(showAlert({ message: e.message, duration: 8000 }));
             return;
           }
 
           return transfer;
         }
       } catch (e) {
-        if (e instanceof Error)
-          dispatch(
-            showAlert({ message: `${e.name} ${e.message}`, duration: 8000 })
-          );
+        if (e instanceof Error) dispatch(showAlert({ message: `${e.name} ${e.message}`, duration: 8000 }));
         return;
       }
     }

@@ -1,9 +1,11 @@
-import classNames from "classnames";
 import { CSSProperties } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import "./Menu.styles.css";
+
+import classNames from "classnames";
+
 import { useClosure } from "../../../hooks/useClosure";
 import useRouter from "../../../hooks/useRouter";
+import "./Menu.styles.css";
 
 export interface MenuItem {
   to: string;
@@ -34,9 +36,7 @@ function Menu({ menuItems, style, className }: MenuProps) {
       <div className="menu">
         {menuItems.map((item) => (
           <NavLink to={item.to} key={item.to} onClick={handlerClick(item.to)}>
-            {item.icon && (
-              <img src={item.icon} alt={item.label} aria-label={item.label} />
-            )}
+            {item.icon && <img src={item.icon} alt={item.label} aria-label={item.label} />}
             <p>{item.label}</p>
           </NavLink>
         ))}

@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
 import { ReactNode, useEffect, useState } from "react";
+
+import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
+
 import { useApiAuthMutation } from "../../features/auth/authApi";
 import {
   selectAccessToken,
@@ -8,29 +10,17 @@ import {
   selectAuthIsTmaReady,
   selectAuthIsTonReady,
 } from "../../features/auth/authSelector";
-import {
-  AccountState,
-  setAccessToken,
-  setAccount,
-  setIsReady,
-  setIsTmaReady,
-} from "../../features/auth/authSlice";
-import {
-  selectMainButtonIsVisible,
-  selectMainButtonTitle,
-} from "../../features/tma/mainButtonSelector";
-import {
-  selectIsTma,
-  selectIsTmaLoading,
-} from "../../features/tma/tmaSelector";
+import { AccountState, setAccessToken, setAccount, setIsReady, setIsTmaReady } from "../../features/auth/authSlice";
+import { selectMainButtonIsVisible, selectMainButtonTitle } from "../../features/tma/mainButtonSelector";
+import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
 import { setTma, setTmaLoading } from "../../features/tma/tmaSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { TmaMainButton, TmaStateContext } from "../../hooks/useTma";
 import { useTon } from "../../hooks/useTon";
-import { AuthInitData, AuthInitTon } from "../../types/auth";
-import MainButton from "../buttons/MainButton";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
 import { useTonClient } from "../../hooks/useTonClient";
+import { AuthInitData, AuthInitTon } from "../../types/auth";
+import MainButton from "../buttons/MainButton";
 
 type Props = {
   children: ReactNode;
@@ -91,20 +81,8 @@ export function TmaProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    console.log(
-      "Ready:",
-      isTonReady && isTmaReady && !!accessToken && !!client
-    );
-    console.log(
-      "isTonReady:",
-      isTonReady,
-      "isTmaReady",
-      isTmaReady,
-      "accessToken",
-      !!accessToken,
-      "client",
-      !!client
-    );
+    console.log("Ready:", isTonReady && isTmaReady && !!accessToken && !!client);
+    console.log("isTonReady:", isTonReady, "isTmaReady", isTmaReady, "accessToken", !!accessToken, "client", !!client);
 
     dispatch(setIsReady(isTonReady && isTmaReady && !!accessToken && !!client));
   }, [isTonReady, isTmaReady, accessToken, client]);
