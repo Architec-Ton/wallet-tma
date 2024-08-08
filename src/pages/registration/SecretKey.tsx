@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { mnemonicNew } from "@ton/crypto";
+
 import { iconButtonCopyColor } from "../../assets/icons/buttons/index.ts";
 import Button from "../../components/buttons/Button.tsx";
 import Column from "../../components/containers/Column.tsx";
 import Page from "../../components/containers/Page.tsx";
 import Block from "../../components/typography/Block.tsx";
+import { showAlert } from "../../features/alert/alertSlice.ts";
 import useLanguage from "../../hooks/useLanguage.ts";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
-import "./SecretKey.styles.css";
 import { usePage } from "../../hooks/usePage.ts";
 import useRouter from "../../hooks/useRouter.ts";
-import { mnemonicNew } from "@ton/crypto";
-import { useDispatch } from "react-redux";
-import { showAlert } from "../../features/alert/alertSlice.ts";
+import { useTmaMainButton } from "../../hooks/useTma.ts";
+import "./SecretKey.styles.css";
 
 const SecretKey = () => {
   const t = useLanguage("Key");
@@ -31,7 +33,7 @@ const SecretKey = () => {
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
           state: { mnemonic: m.join(" "), confirm: true },
-        })
+        }),
       );
     });
   }, []);
@@ -41,7 +43,7 @@ const SecretKey = () => {
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
           state: { mnemonic: mnemonic, confirm: false },
-        })
+        }),
       );
     }
   }, [mnemonic]);
@@ -74,12 +76,7 @@ const SecretKey = () => {
           </Column>
         </Block>
         <div className="center p-1">
-          <Button
-            icon={iconButtonCopyColor}
-            title={t("Copy", "button")}
-            primary={false}
-            onClick={copyToClipboard}
-          />
+          <Button icon={iconButtonCopyColor} title={t("Copy", "button")} primary={false} onClick={copyToClipboard} />
         </div>
       </Column>
     </Page>

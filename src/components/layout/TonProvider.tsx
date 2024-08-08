@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useEffect } from "react";
 
+import { useTonConnectUI } from "@tonconnect/ui-react";
+
+import { setIsTonReady } from "../../features/auth/authSlice";
+import { TonConnectionMode, setAddress } from "../../features/ton/tonSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTon } from "../../hooks/useTon";
-import { setAddress, TonConnectionMode } from "../../features/ton/tonSlice";
-import { setIsTonReady } from "../../features/auth/authSlice";
-import { WalletsState } from "../../types/auth";
 import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
-import ModalPinCode from "../ui/modals/modalPinCode";
-import ModalTrx from "../ui/modals/trxModal";
 import useTrxModalManagement from "../../hooks/useTon/useTrxModalManagment";
 import { RootState } from "../../store";
+import { WalletsState } from "../../types/auth";
+import ModalPinCode from "../ui/modals/modalPinCode";
+import ModalTrx from "../ui/modals/trxModal";
 
 type Props = {
   children: ReactNode;
@@ -25,9 +26,7 @@ export function TonProvider({ children }: Props) {
   const pincode = usePinCodeModalManagement();
   const trx = useTrxModalManagement();
   const trxHash = useAppSelector((state: RootState) => state.trx.trxHash);
-  const trxInitData = useAppSelector(
-    (state: RootState) => state.trx.trxInitData
-  );
+  const trxInitData = useAppSelector((state: RootState) => state.trx.trxInitData);
 
   // const tonMode = useAppSelector(selectTonMode);
   const [bcData] = useLocalStorage<WalletsState>("wData", {
@@ -40,28 +39,18 @@ export function TonProvider({ children }: Props) {
       dispatch(
         setAddress({
           mode: TonConnectionMode.disconnect,
-        })
+        }),
       );
       dispatch(setIsTonReady(true));
-    } else if (
-      bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.tonconnect
-    ) {
+    } else if (bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.tonconnect) {
       let resetTonConnect = true;
       if (tonConnectUI.account && tonConnectUI.account.address) {
-        ton.setAddress(
-          tonConnectUI.account.address,
-          TonConnectionMode.tonconnect,
-          tonConnectUI.account.publicKey
-        );
+        ton.setAddress(tonConnectUI.account.address, TonConnectionMode.tonconnect, tonConnectUI.account.publicKey);
       } else {
         tonConnectUI.onStatusChange((wallet) => {
           resetTonConnect = false;
           if (wallet && wallet.account.address) {
-            ton.setAddress(
-              wallet.account.address,
-              TonConnectionMode.tonconnect,
-              wallet.account.publicKey
-            );
+            ton.setAddress(wallet.account.address, TonConnectionMode.tonconnect, wallet.account.publicKey);
           } else {
             ton.setDisconnect();
           }
@@ -75,14 +64,12 @@ export function TonProvider({ children }: Props) {
         }, 20000);
         return () => clearTimeout(timer);
       }
-    } else if (
-      bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.mnemonics
-    ) {
+    } else if (bcData.wallets[bcData.currentWallet].mode == TonConnectionMode.mnemonics) {
       ton.setAddress(
         bcData.wallets[bcData.currentWallet].address || "",
         TonConnectionMode.mnemonics,
         bcData.wallets[bcData.currentWallet].publicKey,
-        bcData.wallets[bcData.currentWallet].privateKey
+        bcData.wallets[bcData.currentWallet].privateKey,
       );
       dispatch(setIsTonReady(true));
     }

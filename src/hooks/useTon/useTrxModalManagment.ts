@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { trxModalActions } from "../../features/modal/trxModalSlice";
+
 import trxModalThunkActions from "../../features/modal/trxModal";
+import { trxModalActions } from "../../features/modal/trxModalSlice";
+import { AppDispatch, RootState } from "../../store";
 import { TransactionDto } from "../../types/transaction";
 
 function useTrxModalManagement() {
@@ -10,13 +11,8 @@ function useTrxModalManagement() {
     isOpened: state.trx.isOpened,
   }));
 
-  const open = async (
-    trxHash?: string,
-    trxData?: TransactionDto | undefined
-  ) => {
-    const { payload } = await dispatch(
-      trxModalThunkActions.open({ trxHash: trxHash, trxInitData: trxData })
-    );
+  const open = async (trxHash?: string, trxData?: TransactionDto | undefined) => {
+    const { payload } = await dispatch(trxModalThunkActions.open({ trxHash: trxHash, trxInitData: trxData }));
     return payload as string | undefined;
   };
 

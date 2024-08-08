@@ -1,23 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+import { mnemonicToPrivateKey } from "@ton/crypto";
+import { WalletContractV4 } from "@ton/ton";
+
 import Column from "../../components/containers/Column.tsx";
 import Page from "../../components/containers/Page.tsx";
 import Input from "../../components/inputs/Input.tsx";
-import useLanguage from "../../hooks/useLanguage.ts";
-import "./ConfirmKey.styles.css";
-import { usePage } from "../../hooks/usePage.ts";
-import { mnemonicToPrivateKey } from "@ton/crypto";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
-import { useLocation } from "react-router-dom";
-import { useTon } from "../../hooks/useTon/index.ts";
-import { WalletContractV4 } from "@ton/ton";
-import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal.ts";
-import { encodePrivateKeyByPin } from "../../utils/pincode.ts";
-import useLocalStorage from "../../hooks/useLocalStorage.ts";
-import { WalletsState } from "../../types/auth.ts";
-import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
 import { showAlert } from "../../features/alert/alertSlice.ts";
-import useRouter from "../../hooks/useRouter.ts";
 import { TonConnectionMode } from "../../features/ton/tonSlice.ts";
+import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
+import useLanguage from "../../hooks/useLanguage.ts";
+import useLocalStorage from "../../hooks/useLocalStorage.ts";
+import { usePage } from "../../hooks/usePage.ts";
+import useRouter from "../../hooks/useRouter.ts";
+import { useTmaMainButton } from "../../hooks/useTma.ts";
+import { useTon } from "../../hooks/useTon/index.ts";
+import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal.ts";
+import { WalletsState } from "../../types/auth.ts";
+import { encodePrivateKeyByPin } from "../../utils/pincode.ts";
+import "./ConfirmKey.styles.css";
 
 // const randomInt = (min: number, max: number) =>
 //   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -34,9 +36,7 @@ const ConfirmKey: React.FC = () => {
   const [mnemonics, setMnemonics] = useState<string[]>([]);
   // const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const [inputs, setInputs] = useState<string[]>(Array(3).fill(""));
-  const [mnemonicsVerifyIdx, setMnemonicsVerifyIdx] = useState<number[]>([
-    3, 7, 17,
-  ]);
+  const [mnemonicsVerifyIdx, setMnemonicsVerifyIdx] = useState<number[]>([3, 7, 17]);
 
   const [storedValue, setStoredValue] = useLocalStorage<WalletsState>("wData", {
     currentWallet: -1,
@@ -49,12 +49,11 @@ const ConfirmKey: React.FC = () => {
 
   const pincode = usePinCodeModalManagement();
 
-  const handleChange =
-    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newInputs = [...inputs];
-      newInputs[index] = event.target.value;
-      setInputs(newInputs);
-    };
+  const handleChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newInputs = [...inputs];
+    newInputs[index] = event.target.value;
+    setInputs(newInputs);
+  };
 
   const setupPinCode = async (mnemonics: string[]) => {
     page.setLoading(false, false);
@@ -69,7 +68,7 @@ const ConfirmKey: React.FC = () => {
         showAlert({
           message: "Pincode wrong.",
           duration: 8000,
-        })
+        }),
       );
       navigate("/");
       return;
@@ -83,7 +82,7 @@ const ConfirmKey: React.FC = () => {
         showAlert({
           message: "Pincode not the same.",
           duration: 8000,
-        })
+        }),
       );
 
       setupPinCode(mnemonics);
@@ -125,7 +124,7 @@ const ConfirmKey: React.FC = () => {
         wallet.address.toString({ urlSafe: true, bounceable: false }),
         TonConnectionMode.mnemonics,
         keyPair.publicKey.toString("hex"),
-        privateHash
+        privateHash,
       );
       setIsCompleted(true);
     } catch (e) {
@@ -134,7 +133,7 @@ const ConfirmKey: React.FC = () => {
         showAlert({
           message: `Coding wrong. (${(e as Error).message})`,
           duration: 8000,
-        })
+        }),
       );
     }
 
@@ -144,9 +143,7 @@ const ConfirmKey: React.FC = () => {
   const confirmHandler = (mnemonics: string[]) => {
     // if (verificationStep == 0) {
     console.log("mnemonicsVerifyIdx", mnemonicsVerifyIdx);
-    const checkMnemonics = mnemonicsVerifyIdx.map(
-      (v, index) => mnemonics[v] == inputs[index].toLowerCase()
-    );
+    const checkMnemonics = mnemonicsVerifyIdx.map((v, index) => mnemonics[v] == inputs[index].toLowerCase());
     if (!checkMnemonics.every((v) => Boolean(v))) {
       console.log("Wrong inputs", checkMnemonics, inputs, mnemonicsVerifyIdx);
       // return;
@@ -157,18 +154,13 @@ const ConfirmKey: React.FC = () => {
   const description = useMemo(
     () => (
       <p>
-        {t("description")}{" "}
-        <span>{mnemonicsVerifyIdx.map((v) => v + 1).join(", ")}</span>
+        {t("description")} <span>{mnemonicsVerifyIdx.map((v) => v + 1).join(", ")}</span>
       </p>
     ),
-    [mnemonics, mnemonicsVerifyIdx, inputs]
+    [mnemonics, mnemonicsVerifyIdx, inputs],
   );
 
-  const generateUniqueRandomNumbers = (
-    count: number,
-    min: number,
-    max: number
-  ): number[] => {
+  const generateUniqueRandomNumbers = (count: number, min: number, max: number): number[] => {
     const uniqueNumbers = new Set<number>();
     while (uniqueNumbers.size < count) {
       uniqueNumbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
@@ -220,11 +212,7 @@ const ConfirmKey: React.FC = () => {
             <div className="container">
               {mnemonicsVerifyIdx.map((number, index) => (
                 <label key={index}>
-                  <Input
-                    prefix={`${number + 1}.`}
-                    key={number}
-                    onChange={handleChange(index)}
-                  />
+                  <Input prefix={`${number + 1}.`} key={number} onChange={handleChange(index)} />
                 </label>
               ))}
             </div>

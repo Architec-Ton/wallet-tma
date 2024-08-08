@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+
 import Column from "../components/containers/Column";
 import Page from "../components/containers/Page";
 import Assets from "../components/ui/balance/Assets";
 import Balance from "../components/ui/balance/Balance";
+import HistoryWidget from "../components/ui/balance/HistoryWidget";
 import WalletMenu from "../components/ui/menu/WalletMenu";
 import { selectAuthIsReady } from "../features/auth/authSelector";
 import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
@@ -11,17 +14,13 @@ import { useApiWalletInfoMutation } from "../features/wallet/walletApi";
 import { useAppSelector } from "../hooks/useAppDispatch";
 import { usePage } from "../hooks/usePage";
 import useRouter from "../hooks/useRouter";
-import { WalletInfoData } from "../types/wallet";
-import { NavLink } from "react-router-dom";
 import { useTon } from "../hooks/useTon";
-import HistoryWidget from "../components/ui/balance/HistoryWidget";
+import { WalletInfoData } from "../types/wallet";
 
 function Main() {
   const navigate = useRouter();
 
-  const [walletInfoData, setWalletInfoData] = useState<WalletInfoData | null>(
-    null
-  );
+  const [walletInfoData, setWalletInfoData] = useState<WalletInfoData | null>(null);
   const isTonLoading = useAppSelector(selectIsTonLoading);
   const tonMode = useAppSelector(selectTonMode);
   const page = usePage();
@@ -66,24 +65,12 @@ function Main() {
       <Column>
         <Balance walletInfoData={walletInfoData}></Balance>
         <WalletMenu />
-        <Assets
-          assets={
-            walletInfoData
-              ? walletInfoData.wallets[walletInfoData.currentWallet].assets
-              : []
-          }
-        />
-        {walletInfoData &&
-          walletInfoData.wallets[walletInfoData.currentWallet].history.length >
-            0 && (
-            <HistoryWidget
-              items={
-                walletInfoData.wallets[walletInfoData.currentWallet].history
-              }
-            >
-              <NavLink to="/histories">See more</NavLink>
-            </HistoryWidget>
-          )}
+        <Assets assets={walletInfoData ? walletInfoData.wallets[walletInfoData.currentWallet].assets : []} />
+        {walletInfoData && walletInfoData.wallets[walletInfoData.currentWallet].history.length > 0 && (
+          <HistoryWidget items={walletInfoData.wallets[walletInfoData.currentWallet].history}>
+            <NavLink to="/histories">See more</NavLink>
+          </HistoryWidget>
+        )}
       </Column>
     </Page>
   );

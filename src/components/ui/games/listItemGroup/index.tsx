@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { iconButtonArraw } from '../../../../assets/icons/buttons';
-import { GameListItemType } from '../../../../types/gameTypes';
-import ListBlock from '../../listBlock';
-import ListBlockItem from '../../listBlock/ListBlockItem';
-import { useClosure } from '../../../../hooks/useClosure';
+import { useNavigate } from "react-router-dom";
 
-import './index.css';
+import { iconButtonArraw } from "../../../../assets/icons/buttons";
+import { useClosure } from "../../../../hooks/useClosure";
+import { GameListItemType } from "../../../../types/gameTypes";
+import ListBlock from "../../listBlock";
+import ListBlockItem from "../../listBlock/ListBlockItem";
+import "./index.css";
 
 type OwnPropsType = {
   group: GameListItemType[];

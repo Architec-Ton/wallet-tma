@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { AuthInitData } from "../../types/auth";
 import { UserInfo } from "../../types/user";
 import { AuthInitTon } from "../../types/wallet";
@@ -29,10 +30,7 @@ const authSlice = createSlice({
     setIsReady(state: AuthState, action: PayloadAction<boolean>) {
       state.isReady = action.payload;
     },
-    setAccessToken(
-      state: AuthState,
-      action: PayloadAction<string | undefined>
-    ) {
+    setAccessToken(state: AuthState, action: PayloadAction<string | undefined>) {
       state.accessToken = action.payload;
       // state.isReady =
       //   state.isTmaReady && state.isTonReady && !!state.accessToken;
@@ -49,33 +47,21 @@ const authSlice = createSlice({
         } as AuthInitData,
       };
     },
-    setAccount(
-      state: AuthState,
-      action: PayloadAction<AuthInitData | undefined>
-    ) {
+    setAccount(state: AuthState, action: PayloadAction<AuthInitData | undefined>) {
       state.auth = { ...state.auth, account: action.payload };
     },
     setIsTmaReady(state: AuthState, action: PayloadAction<boolean>) {
       state.isTmaReady = action.payload;
-      state.isReady =
-        state.isTmaReady && state.isTonReady && !!state.accessToken;
+      state.isReady = state.isTmaReady && state.isTonReady && !!state.accessToken;
     },
     setIsTonReady(state: AuthState, action: PayloadAction<boolean>) {
       state.isTonReady = action.payload;
-      state.isReady =
-        state.isTmaReady && state.isTonReady && !!state.accessToken;
+      state.isReady = state.isTmaReady && state.isTonReady && !!state.accessToken;
     },
   },
 });
 
-export const {
-  setAccessToken,
-  clearAccessToken,
-  setUser,
-  setAccount,
-  setIsTmaReady,
-  setIsTonReady,
-  setIsReady,
-} = authSlice.actions;
+export const { setAccessToken, clearAccessToken, setUser, setAccount, setIsTmaReady, setIsTonReady, setIsReady } =
+  authSlice.actions;
 
 export default authSlice.reducer;

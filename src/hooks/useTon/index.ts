@@ -1,16 +1,14 @@
+import { useEffect, useState } from "react";
+
+import { Address } from "@ton/core";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+
+import { TonConnectionMode, setAddress, setSeqno } from "../../features/ton/tonSlice";
+import { WalletsState } from "../../types/auth";
 import { useAppDispatch } from "../useAppDispatch";
 import useLocalStorage from "../useLocalStorage";
-import {
-  setAddress,
-  TonConnectionMode,
-  setSeqno,
-} from "../../features/ton/tonSlice";
-import { useEffect, useState } from "react";
-import { useWalletInitData } from "./useWalletInitData";
-import { WalletsState } from "../../types/auth";
 import { useSender } from "./sender";
-import { useTonConnectUI } from "@tonconnect/ui-react";
-import { Address } from "@ton/core";
+import { useWalletInitData } from "./useWalletInitData";
 
 export function useTon() {
   const dispatch = useAppDispatch();
@@ -23,9 +21,7 @@ export function useTon() {
 
   const sender = useSender();
 
-  const [tonMode, setTonMode] = useState<TonConnectionMode>(
-    TonConnectionMode.disconnect
-  );
+  const [tonMode, setTonMode] = useState<TonConnectionMode>(TonConnectionMode.disconnect);
 
   useEffect(() => {
     if (bcData.currentWallet < 0) {
@@ -40,12 +36,7 @@ export function useTon() {
     wallet: wallet,
     sender: sender,
     setSeqno: (seqno: number | null) => dispatch(setSeqno(seqno)),
-    setAddress: (
-      address: string,
-      mode: TonConnectionMode,
-      publicKey?: string,
-      privateKey?: string
-    ) => {
+    setAddress: (address: string, mode: TonConnectionMode, publicKey?: string, privateKey?: string) => {
       setTonMode(mode);
 
       dispatch(
@@ -59,7 +50,7 @@ export function useTon() {
           mode,
           publicKey: publicKey,
           privateKey: privateKey,
-        })
+        }),
       );
 
       console.log("useTon.setAddress", mode, address, publicKey);
@@ -72,13 +63,12 @@ export function useTon() {
         // mode: 'disconnect',
       });
       if (tonConnectUI) tonConnectUI.disconnect();
-      if (localStorage)
-        localStorage.removeItem("ton-connect-storage_bridge-connection");
+      if (localStorage) localStorage.removeItem("ton-connect-storage_bridge-connection");
       setTonMode(TonConnectionMode.disconnect);
       dispatch(
         setAddress({
           mode: TonConnectionMode.disconnect,
-        })
+        }),
       );
     },
   };

@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { initialConfirmationModalState } from "../../types/modal";
 
 const pinCodeModalSlice = createSlice({

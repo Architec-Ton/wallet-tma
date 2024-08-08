@@ -1,8 +1,9 @@
-import { iconButtonCopy } from '../../../assets/icons/buttons';
-import Row from '../../containers/Row';
-import './Address.styles.css';
-import {showAlert} from "../../../features/alert/alertSlice.ts";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
+
+import { iconButtonCopy } from "../../../assets/icons/buttons";
+import { showAlert } from "../../../features/alert/alertSlice.ts";
+import Row from "../../containers/Row";
+import "./Address.styles.css";
 
 type Props = {
   address?: string;
@@ -20,26 +21,28 @@ export const shortenString = (str: string): string => {
   return `${prefix}....${suffix}`;
 };
 
-function Address({ address, copy=true }: Props) {
-  const dispatch = useDispatch()
+function Address({ address, copy = true }: Props) {
+  const dispatch = useDispatch();
   const copyToClipboard = () => {
     if (address) {
       navigator.clipboard
         .writeText(address)
-          .then(() => {
-              dispatch(showAlert({message: 'copy', duration: 1500}))
-            console.log('coped')
-          })
-        .catch((err) => console.error('Failed to copy text: ', err));
+        .then(() => {
+          dispatch(showAlert({ message: "copy", duration: 1500 }));
+          console.log("coped");
+        })
+        .catch((err) => console.error("Failed to copy text: ", err));
     }
   };
 
   return (
     <Row className="address">
       <small>{address && shortenString(address)}</small>
-        {copy && <a href="#" onClick={copyToClipboard}>
-            <img src={iconButtonCopy}/>{' '}
-        </a>}
+      {copy && (
+        <a href="#" onClick={copyToClipboard}>
+          <img src={iconButtonCopy} />{" "}
+        </a>
+      )}
     </Row>
   );
 }

@@ -1,10 +1,11 @@
 // authApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
-import baseQuery from "../api/api";
-import { WalletInfoData } from "../../types/wallet";
+
 import { CoinDto } from "../../types/assest";
-import { setTonUsdPrice } from "./walletSlice";
 import { TransactionHistoryItemDto } from "../../types/history";
+import { WalletInfoData } from "../../types/wallet";
+import baseQuery from "../api/api";
+import { setTonUsdPrice } from "./walletSlice";
 
 export const walletApi = createApi({
   reducerPath: "walletApi",
@@ -43,8 +44,4 @@ export const walletApi = createApi({
   }),
 });
 
-export const {
-  useApiWalletInfoMutation,
-  useApiWalletAssetsMutation,
-  useApiWalletHistoryMutation,
-} = walletApi;
+export const { useApiWalletInfoMutation, useApiWalletAssetsMutation, useApiWalletHistoryMutation } = walletApi;

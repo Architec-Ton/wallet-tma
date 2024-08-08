@@ -1,6 +1,7 @@
-import { CHAIN } from "@tonconnect/protocol";
 import { Sender, SenderArguments } from "@ton/core";
+import { CHAIN } from "@tonconnect/protocol";
 import { useTonWallet } from "@tonconnect/ui-react";
+
 import { useAppTonConnectUi } from "../useAppTonConnectUi";
 
 export function useTonConnect(): {

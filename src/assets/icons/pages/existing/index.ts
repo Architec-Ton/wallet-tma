@@ -1,3 +1,3 @@
-import iconPageExisting from './paste-icon.svg';
+import iconPageExisting from "./paste-icon.svg";
 
 export { iconPageExisting };

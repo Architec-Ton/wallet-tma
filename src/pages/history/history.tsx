@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+
 import Page from "../../components/containers/Page";
-import { useApiWalletHistoryMutation } from "../../features/wallet/walletApi";
-import { TransactionHistoryItemDto } from "../../types/history";
-import { usePage } from "../../hooks/usePage";
 import History from "../../components/ui/balance/History";
-import { useAppSelector } from "../../hooks/useAppDispatch";
 import { selectAuthIsReady } from "../../features/auth/authSelector";
+import { useApiWalletHistoryMutation } from "../../features/wallet/walletApi";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import { usePage } from "../../hooks/usePage";
+import { TransactionHistoryItemDto } from "../../types/history";
 
 function Histories() {
   //   const t = useLanguage("history");
@@ -13,9 +14,7 @@ function Histories() {
   const isReady = useAppSelector(selectAuthIsReady);
 
   const [walletHistoryApi] = useApiWalletHistoryMutation();
-  const [walletItemsData, setWalletItemsData] = useState<
-    TransactionHistoryItemDto[]
-  >([]);
+  const [walletItemsData, setWalletItemsData] = useState<TransactionHistoryItemDto[]>([]);
 
   const handleInfo = async () => {
     try {

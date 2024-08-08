@@ -1,7 +1,7 @@
-import Section from '../../containers/Section';
-import ListBlock from '../listBlock';
-import ListTileItem from '../listBlock/ListTileItem';
-import { CoinDto } from '../../../types/assest';
+import { CoinDto } from "../../../types/assest";
+import Section from "../../containers/Section";
+import ListBlock from "../listBlock";
+import ListTileItem from "../listBlock/ListTileItem";
 
 type OwnPropsType = {
   //   children: React.ReactNode;
@@ -19,11 +19,7 @@ const AssetsList = ({ title, assets, onClick }: OwnPropsType) => {
           return (
             <ListTileItem
               key={`${asset.meta?.address}-${index}`}
-              icon={
-                asset.meta?.image
-                  ? asset.meta?.image
-                  : `data:image;base64, ${asset.meta?.imageData}`
-              }
+              icon={asset.meta?.image ? asset.meta?.image : `data:image;base64, ${asset.meta?.imageData}`}
               title={asset.meta?.name}
               description={`${asset.amount.toLocaleString(undefined, {
                 maximumFractionDigits: 5, //asset.meta?.decimals,
@@ -31,7 +27,8 @@ const AssetsList = ({ title, assets, onClick }: OwnPropsType) => {
               })} ${asset.meta?.symbol}`}
               onClick={() => {
                 if (onClick) onClick(asset);
-              }}></ListTileItem>
+              }}
+            ></ListTileItem>
           );
         })}
       </ListBlock>

@@ -1,7 +1,8 @@
 import { useState } from "react";
+
+import useLanguage from "../../../hooks/useLanguage";
 import { CoinDto } from "../../../types/assest";
 import AssetInput from "../../inputs/AssetInput";
-import useLanguage from "../../../hooks/useLanguage";
 
 interface AssetInputProps {
   asset?: CoinDto;
@@ -12,13 +13,7 @@ interface AssetInputProps {
   isSelectable?: boolean;
 }
 
-const SendAssetInput = ({
-  asset,
-  value,
-  isSelectable,
-  onChange,
-  onBlur,
-}: AssetInputProps) => {
+const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
 
   const handlerOnChange = (value: string) => {

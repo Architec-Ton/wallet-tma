@@ -1,27 +1,29 @@
 // import { useNavigate } from 'react-router-dom';
-import useLanguage from "../../hooks/useLanguage";
-import Page from "../../components/containers/Page";
 import { useEffect, useState } from "react";
-import { usePage } from "../../hooks/usePage";
-import { useApiWalletAssetsMutation } from "../../features/wallet/walletApi";
-import { CoinDto } from "../../types/assest";
-import AssetsList from "../../components/ui/send/assets";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import { selectAuthIsReady } from "../../features/auth/authSelector";
-import AddressInput from "../../components/inputs/AddressInput";
-import { useTmaMainButton } from "../../hooks/useTma";
+import { useLocation } from "react-router-dom";
+
 import { Address, toNano } from "@ton/core";
-import Delimiter from "../../components/typography/Delimiter";
-import Row from "../../components/containers/Row";
+
 import { iconPageSend } from "../../assets/icons/pages/send";
-import { shortenString } from "../../components/ui/balance/Address";
+import Page from "../../components/containers/Page";
+import Row from "../../components/containers/Row";
+import AddressInput from "../../components/inputs/AddressInput";
+import Delimiter from "../../components/typography/Delimiter";
 import TransferAsset from "../../components/ui/assets/TransferAssets";
+import { shortenString } from "../../components/ui/balance/Address";
 import ListBlock from "../../components/ui/listBlock";
 import ListBaseItem from "../../components/ui/listBlock/ListBaseItem";
-import { useTon } from "../../hooks/useTon";
+import AssetsList from "../../components/ui/send/assets";
+import { selectAuthIsReady } from "../../features/auth/authSelector";
+import { useApiWalletAssetsMutation } from "../../features/wallet/walletApi";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 import useContracts from "../../hooks/useContracts";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
-import { useLocation } from "react-router-dom";
+import { useTmaMainButton } from "../../hooks/useTma";
+import { useTon } from "../../hooks/useTon";
+import { CoinDto } from "../../types/assest";
 
 interface ItemInfo {
   title: string;
@@ -60,18 +62,9 @@ const SendPage = () => {
     }
   };
 
-
-  const handleAmountInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const amount = Number(event.target.value);
-    if (
-      step == 2 &&
-      !isNaN(amount) &&
-      amount > 0 &&
-      asset &&
-      amount <= asset?.amount
-    ) {
+    if (step == 2 && !isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
       btn.init(
         t("continue", "button"),
         () => {
@@ -92,11 +85,7 @@ const SendPage = () => {
                 });
                 console.log("Ton TX:", tx);
               } else if (asset.type == "jetton") {
-                console.log(
-                  ton.wallet.address,
-                  asset.meta?.address,
-                  asset.meta?.decimals
-                );
+                console.log(ton.wallet.address, asset.meta?.address, asset.meta?.decimals);
                 if (
                   ton.wallet.address &&
                   asset.meta?.address &&
@@ -105,34 +94,26 @@ const SendPage = () => {
                 ) {
                   const walletAddress = await contracts.jetton.getWallet(
                     Address.parse(asset.meta?.address),
-                    ton.wallet.address
+                    ton.wallet.address,
                   );
 
                   console.log("walletJetton:", walletAddress);
-                  const jettonAmount = BigInt(
-                    amount * Math.pow(10, asset.meta.decimals)
-                  );
+                  const jettonAmount = BigInt(amount * Math.pow(10, asset.meta.decimals));
                   console.log("jettonAmount:", jettonAmount);
                   if (walletAddress) {
-                    const tx = await contracts.jetton.transfer(
-                      walletAddress,
-                      Address.parse(address),
-                      jettonAmount
-                    );
+                    const tx = await contracts.jetton.transfer(walletAddress, Address.parse(address), jettonAmount);
                     console.log("Jetton TX:", tx);
                   }
                 }
               }
               setStep(4);
             },
-            isButtonEnabled
+            isButtonEnabled,
           );
           const itemsInfo: ItemInfo[] = [
             {
               title: t("sender"),
-              value: shortenString(
-                ton.wallet.address?.toString({ urlSafe: true }) || "hidden"
-              ),
+              value: shortenString(ton.wallet.address?.toString({ urlSafe: true }) || "hidden"),
             },
             {
               title: t("currency"),
@@ -149,7 +130,7 @@ const SendPage = () => {
           ];
           setConfirmInfo(itemsInfo);
         },
-        true
+        true,
       );
     } else if (step == 2) {
       btn.setVisible(false);
@@ -170,7 +151,6 @@ const SendPage = () => {
     setStep(1);
     setAsset(asset);
   };
-
 
   const handleInfo = async () => {
     try {
@@ -203,7 +183,7 @@ const SendPage = () => {
           btn.setVisible(false);
           setStep(2);
         },
-        isButtonEnabled
+        isButtonEnabled,
       );
     }
     if (step == 4) {
@@ -213,21 +193,15 @@ const SendPage = () => {
   }, [address, isButtonEnabled, step]);
 
   const setMaxAmount = () => {
-    setAmount(`${asset?.amount}`)
-  }
+    setAmount(`${asset?.amount}`);
+  };
 
   return (
     <Page>
-      {step == 0 && (
-        <AssetsList assets={assets} title={t("title")} onClick={handlerClick} />
-      )}
+      {step == 0 && <AssetsList assets={assets} title={t("title")} onClick={handlerClick} />}
       {step == 1 && (
         <>
-          <AddressInput
-            onChange={handleInputChange}
-            value={address}
-            className={`${error ? "input-error" : ""}`}
-          />
+          <AddressInput onChange={handleInputChange} value={address} className={`${error ? "input-error" : ""}`} />
           <Delimiter />
         </>
       )}
@@ -235,15 +209,10 @@ const SendPage = () => {
         <>
           <Row>
             <img src={iconPageSend} />
-            <h2 > Send to {shortenString(address)}</h2>
+            <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />
-          <TransferAsset
-            asset={asset}
-            value={amount}
-            onChange={handleAmountInputChange}
-            setMaxAmount={setMaxAmount}
-          />
+          <TransferAsset asset={asset} value={amount} onChange={handleAmountInputChange} setMaxAmount={setMaxAmount} />
         </>
       )}
       {step == 3 && (

@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
+
+import { Address, toNano } from "@ton/core";
+
+import { iconStakeButton, iconTasksButton } from "../../assets/icons/buttons";
+import Button from "../../components/buttons/Button";
 import Column from "../../components/containers/Column";
 import Page from "../../components/containers/Page";
+import BlockWithTitle from "../../components/typography/BlockWithTitle";
+import BankBalance from "../../components/ui/balance/BankBalance";
 import History from "../../components/ui/balance/History";
+import BankMintingInfo from "../../components/ui/bank/BankMintingInfo";
+import ReferralsInfo from "../../components/ui/bank/ReferralsInfo";
 import { selectAuthIsReady } from "../../features/auth/authSelector";
+import { useApiGetBankInfoMutation } from "../../features/bank/bankApi";
 import { useAppSelector } from "../../hooks/useAppDispatch";
+import useContracts from "../../hooks/useContracts";
+import useLanguage from "../../hooks/useLanguage";
 import { usePage } from "../../hooks/usePage";
 import useRouter from "../../hooks/useRouter";
-import Button from "../../components/buttons/Button";
-import BlockWithTitle from "../../components/typography/BlockWithTitle";
-import { iconStakeButton, iconTasksButton } from "../../assets/icons/buttons";
-import useLanguage from "../../hooks/useLanguage";
-import BankBalance from "../../components/ui/balance/BankBalance";
-import useContracts from "../../hooks/useContracts";
 import { useTon } from "../../hooks/useTon";
-import ReferralsInfo from "../../components/ui/bank/ReferralsInfo";
-import BankMintingInfo from "../../components/ui/bank/BankMintingInfo";
 import { useTonClient } from "../../hooks/useTonClient";
-import { useApiGetBankInfoMutation } from "../../features/bank/bankApi";
 import { BankInfoDto } from "../../types/banks";
-import { Address, toNano } from "@ton/core";
 
 type StakeInfo = {
   for: Address;
@@ -67,10 +69,7 @@ function BankMain() {
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
       console.log("BNK Stake Wallet", stakeAddress?.toString());
       if (stakeAddress) {
-        const stakeInfo = await contracts.bank.getStakeInfo(
-          stakeAddress,
-          ownerAddress
-        );
+        const stakeInfo = await contracts.bank.getStakeInfo(stakeAddress, ownerAddress);
         if (stakeInfo) {
           setStakeInfoData(stakeInfo);
           // setArc(stakeInfo?.calculatedAmount);
