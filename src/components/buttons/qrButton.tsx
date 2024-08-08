@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import React from "react";
 
 import { useQRScanner } from "@tma.js/sdk-react";
 import classNames from "classnames";

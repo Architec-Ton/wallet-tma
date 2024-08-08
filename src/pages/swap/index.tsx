@@ -1,8 +1,8 @@
-import type { ChangeEventHandler} from "react";
-import { useEffect, useMemo, useState } from "react";
+import type { ChangeEventHandler } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import type { AddressType, AmountType} from "@ston-fi/sdk";
+import type { AddressType, AmountType } from "@ston-fi/sdk";
 import { DEX, pTON } from "@ston-fi/sdk";
 
 import { iconReverseButton } from "../../assets/icons/buttons";
@@ -204,10 +204,13 @@ const Swap = () => {
 
   const changeSendValue = (value: string) => {
     const receivedValue = calculateSwappValues(value, "send") || "";
-    setSwappAssets(({ send, receive }) => ({
-        send: { ...send, value },
-        receive: { ...receive, value: receivedValue?.toString() },
-      } satisfies SwapDataType));
+    setSwappAssets(
+      ({ send, receive }) =>
+        ({
+          send: { ...send, value },
+          receive: { ...receive, value: receivedValue?.toString() },
+        }) satisfies SwapDataType,
+    );
   };
 
   const changeSendHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -288,7 +291,7 @@ const Swap = () => {
     const { data } = await simulationTrigger({
       offer_address: sendingAsset.meta?.address as string,
       ask_address: receivingAsset?.meta?.address as string,
-      units: Math.round(Number(swapAssets.send.value) * 10**Number(sendingAsset?.meta?.decimals)),
+      units: Math.round(Number(swapAssets.send.value) * 10 ** Number(sendingAsset?.meta?.decimals)),
       slippage_tolerance: "0.001",
     });
     return data;

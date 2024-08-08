@@ -1,6 +1,4 @@
-// import {useNavigate} from "react-router-dom";
-// import {useTmaMainButton} from "../../hooks/useTma.ts";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import SHIELD from "../../assets/icons/pages/registration-complete/shield-tick.svg";
 import Page from "../../components/containers/Page.tsx";

@@ -1,5 +1,5 @@
-import type { ReactNode} from "react";
-import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Address as Addr } from "@ton/core";
 

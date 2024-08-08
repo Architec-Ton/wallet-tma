@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import React from "react";
 
 import { iconTrxRecv, iconTrxSend } from "../../../assets/icons/jettons";
 import useLanguage from "../../../hooks/useLanguage";

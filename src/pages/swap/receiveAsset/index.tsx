@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+import React from "react";
 
 import type { AssetDataType } from "..";
 import { iconOpenButton } from "../../../assets/icons/buttons";
@@ -19,7 +20,7 @@ type OwnPropsType = {
 
 const ReceiveAsset = ({ asset, coin, sendedCoin, disabled, onChange, onClick, value }: OwnPropsType) => {
   const t = useLanguage("swap");
-  const decimals = 10**(coin?.meta?.decimals ? coin?.meta?.decimals : 0);
+  const decimals = 10 ** (coin?.meta?.decimals ? coin?.meta?.decimals : 0);
   const receivedCoinPrice =
     sendedCoin && coin && Math.round((sendedCoin.usdPrice / coin.usdPrice) * decimals) / decimals;
   return (

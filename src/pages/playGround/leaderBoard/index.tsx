@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import Grid from "../../../components/containers/Grid";
@@ -35,22 +35,16 @@ const LeaderBoard = () => {
         </Grid>
         {data &&
           data.map((leader, index) => (
-              <Grid
-                key={`${leader.name}-${index}`}
-                columns={12}
-                gap={2}
-                className="block game-leader__row"
-                isOrderedList
-              >
-                <GameLeaderRow
-                  num={index + 1}
-                  name={leader.name}
-                  totalCoins={leader.totalCoins}
-                  asset={leader.asset}
-                  time={leader.time}
-                />
-              </Grid>
-            ))}
+            <Grid key={`${leader.name}-${index}`} columns={12} gap={2} className="block game-leader__row" isOrderedList>
+              <GameLeaderRow
+                num={index + 1}
+                name={leader.name}
+                totalCoins={leader.totalCoins}
+                asset={leader.asset}
+                time={leader.time}
+              />
+            </Grid>
+          ))}
       </Section>
     </Page>
   );

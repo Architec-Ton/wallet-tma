@@ -1,9 +1,12 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import { iconButtonCopy } from "../../../assets/icons/buttons";
 import { showAlert } from "../../../features/alert/alertSlice.ts";
 import Row from "../../containers/Row";
 import "./Address.styles.css";
+
+import React from "react";
 
 type Props = {
   address?: string;

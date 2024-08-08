@@ -1,8 +1,12 @@
+import React from "react";
+
 import ListBlock from ".";
 import type { ItemDto } from "../../../types/list";
 import Column from "../../containers/Column";
 import ListBaseItem from "./ListBaseItem";
 import "./ListItem.styles.css";
+
+import React from "react";
 
 type OwnPropsType = {
   items: ItemDto[];
@@ -10,26 +14,26 @@ type OwnPropsType = {
 };
 
 const ListItem = ({ items, onClick }: OwnPropsType) => (
-    <>
-      {items && items.length > 0 && (
-        <ListBlock className="listitem-info-block">
-          {items.map((item, index) => (
-            <ListBaseItem
-              key={index}
-              onClick={() => {
-                if (onClick) onClick(item);
-              }}
-            >
-              <div>{item.title}</div>
-              <Column className="listitem-info-block-body">
-                <div>{item.value}</div>
-                {item.subvalue && <div className="secondary-data">{item.subvalue}</div>}
-              </Column>
-            </ListBaseItem>
-          ))}
-        </ListBlock>
-      )}
-    </>
-  );
+  <>
+    {items && items.length > 0 && (
+      <ListBlock className="listitem-info-block">
+        {items.map((item, index) => (
+          <ListBaseItem
+            key={index}
+            onClick={() => {
+              if (onClick) onClick(item);
+            }}
+          >
+            <div>{item.title}</div>
+            <Column className="listitem-info-block-body">
+              <div>{item.value}</div>
+              {item.subvalue && <div className="secondary-data">{item.subvalue}</div>}
+            </Column>
+          </ListBaseItem>
+        ))}
+      </ListBlock>
+    )}
+  </>
+);
 
 export default ListItem;

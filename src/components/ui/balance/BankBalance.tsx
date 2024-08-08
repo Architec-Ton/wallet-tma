@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import React from "react";
 
 import { iconBankButton } from "../../../assets/icons/buttons";
 import useLanguage from "../../../hooks/useLanguage";

@@ -1,3 +1,5 @@
+import type React from "react";
+
 import { formatDistanceToNow } from "date-fns";
 
 interface Props {

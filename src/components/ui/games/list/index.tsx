@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { SwiperSlide } from "swiper/react";
@@ -66,10 +66,10 @@ const GameList = ({ games }: OwnPropsType) => {
                   className="list-swipe"
                 >
                   {category.apps.map((itemsGroup, index) => (
-                      <SwiperSlide key={`game_slide-${category.id}-${index}`} className="list-slide">
-                        <GameListItemGroup group={itemsGroup} />
-                      </SwiperSlide>
-                    ))}
+                    <SwiperSlide key={`game_slide-${category.id}-${index}`} className="list-slide">
+                      <GameListItemGroup group={itemsGroup} />
+                    </SwiperSlide>
+                  ))}
                 </Slider>
               </Column>
             </Column>
