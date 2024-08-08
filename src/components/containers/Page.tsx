@@ -4,10 +4,10 @@ import { useLocation } from "react-router-dom";
 
 import { selectIsLoading, selectIsNavbarVisible } from "../../features/page/pageSelectors";
 import { useAppSelector } from "../../hooks/useAppDispatch";
-import BackButton from "../buttons/BackButton.tsx";
+import BackButton from "../buttons/BackButton";
 import Loader from "../layout/Loader";
 import Title from "../typography/Title";
-import MainMenu from "../ui/menu/MainMenu.tsx";
+import MainMenu from "../ui/menu/MainMenu";
 import Container from "./Container";
 import "./Page.styles.css";
 

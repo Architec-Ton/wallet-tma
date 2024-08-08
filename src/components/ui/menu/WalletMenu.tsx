@@ -5,13 +5,11 @@ import {
   iconMenuWalletBank,
   iconMenuWalletSend,
   iconMenuWalletSwap,
-} from "../../../assets/icons/menus/wallet/index.ts";
+} from "../../../assets/icons/menus/wallet/index";
 import useLanguage from "../../../hooks/useLanguage";
 import type { MenuItem } from "./Menu";
 import Menu from "./Menu";
 import "./WalletMenu.styles.css";
-
-import React from "react";
 
 function WalletMenu() {
   const t = useLanguage("menu-wallet");

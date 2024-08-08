@@ -7,7 +7,7 @@ import Column from "../../components/containers/Column";
 import Section from "../../components/containers/Section";
 import Block from "../../components/typography/Block";
 import FormatMessage from "../../components/typography/FormatMessage";
-import { showAlert } from "../../features/alert/alertSlice.ts";
+import { showAlert } from "../../features/alert/alertSlice";
 import useLanguage from "../../hooks/useLanguage";
 import { useTon } from "../../hooks/useTon";
 import type { AssetType } from "./ReceiveAsset";

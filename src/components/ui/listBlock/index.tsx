@@ -5,7 +5,6 @@ import classNames from "classnames";
 import Block from "../../typography/Block";
 import "./index.css";
 
-import React from "react";
 
 type OwnPropsType = {
   children: React.ReactNode;

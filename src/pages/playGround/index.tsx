@@ -3,23 +3,23 @@ import { Link } from "react-router-dom";
 
 import { SwiperSlide } from "swiper/react";
 
-import Column from "../../components/containers/Column.tsx";
-import Page from "../../components/containers/Page.tsx";
-import Row from "../../components/containers/Row.tsx";
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
+import Row from "../../components/containers/Row";
 import GameList from "../../components/ui/games/list";
 import TopRate from "../../components/ui/games/topRate";
 import SearchBar from "../../components/ui/searchBar";
 import Slider from "../../components/ui/slider";
 import Tabs from "../../components/ui/tabs";
-import Tab from "../../components/ui/tabs/Tab.tsx";
-import { useGetCategoriesMutation, useGetTopRateGamesMutation } from "../../features/gaming/gamingApi.ts";
-import { selectGames, selectGamesFilter } from "../../features/gaming/gamingSelectors.ts";
-import { clearFilter } from "../../features/gaming/gamingSlice.ts";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch.ts";
-import useDebounce from "../../hooks/useDebounce.ts";
-import useLanguage from "../../hooks/useLanguage.ts";
-import { usePage } from "../../hooks/usePage.ts";
-import type { AppsList, GameFilterType } from "../../types/gameTypes.ts";
+import Tab from "../../components/ui/tabs/Tab";
+import { useGetCategoriesMutation, useGetTopRateGamesMutation } from "../../features/gaming/gamingApi";
+import { selectGames, selectGamesFilter } from "../../features/gaming/gamingSelectors";
+import { clearFilter } from "../../features/gaming/gamingSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import useDebounce from "../../hooks/useDebounce";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+import type { AppsList, GameFilterType } from "../../types/gameTypes";
 import "./index.css";
 
 type SearchParamsType = {

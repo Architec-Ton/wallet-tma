@@ -6,7 +6,6 @@ import Column from "../../containers/Column";
 import ListBaseItem from "./ListBaseItem";
 import "./ListItem.styles.css";
 
-import React from "react";
 
 type OwnPropsType = {
   items: ItemDto[];

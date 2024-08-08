@@ -4,21 +4,21 @@ import { useLocation } from "react-router-dom";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
 
-import Column from "../../components/containers/Column.tsx";
-import Page from "../../components/containers/Page.tsx";
-import Input from "../../components/inputs/Input.tsx";
-import { showAlert } from "../../features/alert/alertSlice.ts";
-import { TonConnectionMode } from "../../features/ton/tonSlice.ts";
-import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
-import useLanguage from "../../hooks/useLanguage.ts";
-import useLocalStorage from "../../hooks/useLocalStorage.ts";
-import { usePage } from "../../hooks/usePage.ts";
-import useRouter from "../../hooks/useRouter.ts";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
-import { useTon } from "../../hooks/useTon/index.ts";
-import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal.ts";
-import type { WalletsState } from "../../types/auth.ts";
-import { encodePrivateKeyByPin } from "../../utils/pincode.ts";
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
+import Input from "../../components/inputs/Input";
+import { showAlert } from "../../features/alert/alertSlice";
+import { TonConnectionMode } from "../../features/ton/tonSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import useLanguage from "../../hooks/useLanguage";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { usePage } from "../../hooks/usePage";
+import useRouter from "../../hooks/useRouter";
+import { useTmaMainButton } from "../../hooks/useTma";
+import { useTon } from "../../hooks/useTon/index";
+import usePinCodeModalManagement from "../../hooks/useTon/usePinCodeModal";
+import type { WalletsState } from "../../types/auth";
+import { encodePrivateKeyByPin } from "../../utils/pincode";
 import "./ConfirmKey.styles.css";
 
 // const randomInt = (min: number, max: number) =>
