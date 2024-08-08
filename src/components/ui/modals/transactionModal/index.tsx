@@ -1,12 +1,16 @@
 import React from "react";
 
-import { iconGlobalButton } from "../../../../assets/icons/buttons";
-// import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
-import useLanguage from "../../../../hooks/useLanguage";
-import type { ItemDto } from "../../../../types/list";
-import type { TransactionDto } from "../../../../types/transaction";
-import Column from "../../../containers/Column";
-import Row from "../../../containers/Row";
+import type { ItemDto } from "types/list";
+import type { TransactionDto } from "types/transaction";
+
+import { iconGlobalButton } from "assets/icons/buttons";
+
+// import { iconTon, iconUsdt } from "assets/icons/jettons"
+import useLanguage from "hooks/useLanguage";
+
+import Column from "components/containers/Column";
+import Row from "components/containers/Row";
+
 import { shortenString } from "../../balance/Address";
 import InlineLoader from "../../inlineLoader";
 import ListItem from "../../listBlock/ListItem";

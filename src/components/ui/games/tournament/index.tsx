@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 
+import { useSubscribeTournamentMutation } from "features/gaming/gamingApi";
 import Lottie from "lottie-react";
 
-import fireWorkData from "../../../../assets/loties/firework.json";
-import { useSubscribeTournamentMutation } from "../../../../features/gaming/gamingApi";
-import useLanguage from "../../../../hooks/useLanguage";
-import Column from "../../../containers/Column";
-import Section from "../../../containers/Section";
-import Block from "../../../typography/Block";
+import fireWorkData from "assets/loties/firework.json";
+
+import useLanguage from "hooks/useLanguage";
+
+import Column from "components/containers/Column";
+import Section from "components/containers/Section";
+import Block from "components/typography/Block";
+
 import "./index.css";
 
 const Tournament = ({ id }: { id?: string }) => {
@@ -19,7 +22,6 @@ const Tournament = ({ id }: { id?: string }) => {
   useEffect(() => {
     if (isSended) {
       setShowFireWork(true);
-      setTimeout(() => {}, 1000);
     }
   }, [isSended]);
 

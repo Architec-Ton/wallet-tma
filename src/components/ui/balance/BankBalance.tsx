@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 import React from "react";
 
-import { iconBankButton } from "../../../assets/icons/buttons";
-import useLanguage from "../../../hooks/useLanguage";
-import useRouter from "../../../hooks/useRouter";
+import { iconBankButton } from "assets/icons/buttons";
+
+import useLanguage from "hooks/useLanguage";
+import useRouter from "hooks/useRouter";
+
 import Button from "../../buttons/Button";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";

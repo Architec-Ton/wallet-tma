@@ -1,12 +1,12 @@
-// import useRouter from "../../hooks/useRouter";
-// import useLanguage from "../../hooks/useLanguage";
+// import useRouter from "hooks/useRouter";
+// import useLanguage from "hooks/useLanguage";
 // import {
 //     walletLanguageIcon,
 //     mainCurrencyIcon,
 //     applicationSubmitIcon,
 //     walletSafetyIcon,
 //     notificationIcon
-// } from '../../assets/icons/settings/index.ts'
+// } from 'assets/icons/settings/index.ts'
 
 // interface Setting {
 //     name: string;

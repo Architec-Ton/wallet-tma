@@ -3,18 +3,20 @@ import { Address, internal } from "@ton/core";
 import type { KeyPair } from "@ton/crypto";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
-
-import { iconTon } from "../../assets/icons/jettons";
-import { showAlert } from "../../features/alert/alertSlice";
+import { showAlert } from "features/alert/alertSlice";
 import {
   selectAddress,
   selectAddressPrivateKey, // selectAddressPublicKey,
   selectTonMode,
-} from "../../features/ton/tonSelector";
-import { TonConnectionMode, setExpiration, setSeqno } from "../../features/ton/tonSlice";
+} from "features/ton/tonSelector";
+import { TonConnectionMode, setExpiration, setSeqno } from "features/ton/tonSlice";
+import type { TransactionDto } from "types/transaction";
+
+import { iconTon } from "assets/icons/jettons";
+
+import { decodePrivateKeyByPin } from "utils/pincode";
+
 import type { RootState } from "../../store";
-import type { TransactionDto } from "../../types/transaction";
-import { decodePrivateKeyByPin } from "../../utils/pincode";
 import { useAppDispatch, useAppSelector } from "../useAppDispatch";
 import { useTmaMainButton } from "../useTma";
 import { useTonClient } from "../useTonClient";

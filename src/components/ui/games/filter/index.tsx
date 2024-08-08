@@ -1,11 +1,13 @@
 import type { ChangeEventHandler } from "react";
 import React, { useMemo } from "react";
 
-import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
-import { clearFilter, setFilter } from "../../../../features/gaming/gamingSlice";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/useAppDispatch";
-import useLanguage from "../../../../hooks/useLanguage";
-import Block from "../../../typography/Block";
+import { selectGamesFilter } from "features/gaming/gamingSelectors";
+import { clearFilter, setFilter } from "features/gaming/gamingSlice";
+
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
+import Block from "components/typography/Block";
 
 const GameListFilter = () => {
   const t = useLanguage("game");

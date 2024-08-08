@@ -2,12 +2,15 @@ import type { CSSProperties, ReactNode } from "react";
 import React from "react";
 
 import classNames from "classnames";
+import type { CoinDto } from "types/assest";
 
-import { iconOpenButton } from "../../assets/icons/buttons";
-import Row from "../../components/containers/Row";
-import Section from "../../components/containers/Section";
-import useLanguage from "../../hooks/useLanguage";
-import type { CoinDto } from "../../types/assest";
+import { iconOpenButton } from "assets/icons/buttons";
+
+import useLanguage from "hooks/useLanguage";
+
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
+
 import "./AssetInput.styles.css";
 
 interface AssetInputProps {

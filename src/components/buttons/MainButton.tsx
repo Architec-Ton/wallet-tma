@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { useCloudStorage, useInitData, useMainButton, useViewport } from "@tma.js/sdk-react";
 import { Address } from "@ton/core";
+import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
+import { setReferral } from "features/tma/tmaSlice";
 
-import { selectIsTma, selectIsTmaLoading } from "../../features/tma/tmaSelector";
-import { setReferral } from "../../features/tma/tmaSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import type { EventHandler } from "../../hooks/useTma";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import type { EventHandler } from "hooks/useTma";
 
 type Props = {
   title?: string;

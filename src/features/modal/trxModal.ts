@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import type { TransactionModalInit } from "types/transaction";
+
 import { store } from "../../store";
-import type { TransactionModalInit } from "../../types/transaction";
 import { trxModalActions } from "./trxModalSlice";
 
 const trxModalThunkActions = {

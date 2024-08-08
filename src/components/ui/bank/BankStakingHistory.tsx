@@ -1,18 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { formatDate } from "date-fns";
+import { useApiWalletAssetsMutation } from "features/wallet/walletApi";
 
-import { iconSortButton } from "../../../assets/icons/buttons";
-import { useApiWalletAssetsMutation } from "../../../features/wallet/walletApi";
-// import { CoinDto } from "../../../types/assest";
+import { iconSortButton } from "assets/icons/buttons";
+
+// import { CoinDto } from "types/assest";
 // import Row from "../../containers/Row";
-// import useLanguage from "../../../hooks/useLanguage";
-// import bankIcon from "../../../assets/images/bank.png";
+// import useLanguage from "hooks/useLanguage";
+// import bankIcon from "assets/images/bank.png";
 // import { useNavigate } from "react-router-dom";
 // import PartialContent from "../modals/PartialContent";
-import useContracts from "../../../hooks/useContracts";
-import { usePage } from "../../../hooks/usePage";
-import { useTon } from "../../../hooks/useTon";
+import useContracts from "hooks/useContracts";
+import { usePage } from "hooks/usePage";
+import { useTon } from "hooks/useTon";
+
 import Page from "../../containers/Page";
 import Section from "../../containers/Section";
 import type { StakeHistoryType } from "./BankStakingHistorySection";

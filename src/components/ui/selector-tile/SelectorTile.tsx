@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import { checkIcon } from "../../../assets/icons/settings/index";
+import { checkIcon } from "assets/icons/settings/index";
+
 import Block from "../../typography/Block";
 
 interface StringItem {

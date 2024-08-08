@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import { Address } from "@ton/core";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import { TonConnectionMode, setAddress, setSeqno } from "features/ton/tonSlice";
+import type { WalletsState } from "types/auth";
 
-import { TonConnectionMode, setAddress, setSeqno } from "../../features/ton/tonSlice";
-import type { WalletsState } from "../../types/auth";
 import { useAppDispatch } from "../useAppDispatch";
 import useLocalStorage from "../useLocalStorage";
 import { useSender } from "./sender";

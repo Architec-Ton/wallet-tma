@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import trxModalThunkActions from "../../features/modal/trxModal";
-import { trxModalActions } from "../../features/modal/trxModalSlice";
-import { trxIsOpenedSelector } from "../../features/modal/trxSelector";
+import trxModalThunkActions from "features/modal/trxModal";
+import { trxModalActions } from "features/modal/trxModalSlice";
+import { trxIsOpenedSelector } from "features/modal/trxSelector";
+import type { TransactionDto } from "types/transaction";
+
 import type { AppDispatch } from "../../store";
-import type { TransactionDto } from "../../types/transaction";
 
 function useTrxModalManagement() {
   const dispatch: AppDispatch = useDispatch();

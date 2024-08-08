@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { bioButtonKeybord, delButtonKeybord } from "../../assets/icons/pincode/index";
-import Circle from "../../components/pin-page/Circle";
-import Block from "../../components/typography/Block";
-import useLanguage from "../../hooks/useLanguage";
+import { bioButtonKeybord, delButtonKeybord } from "assets/icons/pincode/index";
+
+import useLanguage from "hooks/useLanguage";
+
+import Circle from "components/pin-page/Circle";
+import Block from "components/typography/Block";
+
 import "./PinCode.style.css";
 
 export interface PinInputProps {

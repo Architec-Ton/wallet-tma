@@ -1,8 +1,9 @@
 import React from "react";
 
-import Column from "../../../containers/Column";
-import Section from "../../../containers/Section";
-import Block from "../../../typography/Block";
+import Column from "components/containers/Column";
+import Section from "components/containers/Section";
+import Block from "components/typography/Block";
+
 import Modal from "../../modal";
 import "./index.css";
 

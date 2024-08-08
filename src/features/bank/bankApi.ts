@@ -1,7 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import type { BankBuyDto, BankInfoDto } from "../../types/banks";
-import type { ReferalsInfo } from "../../types/referals";
+import type { BankBuyDto, BankInfoDto } from "types/banks";
+import type { ReferalsInfo } from "types/referals";
+
 import baseQuery from "../api/api";
 
 export const bankApi = createApi({

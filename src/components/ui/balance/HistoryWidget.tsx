@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 import React from "react";
 
-import { iconTrxRecv, iconTrxSend } from "../../../assets/icons/jettons";
-import useLanguage from "../../../hooks/useLanguage";
-import type { TransactionHistoryItemDto } from "../../../types/history";
+import type { TransactionHistoryItemDto } from "types/history";
+
+import { iconTrxRecv, iconTrxSend } from "assets/icons/jettons";
+
+import useLanguage from "hooks/useLanguage";
+
 import Section from "../../containers/Section";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";

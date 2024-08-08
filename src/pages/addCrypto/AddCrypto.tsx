@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { iconButtonArraw } from "../../assets/icons/buttons";
-import { iconScanBarcode } from "../../assets/icons/pages/add-crypto";
-import Section from "../../components/containers/Section";
-import Tile from "../../components/typography/Tile";
+import { iconButtonArraw } from "assets/icons/buttons";
+import { iconScanBarcode } from "assets/icons/pages/add-crypto";
+
+import Section from "components/containers/Section";
+import Tile from "components/typography/Tile";
 
 const ChooseAddMethod = () => {
   const navigate = useNavigate();

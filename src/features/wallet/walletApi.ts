@@ -1,9 +1,10 @@
 // authApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import type { CoinDto } from "../../types/assest";
-import type { TransactionHistoryItemDto } from "../../types/history";
-import type { WalletInfoData } from "../../types/wallet";
+import type { CoinDto } from "types/assest";
+import type { TransactionHistoryItemDto } from "types/history";
+import type { WalletInfoData } from "types/wallet";
+
 import baseQuery from "../api/api";
 import { setTonUsdPrice } from "./walletSlice";
 

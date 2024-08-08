@@ -4,8 +4,9 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import classNames from "classnames";
 
-import { useClosure } from "../../../hooks/useClosure";
-import useRouter from "../../../hooks/useRouter";
+import { useClosure } from "hooks/useClosure";
+import useRouter from "hooks/useRouter";
+
 import "./Menu.styles.css";
 
 export interface MenuItem {

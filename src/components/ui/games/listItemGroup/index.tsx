@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { iconButtonArraw } from "../../../../assets/icons/buttons";
-import { useClosure } from "../../../../hooks/useClosure";
-import type { GameListItemType } from "../../../../types/gameTypes";
+import type { GameListItemType } from "types/gameTypes";
+
+import { iconButtonArraw } from "assets/icons/buttons";
+
+import { useClosure } from "hooks/useClosure";
+
 import ListBlock from "../../listBlock";
 import ListBlockItem from "../../listBlock/ListBlockItem";
 import "./index.css";

@@ -2,13 +2,13 @@ import React from "react";
 
 import { formatDate } from "date-fns";
 
-import useLanguage from "../../../hooks/useLanguage";
+import useLanguage from "hooks/useLanguage";
+
 import Section from "../../containers/Section";
 import Block from "../../typography/Block";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import "./BankStakingHistorySection.styles.css";
-
 
 export type StakeHistoryType = {
   date: string;

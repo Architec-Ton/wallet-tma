@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 import "./Tab.style.css";
 
-
 type TabPropsType = {
   children: React.ReactNode;
   isActive?: boolean;

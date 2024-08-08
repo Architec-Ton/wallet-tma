@@ -1,8 +1,10 @@
 import type { ChangeEvent } from "react";
 import React, { useEffect } from "react";
 
-import useLanguage from "../../../hooks/useLanguage";
-import type { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "types/assest";
+
+import useLanguage from "hooks/useLanguage";
+
 import Column from "../../containers/Column";
 import { SuffixInput } from "../../inputs/SuffixInput";
 import "./TransferAssets.styles.css";

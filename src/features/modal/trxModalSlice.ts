@@ -1,9 +1,9 @@
-import type { PayloadAction} from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { trxModalState } from "../../types/modal";
-import { initialConfirmationModalState } from "../../types/modal";
-import type { TransactionModalInit } from "../../types/transaction";
+import type { trxModalState } from "types/modal";
+import { initialConfirmationModalState } from "types/modal";
+import type { TransactionModalInit } from "types/transaction";
 
 const trxModalSlice = createSlice({
   name: "trxModal",

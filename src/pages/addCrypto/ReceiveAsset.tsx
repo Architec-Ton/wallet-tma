@@ -1,14 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { iconTon, iconUsdt } from "../../assets/icons/jettons";
-import Section from "../../components/containers/Section";
-import Delimiter from "../../components/typography/Delimiter";
-import FormatMessage from "../../components/typography/FormatMessage";
-import ListBlock from "../../components/ui/listBlock";
-import ListBlockItem from "../../components/ui/listBlock/ListBlockItem";
-import { useClosure } from "../../hooks/useClosure";
-import useLanguage from "../../hooks/useLanguage";
+import { iconTon, iconUsdt } from "assets/icons/jettons";
+
+import { useClosure } from "hooks/useClosure";
+import useLanguage from "hooks/useLanguage";
+
+import Section from "components/containers/Section";
+import Delimiter from "components/typography/Delimiter";
+import FormatMessage from "components/typography/FormatMessage";
+import ListBlock from "components/ui/listBlock";
+import ListBlockItem from "components/ui/listBlock/ListBlockItem";
 
 export type AssetType = {
   thumb: string;
