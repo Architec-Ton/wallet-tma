@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 
-import NewsAutor from "../../assets/images/News-autor.png";
-import NewsPicture from "../../assets/images/News-picture.png";
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
+import NewsAutor from "assets/images/News-autor.png";
+import NewsPicture from "assets/images/News-picture.png";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+
+import Page from "components/containers/Page";
+
 import NewsCard from "./news-card/NewsCard";
 import Hashtags from "./news-card/news-card-components/Hashtags";
 

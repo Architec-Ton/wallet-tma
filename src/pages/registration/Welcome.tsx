@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 
-import { iconPageStartCoin, iconPageStartGameboy, iconPageStartShieldTick } from "../../assets/icons/pages/start";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import Tile from "../../components/typography/Tile";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import useRouter from "../../hooks/useRouter";
-import { useTmaMainButton } from "../../hooks/useTma";
+import { iconPageStartCoin, iconPageStartGameboy, iconPageStartShieldTick } from "assets/icons/pages/start";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTmaMainButton } from "hooks/useTma";
+
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import Tile from "components/typography/Tile";
 
 function Welcome() {
   const navigate = useRouter();

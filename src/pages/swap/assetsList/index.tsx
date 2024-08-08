@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-import Column from "../../../components/containers/Column";
-import Row from "../../../components/containers/Row";
-import Block from "../../../components/typography/Block";
-import Delimiter from "../../../components/typography/Delimiter";
-import Modal from "../../../components/ui/modal";
-import SearchBar from "../../../components/ui/searchBar";
-import { useClosure } from "../../../hooks/useClosure";
-import useDebounce from "../../../hooks/useDebounce";
-import useLanguage from "../../../hooks/useLanguage";
-import type { CoinDto } from "../../../types/assest";
+import type { CoinDto } from "types/assest";
+
+import { useClosure } from "hooks/useClosure";
+import useDebounce from "hooks/useDebounce";
+import useLanguage from "hooks/useLanguage";
+
+import Column from "components/containers/Column";
+import Row from "components/containers/Row";
+import Block from "components/typography/Block";
+import Delimiter from "components/typography/Delimiter";
+import Modal from "components/ui/modal";
+import SearchBar from "components/ui/searchBar";
+
 import "./index.css";
 
 type OwnPropsType = {

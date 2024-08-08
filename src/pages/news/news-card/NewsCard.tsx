@@ -3,8 +3,9 @@ import React from "react";
 
 import classNames from "classnames";
 
-import Column from "../../../components/containers/Column";
-import Block from "../../../components/typography/Block";
+import Column from "components/containers/Column";
+import Block from "components/typography/Block";
+
 import "./NewsCard.styles.css";
 import Hashtags from "./news-card-components/Hashtags";
 // import LikeDislike from "./news-card-components/LikeDislike"

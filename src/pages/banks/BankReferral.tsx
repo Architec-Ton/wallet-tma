@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { iconBankButton, iconButtonCopyLight, iconButtonProfileUsers } from "../../assets/icons/buttons";
-import Page from "../../components/containers/Page";
-import Row from "../../components/containers/Row";
-import BlockWithTitle from "../../components/typography/BlockWithTitle";
-import FormatMessage from "../../components/typography/FormatMessage";
-import MiniBlock from "../../components/typography/MiniBlock";
+import { showAlert } from "features/alert/alertSlice";
+import { useApiGetBankReferralsQuery } from "features/bank/bankApi";
+
+import { iconBankButton, iconButtonCopyLight, iconButtonProfileUsers } from "assets/icons/buttons";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import { useTon } from "hooks/useTon/index";
+
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import BlockWithTitle from "components/typography/BlockWithTitle";
+import FormatMessage from "components/typography/FormatMessage";
+import MiniBlock from "components/typography/MiniBlock";
+
 import { APP_URL } from "../../constants";
-import { showAlert } from "../../features/alert/alertSlice";
-import { useApiGetBankReferralsQuery } from "../../features/bank/bankApi";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import { useTon } from "../../hooks/useTon/index";
 import "./BankReferral.styles.css";
 
 const BankReferral = () => {

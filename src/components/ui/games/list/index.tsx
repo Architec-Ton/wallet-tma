@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { SwiperSlide } from "swiper/react";
+import type { GameListItemType, GameListType } from "types/gameTypes";
 
-import useLanguage from "../../../../hooks/useLanguage";
-import type { GameListItemType, GameListType } from "../../../../types/gameTypes";
-import Column from "../../../containers/Column";
-import Row from "../../../containers/Row";
+import useLanguage from "hooks/useLanguage";
+
+import Column from "components/containers/Column";
+import Row from "components/containers/Row";
+
 import Slider from "../../slider";
 import GameListItemGroup from "../listItemGroup";
 import "./index.css";

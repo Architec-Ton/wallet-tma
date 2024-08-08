@@ -16,10 +16,8 @@
       "i18n/*": ["./src/i18n/*"],
       "mocks/*": ["./src/mocks/*"],
       "pages/*": ["./src/pages/*"],
-      "store/*": ["./src/store/*"],
       "types/*": ["./src/types/*"],
-      "utils/*": ["./src/utils/*"],
-      "constants/*": ["./src/constants.ts"]
+      "utils/*": ["./src/utils/*"]
     },
 
     /* Bundler mode */

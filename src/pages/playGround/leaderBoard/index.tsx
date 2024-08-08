@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import Grid from "../../../components/containers/Grid";
-import Page from "../../../components/containers/Page";
-import Section from "../../../components/containers/Section";
-import { useGetGameLeadersQuery } from "../../../features/gaming/gamingApi";
-import { setLoading } from "../../../features/page/pageSlice";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import useLanguage from "../../../hooks/useLanguage";
+import { useGetGameLeadersQuery } from "features/gaming/gamingApi";
+import { setLoading } from "features/page/pageSlice";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
+import Grid from "components/containers/Grid";
+import Page from "components/containers/Page";
+import Section from "components/containers/Section";
+
 import GameLeaderRow from "./GameLeaderRow";
 
 const LeaderBoard = () => {

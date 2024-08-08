@@ -1,4 +1,4 @@
-// import useLanguage from '../../../hooks/useLanguage';
+// import useLanguage from 'hooks/useLanguage';
 import React from "react";
 
 import Row from "../../containers/Row";

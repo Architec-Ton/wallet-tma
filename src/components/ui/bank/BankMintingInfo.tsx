@@ -1,6 +1,7 @@
 import React from "react";
 
-import useLanguage from "../../../hooks/useLanguage";
+import useLanguage from "hooks/useLanguage";
+
 import Grid from "../../containers/Grid";
 import BlockWithTitle from "../../typography/BlockWithTitle";
 import "./BankMintingInfo.styles.css";

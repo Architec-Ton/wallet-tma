@@ -3,9 +3,10 @@ import React from "react";
 
 import { useQRScanner } from "@tma.js/sdk-react";
 import classNames from "classnames";
+import { selectIsTma } from "features/tma/tmaSelector";
 
-import { selectIsTma } from "../../features/tma/tmaSelector";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "hooks/useAppDispatch";
+
 import "./Button.styles.css";
 
 type Props = {

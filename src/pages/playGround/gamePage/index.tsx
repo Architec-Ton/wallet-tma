@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import classNames from "classnames";
+import { useGetGameQuery } from "features/gaming/gamingApi";
+import { setLoading } from "features/page/pageSlice";
 import { SwiperSlide } from "swiper/react";
 
-import { iconCoinButton, iconGlobalButton, iconSendButton } from "../../../assets/icons/buttons";
-// import { GameResource } from '../../../types/gameTypes';
-import LinkButton from "../../../components/buttons/LinkButton";
-import Page from "../../../components/containers/Page";
-import Row from "../../../components/containers/Row";
-import Section from "../../../components/containers/Section";
-import Block from "../../../components/typography/Block";
-import Tile from "../../../components/typography/Tile";
-import TypedTile from "../../../components/typography/TypedTile";
-import Tournament from "../../../components/ui/games/tournament";
-import Slider from "../../../components/ui/slider";
-import { useGetGameQuery } from "../../../features/gaming/gamingApi";
-import { setLoading } from "../../../features/page/pageSlice";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import useLanguage from "../../../hooks/useLanguage";
+import { iconCoinButton, iconGlobalButton, iconSendButton } from "assets/icons/buttons";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
+// import { GameResource } from 'types/gameTypes';
+import LinkButton from "components/buttons/LinkButton";
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
+import Block from "components/typography/Block";
+import Tile from "components/typography/Tile";
+import TypedTile from "components/typography/TypedTile";
+import Tournament from "components/ui/games/tournament";
+import Slider from "components/ui/slider";
+
 import "./index.css";
 
 const typedIcons = {

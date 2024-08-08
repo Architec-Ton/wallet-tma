@@ -2,13 +2,16 @@ import type { ReactNode } from "react";
 import React, { useEffect, useState } from "react";
 
 import { Address as Addr } from "@ton/core";
+import { showAlert } from "features/alert/alertSlice";
+import type { WalletInfoData } from "types/wallet";
 
-import { iconInputScan } from "../../../assets/icons/inputs";
-import { showAlert } from "../../../features/alert/alertSlice";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import useRouter from "../../../hooks/useRouter";
-import type { WalletInfoData } from "../../../types/wallet";
-import { parseTonTransferUrl } from "../../../utils/formatter";
+import { iconInputScan } from "assets/icons/inputs";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useRouter from "hooks/useRouter";
+
+import { parseTonTransferUrl } from "utils/formatter";
+
 import QrButton from "../../buttons/qrButton";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";

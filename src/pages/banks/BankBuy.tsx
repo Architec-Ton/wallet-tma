@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 
 import { Address, toNano } from "@ton/core";
+import { selectAuthIsReady } from "features/auth/authSelector";
+import { useApiGetBankBuyMutation } from "features/bank/bankApi";
+import { selectReferral } from "features/tma/tmaSelector";
+import type { CoinDto } from "types/assest";
 
-import { iconInfoButton, iconReverseButton } from "../../assets/icons/buttons";
-import Page from "../../components/containers/Page";
-// import Column from '../../components/containers/Column';
-import Row from "../../components/containers/Row";
-import Delimiter from "../../components/typography/Delimiter";
-import FormatMessage from "../../components/typography/FormatMessage";
-import RecvAssetInput from "../../components/ui/assets/RecvAssets";
-import SendAssetInput from "../../components/ui/assets/SendAssets";
-import { selectAuthIsReady } from "../../features/auth/authSelector";
-import { useApiGetBankBuyMutation } from "../../features/bank/bankApi";
-import { selectReferral } from "../../features/tma/tmaSelector";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import useContracts from "../../hooks/useContracts";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import useRouter from "../../hooks/useRouter";
-import { useTmaMainButton } from "../../hooks/useTma";
-import type { CoinDto } from "../../types/assest";
+import { iconInfoButton, iconReverseButton } from "assets/icons/buttons";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+import useContracts from "hooks/useContracts";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTmaMainButton } from "hooks/useTma";
+
+import Page from "components/containers/Page";
+// import Column from 'components/containers/Column';
+import Row from "components/containers/Row";
+import Delimiter from "components/typography/Delimiter";
+import FormatMessage from "components/typography/FormatMessage";
+import RecvAssetInput from "components/ui/assets/RecvAssets";
+import SendAssetInput from "components/ui/assets/SendAssets";
+
 import "./BankBuy.styles.css";
 
 function BankBuy() {

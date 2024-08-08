@@ -1,7 +1,7 @@
-import type { PayloadAction} from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { AppsList, GameFilterType } from "../../types/gameTypes";
+import type { AppsList, GameFilterType } from "types/gameTypes";
 
 export interface GamingState {
   games: AppsList;

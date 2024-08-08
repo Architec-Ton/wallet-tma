@@ -1,7 +1,9 @@
 import React from "react";
 
-import useLanguage from "../../../../hooks/useLanguage";
-import type { GameListItemType } from "../../../../types/gameTypes";
+import type { GameListItemType } from "types/gameTypes";
+
+import useLanguage from "hooks/useLanguage";
+
 import GameListSection from "../listSection";
 
 type TopRatePropsType = {

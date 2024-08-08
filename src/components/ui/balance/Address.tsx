@@ -1,8 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { iconButtonCopy } from "../../../assets/icons/buttons";
-import { showAlert } from "../../../features/alert/alertSlice";
+import { showAlert } from "features/alert/alertSlice";
+
+import { iconButtonCopy } from "assets/icons/buttons";
+
 import Row from "../../containers/Row";
 import "./Address.styles.css";
 

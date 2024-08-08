@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useGetCategoriesMutation, useGetTopRateGamesMutation } from "features/gaming/gamingApi";
+import { selectGames, selectGamesFilter } from "features/gaming/gamingSelectors";
+import { clearFilter } from "features/gaming/gamingSlice";
 import { SwiperSlide } from "swiper/react";
+import type { AppsList, GameFilterType } from "types/gameTypes";
 
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import Row from "../../components/containers/Row";
-import GameList from "../../components/ui/games/list";
-import TopRate from "../../components/ui/games/topRate";
-import SearchBar from "../../components/ui/searchBar";
-import Slider from "../../components/ui/slider";
-import Tabs from "../../components/ui/tabs";
-import Tab from "../../components/ui/tabs/Tab";
-import { useGetCategoriesMutation, useGetTopRateGamesMutation } from "../../features/gaming/gamingApi";
-import { selectGames, selectGamesFilter } from "../../features/gaming/gamingSelectors";
-import { clearFilter } from "../../features/gaming/gamingSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import useDebounce from "../../hooks/useDebounce";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import type { AppsList, GameFilterType } from "../../types/gameTypes";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import useDebounce from "hooks/useDebounce";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import GameList from "components/ui/games/list";
+import TopRate from "components/ui/games/topRate";
+import SearchBar from "components/ui/searchBar";
+import Slider from "components/ui/slider";
+import Tabs from "components/ui/tabs";
+import Tab from "components/ui/tabs/Tab";
+
 import "./index.css";
 
 type SearchParamsType = {
