@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { checkIcon } from "../../../assets/icons/settings/index.ts";
-import Block from "../../typography/Block.tsx";
+import { checkIcon } from "../../../assets/icons/settings/index";
+import Block from "../../typography/Block";
 
 interface StringItem {
   type: "string";
@@ -32,7 +32,7 @@ const SelectorTile: React.FC<SelectedItems> = ({ selectItems, onItemSelected }) 
     onItemSelected(itemValue);
   };
 
-  const getItemDisplay = (item: ListItem) => item.type === "string" ? item.value : item.value.language;
+  const getItemDisplay = (item: ListItem) => (item.type === "string" ? item.value : item.value.language);
 
   return (
     <Block>

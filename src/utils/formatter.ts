@@ -17,4 +17,6 @@ export function parseTonTransferUrl(url: string | undefined): string | undefined
       return match[1];
     }
   }
+
+  return undefined;
 }

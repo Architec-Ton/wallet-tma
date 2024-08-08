@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 import "./Grid.styles.css";
 
-import React from "react";
 
 type OwnProps = {
   gap?: number;

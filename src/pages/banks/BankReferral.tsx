@@ -7,12 +7,12 @@ import Row from "../../components/containers/Row";
 import BlockWithTitle from "../../components/typography/BlockWithTitle";
 import FormatMessage from "../../components/typography/FormatMessage";
 import MiniBlock from "../../components/typography/MiniBlock";
-import { APP_URL } from "../../constants.ts";
-import { showAlert } from "../../features/alert/alertSlice.ts";
+import { APP_URL } from "../../constants";
+import { showAlert } from "../../features/alert/alertSlice";
 import { useApiGetBankReferralsQuery } from "../../features/bank/bankApi";
 import useLanguage from "../../hooks/useLanguage";
 import { usePage } from "../../hooks/usePage";
-import { useTon } from "../../hooks/useTon/index.ts";
+import { useTon } from "../../hooks/useTon/index";
 import "./BankReferral.styles.css";
 
 const BankReferral = () => {

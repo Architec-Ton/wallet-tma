@@ -11,7 +11,6 @@ import ListBaseItem from "../listBlock/ListBaseItem";
 // import { useApiGetBankReferralsQuery } from "../../../features/bank/bankApi";
 import "./ReferralsInfo.style.css";
 
-import React from "react";
 
 const ReferralsInfo = () => {
   const t = useLanguage("bank");

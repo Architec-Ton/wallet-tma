@@ -3,16 +3,16 @@ import { useDispatch } from "react-redux";
 
 import { mnemonicNew } from "@ton/crypto";
 
-import { iconButtonCopyColor } from "../../assets/icons/buttons/index.ts";
-import Button from "../../components/buttons/Button.tsx";
-import Column from "../../components/containers/Column.tsx";
-import Page from "../../components/containers/Page.tsx";
-import Block from "../../components/typography/Block.tsx";
-import { showAlert } from "../../features/alert/alertSlice.ts";
-import useLanguage from "../../hooks/useLanguage.ts";
-import { usePage } from "../../hooks/usePage.ts";
-import useRouter from "../../hooks/useRouter.ts";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
+import { iconButtonCopyColor } from "../../assets/icons/buttons/index";
+import Button from "../../components/buttons/Button";
+import Column from "../../components/containers/Column";
+import Page from "../../components/containers/Page";
+import Block from "../../components/typography/Block";
+import { showAlert } from "../../features/alert/alertSlice";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+import useRouter from "../../hooks/useRouter";
+import { useTmaMainButton } from "../../hooks/useTma";
 import "./SecretKey.styles.css";
 
 const SecretKey = () => {

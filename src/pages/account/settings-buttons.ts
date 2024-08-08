@@ -1,5 +1,5 @@
-// import useRouter from "../../hooks/useRouter.ts";
-// import useLanguage from "../../hooks/useLanguage.ts";
+// import useRouter from "../../hooks/useRouter";
+// import useLanguage from "../../hooks/useLanguage";
 // import {
 //     walletLanguageIcon,
 //     mainCurrencyIcon,

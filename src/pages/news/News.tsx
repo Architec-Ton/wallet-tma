@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 
 import NewsAutor from "../../assets/images/News-autor.png";
 import NewsPicture from "../../assets/images/News-picture.png";
-import Page from "../../components/containers/Page.tsx";
-import useLanguage from "../../hooks/useLanguage.ts";
-import { usePage } from "../../hooks/usePage.ts";
-import NewsCard from "./news-card/NewsCard.tsx";
-import Hashtags from "./news-card/news-card-components/Hashtags.tsx";
+import Page from "../../components/containers/Page";
+import useLanguage from "../../hooks/useLanguage";
+import { usePage } from "../../hooks/usePage";
+import NewsCard from "./news-card/NewsCard";
+import Hashtags from "./news-card/news-card-components/Hashtags";
 
 interface CARD_DATA {
   authors: { name: string; img: string };

@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 import "./Tab.style.css";
 
-import React from "react";
 
 type TabPropsType = {
   children: React.ReactNode;
