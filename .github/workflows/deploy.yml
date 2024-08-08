@@ -20,6 +20,6 @@ jobs:
             cd /srv/adev/wallet-tma
             git pull origin dev
             cd ..
-            docker compose -f docker-compose.dev.yml down
             docker compose -f docker-compose.dev.yml build
+            docker compose -f docker-compose.dev.yml down
             docker compose -f docker-compose.dev.yml up -d
