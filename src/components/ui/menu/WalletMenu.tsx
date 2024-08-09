@@ -19,7 +19,7 @@ function WalletMenu() {
   const menuItems: MenuItem[] = [
     { to: "/add-crypto", icon: iconMenuWalletAdd, label: t("add") },
     { to: "/send", icon: iconMenuWalletSend, label: t("send") },
-    { to: "/", icon: iconMenuWalletSwap, label: t("swap") },
+    { to: "/swap", icon: iconMenuWalletSwap, label: t("swap") },
     { to: "/bank", icon: iconMenuWalletBank, label: t("bank") },
   ];
 
