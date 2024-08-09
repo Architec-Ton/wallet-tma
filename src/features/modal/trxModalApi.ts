@@ -1,14 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+
+import type { TransactionCreateDto, TransactionCreateDtoOut, TransactionDto } from "types/transaction";
+
 import baseQuery from "../api/api";
-import {
-  TransactionCreateDto,
-  TransactionCreateDtoOut,
-  TransactionDto,
-} from "../../types/transaction";
 
 export const trxApi = createApi({
   reducerPath: "trxApi",
-  baseQuery: baseQuery,
+  baseQuery,
   endpoints: (builder) => ({
     apiGetTransaction: builder.mutation<TransactionDto, string | undefined>({
       query: (trx) => ({
@@ -16,14 +14,11 @@ export const trxApi = createApi({
         method: "GET",
       }),
     }),
-    apiPostCreateTransaction: builder.mutation<
-      TransactionCreateDtoOut,
-      TransactionCreateDto
-    >({
+    apiPostCreateTransaction: builder.mutation<TransactionCreateDtoOut, TransactionCreateDto>({
       query: (body) => ({
         url: `/transaction/outcoming`,
         method: "POST",
-        body: body,
+        body,
       }),
     }),
   }),

@@ -1,8 +1,11 @@
-import classNames from 'classnames';
-import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
-import './Block.styles.css';
-import './BlockWithTitle.styles.css';
-import Title from './Title';
+import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import React from "react";
+
+import classNames from "classnames";
+
+import "./Block.styles.css";
+import "./BlockWithTitle.styles.css";
+import Title from "./Title";
 
 interface OwnProps<T> extends HTMLAttributes<T> {
   title: string;
@@ -21,24 +24,16 @@ function BlockWithTitle({
   children,
   style,
   className,
-  direction = 'column',
+  direction = "column",
   ...divProps
 }: OwnProps<HTMLDivElement>) {
   return (
     <div
       style={style}
-      className={classNames(
-        'block-with-title',
-        'block',
-        `block-${direction}`,
-        className
-      )}
-      {...divProps}>
-      <Title
-        title={title}
-        titleAccent={titleAccent}
-        hintMessage={hintMessage}
-      />
+      className={classNames("block-with-title", "block", `block-${direction}`, className)}
+      {...divProps}
+    >
+      <Title title={title} titleAccent={titleAccent} hintMessage={hintMessage} />
       {children}
     </div>
   );

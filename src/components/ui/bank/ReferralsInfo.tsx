@@ -1,13 +1,16 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import ListBlock from "../listBlock";
-import ListBaseItem from "../listBlock/ListBaseItem";
-import useLanguage from "../../../hooks/useLanguage";
-import { iconReferralsButton } from "../../../assets/icons/buttons";
-import Title from "../../typography/Title";
+
+import { iconReferralsButton } from "assets/icons/buttons";
+
+import useLanguage from "hooks/useLanguage";
+
 import Column from "../../containers/Column";
 import MiniBlock from "../../typography/MiniBlock";
-// import { useApiGetBankReferralsQuery } from "../../../features/bank/bankApi";
-
+import Title from "../../typography/Title";
+import ListBlock from "../listBlock";
+import ListBaseItem from "../listBlock/ListBaseItem";
+// import { useApiGetBankReferralsQuery } from "features/bank/bankApi";
 import "./ReferralsInfo.style.css";
 
 const ReferralsInfo = () => {

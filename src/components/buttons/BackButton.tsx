@@ -1,12 +1,10 @@
-import { useBackButton } from "@tma.js/sdk-react";
+import React, { useEffect } from "react";
 
-import { useEffect } from "react";
-import {
-  selectIsTma,
-  selectIsTmaLoading,
-} from "../../features/tma/tmaSelector";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import useRouter from "../../hooks/useRouter";
+import { useBackButton } from "@tma.js/sdk-react";
+import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+import useRouter from "hooks/useRouter";
 
 type Props = {
   visible: boolean;

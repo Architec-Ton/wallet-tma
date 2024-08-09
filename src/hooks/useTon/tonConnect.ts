@@ -1,6 +1,7 @@
-import { CHAIN } from "@tonconnect/protocol";
-import { Sender, SenderArguments } from "@ton/core";
+import type { Sender, SenderArguments } from "@ton/core";
+import type { CHAIN } from "@tonconnect/ui-react";
 import { useTonWallet } from "@tonconnect/ui-react";
+
 import { useAppTonConnectUi } from "../useAppTonConnectUi";
 
 export function useTonConnect(): {
@@ -25,7 +26,6 @@ export function useTonConnect(): {
           ],
           validUntil: Date.now() + 10 * 60 * 1000, // 10 minutes for user to approve
         });
-        console.log(tx);
       },
     },
     connected: !!wallet?.account.address,

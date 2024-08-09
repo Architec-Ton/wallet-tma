@@ -2,57 +2,56 @@
   color-scheme: light dark;
 
   /* Основные цвета */
-  --primary-color: #07ACFF;
-  --secondary-color: #65656A;
+  --primary-color: #07acff;
+  --secondary-color: #65656a;
   --third-colour: #e5e5e5;
-  --background-color: light-dark(#ffffff, #0a0a0a );  
-  /* # var(--tg-theme-bg-color)  #2c2c2c*/ 
-    /* #2c2c2c); */
-  --background-selected-color: light-dark(#F7F9FB, #232328);
-  --selected-color: #6ACDFF;
-  --text-color: light-dark(#232328, #F7F9FB);
+  --background-color: light-dark(#ffffff, #0a0a0a);
+  /* # var(--tg-theme-bg-color)  #2c2c2c*/
+  /* #2c2c2c); */
+  --background-selected-color: light-dark(#f7f9fb, #232328);
+  --selected-color: #6acdff;
+  --text-color: light-dark(#232328, #f7f9fb);
   --hint-message-back-background-color: var(--secondary-color);
 
   /* Цвета для текста */
-  --text-secondary-color:  light-dark(#8e8e93, #76787A);
-  --text-primary-color: #F7F9FB;
+  --text-secondary-color: light-dark(#8e8e93, #76787a);
+  --text-primary-color: #f7f9fb;
   --link-color: var(--primary-color);
   --link-hover-color: var(--selected-color);
 
   /* Цвета для кнопок */
   --button-bg-color: var(--primary-color);
   --button-text-color: var(--background-color);
-  --button-border-color: var(--primary-color);;
+  --button-border-color: var(--primary-color);
   --button-hover-bg-color: var(--selected-color);
   --button-hover-text-color: var(--background-color);
   --button-hover-border-color: var(--selected-color);
   --hashtags-text-color: var(--text-secondary-color);
   --hashtags-bg-color: var(--background-selected-color);
   --hashtags-text-color-active: var(--primary-color);
-  --hashtags-bg-color-active: rgba(7,172,255,0.12);
-
+  --hashtags-bg-color-active: rgba(7, 172, 255, 0.12);
 
   /* Цвета для форм */
   --input-bg-color: var(--background-selected-color);
   --input-text-color: var(--text-secondary-color);
-  --input-border-color: var(--background-selected-color);;
+  --input-border-color: var(--background-selected-color);
   --input-focus-bg-color: var(--background-selected-color);
-  --input-focus-text-color: var(--text-color);;
+  --input-focus-text-color: var(--text-color);
   --input-focus-border-color: var(--primary-color);
 
   /* Цвета для уведомлений */
-  --success-color: #4ECC5E;
-  --error-color: #CC2929;
+  --success-color: #4ecc5e;
+  --error-color: #cc2929;
   --warning-color: #ffc107;
   --info-color: #17a2b8;
 
   /* Цвета для тени и границ */
   --box-shadow-color: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
-  --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255,255,255,0.05));
-  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.64), rgba(255,255,255,0.05));
+  --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+  --background-transparent-color: light-dark(rgba(0, 0, 0, 0.64), rgba(255, 255, 255, 0.05));
 
-  /* Отступы и поля */  
+  /* Отступы и поля */
   --spacing-2: 0.125rem;
   --spacing-4: 0.25rem;
   --spacing-8: 0.5rem;
@@ -75,7 +74,7 @@
   --font-size-xlarge: 32px;
 
   --font-regular: 400;
-  --font-medium:  500;
+  --font-medium: 500;
   --font-bold: 600;
 
   /* Высота строки */
@@ -94,8 +93,8 @@
   --opacity-disabled: 0.6;
 
   /* Шрифты */
-  --font-family-sans-serif: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  --font-family-monospace: 'Courier New', Courier, monospace;
+  --font-family-sans-serif: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-family-monospace: "Courier New", Courier, monospace;
 
   /* Ширина */
   --w-full: 100%;
@@ -117,18 +116,18 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root{
-    --background-color: #0a0a0a;  
+  :root {
+    --background-color: #0a0a0a;
     --background-selected-color: #232328;
-    --text-color: #F7F9FB;
-    --text-secondary-color: #76787A;
+    --text-color: #f7f9fb;
+    --text-secondary-color: #76787a;
   }
 }
 
 @media (prefers-color-scheme: light) {
-  :root{
-    --background-color: #ffffff;  
-    --background-selected-color:#F7F9FB;
+  :root {
+    --background-color: #ffffff;
+    --background-selected-color: #f7f9fb;
     --text-color: #232328;
     --text-secondary-color: #8e8e93;
   }

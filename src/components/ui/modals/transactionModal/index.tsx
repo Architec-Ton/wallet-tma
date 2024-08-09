@@ -1,16 +1,21 @@
-import { iconGlobalButton } from "../../../../assets/icons/buttons";
-// import { iconTon, iconUsdt } from "../../../../assets/icons/jettons"
-import useLanguage from "../../../../hooks/useLanguage";
-import Column from "../../../containers/Column";
-import Row from "../../../containers/Row";
-import InlineLoader from "../../inlineLoader";
-import Modal from "../../modal";
+import React from "react";
 
-import "./index.css";
-import { TransactionDto } from "../../../../types/transaction";
-import ListItem from "../../listBlock/ListItem";
-import { ItemDto } from "../../../../types/list";
+import type { ItemDto } from "types/list";
+import type { TransactionDto } from "types/transaction";
+
+import { iconGlobalButton } from "assets/icons/buttons";
+
+// import { iconTon, iconUsdt } from "assets/icons/jettons"
+import useLanguage from "hooks/useLanguage";
+
+import Column from "components/containers/Column";
+import Row from "components/containers/Row";
+
 import { shortenString } from "../../balance/Address";
+import InlineLoader from "../../inlineLoader";
+import ListItem from "../../listBlock/ListItem";
+import Modal from "../../modal";
+import "./index.css";
 
 type TransactionModalPropsType = {
   onClose?: () => void;
@@ -81,11 +86,7 @@ TransactionModalPropsType) => {
             </div>
           </>
         )}
-        {trx && trx.utime && (
-          <div className="secondary-data">
-            {new Date(trx.utime * 1000).toLocaleString()}
-          </div>
-        )}
+        {trx && trx.utime && <div className="secondary-data">{new Date(trx.utime * 1000).toLocaleString()}</div>}
         {(!trx || !trx.status) && (
           <Row className="process">
             <InlineLoader />
@@ -93,7 +94,7 @@ TransactionModalPropsType) => {
           </Row>
         )}
       </Column>
-      <ListItem items={items}></ListItem>
+      <ListItem items={items} />
       {trx && trx.hash && (
         <button className="rounded-button control-button transaction-button">
           <Row>

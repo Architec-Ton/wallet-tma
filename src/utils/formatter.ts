@@ -8,9 +8,7 @@ export const bigNumberFormatter = (value: number | bigint) => {
   return formatter.format(value);
 };
 
-export function parseTonTransferUrl(
-  url: string | undefined
-): string | undefined {
+export function parseTonTransferUrl(url: string | undefined): string | undefined {
   if (url) {
     const regex = /^ton:\/\/transfer\/([a-zA-Z0-9\-_]+)$/;
     const match = url.match(regex);
@@ -19,4 +17,6 @@ export function parseTonTransferUrl(
       return match[1];
     }
   }
+
+  return undefined;
 }

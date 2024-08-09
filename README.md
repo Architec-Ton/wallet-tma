@@ -6,6 +6,22 @@ A large team of developers and marketers is working on the development of a larg
 
 ---
 
+# Dev mode
+
+Install pnpm:
+
+```bash
+npm install -g pnpm
+```
+
+Enter the command:
+
+```bash
+pnpm dev
+```
+
+---
+
 ### Installation
 
 Clone this repository to set up the project locally. Be sure to install `docker`, then proceed to the next instructions:

@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { CoinDto } from "../../../types/assest";
+import React, { useState } from "react";
+
+import type { CoinDto } from "types/assest";
+
+import useLanguage from "hooks/useLanguage";
+
 import AssetInput from "../../inputs/AssetInput";
-import useLanguage from "../../../hooks/useLanguage";
 
 interface AssetInputProps {
   asset?: CoinDto;
@@ -12,18 +15,12 @@ interface AssetInputProps {
   isSelectable?: boolean;
 }
 
-const SendAssetInput = ({
-  asset,
-  value,
-  isSelectable,
-  onChange,
-  onBlur,
-}: AssetInputProps) => {
+const SendAssetInput = ({ asset, value, isSelectable, onChange, onBlur }: AssetInputProps) => {
   const [error, setError] = useState<boolean>(false);
 
   const handlerOnChange = (value: string) => {
     const sValue = Number(value);
-    if (isNaN(sValue) || (asset && sValue > asset?.amount)) {
+    if (Number.isNaN(sValue) || (asset && sValue > asset?.amount)) {
       setError(true);
     } else {
       setError(false);
@@ -66,7 +63,6 @@ const SendAssetInput = ({
         className="rounded-button control-button"
         onClick={() => {
           if (asset) {
-            console.log("clicl", asset?.amount / 2);
             if (asset && onChange) onChange((asset?.amount / 2).toString());
           }
         }}

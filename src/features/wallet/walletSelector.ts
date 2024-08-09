@@ -1,3 +1,3 @@
-import { RootState } from "../../store";
+import type { RootState } from "../../store";
 
-export const selectTonUsdPrice = (state: RootState) => state.wallet.tonUsdPrice
+export const selectTonUsdPrice = (state: RootState) => state.wallet.tonUsdPrice;

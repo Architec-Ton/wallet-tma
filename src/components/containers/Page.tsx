@@ -1,14 +1,15 @@
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  selectIsLoading,
-  selectIsNavbarVisible,
-} from "../../features/page/pageSelectors";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import BackButton from "../buttons/BackButton.tsx";
+
+import { selectIsLoading, selectIsNavbarVisible } from "features/page/pageSelectors";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+
+import BackButton from "../buttons/BackButton";
 import Loader from "../layout/Loader";
 import Title from "../typography/Title";
-import MainMenu from "../ui/menu/MainMenu.tsx";
+import MainMenu from "../ui/menu/MainMenu";
 import Container from "./Container";
 import "./Page.styles.css";
 
@@ -22,33 +23,16 @@ type Props = {
   pageControl?: ReactNode;
 };
 
-const backButtonExclude: string[] = [
-  "/",
-  "/playground",
-  "/news",
-  "/account",
-  "/registration/welcome",
-];
+const backButtonExclude: string[] = ["/", "/playground", "/news", "/account", "/registration/welcome"];
 
-function Page({
-  children,
-  style,
-  className,
-  title,
-  titleAccent,
-  hintMessage,
-  pageControl,
-}: Props) {
+function Page({ children, style, className, title, titleAccent, hintMessage, pageControl }: Props) {
   const location = useLocation();
-  const [backButtonIsVisible, setBackButtonIsVisible] =
-    useState<boolean>(false);
+  const [backButtonIsVisible, setBackButtonIsVisible] = useState<boolean>(false);
   const isLoading = useAppSelector(selectIsLoading);
   const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
 
   useEffect(() => {
-    setBackButtonIsVisible(
-      !backButtonExclude.includes(location.pathname) && !isLoading
-    );
+    setBackButtonIsVisible(!backButtonExclude.includes(location.pathname) && !isLoading);
   }, [location, isLoading]);
   if (isLoading) return <Loader />;
 
@@ -58,13 +42,7 @@ function Page({
       <Container style={style} className={className} key={location.key}>
         {(title || pageControl) && (
           <div className="page-header">
-            {title && (
-              <Title
-                title={title}
-                titleAccent={titleAccent}
-                hintMessage={hintMessage}
-              />
-            )}
+            {title && <Title title={title} titleAccent={titleAccent} hintMessage={hintMessage} />}
             {pageControl}
           </div>
         )}

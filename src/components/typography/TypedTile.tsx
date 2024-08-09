@@ -1,9 +1,11 @@
-import classNames from 'classnames';
-import React, { CSSProperties } from 'react';
-import Block from './Block';
-import Row from '../containers/Row';
+import type { CSSProperties } from "react";
+import React from "react";
 
-import './TypedTile.styles.css';
+import classNames from "classnames";
+
+import Row from "../containers/Row";
+import Block from "./Block";
+import "./TypedTile.styles.css";
 
 type Props = {
   icon?: string;
@@ -18,24 +20,9 @@ type Props = {
   onClick?: () => void;
 };
 
-function TypedTile({
-  icon,
-  typeIcon,
-  title,
-  description,
-  iconAction,
-  style,
-  className,
-  onClick,
-  children,
-}: Props) {
+function TypedTile({ icon, typeIcon, title, description, iconAction, style, className, onClick, children }: Props) {
   return (
-    <Block
-      style={style}
-      direction="row"
-      className={classNames('typed-tile', className)}
-      onClick={onClick}
-    >
+    <Block style={style} direction="row" className={classNames("typed-tile", className)} onClick={onClick}>
       <Row>
         {icon && <img src={icon} className="tile-icon" />}
         <div className="tile-body">
@@ -51,7 +38,7 @@ function TypedTile({
         <img
           src={iconAction}
           style={{
-            justifySelf: 'end',
+            justifySelf: "end",
           }}
           className="tile-iconaction"
         />

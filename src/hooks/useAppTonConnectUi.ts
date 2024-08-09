@@ -1,14 +1,9 @@
-import {
-  TonConnectUI,
-  TonConnectUiOptions,
-  useTonConnectUI,
-} from "@tonconnect/ui-react";
+import type { TonConnectUI, TonConnectUiOptions } from "@tonconnect/ui-react";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+
 // import { useEffect } from "react";
 
-export const useAppTonConnectUi = (): [
-  TonConnectUI,
-  (options: TonConnectUiOptions) => void
-] => {
+export const useAppTonConnectUi = (): [TonConnectUI, (options: TonConnectUiOptions) => void] => {
   const [tonConnectUI, tonConnectUiOptions] = useTonConnectUI();
 
   // useEffect(() => {

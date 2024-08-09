@@ -1,4 +1,4 @@
-import { TransactionDto } from "./transaction";
+import type { TransactionDto } from "./transaction";
 
 export interface ConfirmationModalState {
   isOpened: boolean;

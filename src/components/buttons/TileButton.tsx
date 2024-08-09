@@ -1,8 +1,10 @@
-import { CSSProperties, MouseEventHandler } from 'react';
-import './TileButton.styles.css';
+import type { CSSProperties, MouseEventHandler } from "react";
+import React from "react";
 
-import Tile from '../typography/Tile';
-import classNames from 'classnames';
+import classNames from "classnames";
+
+import Tile from "../typography/Tile";
+import "./TileButton.styles.css";
 
 type Props = {
   icon?: string;
@@ -15,26 +17,10 @@ type Props = {
   children?: React.ReactNode;
 };
 
-function TileButton({
-  icon,
-  title,
-  description,
-  iconAction,
-  style,
-  className,
-  onClick,
-  children,
-}: Props) {
+function TileButton({ icon, title, description, iconAction, style, className, onClick, children }: Props) {
   return (
-    <button
-      onClick={onClick}
-      className={classNames('tile-button', className)}
-      style={style}>
-      <Tile
-        icon={icon}
-        title={title}
-        description={description}
-        iconAction={iconAction}>
+    <button onClick={onClick} className={classNames("tile-button", className)} style={style}>
+      <Tile icon={icon} title={title} description={description} iconAction={iconAction}>
         {children}
       </Tile>
     </button>

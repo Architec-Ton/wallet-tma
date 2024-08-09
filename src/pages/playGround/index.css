@@ -2,7 +2,7 @@
   --grid-cols: 2;
 }
 
-.games-marketing-image{
+.games-marketing-image {
   aspect-ratio: 361/196;
   border-radius: var(--border-radius-16);
   width: 100%;

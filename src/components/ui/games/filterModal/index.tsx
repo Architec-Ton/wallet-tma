@@ -1,16 +1,16 @@
-import GameListFilter from "../filter"
-import Modal from "../../modal"
+import React from "react";
+
+import Modal from "../../modal";
+import GameListFilter from "../filter";
 
 type OwnPropsType = {
-  modalHandler: () => void
-}
+  modalHandler: () => void;
+};
 
-const GameFilterModal = ({ modalHandler }: OwnPropsType) => {
-  return (
-    <Modal title="Filter settings" onClose={modalHandler}>
-      <GameListFilter />
-    </Modal>
-  )
-}
+const GameFilterModal = ({ modalHandler }: OwnPropsType) => (
+  <Modal title="Filter settings" onClose={modalHandler}>
+    <GameListFilter />
+  </Modal>
+);
 
-export default GameFilterModal
+export default GameFilterModal;

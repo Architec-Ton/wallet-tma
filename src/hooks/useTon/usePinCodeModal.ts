@@ -1,26 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import pinCodeModalThunkActions from "../../features/modal/pinModal";
-import { AppDispatch, RootState } from "../../store";
-import { pinCodeModalActions } from "../../features/modal/pinModalSlice";
+
+import pinCodeModalThunkActions from "features/modal/pinModal";
+import { pinCodeModalActions } from "features/modal/pinModalSlice";
+import { pincodeIsOpenedSelector } from "features/modal/pinSelector";
+
+import type { AppDispatch } from "../../store";
 
 function usePinCodeModalManagement() {
   const dispatch: AppDispatch = useDispatch();
-  const { isOpened } = useSelector((state: RootState) => ({
-    isOpened: state.pincode.isOpened,
-  }));
+  const isOpened = useSelector(pincodeIsOpenedSelector);
 
   const open = async () => {
     const { payload } = await dispatch(pinCodeModalThunkActions.open());
     return payload as string | undefined;
   };
 
-  const confirm = (value: string | undefined) => {
-    return dispatch(pinCodeModalActions.confirm(value));
-  };
+  const confirm = (value: string | undefined) => dispatch(pinCodeModalActions.confirm(value));
 
-  const decline = () => {
-    return dispatch(pinCodeModalActions.decline());
-  };
+  const decline = () => dispatch(pinCodeModalActions.decline());
 
   return {
     isOpened,

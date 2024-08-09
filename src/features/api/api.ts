@@ -1,6 +1,8 @@
-import { BE_URL } from "../../constants";
-import { RootState } from "../../store";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
+
+// TODO: fiz this imports
+import { BE_URL } from "../../constants";
+import type { RootState } from "../../store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BE_URL,

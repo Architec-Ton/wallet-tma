@@ -1,21 +1,26 @@
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
+import React, { useEffect } from "react";
+
+import { useTonAddress, useTonConnectModal } from "@tonconnect/ui-react";
+import { setLoading } from "features/page/pageSlice";
+import { TonConnectionMode } from "features/ton/tonSlice";
+import type { WalletsState } from "types/auth";
+
 import {
   iconPageAddWalletCircle,
   iconPageAddWalletImport,
   iconPageAddWalletKey,
   iconPageAddWalletNextPage,
-} from "../../assets/icons/pages/add-wallet";
-import Column from "../../components/containers/Column";
-import TileButton from "../../components/buttons/TileButton";
-import { useEffect } from "react";
-import { setLoading } from "../../features/page/pageSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import useRouter from "../../hooks/useRouter";
-import { useTonAddress, useTonConnectModal } from "@tonconnect/ui-react";
-import { useTon } from "../../hooks/useTon";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { WalletsState } from "../../types/auth";
+} from "assets/icons/pages/add-wallet";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+import useLocalStorage from "hooks/useLocalStorage";
+import useRouter from "hooks/useRouter";
+import { useTon } from "hooks/useTon";
+
+import TileButton from "components/buttons/TileButton";
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
 
 function AddWallet() {
   const t = useLanguage("AddWallet");
@@ -36,27 +41,24 @@ function AddWallet() {
   };
 
   useEffect(() => {
-    console.log("addWalletvardan", state, address);
-    if (
-      state.status == "closed" &&
-      state.closeReason == "wallet-selected" &&
-      address
-    ) {
-      ton.setAddress(address, "tonconnect");
+    if (state.status === "closed" && state.closeReason === "wallet-selected" && address) {
+      ton.setAddress(address, TonConnectionMode.tonconnect);
 
       setStoredValue({
         currentWallet: 0,
-        wallets: [{
-          network: "ton",
-          mode: "tonconnect",
-          address: address
-        }],
+        wallets: [
+          {
+            network: "ton",
+            mode: TonConnectionMode.tonconnect,
+            address,
+          },
+        ],
       });
     }
   }, [state]);
 
   useEffect(() => {
-    if (ton.mode == "tonconnect") {
+    if (ton.mode === TonConnectionMode.tonconnect) {
       navigate("/");
     }
   }, [ton.mode]);

@@ -1,5 +1,5 @@
 .staking-page .title {
-  margin-left: 0
+  margin-left: 0;
 }
 
 .staking-form-container {
@@ -22,18 +22,18 @@
 
 .staking-asset input {
   border: none;
-    background: none;
-    padding: 0;
-    width: 100%;
-    color: transparent;
-    position: absolute;
-    height: var(--font-size-xlarge);
-    font-size: var(--font-size-xlarge);
-    font-weight: var(--font-medium);
-    line-height: var(--font-size-xlarge);
-    text-align: right;
-    caret-color: black;
-    bottom: 0;
+  background: none;
+  padding: 0;
+  width: 100%;
+  color: transparent;
+  position: absolute;
+  height: var(--font-size-xlarge);
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-medium);
+  line-height: var(--font-size-xlarge);
+  text-align: right;
+  caret-color: black;
+  bottom: 0;
 }
 .staking-asset {
   position: relative;
@@ -68,7 +68,6 @@
   padding-bottom: var(--spacing-2);
 }
 
-
 /* Number input */
 .number-input {
   display: inline-flex;
@@ -93,7 +92,7 @@
   padding: var(--spacing-8);
 }
 
-.up-button {  
+.up-button {
   position: absolute;
   width: 6px;
   height: 6px;

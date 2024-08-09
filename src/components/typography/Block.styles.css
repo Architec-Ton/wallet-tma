@@ -1,16 +1,16 @@
-.block{
-    border-radius: var(--border-radius-16);
-    background-color: var(--background-selected-color);
-    padding: var(--spacing-12);
+.block {
+  border-radius: var(--border-radius-16);
+  background-color: var(--background-selected-color);
+  padding: var(--spacing-12);
 }
 
-.block-column{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+.block-column {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
-.block-row{
-    display: flex;
-    flex-direction: row;
-    align-items: start;
+.block-row {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
 }

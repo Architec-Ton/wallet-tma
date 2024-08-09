@@ -1,4 +1,4 @@
-import { RootState } from "../../store";
+import type { RootState } from "../../store";
 
 export const selectIsTmaLoading = (state: RootState) => state.tma.isTmaLoading;
 export const selectIsTma = (state: RootState) => state.tma.isTma;

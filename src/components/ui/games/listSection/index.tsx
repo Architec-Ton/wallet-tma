@@ -1,18 +1,17 @@
-import { useState } from "react";
-import Section from "../../../containers/Section";
-import GameListItemGroup from "../listItemGroup";
-import { GameListItemType } from "../../../../types/gameTypes";
-import {
-  iconFilterSquareButton,
-  iconSortButton,
-} from "../../../../assets/icons/buttons";
+import React, { useState } from "react";
+
+import { selectGamesFilter } from "features/gaming/gamingSelectors";
+import { setFilter } from "features/gaming/gamingSlice";
+import type { GameListItemType } from "types/gameTypes";
+
+import { iconFilterSquareButton, iconSortButton } from "assets/icons/buttons";
+
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+
+import Section from "components/containers/Section";
+
 import GameFilterModal from "../filterModal";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/useAppDispatch";
-import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
-import { setFilter } from "../../../../features/gaming/gamingSlice";
+import GameListItemGroup from "../listItemGroup";
 
 type OwnPropsType = {
   title?: string;
@@ -36,14 +35,12 @@ const GameListSection = ({ title, list }: OwnPropsType) => {
     dispatch(setFilter(newFilter));
   };
 
-  const readMore = () => {
-    return (
-      <div className="read-more__component">
-        <img src={iconSortButton} onClick={sortHandler} alt="" />
-        <img src={iconFilterSquareButton} onClick={modalHandler} alt="" />
-      </div>
-    );
-  };
+  const readMore = () => (
+    <div className="read-more__component">
+      <img src={iconSortButton} onClick={sortHandler} alt="" />
+      <img src={iconFilterSquareButton} onClick={modalHandler} alt="" />
+    </div>
+  );
 
   return (
     <Section title={title as string} readMore={readMore()}>

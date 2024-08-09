@@ -1,41 +1,25 @@
-export const BE_URL = "https://app.architecton.site/api/v2/wallet";
-//("http://localhost:8000/api/v2/wallet");
-// import.meta.env.VITE_BE_URL ||
-// "https://dev.architecton.site/api/v2/wallet"; /*"http://localhost:8000/api/v2/wallet"*/
+export const BE_URL = import.meta.env.VITE_BE_URL;
 
-export const FE_URL = "https://t.me/Architec_ton_bot/wallet"; //"https://t.me/ArchitectonWallet_Bot/app";
-//import.meta.env.VITE_FE_URL || "/wallet";
+export const FE_URL = import.meta.env.VITE_FE_URL;
 
-export const MANIFEST_URL =
-  import.meta.env.VITE_MANIFEST_URL ||
-  "https://architecton.site/tonconnect-manifest.json";
+export const MANIFEST_URL = import.meta.env.VITE_MANIFEST_URL;
 
-export const TA_URL = "https://ton.architecton.site/api/v2/";
-// import.meta.env.VITE_TA_URL || "https://testnet.toncenter.com/api/v2/"; // "https://ton.architecton.site/api/v2/";
+export const TA_URL = import.meta.env.VITE_TA_URL;
 
-export const APP_URL =
-  import.meta.env.VITE_APP_URL || "https://t.me/architec_ton_bot/wallet";
+export const APP_URL = import.meta.env.VITE_APP_URL;
 
-import.meta.env.VITE_MANIFEST_URL ||
-  "https://architecton.site/tonconnect-manifest.json";
+export const TONAPI_KEY = import.meta.env.VITE_TONAPI_KEY;
 
-export const TONAPI_KEY =
-  import.meta.env.VITE_TONAPI_KEY ||
-  "88d5912ad2394e5cbae97a351bb6a3e1174e09f7956d096beaae3acab91324da";
+export const BANK_JETTON_MASTER_ADDRESS = import.meta.env.VITE_BANK_JETTON_MASTER_ADDRESS;
 
-export const BANK_JETTON_MASTER_ADDRESS =
-  "EQAj1qW6WZTd7sd33Uk48O3TqxNPMjYrgwRHAcBM8RcQCQAD";
-// import.meta.env.VITE_BANK_JETTON_MASTER_ADDRESS ||
-// "kQBuFWV6jW_9F69A3qjn5rpqfG4eIMBJs9GFSrZU7d33EmIG";
+export const BANK_CROWDSALE_ADDRESS = import.meta.env.VITE_BANK_CROWDSALE_ADDRESS;
 
-export const BANK_CROWDSALE_ADDRESS =
-  "EQDe0iw9l9-pyNmoS5eKnCc0dOTvKeW99CHw1P2mPe119nsZ";
-// import.meta.env.VITE_BANK_CROWDSALE_ADDRESS ||
-// "kQCGPhwK3XWC32jQ3neY2_TFQP6UxHybUz_5cN3_ufScxBHr";
+export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT;
 
-export const BANK_GAS_AMOUNT = import.meta.env.VITE_BANK_GAS_AMOUNT || "0.07";
+export const TON_CLIENT_NETWORK = import.meta.env.VITE_TON_CLIENT_NETWORK;
 
-export const TON_CLIENT_NETWORK = "mainnet";
-// import.meta.env.VITE_TON_CLIENT_NETWORK || "testnet";
+export const TON_PINCODE_SALT = import.meta.env.VITE_TON_PINCODE_SALT;
 
-export const TON_PINCODE_SALT = import.meta.env.VITE_TON_PINCODE_SALT || "salt";
+export const TON_JETTON = "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c";
+
+export const GA_ID = import.meta.env.VITE_GA_ID;

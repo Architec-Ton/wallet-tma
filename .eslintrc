@@ -1,0 +1,148 @@
+{
+  "root": true,
+  "env": { "browser": true, "es2020": true },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "jsx": true,
+    },
+  },
+  "ignorePatterns": ["dist", ".eslintrc.cjs"],
+  "extends": ["airbnb", "airbnb/hooks", "plugin:@typescript-eslint/recommended", "prettier"],
+
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"],
+        "extensions": [".js", ".ts", ".jsx", ".tsx"],
+      },
+      "typescript": {
+        "project": ["./tsconfig.json"],
+      },
+    },
+    "import/extensions": [".js", ".ts", ".jsx", ".tsx"],
+  },
+
+  "plugins": ["unused-imports", "react-refresh"],
+
+  "rules": {
+    "unused-imports/no-unused-imports": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-shadow": "warn",
+    "react/button-has-type": "off",
+    "new-cap": "off",
+    "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
+    "no-console": [
+      "warn",
+      {
+        "allow": ["info", "warn", "error", "debug"],
+      },
+    ],
+    "no-plusplus": 0,
+    "prefer-destructuring": [
+      "warn",
+      {
+        "object": true,
+        "array": false,
+      },
+    ],
+    "no-underscore-dangle": 0,
+    "import/prefer-default-export": 0,
+    "lines-between-class-members": "off",
+    "no-else-return": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
+    // Start temporary rules
+    // These rules are here just to keep the lint error to 0 during the migration to the new rule set
+    // They need to be removed and fixed as soon as possible
+    "@typescript-eslint/ban-ts-comment": [
+      1,
+      {
+        "ts-ignore": false,
+        "ts-nocheck": false,
+      },
+    ],
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_",
+      },
+    ],
+    "radix": 0,
+    "import/no-extraneous-dependencies": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/media-has-caption": 0,
+    // Exchange
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state", "memo"],
+      },
+    ],
+    "react/require-default-props": 0,
+    "no-nested-ternary": 0,
+    "max-classes-per-file": 0,
+    // End temporary rules
+    "react/react-in-jsx-scope": "error",
+    "consistent-return": "warn",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"],
+        },
+      },
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"],
+        },
+      },
+    ],
+    //
+    "no-use-before-define": "off",
+    "react/prop-types": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".tsx"],
+      },
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["arrow-function", "function-declaration"],
+      },
+    ],
+
+    "no-restricted-exports": "off",
+    "react/no-unstable-nested-components": "off",
+    "react/jsx-no-constructed-context-values": "warn",
+    "import/no-cycle": "off",
+    "camelcase": "warn",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "mjs": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+      },
+    ],
+  },
+}

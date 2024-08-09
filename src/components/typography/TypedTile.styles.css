@@ -1,17 +1,17 @@
-.typed-tile{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: var(--spacing-12);
-    font-size: var(--font-size-medium);
-    padding: var(--spacing-8);
+.typed-tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--spacing-12);
+  font-size: var(--font-size-medium);
+  padding: var(--spacing-8);
 }
 
 .typed-tile .tile-icon {
-    width: var(--thumbnail-medium-width);
-      height: var(--thumbnail-medium-height);
-      border-radius: var(--border-radius-full);
+  width: var(--thumbnail-medium-width);
+  height: var(--thumbnail-medium-height);
+  border-radius: var(--border-radius-full);
 }
 
 .tile-header {
@@ -30,12 +30,10 @@
   text-transform: capitalize;
 }
 
-.tile-body p{
+.tile-body p {
   margin: 0;
 }
 
 .typed-tile p {
   font-size: var(--font-size-medium);
 }
-
-

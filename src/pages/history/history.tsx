@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
-import Page from "../../components/containers/Page";
-import { useApiWalletHistoryMutation } from "../../features/wallet/walletApi";
-import { TransactionHistoryItemDto } from "../../types/history";
-import { usePage } from "../../hooks/usePage";
-import History from "../../components/ui/balance/History";
-import { useAppSelector } from "../../hooks/useAppDispatch";
-import { selectAuthIsReady } from "../../features/auth/authSelector";
+import React, { useEffect, useState } from "react";
+
+import { selectAuthIsReady } from "features/auth/authSelector";
+import { useApiWalletHistoryMutation } from "features/wallet/walletApi";
+import type { TransactionHistoryItemDto } from "types/history";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+import { usePage } from "hooks/usePage";
+
+import Page from "components/containers/Page";
+import History from "components/ui/balance/History";
 
 function Histories() {
   //   const t = useLanguage("history");
@@ -13,17 +16,15 @@ function Histories() {
   const isReady = useAppSelector(selectAuthIsReady);
 
   const [walletHistoryApi] = useApiWalletHistoryMutation();
-  const [walletItemsData, setWalletItemsData] = useState<
-    TransactionHistoryItemDto[]
-  >([]);
+  const [walletItemsData, setWalletItemsData] = useState<TransactionHistoryItemDto[]>([]);
 
   const handleInfo = async () => {
     try {
       const result = await walletHistoryApi(null).unwrap();
-      //   console.log("Wallet result:", result);
+
       setWalletItemsData(result);
       const result2 = await walletHistoryApi(null).unwrap();
-      //   console.log("Wallet result:", result);
+
       setWalletItemsData(result2);
     } catch (err) {
       console.error("Failed to get info: ", err);

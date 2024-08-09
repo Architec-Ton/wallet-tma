@@ -1,35 +1,39 @@
-import { ChangeEventHandler, useMemo } from "react"
-import Block from "../../../typography/Block"
-import useLanguage from "../../../../hooks/useLanguage"
-import { useAppDispatch, useAppSelector } from "../../../../hooks/useAppDispatch";
-import { selectGamesFilter } from "../../../../features/gaming/gamingSelectors";
-import { setFilter, clearFilter } from "../../../../features/gaming/gamingSlice";
+import type { ChangeEventHandler } from "react";
+import React, { useMemo } from "react";
 
+import { selectGamesFilter } from "features/gaming/gamingSelectors";
+import { clearFilter, setFilter } from "features/gaming/gamingSlice";
+
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
+import Block from "components/typography/Block";
 
 const GameListFilter = () => {
-  const t = useLanguage("game")
-  const dispatch = useAppDispatch()
-  const filter = useAppSelector(selectGamesFilter)
+  const t = useLanguage("game");
+  const dispatch = useAppDispatch();
+  const filter = useAppSelector(selectGamesFilter);
 
-  const filtersStatus = useMemo(() => {
-    return {
-      name: filter.name ? t("filter-on"): t("filter-off"),
-      rate: filter.rate ? t("filter-on"): t("filter-off"),
-      date: filter.date ? t("filter-on"): t("filter-off"),
-    }
-  }, [filter])
+  const filtersStatus = useMemo(
+    () => ({
+      name: filter.name ? t("filter-on") : t("filter-off"),
+      rate: filter.rate ? t("filter-on") : t("filter-off"),
+      date: filter.date ? t("filter-on") : t("filter-off"),
+    }),
+    [filter],
+  );
 
   const filterHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const target = e.currentTarget
-    const { checked, name } = target
-    const updatedFilter = { ...filter, [name]: !!checked }
-    
-    dispatch(setFilter(updatedFilter))
-  }
+    const target = e.currentTarget;
+    const { checked, name } = target;
+    const updatedFilter = { ...filter, [name]: !!checked };
+
+    dispatch(setFilter(updatedFilter));
+  };
 
   const clearHandler = () => {
-    dispatch(clearFilter())
-  }
+    dispatch(clearFilter());
+  };
 
   return (
     <>
@@ -60,7 +64,7 @@ const GameListFilter = () => {
         </label>
       </Block>
     </>
-  )
-}
+  );
+};
 
-export default GameListFilter
+export default GameListFilter;

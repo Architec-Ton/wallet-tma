@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface WalletState {
   tonUsdPrice: number;
@@ -9,7 +10,7 @@ const initialState: WalletState = {
 } satisfies WalletState;
 
 const walletSlice = createSlice({
-  name: 'wallet',
+  name: "wallet",
   initialState,
   reducers: {
     setTonUsdPrice(state: WalletState, action: PayloadAction<number>) {

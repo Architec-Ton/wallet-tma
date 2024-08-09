@@ -1,26 +1,23 @@
-// Import Swiper React components
-import { Swiper, SwiperProps } from 'swiper/react';
+import React from "react";
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './index.css'
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import type { SwiperProps } from "swiper/react";
+import { Swiper } from "swiper/react";
 
-// import required modules
-import { Pagination } from 'swiper/modules';
+import "./index.css";
 
 type SliderPropsType = {
-  children: React.ReactNode
-  settings?: SwiperProps
-  className?: string
-}
+  children: React.ReactNode;
+  settings?: SwiperProps;
+  className?: string;
+};
 
-const Slider = ({ children, settings = {}, className }: SliderPropsType) => {
-  return (
-    <Swiper className={className} modules={[Pagination]} {...settings}>
-      {children}
-    </Swiper>
-  )
-}
+const Slider = ({ children, settings = {}, className }: SliderPropsType) => (
+  <Swiper className={className} modules={[Pagination]} {...settings}>
+    {children}
+  </Swiper>
+);
 
-export default Slider
+export default Slider;

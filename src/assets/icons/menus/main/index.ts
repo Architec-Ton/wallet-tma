@@ -1,11 +1,6 @@
-import iconMenuMainWallet from "./wallet.svg";
 import iconMenuMainAccount from "./account.svg";
-import iconMenuMainNews from "./news.svg";
 import iconMenuMainApps from "./apps.svg";
+import iconMenuMainNews from "./news.svg";
+import iconMenuMainWallet from "./wallet.svg";
 
-export {
-  iconMenuMainWallet,
-  iconMenuMainAccount,
-  iconMenuMainNews,
-  iconMenuMainApps,
-};
+export { iconMenuMainWallet, iconMenuMainAccount, iconMenuMainNews, iconMenuMainApps };

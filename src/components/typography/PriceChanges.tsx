@@ -1,5 +1,8 @@
+import type { CSSProperties, HTMLAttributes } from "react";
+import React from "react";
+
 import classNames from "classnames";
-import { CSSProperties, HTMLAttributes } from "react";
+
 import "./PriceChanges.styles.css";
 
 interface Props<T> extends HTMLAttributes<T> {
@@ -8,26 +11,18 @@ interface Props<T> extends HTMLAttributes<T> {
   className?: string;
 }
 
-function PriceChanges({
-  style,
-  className,
-  changePrice,
-}: Props<HTMLDivElement>) {
+function PriceChanges({ style, className, changePrice }: Props<HTMLDivElement>) {
   return (
     <div
       style={style}
-      className={classNames(
-        "change-price",
-        className,
-        changePrice >= 0 ? "change-up" : "change-down"
-      )}
+      className={classNames("change-price", className, changePrice >= 0 ? "change-up" : "change-down")}
     >
       {changePrice >= 0 ? "+" : ""}
       {(changePrice * 100).toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,
       })}
-      {"%"}
+      %
     </div>
   );
 }

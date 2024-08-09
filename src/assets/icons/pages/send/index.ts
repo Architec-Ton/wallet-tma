@@ -1,3 +1,3 @@
-import iconPageSend from './send.svg';
+import iconPageSend from "./send.svg";
 
 export { iconPageSend };
