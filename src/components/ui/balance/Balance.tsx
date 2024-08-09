@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 
 import { Address as Addr } from "@ton/core";
 import { showAlert } from "features/alert/alertSlice";
+import { AssetKind, useLazyGetStonFiAssetQuery } from "features/stonfi/stonFiApi";
+import type { CoinDto } from "types/assest";
 import type { WalletInfoData } from "types/wallet";
 
 import { iconInputScan } from "assets/icons/inputs";
@@ -12,6 +14,7 @@ import useRouter from "hooks/useRouter";
 
 import { parseTonTransferUrl } from "utils/formatter";
 
+import { TON_JETTON } from "../../../constants";
 import QrButton from "../../buttons/qrButton";
 import Column from "../../containers/Column";
 import Row from "../../containers/Row";
@@ -26,8 +29,34 @@ type Props = {
 
 function Balance({ children, walletInfoData }: Props) {
   const [qrText, setQrText] = useState<string | undefined>();
+  const [totalAssetPrice, setTotalAssetPrice] = useState<number>(0);
   const navigate = useRouter();
   const dispatch = useAppDispatch();
+  const [getStonFiAsset] = useLazyGetStonFiAssetQuery();
+
+  useEffect(() => {
+    const fetchAssetPrices = async () => {
+      if (walletInfoData) {
+        const currentWallet = walletInfoData.wallets[walletInfoData.currentWallet];
+        const assetPrices = await Promise.all(
+          currentWallet.assets.map(async (asset: CoinDto) => {
+            const assetAddress = asset.type === AssetKind.Ton ? TON_JETTON : asset.meta?.address;
+
+            const { data } = await getStonFiAsset(assetAddress);
+            const assetPrice = data?.asset.dex_price_usd || data?.asset.third_party_usd_price;
+            const assetPriceNum = Number.isNaN(Number(assetPrice)) ? 0 : Number(assetPrice);
+
+            return data ? assetPriceNum * asset.amount : 0;
+          }),
+        );
+
+        const total = assetPrices.reduce((acc, price) => acc + price, 0);
+        setTotalAssetPrice(total);
+      }
+    };
+
+    fetchAssetPrices();
+  }, [walletInfoData, getStonFiAsset]);
 
   useEffect(() => {
     try {
@@ -49,7 +78,7 @@ function Balance({ children, walletInfoData }: Props) {
         <Row className="space-between">
           <div className="balance-block-value">
             {walletInfoData &&
-              `$ ${walletInfoData.wallets[walletInfoData.currentWallet].usdPrice.toLocaleString(undefined, {
+              `$ ${totalAssetPrice.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
                 minimumFractionDigits: 2,
               })}`}
