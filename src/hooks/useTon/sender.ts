@@ -116,8 +116,7 @@ export const useSender = (): Sender => {
             );
             return;
           }
-          dispatch(setSeqno(seqno_current));
-
+          
           const transfer = await contract.createTransfer({
             seqno: seqno_current,
             secretKey: privateKey,
@@ -127,9 +126,29 @@ export const useSender = (): Sender => {
                 value: args.value,
                 to: args.to,
                 body: args.body,
+                bounce: !!args.bounce,
               }),
             ],
           });
+          
+          const transactionSize = transfer.toBoc().length;
+          // 1 gas = 655360000 / 2^16 nanotons = 0,000 01 TON
+          const gasPrice = 0.00001 * 1e9;
+          const estimatedGasCost = gasPrice * transactionSize;
+          const estimatedGasCostTons = estimatedGasCost / 1e9;
+          
+          if (balance < (args.value + toNano(estimatedGasCostTons))) {
+            dispatch(
+              showAlert({
+                message:
+                "Insufficient funds to complete the transaction",
+                duration: 8000,
+              }),
+            );
+            return;
+          }
+
+          dispatch(setSeqno(seqno_current));
 
           try {
             const trx = await contract.send(transfer);
