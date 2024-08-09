@@ -1,24 +1,40 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AssetInfo } from "@ston-fi/api";
+
+export interface AssetInfo {
+  balance?: string | undefined;
+  blacklisted: boolean;
+  community: boolean;
+  contractAddress: string;
+  decimals: number;
+  defaultSymbol: boolean;
+  deprecated: boolean;
+  dexPriceUsd?: string | undefined;
+  displayName?: string | undefined;
+  imageUrl?: string | undefined;
+  kind: "Ton" | "Wton" | "Jetton";
+  symbol: string;
+  thirdPartyPriceUsd?: string | undefined;
+  walletAddress?: string | undefined;
+}
 
 export interface SwapState {
-  assets: AssetInfo[]
+  assets: AssetInfo[];
 }
 
 const initialState: SwapState = {
   assets: [],
-} satisfies SwapState
+} satisfies SwapState;
 
 const swapSlice = createSlice({
   name: "gaming",
   initialState,
   reducers: {
     setAssets(state: SwapState, action: PayloadAction<AssetInfo[]>) {
-      state.assets = action.payload
+      state.assets = action.payload;
     },
-  }
-})
+  },
+});
 
-export const { setAssets } = swapSlice.actions
+export const { setAssets } = swapSlice.actions;
 
-export default swapSlice.reducer
+export default swapSlice.reducer;
