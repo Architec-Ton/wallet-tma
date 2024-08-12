@@ -1,5 +1,5 @@
 import type { Sender, SenderArguments } from "@ton/core";
-import { Address, internal, toNano } from "@ton/core";
+import { Address, internal, SendMode, toNano } from "@ton/core";
 import type { KeyPair } from "@ton/crypto";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
@@ -120,7 +120,7 @@ export const useSender = (): Sender => {
           const transfer = await contract.createTransfer({
             seqno: seqno_current,
             secretKey: privateKey,
-            sendMode: args.sendMode,
+            sendMode: args.sendMode ? SendMode.CARRY_ALL_REMAINING_BALANCE + args.sendMode : SendMode.CARRY_ALL_REMAINING_BALANCE,
             messages: [
               internal({
                 value: args.value,
