@@ -1,5 +1,9 @@
 import type { Sender, SenderArguments } from "@ton/core";
 import { Address, internal, toNano } from "@ton/core";
+import type { KeyPair } from "@ton/crypto";
+import { mnemonicToPrivateKey } from "@ton/crypto";
+import { WalletContractV4 } from "@ton/ton";
+import { showAlert } from "features/alert/alertSlice";
 import {
   selectAddress,
   selectAddressPrivateKey, // selectAddressPublicKey,
