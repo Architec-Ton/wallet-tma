@@ -1,39 +1,40 @@
-import {useEffect} from 'react';
-import Page from "../../../components/containers/Page.tsx";
-import useLanguage from "../../../hooks/useLanguage.ts";
-import {usePage} from "../../../hooks/usePage.ts";
-import SelectorTile from "../../../components/ui/selector-tile/SelectorTile.tsx";
+import React, { useEffect } from "react";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+
+import Page from "components/containers/Page";
+import SelectorTile from "components/ui/selector-tile/SelectorTile";
 
 const WalletLanguage = () => {
-    const languages = [
-        {
-            language: 'English',
-            description: 'English — Hello'
-        },
-        {
-            language: 'Russian',
-            description: 'Русский — Привет'
-        }
-    ]
+  const languages = [
+    {
+      language: "English",
+      description: "English — Hello",
+    },
+    {
+      language: "Russian",
+      description: "Русский — Привет",
+    },
+  ];
 
-    const onItemSelected = () => {
+  const onItemSelected = () => {};
 
-    }
+  const t = useLanguage("account");
+  const page = usePage();
 
-    const t = useLanguage('account')
-    const page = usePage();
+  useEffect(() => {
+    page.setLoading(false, false);
+  }, []);
 
-    useEffect(() => {
-        page.setLoading(false, false)
-    }, []);
-
-    return (
-        <Page title={t('wallet-language')}>
-            <SelectorTile
-                selectItems={languages.map(lang => ({ type: 'object', value: lang }))}
-                onItemSelected={onItemSelected}/>
-        </Page>
-    );
+  return (
+    <Page title={t("wallet-language")}>
+      <SelectorTile
+        selectItems={languages.map((lang) => ({ type: "object", value: lang }))}
+        onItemSelected={onItemSelected}
+      />
+    </Page>
+  );
 };
 
 export default WalletLanguage;

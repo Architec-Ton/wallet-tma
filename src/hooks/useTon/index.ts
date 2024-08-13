@@ -1,16 +1,14 @@
+import { useEffect, useState } from "react";
+
+import { Address } from "@ton/core";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+import { TonConnectionMode, setAddress, setSeqno } from "features/ton/tonSlice";
+import type { WalletsState } from "types/auth";
+
 import { useAppDispatch } from "../useAppDispatch";
 import useLocalStorage from "../useLocalStorage";
-import {
-  setAddress,
-  TonConnectionMode,
-  setSeqno,
-} from "../../features/ton/tonSlice";
-import { useEffect, useState } from "react";
-import { useWalletInitData } from "./useWalletInitData";
-import { WalletsState } from "../../types/auth";
 import { useSender } from "./sender";
-import { useTonConnectUI } from "@tonconnect/ui-react";
-import { Address } from "@ton/core";
+import { useWalletInitData } from "./useWalletInitData";
 
 export function useTon() {
   const dispatch = useAppDispatch();
@@ -23,32 +21,24 @@ export function useTon() {
 
   const sender = useSender();
 
-  const [tonMode, setTonMode] = useState<
-    "disconnect" | "tonconnect" | "mnemonics"
-  >("disconnect");
+  const [tonMode, setTonMode] = useState<TonConnectionMode>(TonConnectionMode.disconnect);
 
   useEffect(() => {
     if (bcData.currentWallet < 0) {
-      setTonMode("disconnect");
-    } else if (bcData.wallets[bcData.currentWallet].mode == "tonconnect") {
-      setTonMode("tonconnect");
-    } else if (bcData.wallets[bcData.currentWallet].mode == "mnemonics") {
-      setTonMode("mnemonics");
+      setTonMode(TonConnectionMode.disconnect);
+    } else {
+      setTonMode(bcData.wallets[bcData.currentWallet].mode);
     }
   }, []);
 
   return {
     mode: tonMode,
-    wallet: wallet,
-    sender: sender,
+    wallet,
+    sender,
     setSeqno: (seqno: number | null) => dispatch(setSeqno(seqno)),
-    setAddress: (
-      address: string,
-      mode: "disconnect" | "tonconnect" | "mnemonics",
-      publicKey?: string,
-      privateKey?: string
-    ) => {
+    setAddress: (address: string, mode: TonConnectionMode, publicKey?: string, privateKey?: string) => {
       setTonMode(mode);
+
       dispatch(
         setAddress({
           address: address
@@ -57,17 +47,11 @@ export function useTon() {
                 bounceable: false,
               })
             : undefined,
-          mode:
-            mode == "tonconnect"
-              ? TonConnectionMode.tonconnect
-              : mode == "mnemonics"
-              ? TonConnectionMode.mnemonics
-              : TonConnectionMode.disconnect,
-          publicKey: publicKey,
-          privateKey: privateKey,
-        })
+          mode,
+          publicKey,
+          privateKey,
+        }),
       );
-      console.log("useTon.setAddress", mode, address, publicKey);
     },
     setDisconnect: () => {
       setBcData({
@@ -77,13 +61,12 @@ export function useTon() {
         // mode: 'disconnect',
       });
       if (tonConnectUI) tonConnectUI.disconnect();
-      if (localStorage)
-        localStorage.removeItem("ton-connect-storage_bridge-connection");
-      setTonMode("disconnect");
+      if (localStorage) localStorage.removeItem("ton-connect-storage_bridge-connection");
+      setTonMode(TonConnectionMode.disconnect);
       dispatch(
         setAddress({
           mode: TonConnectionMode.disconnect,
-        })
+        }),
       );
     },
   };

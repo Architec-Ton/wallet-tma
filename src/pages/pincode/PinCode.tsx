@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import {
-  delButtonKeybord,
-  bioButtonKeybord,
-} from "../../assets/icons/pincode/index.ts";
+import React, { useEffect, useState } from "react";
+
+import { bioButtonKeybord, delButtonKeybord } from "assets/icons/pincode/index";
+
+import useLanguage from "hooks/useLanguage";
+
+import Circle from "components/pin-page/Circle";
+import Block from "components/typography/Block";
+
 import "./PinCode.style.css";
-import Block from "../../components/typography/Block.tsx";
-import useLanguage from "../../hooks/useLanguage.ts";
-import Circle from "../../components/pin-page/Circle.tsx";
 
 export interface PinInputProps {
   onSuccess?: (pin: string) => void;
@@ -16,9 +17,7 @@ export interface PinInputProps {
 const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
   const t = useLanguage("Pincode");
   const [pin, setPin] = useState<string>("");
-  const [status, setStatus] = useState<"normal" | "error" | "success">(
-    "normal"
-  );
+  const [status, setStatus] = useState<"normal" | "error" | "success">("normal");
   useEffect(() => {
     switch (status) {
       case "success":
@@ -29,6 +28,9 @@ const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
       case "error":
         setTimeout(() => setStatus("normal"), 300);
         if (onFailure) onFailure();
+        break;
+
+      default:
         break;
     }
   }, [status, pin]);
@@ -68,24 +70,14 @@ const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
 
       <div className="pin-keypad">
         {[...Array(9)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleClick(index + 1)}
-            className="pin-button"
-          >
+          <button key={index} onClick={() => handleClick(index + 1)} className="pin-button">
             {index + 1}
           </button>
         ))}
 
         <button onClick={handleBiometry} className="pin-button">
           {" "}
-          {
-            <img
-              src={bioButtonKeybord}
-              style={{ marginTop: 8, blockSize: "50%" }}
-              alt={"Bio"}
-            />
-          }
+          <img src={bioButtonKeybord} style={{ marginTop: 8, blockSize: "50%" }} alt="Bio" />
         </button>
 
         <button onClick={() => handleClick(0)} className="pin-button">
@@ -93,11 +85,7 @@ const PinCode: React.FC<PinInputProps> = ({ onSuccess, onFailure }) => {
         </button>
 
         <button onClick={handleDelete} className="pin-button">
-          <img
-            src={delButtonKeybord}
-            style={{ marginTop: 8, blockSize: "50%" }}
-            alt={"Del"}
-          />
+          <img src={delButtonKeybord} style={{ marginTop: 8, blockSize: "50%" }} alt="Del" />
         </button>
       </div>
     </div>

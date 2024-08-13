@@ -1,9 +1,10 @@
-// import useLanguage from '../../../hooks/useLanguage';
-import Row from '../../containers/Row.tsx';
-import ListBaseItem from '../listBlock/ListBaseItem.tsx';
-import ListBlock from '../listBlock/index.tsx';
+// import useLanguage from 'hooks/useLanguage';
+import React from "react";
 
-import "./BankStakingInfo.styles.css"
+import Row from "../../containers/Row";
+import ListBaseItem from "../listBlock/ListBaseItem";
+import ListBlock from "../listBlock/index";
+import "./BankStakingInfo.styles.css";
 
 export interface InfoItems {
   title: string;
@@ -11,14 +12,14 @@ export interface InfoItems {
 }
 
 type OwnProps = {
-  infoItems: InfoItems[] | undefined
-}
+  infoItems: InfoItems[] | undefined;
+};
 
 function BankStakingInfo({ infoItems }: OwnProps) {
   //   const t = useLanguage('bank-staking');
 
   if (!infoItems) {
-    return null
+    return null;
   }
 
   return (

@@ -1,19 +1,18 @@
-import classNames from "classnames"
-import Row from "../containers/Row"
+import React from "react";
 
-import "./MiniBlock.styles.css"
+import classNames from "classnames";
 
-const MiniBlock = (
-  { icon, text, className }: {icon: string, text?: string | number, className?: string}
-) => {
-  return (
-    <Row className={classNames("mini-block", className)}>
-      <div className="mini-block-icon">
-        <img src={icon} alt="" />
-      </div>
-      <div className="mini-block-content center grow">{text}</div>
-    </Row>
-  )
-}
+import Row from "../containers/Row";
+import "./MiniBlock.styles.css";
 
-export default MiniBlock
+
+const MiniBlock = ({ icon, text, className }: { icon: string; text?: string | number; className?: string }) => (
+  <Row className={classNames("mini-block", className)}>
+    <div className="mini-block-icon">
+      <img src={icon} alt="" />
+    </div>
+    <div className="mini-block-content center grow">{text}</div>
+  </Row>
+);
+
+export default MiniBlock;

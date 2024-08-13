@@ -1,10 +1,13 @@
-import { useEffect } from "react";
-import Column from "../../components/containers/Column";
-import Page from "../../components/containers/Page";
-import useLanguage from "../../hooks/useLanguage";
-import { usePage } from "../../hooks/usePage";
-import BlockWithTitle from "../../components/typography/BlockWithTitle";
-import { iconTimer } from "../../assets/icons/globals";
+import React, { useEffect } from "react";
+
+import { iconTimer } from "assets/icons/globals";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import BlockWithTitle from "components/typography/BlockWithTitle";
 
 function BankingTasks() {
   const page = usePage();
@@ -18,10 +21,7 @@ function BankingTasks() {
   return (
     <Page title={t("title")}>
       <Column columns={2}>
-        <BlockWithTitle
-          title={t("partners")}
-          style={{ justifyItems: "center" }}
-        >
+        <BlockWithTitle title={t("partners")} style={{ justifyItems: "center" }}>
           <img src={iconTimer} />
         </BlockWithTitle>
       </Column>

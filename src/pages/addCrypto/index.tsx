@@ -1,9 +1,11 @@
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Page from "../../components/containers/Page";
+
+import { usePage } from "hooks/usePage";
+
+import Page from "components/containers/Page";
 
 import "./index.css";
-import { usePage } from "../../hooks/usePage";
-import { useEffect } from "react";
 
 const AddCrypto = () => {
   const page = usePage();

@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
-import { iconButtonCopyColor } from "../../assets/icons/buttons/index.ts";
-import Button from "../../components/buttons/Button.tsx";
-import Column from "../../components/containers/Column.tsx";
-import Page from "../../components/containers/Page.tsx";
-import Block from "../../components/typography/Block.tsx";
-import useLanguage from "../../hooks/useLanguage.ts";
-import { useTmaMainButton } from "../../hooks/useTma.ts";
-import "./SecretKey.styles.css";
-import { usePage } from "../../hooks/usePage.ts";
-import useRouter from "../../hooks/useRouter.ts";
-import { mnemonicNew } from "@ton/crypto";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { showAlert } from "../../features/alert/alertSlice.ts";
+
+import { mnemonicNew } from "@ton/crypto";
+import { showAlert } from "features/alert/alertSlice";
+
+import { iconButtonCopyColor } from "assets/icons/buttons/index";
+
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTmaMainButton } from "hooks/useTma";
+
+import Button from "components/buttons/Button";
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import Block from "components/typography/Block";
+
+import "./SecretKey.styles.css";
 
 const SecretKey = () => {
   const t = useLanguage("Key");
@@ -20,16 +25,18 @@ const SecretKey = () => {
   const page = usePage();
   const [mnemonic, setMnemonic] = useState<string>("");
   const dispatch = useDispatch();
-  //const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
+  // const [mnemonic, setMnemonic] = useLocalStorage<string>("mnemonic", '');
 
   useEffect(() => {
     mnemonicNew(24).then((m) => {
       setMnemonic(m.join(" "));
+
       page.setLoading(false, false);
+
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
           state: { mnemonic: m.join(" "), confirm: true },
-        })
+        }),
       );
     });
   }, []);
@@ -38,8 +45,8 @@ const SecretKey = () => {
     if (mnemonic) {
       btn.init(t("next", "button"), () =>
         navigate("/registration/confirm-secret-key", {
-          state: { mnemonic: mnemonic, confirm: true },
-        })
+          state: { mnemonic, confirm: false },
+        }),
       );
     }
   }, [mnemonic]);
@@ -72,12 +79,7 @@ const SecretKey = () => {
           </Column>
         </Block>
         <div className="center p-1">
-          <Button
-            icon={iconButtonCopyColor}
-            title={t("Copy", "button")}
-            primary={false}
-            onClick={copyToClipboard}
-          />
+          <Button icon={iconButtonCopyColor} title={t("Copy", "button")} primary={false} onClick={copyToClipboard} />
         </div>
       </Column>
     </Page>

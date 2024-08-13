@@ -1,28 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import {
-  iconCoinButton,
-  iconGlobalButton,
-  iconSendButton,
-} from '../../../assets/icons/buttons';
-import Page from '../../../components/containers/Page';
-import Tile from '../../../components/typography/Tile';
-import { useGetGameQuery } from '../../../features/gaming/gamingApi';
-import { setLoading } from '../../../features/page/pageSlice';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-import classNames from 'classnames';
-import { SwiperSlide } from 'swiper/react';
-import Row from '../../../components/containers/Row';
-import Section from '../../../components/containers/Section';
-import Block from '../../../components/typography/Block';
-import TypedTile from '../../../components/typography/TypedTile';
-import Slider from '../../../components/ui/slider';
-import useLanguage from '../../../hooks/useLanguage';
-// import { GameResource } from '../../../types/gameTypes';
+import classNames from "classnames";
+import { useGetGameQuery } from "features/gaming/gamingApi";
+import { setLoading } from "features/page/pageSlice";
+import { SwiperSlide } from "swiper/react";
 
-import LinkButton from '../../../components/buttons/LinkButton';
-import './index.css';
+import { iconCoinButton, iconGlobalButton, iconSendButton } from "assets/icons/buttons";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
+// import { GameResource } from 'types/gameTypes';
+import LinkButton from "components/buttons/LinkButton";
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
+import Block from "components/typography/Block";
+import Tile from "components/typography/Tile";
+import TypedTile from "components/typography/TypedTile";
+import Tournament from "components/ui/games/tournament";
+import Slider from "components/ui/slider";
+
+import "./index.css";
 
 const typedIcons = {
   website: iconGlobalButton,
@@ -31,7 +31,7 @@ const typedIcons = {
 };
 
 const GamePage = () => {
-  const t = useLanguage('game');
+  const t = useLanguage("game");
   const { id } = useParams();
   const dispatch = useAppDispatch();
   // const utils = useUtils();
@@ -41,8 +41,7 @@ const GamePage = () => {
   // const isTma = useAppSelector(selectIsTma);
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
 
-  const [readMoreDescription, setReacMoreDescription] =
-    useState<boolean>(false);
+  const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false);
   // const [assets, setAssets] = useState<CoinDto[]>()
   // const [isPinCode, setIsPinCode] = useState<boolean>(false)
   // const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
@@ -127,16 +126,10 @@ const GamePage = () => {
 
   return (
     <Page>
-      <Tile
-        title={game?.title}
-        description={game?.subtitle}
-        icon={game?.icon}
-        className="game-page__header">
+      <Tile title={game?.title} description={game?.subtitle} icon={game?.icon} className="game-page__header">
         <div className="game-controls">
-          <LinkButton
-            className="primary-button primary-btn"
-            to={game?.url || ''}>
-            {t('play')}
+          <LinkButton className="primary-button primary-btn" to={game?.url || ""}>
+            {t("play")}
           </LinkButton>
 
           {/* <button className="rounded-button vote-button" onClick={modalHandler}>
@@ -148,33 +141,27 @@ const GamePage = () => {
       <Row className="w-screen">
         <Slider
           settings={{
-            slidesPerView: 'auto',
+            slidesPerView: "auto",
             centeredSlides: false,
             spaceBetween: 0,
           }}
-          className="list-swipe">
-          {game?.gallery.map((url, index) => {
-            return (
-              <SwiperSlide key={`${url}-${index}`} className="gallery-slide">
-                <img
-                  src={url}
-                  alt=""
-                  className="game-gallery-img round-large"
-                />
-              </SwiperSlide>
-            );
-          })}
+          className="list-swipe"
+        >
+          {game?.gallery.map((url, index) => (
+            <SwiperSlide key={`${url}-${index}`} className="gallery-slide">
+              <img src={url} alt="" className="game-gallery-img round-large" />
+            </SwiperSlide>
+          ))}
         </Slider>
       </Row>
-      <Section
-        title={t('description')}
-        readMore={t('read-more')}
-        readMoreHandle={readMoreHandler}>
+      <Tournament id={game?.id} />
+      <Section title={t("description")} readMore={t("read-more")} readMoreHandle={readMoreHandler}>
         <Block>
           <div
-            className={classNames('game-description__section', {
+            className={classNames("game-description__section", {
               all: readMoreDescription,
-            })}>
+            })}
+          >
             {game?.description}
           </div>
         </Block>
@@ -196,23 +183,21 @@ const GamePage = () => {
         </Grid>
       </Section> */}
       {game?.resources && game.resources.length > 0 && (
-        <Section title={t('project-resources')}>
-          {game?.resources.map((resource) => {
-            return (
-              <LinkButton to={resource.url} key={resource.url}>
-                <TypedTile
-                  key={`${resource.type}-${game.id}`}
-                  icon={resource.icon}
-                  typeIcon={typedIcons[resource.type]}
-                  title={resource.type}
-                  description={resource.title}
-                  // link={resource.url}
-                  className="game-resource__block telegram"
-                  // onClick={resourceHandler(resource)}
-                />
-              </LinkButton>
-            );
-          })}
+        <Section title={t("project-resources")}>
+          {game?.resources.map((resource) => (
+            <LinkButton to={resource.url} key={resource.url}>
+              <TypedTile
+                key={`${resource.type}-${game.id}`}
+                icon={resource.icon}
+                typeIcon={typedIcons[resource.type]}
+                title={resource.type}
+                description={resource.title}
+                // link={resource.url}
+                className="game-resource__block telegram"
+                // onClick={resourceHandler(resource)}
+              />
+            </LinkButton>
+          ))}
         </Section>
       )}
       {/* {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}

@@ -1,6 +1,9 @@
-import { CSSProperties, MouseEventHandler, ReactNode } from "react";
-import Row from "../../containers/Row";
+import type { CSSProperties, MouseEventHandler, ReactNode } from "react";
+import React from "react";
+
 import classNames from "classnames";
+
+import Row from "../../containers/Row";
 
 type PropsType = {
   children?: ReactNode;
@@ -16,11 +19,7 @@ const ListBaseItem = ({ children, onClick, style, className }: PropsType) => {
     }
   };
   return (
-    <Row
-      className={classNames("list-block", className)}
-      style={style}
-      onClick={clickHandler}
-    >
+    <Row className={classNames("list-block", className)} style={style} onClick={clickHandler}>
       {children}
     </Row>
   );

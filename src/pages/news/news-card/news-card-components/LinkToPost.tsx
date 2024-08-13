@@ -1,11 +1,5 @@
+import type React from "react";
 
-
-const LinkToPost = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-};
+const LinkToPost = () => <div />;
 
 export default LinkToPost;

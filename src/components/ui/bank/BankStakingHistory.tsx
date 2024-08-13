@@ -1,21 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
-import BankStakingHistorySection, {
-  StakeHistoryType,
-} from "./BankStakingHistorySection";
-import Section from "../../containers/Section";
-import Page from "../../containers/Page";
-import { iconSortButton } from "../../../assets/icons/buttons";
-import { usePage } from "../../../hooks/usePage";
+import React, { useEffect, useMemo, useState } from "react";
+
 import { formatDate } from "date-fns";
-import { useApiWalletAssetsMutation } from "../../../features/wallet/walletApi";
-// import { CoinDto } from "../../../types/assest";
+import { useApiWalletAssetsMutation } from "features/wallet/walletApi";
+
+import { iconSortButton } from "assets/icons/buttons";
+
+// import { CoinDto } from "types/assest";
 // import Row from "../../containers/Row";
-// import useLanguage from "../../../hooks/useLanguage";
-// import bankIcon from "../../../assets/images/bank.png";
+// import useLanguage from "hooks/useLanguage";
+// import bankIcon from "assets/images/bank.png";
 // import { useNavigate } from "react-router-dom";
 // import PartialContent from "../modals/PartialContent";
-import useContracts from "../../../hooks/useContracts";
-import { useTon } from "../../../hooks/useTon";
+import useContracts from "hooks/useContracts";
+import { usePage } from "hooks/usePage";
+import { useTon } from "hooks/useTon";
+
+import Page from "../../containers/Page";
+import Section from "../../containers/Section";
+import type { StakeHistoryType } from "./BankStakingHistorySection";
+import BankStakingHistorySection from "./BankStakingHistorySection";
+
 // import { fromNano } from "@ton/core";
 
 const historyMockData = [
@@ -96,7 +100,6 @@ const BankStakingHistory = () => {
 
   const sortedData = useMemo(() => {
     if (historyData) {
-      console.log(direction);
       const data = historyData.sort((a, b) => {
         const aDate = new Date(a.date);
         const bDate = new Date(b.date);
@@ -107,12 +110,15 @@ const BankStakingHistory = () => {
         }
         return 0;
       });
-      const groupedData = data.reduce((acc, history: StakeHistoryType) => {
-        const group = acc.get(history.date) || [];
-        group.push(history);
-        acc.set(history.date, group);
-        return acc;
-      }, new Map() as Map<string, StakeHistoryType[]>);
+      const groupedData = data.reduce(
+        (acc, history: StakeHistoryType) => {
+          const group = acc.get(history.date) || [];
+          group.push(history);
+          acc.set(history.date, group);
+          return acc;
+        },
+        new Map() as Map<string, StakeHistoryType[]>,
+      );
 
       return Object.fromEntries(groupedData);
     }
@@ -122,25 +128,20 @@ const BankStakingHistory = () => {
   const handleStakeInfo = async () => {
     if (ton.wallet.address) {
       const ownerAddress = ton.wallet.address;
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       const stakeAddress = await contracts.bank.getStakeAddress(ownerAddress);
-      console.log("BNK Stake Wallet", stakeAddress?.toString());
+
       if (stakeAddress) {
-        const stakeInfo = await contracts.bank.getStakeInfo(
-          stakeAddress,
-          ownerAddress
-        );
+        const stakeInfo = await contracts.bank.getStakeInfo(stakeAddress, ownerAddress);
         // if (stakeInfo) setArc(fromNano(stakeInfo.calculatedAmount));
-        console.log("getStakeInfo:", stakeInfo);
       }
     }
   };
 
   const handleClaim = async () => {
     if (ton.wallet.address) {
-      //Get BNK Wallet address
+      // Get BNK Wallet address
       const tx = await contracts.bank.claim();
-      console.log("Unstake", tx);
     }
   };
 
@@ -159,10 +160,7 @@ const BankStakingHistory = () => {
 
   return (
     <Page>
-      <Section
-        title="History Stake"
-        readMore={<img src={iconSortButton} onClick={sortHandler} alt="" />}
-      >
+      <Section title="History Stake" readMore={<img src={iconSortButton} onClick={sortHandler} alt="" />}>
         {sortedData &&
           Object.keys(sortedData).map((key) => {
             const dataList = sortedData[key] as StakeHistoryType[];

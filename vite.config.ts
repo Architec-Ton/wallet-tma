@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
 import basicSsl from "@vitejs/plugin-basic-ssl";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import { defineConfig, splitVendorChunkPlugin } from "vite";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
-import { splitVendorChunkPlugin } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,11 +22,20 @@ export default defineConfig({
   ],
   server: {
     host: "architecton.local",
-    port: 443,
+    port: 1111,
   },
   resolve: {
     alias: {
-      "@": "./src",
+      assets: path.resolve(__dirname, "./src/assets"),
+      components: path.resolve(__dirname, "./src/components"),
+      contracts: path.resolve(__dirname, "./src/contracts"),
+      features: path.resolve(__dirname, "./src/features"),
+      hooks: path.resolve(__dirname, "./src/hooks"),
+      i18n: path.resolve(__dirname, "./src/i18n"),
+      mocks: path.resolve(__dirname, "./src/mocks"),
+      pages: path.resolve(__dirname, "./src/pages"),
+      types: path.resolve(__dirname, "./src/types"),
+      utils: path.resolve(__dirname, "./src/utils"),
     },
   },
 });

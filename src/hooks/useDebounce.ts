@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useCallback, useRef } from "react";
 
 type Debounce = (callback: () => void, delay: number) => void;
 

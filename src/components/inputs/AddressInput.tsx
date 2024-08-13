@@ -1,12 +1,18 @@
+import type { CSSProperties, ChangeEventHandler } from "react";
+import React, { useEffect, useState } from "react";
+
 import classNames from "classnames";
-import "./Input.styles.css";
-import { CSSProperties, ChangeEventHandler, useEffect, useState } from "react";
-import Block from "../typography/Block";
-import useLanguage from "../../hooks/useLanguage";
-import { iconInputScan } from "../../assets/icons/inputs";
-import Row from "../containers/Row";
+
+import { iconInputScan } from "assets/icons/inputs";
+
+import useLanguage from "hooks/useLanguage";
+
+import { parseTonTransferUrl } from "utils/formatter";
+
 import QrButton from "../buttons/qrButton";
-import { parseTonTransferUrl } from "../../utils/formatter";
+import Row from "../containers/Row";
+import Block from "../typography/Block";
+import "./Input.styles.css";
 
 interface AddressInputProps {
   onChange?: ChangeEventHandler<HTMLElement>;
@@ -16,13 +22,7 @@ interface AddressInputProps {
   disabled?: boolean;
 }
 
-function AddressInput({
-  onChange,
-  style,
-  className,
-  value,
-  disabled,
-}: AddressInputProps) {
+function AddressInput({ onChange, style, className, value, disabled }: AddressInputProps) {
   const t = useLanguage("input");
   const [qrText, setQrText] = useState<string | undefined>();
   // const isTma = useAppSelector(selectIsTma);
@@ -75,10 +75,7 @@ function AddressInput({
         >
           {t("paste")}
         </a>
-        <QrButton
-          icon={iconInputScan}
-          onChange={(s: string | undefined) => setQrText(s)}
-        />
+        <QrButton icon={iconInputScan} onChange={(s: string | undefined) => setQrText(s)} />
       </Row>
     </Block>
   );

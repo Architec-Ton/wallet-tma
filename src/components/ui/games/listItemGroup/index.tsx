@@ -1,11 +1,15 @@
-import { useNavigate } from 'react-router-dom';
-import { iconButtonArraw } from '../../../../assets/icons/buttons';
-import { GameListItemType } from '../../../../types/gameTypes';
-import ListBlock from '../../listBlock';
-import ListBlockItem from '../../listBlock/ListBlockItem';
-import { useClosure } from '../../../../hooks/useClosure';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import './index.css';
+import type { GameListItemType } from "types/gameTypes";
+
+import { iconButtonArraw } from "assets/icons/buttons";
+
+import { useClosure } from "hooks/useClosure";
+
+import ListBlock from "../../listBlock";
+import ListBlockItem from "../../listBlock/ListBlockItem";
+import "./index.css";
 
 type OwnPropsType = {
   group: GameListItemType[];
@@ -20,18 +24,16 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
 
   return (
     <ListBlock>
-      {group.map((item: GameListItemType) => {
-        return (
-          <ListBlockItem
-            key={item.id}
-            thumb={item.icon}
-            title={item.title}
-            iconAction={iconButtonArraw}
-            description={item.subtitle}
-            onClick={clickHandler(item.id)}
-          />
-        );
-      })}
+      {group.map((item: GameListItemType) => (
+        <ListBlockItem
+          key={item.id}
+          thumb={item.icon}
+          title={item.title}
+          iconAction={iconButtonArraw}
+          description={item.subtitle}
+          onClick={clickHandler(item.id)}
+        />
+      ))}
     </ListBlock>
   );
 };

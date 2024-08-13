@@ -1,22 +1,18 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import {
-  AppsList,
-  GameCategoryType,
-  GameListItemType,
-  IGame,
-  TGameLeader,
-} from '../../types/gameTypes';
-import { setCategories } from './gamingSlice';
-import baseQuery from '../api/api';
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+import type { AppsList, GameCategoryType, GameListItemType, IGame, TGameLeader } from "types/gameTypes";
+
+import baseQuery from "../api/api";
+import { setCategories } from "./gamingSlice";
 
 export const gamingApi = createApi({
-  reducerPath: 'gamingApi',
-  baseQuery: baseQuery,
+  reducerPath: "gamingApi",
+  baseQuery,
   endpoints: (builder) => ({
     getCategories: builder.mutation<AppsList, string | undefined>({
       query: (search) => ({
-        url: search ? `apps?search=${search}` : 'apps',
-        method: 'GET',
+        url: search ? `apps?search=${search}` : "apps",
+        method: "GET",
       }),
       async onCacheEntryAdded(_, { dispatch, cacheDataLoaded }) {
         const cacheData = await cacheDataLoaded;
@@ -28,30 +24,27 @@ export const gamingApi = createApi({
     getGame: builder.query<IGame, string>({
       query: (id) => `app/${id}`,
     }),
-    getGameLeaders: builder.query<
-      TGameLeader[],
-      { id: string; limit?: number }
-    >({
-      query: ({ id, limit = 0 }) =>
-        `leaders/?gameId=${id}${limit ? `&_limit=${limit}` : ''}`,
+    getGameLeaders: builder.query<TGameLeader[], { id: string; limit?: number }>({
+      query: ({ id, limit = 0 }) => `leaders/?gameId=${id}${limit ? `&_limit=${limit}` : ""}`,
     }),
     getCategoryGames: builder.query<AppsList, string>({
       query: (id) => `apps?categoryId=${id}`,
     }),
-    searchGames: builder.mutation<
-      GameCategoryType<GameListItemType[]>,
-      { id: string; params: URLSearchParams }
-    >({
+    searchGames: builder.mutation<GameCategoryType<GameListItemType[]>, { id: string; params: URLSearchParams }>({
       query: ({ id, params }) => ({
         url: `apps?categoryId=${id}&${params.toString()}`,
-        method: 'GET',
+        method: "GET",
       }),
     }),
-    getTopRateGames: builder.mutation<
-      GameListItemType[],
-      URLSearchParams | undefined
-    >({
-      query: (params) => (!params ? 'top' : `top?${params.toString()}`),
+    getTopRateGames: builder.mutation<GameListItemType[], URLSearchParams | undefined>({
+      query: (params) => (!params ? "top" : `top?${params.toString()}`),
+    }),
+    subscribeTournament: builder.mutation<unknown, string>({
+      query: (id) => ({
+        url: `https://tournaments.architecton.site/api/v1/game_participation/take-participation`,
+        method: "POST",
+        body: { game_id: id },
+      }),
     }),
   }),
 });
@@ -63,4 +56,5 @@ export const {
   useSearchGamesMutation,
   useGetCategoriesMutation,
   useGetTopRateGamesMutation,
+  useSubscribeTournamentMutation,
 } = gamingApi;

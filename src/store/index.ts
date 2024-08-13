@@ -1,22 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
-import pageReducer from "../features/page/pageSlice";
-import tonReducer from "../features/ton/tonSlice";
-import mainButtonReducer from "../features/tma/mainButtonSlice";
-import backButtonReducer from "../features/tma/backButtonSlice";
-import tmaReducer from "../features/tma/tmaSlice";
-import gamingSlice from "../features/gaming/gamingSlice";
-import { gamingApi } from "../features/gaming/gamingApi";
-import authSlice from "../features/auth/authSlice";
+
+import alertReducer from "../features/alert/alertSlice";
 import { authApi } from "../features/auth/authApi";
-import { walletApi } from "../features/wallet/walletApi";
-import swapSlice from "../features/swap/swapSlice";
+import authSlice from "../features/auth/authSlice";
 import { bankApi } from "../features/bank/bankApi";
-import walletSlice from "../features/wallet/walletSlice";
+import { gamingApi } from "../features/gaming/gamingApi";
+import gamingSlice from "../features/gaming/gamingSlice";
+import pinCodeModalReducer from "../features/modal/pinModalSlice";
+import { trxApi } from "../features/modal/trxModalApi";
+import trxModalReducer from "../features/modal/trxModalSlice";
+import pageReducer from "../features/page/pageSlice";
 import { stonFiApi } from "../features/stonfi/stonFiApi";
-import alertReducer from "../features/alert/alertSlice.ts";
-import pinCodeModalReducer from "../features/modal/pinModalSlice.ts";
-import trxModalReducer from "../features/modal/trxModalSlice.ts";
-import { trxApi } from "../features/modal/trxModalApi.ts";
+import swapSlice from "../features/swap/swapSlice";
+import backButtonReducer from "../features/tma/backButtonSlice";
+import mainButtonReducer from "../features/tma/mainButtonSlice";
+import tmaReducer from "../features/tma/tmaSlice";
+import tonReducer from "../features/ton/tonSlice";
+import { walletApi } from "../features/wallet/walletApi";
+import walletSlice from "../features/wallet/walletSlice";
 
 export const store = configureStore({
   reducer: {
@@ -46,7 +47,7 @@ export const store = configureStore({
       trxApi.middleware,
       walletApi.middleware,
       gamingApi.middleware,
-      stonFiApi.middleware
+      stonFiApi.middleware,
     ),
 });
 

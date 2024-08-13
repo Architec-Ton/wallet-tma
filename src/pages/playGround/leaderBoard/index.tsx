@@ -1,23 +1,27 @@
-import { useEffect } from "react"
-import { useParams } from "react-router-dom"
-import { useGetGameLeadersQuery } from "../../../features/gaming/gamingApi"
-import { useAppDispatch } from "../../../hooks/useAppDispatch"
-import { setLoading } from "../../../features/page/pageSlice"
-import Section from "../../../components/containers/Section"
-import Grid from "../../../components/containers/Grid"
-import GameLeaderRow from "./GameLeaderRow"
-import Page from "../../../components/containers/Page"
-import useLanguage from "../../../hooks/useLanguage"
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import { useGetGameLeadersQuery } from "features/gaming/gamingApi";
+import { setLoading } from "features/page/pageSlice";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
+import Grid from "components/containers/Grid";
+import Page from "components/containers/Page";
+import Section from "components/containers/Section";
+
+import GameLeaderRow from "./GameLeaderRow";
 
 const LeaderBoard = () => {
-  const t = useLanguage("game")
-  const { id } = useParams()
-  const dispatch = useAppDispatch()
-  const { data, isLoading } = useGetGameLeadersQuery({id: id as string})
+  const t = useLanguage("game");
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const { data, isLoading } = useGetGameLeadersQuery({ id: id as string });
 
   useEffect(() => {
-    dispatch(setLoading(isLoading))
-  }, [isLoading])
+    dispatch(setLoading(isLoading));
+  }, [isLoading]);
 
   return (
     <Page>
@@ -32,8 +36,8 @@ const LeaderBoard = () => {
             isHeader
           />
         </Grid>
-        {data && data.map((leader, index) => {
-          return (
+        {data &&
+          data.map((leader, index) => (
             <Grid key={`${leader.name}-${index}`} columns={12} gap={2} className="block game-leader__row" isOrderedList>
               <GameLeaderRow
                 num={index + 1}
@@ -43,11 +47,10 @@ const LeaderBoard = () => {
                 time={leader.time}
               />
             </Grid>
-          )
-        }) }
+          ))}
       </Section>
     </Page>
-  )
-}
+  );
+};
 
-export default LeaderBoard
+export default LeaderBoard;

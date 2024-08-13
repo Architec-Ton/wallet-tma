@@ -1,4 +1,3 @@
-import { RootState } from "../../store";
+import type { RootState } from "../../store";
 
-export const selectBackButtonIsVisible = (state: RootState) =>
-  state.backBtn.isVisible;
+export const selectBackButtonIsVisible = (state: RootState) => state.backBtn.isVisible;

@@ -1,18 +1,12 @@
-import {
-  useCloudStorage,
-  useInitData,
-  useMainButton,
-  useViewport,
-} from "@tma.js/sdk-react";
-import { EventHandler } from "../../hooks/useTma";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import {
-  selectIsTma,
-  selectIsTmaLoading,
-} from "../../features/tma/tmaSelector";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { useCloudStorage, useInitData, useMainButton, useViewport } from "@tma.js/sdk-react";
 import { Address } from "@ton/core";
-import { setReferral } from "../../features/tma/tmaSlice";
+import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
+import { setReferral } from "features/tma/tmaSlice";
+
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import type { EventHandler } from "hooks/useTma";
 
 type Props = {
   title?: string;
@@ -30,19 +24,14 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
 
   useEffect(() => {
     if (rmListener) {
-      console.log("rm on", rmListener);
       rmListener();
       setRmListener(() => {});
     }
     if (onClick !== undefined) {
       const rmfn = mb.on("click", () => {
-        //mb.showLoader();
-        console.log("Just click ", onClick);
         onClick();
       });
-      console.log("set on", rmfn);
       setRmListener(() => rmfn);
-      //tma?.expand();
     }
   }, [onClick]);
 
@@ -76,7 +65,7 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
             Address.parse(ref);
             dispatch(setReferral(ref));
           } catch (e) {
-            console.log("Refferal wrong", e);
+            console.error("Refferal wrong", e);
           }
         }
       }
@@ -93,8 +82,7 @@ function MainButton({ title, onClick, visible }: Props) {
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
 
   if (isTmaLoading) return <></>;
-  if (isTma)
-    return <MainButtonTMA title={title} onClick={onClick} visible={visible} />;
+  if (isTma) return <MainButtonTMA title={title} onClick={onClick} visible={visible} />;
   return (
     <>
       {visible && (
@@ -103,7 +91,7 @@ function MainButton({ title, onClick, visible }: Props) {
             style={{
               height: "5rem",
             }}
-          ></div>
+          />
           <div className="mainbutton-container">
             <button onClick={onClick} className="primary-btn">
               {title}

@@ -4,8 +4,10 @@ WORKDIR /architecton
 
 COPY package*.json .
 
-RUN npm i
+RUN npm install -g pnpm
+
+RUN pnpm i
 
 COPY . .
 
-CMD ["npm run build"]
+CMD ["pnpm run build"]
