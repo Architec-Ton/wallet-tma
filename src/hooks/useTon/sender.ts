@@ -120,7 +120,9 @@ export const useSender = (): Sender => {
           const transfer = await contract.createTransfer({
             seqno: seqno_current,
             secretKey: privateKey,
-            sendMode: args.sendMode ? SendMode.CARRY_ALL_REMAINING_BALANCE + args.sendMode : SendMode.CARRY_ALL_REMAINING_BALANCE,
+            sendMode: args.sendMode 
+            ? (args.sendMode < SendMode.CARRY_ALL_REMAINING_BALANCE ? SendMode.CARRY_ALL_REMAINING_BALANCE + args.sendMode : args.sendMode) 
+            : SendMode.CARRY_ALL_REMAINING_BALANCE,
             messages: [
               internal({
                 value: args.value,
