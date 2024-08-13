@@ -41,7 +41,7 @@ export const gamingApi = createApi({
     }),
     subscribeTournament: builder.mutation<unknown, string>({
       query: (id) => ({
-        url: `https://tournaments-dev.architecton.site/api/v1/game_participation/take-participation`,
+        url: `https://tournaments.architecton.site/api/v1/game_participation/take-participation`,
         method: "POST",
         body: { game_id: id },
       }),
