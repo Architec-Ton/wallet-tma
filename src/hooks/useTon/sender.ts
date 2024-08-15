@@ -1,5 +1,5 @@
 import type { Sender, SenderArguments } from "@ton/core";
-import { Address, internal, toNano } from "@ton/core";
+import { Address, internal } from "@ton/core";
 import type { KeyPair } from "@ton/crypto";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
@@ -87,21 +87,6 @@ export const useSender = (): Sender => {
 
           // Get balance
           const balance: bigint = await contract.getBalance();
-
-          // NOTE: Temporary check, for avoid infinite tries
-          const isEnoughTONValue = balance - args.value > toNano(0.2);
-
-          if (!isEnoughTONValue) {
-            dispatch(
-              showAlert({
-                message:
-                  "You have an insufficient amount of TON tokens to complete the transfer transaction, including blockchain fees",
-                duration: 8000,
-              }),
-            );
-
-            return;
-          }
 
           // Create a transfer
           const seqno_current: number = await contract.getSeqno();

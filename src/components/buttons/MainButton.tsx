@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 
 import { useCloudStorage, useInitData, useMainButton, useViewport } from "@tma.js/sdk-react";
 import { Address } from "@ton/core";
@@ -8,37 +8,33 @@ import { setReferral } from "features/tma/tmaSlice";
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import type { EventHandler } from "hooks/useTma";
 
-type Props = {
+interface MainButtonProps {
   title?: string;
   onClick?: EventHandler;
   visible: boolean;
-};
+}
 
-function MainButtonTMA({ title, onClick, visible }: Props) {
+const MainButtonTMA = memo(({ title, onClick, visible }: MainButtonProps) => {
   const mb = useMainButton();
   const tma = useViewport();
   const storage = useCloudStorage();
   const dispatch = useAppDispatch();
   const initData = useInitData();
-  const [rmListener, setRmListener] = useState<() => void>(() => {});
-
-  useEffect(() => {
-    if (rmListener) {
-      rmListener();
-      setRmListener(() => {});
-    }
-    if (onClick !== undefined) {
-      const rmfn = mb.on("click", () => {
-        onClick();
-      });
-      setRmListener(() => rmfn);
-    }
-  }, [onClick]);
 
   useEffect(() => {
     mb.setBgColor("#07ACFF");
     mb.setTextColor("#FFFFFF");
-  }, []);
+  }, [mb]);
+
+  useEffect(() => {
+    if (onClick !== undefined) {
+      const rmfn = mb.on("click", onClick);
+
+      return () => rmfn();
+    }
+
+    return undefined;
+  }, [onClick, mb]);
 
   useEffect(() => {
     if (visible && title) {
@@ -49,8 +45,9 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
     } else {
       mb.hide();
     }
-  }, [title, visible]);
+  }, [mb, title, visible]);
 
+  // TODO: Вынести из MainButton эту логику
   useEffect(() => {
     const initTma = async () => {
       if (initData && storage) {
@@ -73,34 +70,36 @@ function MainButtonTMA({ title, onClick, visible }: Props) {
 
     tma?.expand();
     initTma();
-  }, [tma, initData]);
-  return <></>;
-}
+  }, [storage, dispatch, tma, initData]);
 
-function MainButton({ title, onClick, visible }: Props) {
+  return null;
+});
+
+const MainButton = memo(({ title, onClick, visible }: MainButtonProps) => {
   const isTma = useAppSelector(selectIsTma);
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
 
-  if (isTmaLoading) return <></>;
+  if (isTmaLoading) return null;
+
   if (isTma) return <MainButtonTMA title={title} onClick={onClick} visible={visible} />;
+
   return (
-    <>
-      {visible && (
-        <>
-          <div
-            style={{
-              height: "5rem",
-            }}
-          />
-          <div className="mainbutton-container">
-            <button onClick={onClick} className="primary-btn">
-              {title}
-            </button>
-          </div>
-        </>
-      )}
-    </>
+    visible && (
+      <>
+        <div
+          style={{
+            height: "5rem",
+          }}
+        />
+
+        <div className="mainbutton-container">
+          <button onClick={onClick} className="primary-btn">
+            {title}
+          </button>
+        </div>
+      </>
+    )
   );
-}
+});
 
 export default MainButton;

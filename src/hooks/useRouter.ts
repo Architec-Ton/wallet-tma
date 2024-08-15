@@ -10,11 +10,12 @@ function useRouter() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { setMainButtonHandler } = useTmaState();
+
   const navigateFunc = async (url: To | number, options?: NavigateOptions) => {
     // dispatch(setTitle({}));
     dispatch(setMainButtonVisible(false));
     setMainButtonHandler({
-      onClick: () => {},
+      onClick: undefined,
     });
     dispatch(setLoading(true));
     dispatch(setTitle({}));

@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import pinCodeModalThunkActions from "features/modal/pinModal";
@@ -10,21 +11,24 @@ function usePinCodeModalManagement() {
   const dispatch: AppDispatch = useDispatch();
   const isOpened = useSelector(pincodeIsOpenedSelector);
 
-  const open = async () => {
+  const open = useCallback(async () => {
     const { payload } = await dispatch(pinCodeModalThunkActions.open());
     return payload as string | undefined;
-  };
+  }, [dispatch]);
 
-  const confirm = (value: string | undefined) => dispatch(pinCodeModalActions.confirm(value));
+  const confirm = useCallback((value: string | undefined) => dispatch(pinCodeModalActions.confirm(value)), [dispatch]);
 
-  const decline = () => dispatch(pinCodeModalActions.decline());
+  const decline = useCallback(() => dispatch(pinCodeModalActions.decline()), [dispatch]);
 
-  return {
-    isOpened,
-    open,
-    confirm,
-    decline,
-  };
+  return useMemo(
+    () => ({
+      isOpened,
+      open,
+      confirm,
+      decline,
+    }),
+    [isOpened, open, confirm, decline],
+  );
 }
 
 export default usePinCodeModalManagement;
