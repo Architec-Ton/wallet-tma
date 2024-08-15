@@ -6,11 +6,11 @@ import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
 import { useAppSelector } from "hooks/useAppDispatch";
 import useRouter from "hooks/useRouter";
 
-type Props = {
+interface BackButtonProps {
   visible: boolean;
-};
+}
 
-function BackButtonTMA({ visible }: Props) {
+function BackButtonTMA({ visible }: BackButtonProps) {
   const bb = useBackButton();
   const navigate = useRouter();
 
@@ -29,14 +29,19 @@ function BackButtonTMA({ visible }: Props) {
       bb.off("click", handleBackClick);
     };
   }, [bb, navigate, visible]);
-  return <></>;
+
+  return null;
 }
 
-function BackButton({ visible }: Props) {
+function BackButton({ visible }: BackButtonProps) {
   const isTma = useAppSelector(selectIsTma);
+
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
-  if (isTmaLoading) return <></>;
+
+  if (isTmaLoading) return null;
+
   if (isTma) return <BackButtonTMA visible={visible} />;
+
   return <>{visible && <></>}</>;
 }
 

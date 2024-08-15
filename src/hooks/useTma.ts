@@ -28,7 +28,7 @@ export function useTmaMainButton() {
     () => () => {
       dispatch(setMainButtonVisible(false));
       setMainButtonHandler({
-        onClick: () => {},
+        onClick: undefined,
       });
     },
     [],
