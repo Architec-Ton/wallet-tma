@@ -24,7 +24,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
 
   return (
     <ListBlock>
-      {group.map((item: GameListItemType) => (
+      {group.map((item: GameListItemType, idx) => (
         <ListBlockItem
           key={item.id}
           thumb={item.icon}
@@ -32,6 +32,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
           iconAction={iconButtonArraw}
           description={item.subtitle}
           onClick={clickHandler(item.id)}
+          isPartner={item.isPartner}
         />
       ))}
     </ListBlock>
