@@ -24,7 +24,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
 
   return (
     <ListBlock>
-      {group.map((item: GameListItemType, idx) => (
+      {group.map((item: GameListItemType) => (
         <ListBlockItem
           key={item.id}
           thumb={item.icon}
