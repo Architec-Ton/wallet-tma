@@ -31,6 +31,57 @@
   border-radius: var(--spacing-12);
 }
 
+@keyframes gradientAnimation {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.list-block__icon-wrapper {
+  position: relative;
+}
+
+.list-block__icon--framed {
+  outline: 3px solid var(--primary-color);
+  outline-offset: -3px;
+}
+
+.list-block__icon--framed-logo {
+  position: absolute;
+  background-color: var(--primary-color);
+  bottom: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  padding: 3px;
+  border-radius: var(--spacing-12);
+  box-sizing: content-box;
+  z-index: 2;
+}
+
+.list-block__icon--framed-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.list-block__icon--framed-gradient {
+  position: absolute;
+  width: calc(100%);
+  height: calc(100%);
+  border-radius: var(--spacing-12);
+  top: 0;
+  background: var(--partner-animation);
+  background-blend-mode: soft-light;
+  background-size: 200% 200%;
+  animation: gradientAnimation 8s ease infinite;
+}
+
 .list-block__description {
   color: var(--text-secondary-color);
   font-size: var(--font-size-small);

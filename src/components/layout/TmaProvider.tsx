@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { ReactNode } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
 import { useApiAuthMutation } from "features/auth/authApi";
@@ -21,11 +21,11 @@ import { useTonClient } from "hooks/useTonClient";
 
 import MainButton from "../buttons/MainButton";
 
-type Props = {
+interface TmaProviderProps {
   children: ReactNode;
-};
+}
 
-export function TmaProvider({ children }: Props) {
+export function TmaProvider({ children }: TmaProviderProps) {
   const dispatch = useAppDispatch();
 
   const mainButtonIsVisible = useAppSelector(selectMainButtonIsVisible);
@@ -38,7 +38,7 @@ export function TmaProvider({ children }: Props) {
   const auth = useAppSelector(selectAuth);
   const [authApi] = useApiAuthMutation();
   const [mainButtonHandler, setMainButtonHandler] = useState<TmaMainButton>({
-    onClick: () => {},
+    onClick: undefined,
   });
   const { client } = useTonClient();
 
@@ -95,27 +95,9 @@ export function TmaProvider({ children }: Props) {
             queryId: initDataRaw.result.queryId,
             user: userData,
           } as AuthInitData;
-          // const initTon = ton.wallet
-          //   ? ({
-          //       network: ton.wallet.network,
-          //       address: ton.wallet.address?.toString(),
-          //       //publicKey: ton.wall
-          //     } as AuthInitTon)
-          //   : undefined;
-          dispatch(setAccount(accountData));
 
-          // handleAuth(auth, initTon);
+          dispatch(setAccount(accountData));
         }
-      } else {
-        // Add login by web
-        // const initTon = ton.wallet
-        //   ? ({
-        //       network: ton.wallet.network,
-        //       address: ton.wallet.address?.toString(),
-        //       //publicKey: ton.wall
-        //     } as AuthInitTon)
-        //   : undefined;
-        // handleAuth(undefined, initTon);
       }
       dispatch(setIsTmaReady(true));
     }
@@ -134,9 +116,12 @@ export function TmaProvider({ children }: Props) {
     }
   }, [isTmaReady, isTonReady, ton.wallet]);
 
+  const tmaContextValue = useMemo(() => ({ setMainButtonHandler }), [setMainButtonHandler]);
+
   return (
-    <TmaStateContext.Provider value={{ setMainButtonHandler }}>
+    <TmaStateContext.Provider value={tmaContextValue}>
       {children}
+
       <MainButton
         title={mainButtonTitle}
         visible={mainButtonIsVisible && !isTmaLoading && !pincode.isOpened}

@@ -1,6 +1,16 @@
+import { createSelector } from "@reduxjs/toolkit";
+
 import type { RootState } from "../../store";
 
-export const selectMainButtonTitle = (state: RootState) => state.btn.title;
-export const selectMainBUttonIsLoading = (state: RootState) => state.btn.isLoading;
-export const selectMainButtonIsVisible = (state: RootState) => state.btn.isVisible;
-// export const selectIsApiLoading = (state: RootState) => state.page.isApiLoading;
+const selectBtnState = (state: RootState) => state.btn;
+
+export const selectMainButtonTitle = createSelector(selectBtnState, (btn) => btn.title);
+
+export const selectMainButtonIsLoading = createSelector(selectBtnState, (btn) => btn.isLoading);
+
+export const selectMainButtonIsVisible = createSelector(selectBtnState, (btn) => btn.isVisible);
+
+// export const selectIsApiLoading = createSelector(
+//   (state: RootState) => state.page,
+//   (page) => page.isApiLoading
+// );

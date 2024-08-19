@@ -1,8 +1,9 @@
 export type GameListItemType = {
   icon: string;
+  id: string;
+  isPartner: boolean;
   title: string;
   subtitle: string;
-  id: string;
   rating: number;
   date?: number;
 };

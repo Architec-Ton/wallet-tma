@@ -32,6 +32,7 @@ const GameListItemGroup = ({ group }: OwnPropsType) => {
           iconAction={iconButtonArraw}
           description={item.subtitle}
           onClick={clickHandler(item.id)}
+          isPartner={item.isPartner}
         />
       ))}
     </ListBlock>

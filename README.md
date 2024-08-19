@@ -56,3 +56,17 @@ docker run <container_name>
 [English Telegram channel](https://t.me/architecton_eu)
 
 [Chat for dicsussions](https://t.me/architec_ton)
+
+
+# Install certbot
+
+```bash
+apt install git nginx certbot python3-certbot-nginx -y
+```
+
+# Install certs
+
+
+```bash
+certbot --nginx -d DOMAIN_NAME
+```
