@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import classNames from "classnames";
+import { selectAuthIsReady } from "features/auth/authSelector";
 import { useGetGameQuery } from "features/gaming/gamingApi";
 import { setLoading } from "features/page/pageSlice";
 import { SwiperSlide } from "swiper/react";
@@ -23,7 +24,6 @@ import Tournament from "components/ui/games/tournament";
 import Slider from "components/ui/slider";
 
 import "./index.css";
-import { selectAuthIsReady } from "features/auth/authSelector";
 
 const typedIcons = {
   website: iconGlobalButton,
@@ -39,7 +39,7 @@ const GamePage = () => {
   // const [walletInfoApi] = useApiWalletInfoMutation();
   // const navigate = useNavigate();
   const isReady = useAppSelector(selectAuthIsReady);
-  const { data: game, isLoading } = useGetGameQuery(id as string, { skip: !isReady});
+  const { data: game, isLoading } = useGetGameQuery(id as string, { skip: !isReady });
   // const isTma = useAppSelector(selectIsTma);
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
 
@@ -128,7 +128,13 @@ const GamePage = () => {
 
   return (
     <Page>
-      <Tile title={game?.title} description={game?.subtitle} icon={game?.icon} className="game-page__header">
+      <Tile
+        title={game?.title}
+        description={game?.subtitle}
+        icon={game?.icon}
+        isPartner={!!game?.isPartner}
+        className="game-page__header"
+      >
         <div className="game-controls">
           <LinkButton className="primary-button primary-btn" to={game?.url || ""}>
             {t("play")}

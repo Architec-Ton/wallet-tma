@@ -39,7 +39,7 @@ const GameIcon = ({ thumb, framed }: { thumb: string; framed: boolean }) => (
   </div>
 );
 
-const LogoSVG = () => (
+export const LogoSVG = () => (
   <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M60.517 23.1045L37.7935 46.4483C37.318 46.9367 37.324 47.7167 37.8068 48.1978L48.0349 58.3898C48.4375 58.791 49.0609 58.8684 49.5494 58.5778L62.0448 51.145C62.422 50.9206 62.6531 50.5143 62.6531 50.0755L62.6531 23.9725C62.6531 22.8558 61.2959 22.3043 60.517 23.1045Z"
