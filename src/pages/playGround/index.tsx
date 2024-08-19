@@ -23,6 +23,7 @@ import Tabs from "components/ui/tabs";
 import Tab from "components/ui/tabs/Tab";
 
 import "./index.css";
+import { selectAuthIsReady } from "features/auth/authSelector";
 
 type SearchParamsType = {
   direction?: string;
@@ -46,15 +47,17 @@ function PlayGround() {
   const [searchParams, setSearchParams] = useState<SearchParamsType>();
   const [isSearchParamsChanged, setIsSearchParamsChanged] = useState<boolean>(false);
   const [filteredGames, setFilteredGames] = useState<AppsList | null>();
+  const isReady = useAppSelector(selectAuthIsReady);
 
   useEffect(() => {
-    getCategories(undefined);
-    getTopGames(undefined);
-
+    if (isReady) {
+      getCategories(undefined);
+      getTopGames(undefined);
+    }
     return () => {
       dispatch(clearFilter());
     };
-  }, []);
+  }, [isReady]);
 
   useEffect(() => {
     if (games) {

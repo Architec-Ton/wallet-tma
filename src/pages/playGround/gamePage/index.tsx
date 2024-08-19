@@ -8,7 +8,7 @@ import { SwiperSlide } from "swiper/react";
 
 import { iconCoinButton, iconGlobalButton, iconSendButton } from "assets/icons/buttons";
 
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import useLanguage from "hooks/useLanguage";
 
 // import { GameResource } from 'types/gameTypes';
@@ -23,6 +23,7 @@ import Tournament from "components/ui/games/tournament";
 import Slider from "components/ui/slider";
 
 import "./index.css";
+import { selectAuthIsReady } from "features/auth/authSelector";
 
 const typedIcons = {
   website: iconGlobalButton,
@@ -37,7 +38,8 @@ const GamePage = () => {
   // const utils = useUtils();
   // const [walletInfoApi] = useApiWalletInfoMutation();
   // const navigate = useNavigate();
-  const { data: game, isLoading } = useGetGameQuery(id as string);
+  const isReady = useAppSelector(selectAuthIsReady);
+  const { data: game, isLoading } = useGetGameQuery(id as string, { skip: !isReady});
   // const isTma = useAppSelector(selectIsTma);
   // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
 
