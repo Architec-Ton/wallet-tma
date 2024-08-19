@@ -28,7 +28,7 @@ const SearchBar = ({ onChange, value }: OwnPropsType) => {
     <Input
       type="text"
       value={searchValue}
-      placeholder={t("search")}
+      placeholder={t("Search")}
       onChange={searchHandler}
       prefix={<SearchIconComponent />}
       className="search-bar"
