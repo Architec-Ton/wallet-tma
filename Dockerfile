@@ -10,4 +10,4 @@ RUN pnpm i
 
 COPY . .
 
-CMD ["pnpm run build"]
+CMD ["npm run build"]
