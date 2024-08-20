@@ -39,6 +39,7 @@ export interface IGame {
   category: number;
   resources: GameResource[];
   rating: number;
+  isPartner: boolean;
 }
 
 export interface GameResource {

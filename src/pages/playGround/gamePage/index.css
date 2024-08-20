@@ -1,11 +1,12 @@
 .game-page__header {
   background-color: transparent;
+  padding: 0;
 }
 
 .game-page__header .tile-icon {
   width: var(--thumbnail-width);
   height: var(--thumbnail-height);
-  border-radius: var(--spacing-16);
+  border-radius: var(--spacing-20);
 }
 
 .game-page__header .tile-body {
