@@ -37,6 +37,7 @@ import Welcome from "./pages/registration/Welcome";
 // import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from "./pages/send/send";
 import Swap from "./pages/swap";
+import Market from "pages/market";
 
 const router = createBrowserRouter(
   [
@@ -168,6 +169,10 @@ const router = createBrowserRouter(
     {
       path: "/bank/referal",
       element: <BankReferral />,
+    },
+    {
+      path: "/market",
+      element: <Market />,
     },
   ],
   { basename: "/wallet" },
