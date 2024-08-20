@@ -16,7 +16,7 @@ interface OwnProps<T> extends HTMLAttributes<T> {
   iconAction?: string;
   style?: CSSProperties;
   className?: string;
-  isPartner: boolean;
+  isVerified?: boolean;
 
   children?: React.ReactNode;
 }
@@ -28,17 +28,17 @@ function Tile({
   iconAction,
   style,
   className,
-  isPartner,
+  isVerified,
   children,
   ...divProps
 }: OwnProps<HTMLDivElement>) {
   return (
     <Block style={style} direction="row" className={cn("tile", className)} {...divProps}>
       <Row>
-        {icon && <GameIcon icon={icon} framed={isPartner} />}
+        {icon && <GameIcon icon={icon} framed={!!isVerified} />}
         <div className="tile-body">
           <h2 className="tile-header2">
-            {title} {isPartner && <VerifiedIcon />}
+            {title} {isVerified && <VerifiedIcon />}
           </h2>
           <p>{description}</p>
           {children}

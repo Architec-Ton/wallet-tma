@@ -132,7 +132,7 @@ const GamePage = () => {
         title={game?.title}
         description={game?.subtitle}
         icon={game?.icon}
-        isPartner={!!game?.isPartner}
+        isVerified={!!game?.isPartner}
         className="game-page__header"
       >
         <div className="game-controls">
