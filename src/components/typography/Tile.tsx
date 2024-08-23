@@ -58,7 +58,7 @@ function Tile({
 }
 
 const GameIcon = ({ icon, framed }: { icon: string; framed: boolean }) => (
-  <div className="tile-icon-wrapper">
+  <div className="tile-icon-wrapper" style={{ height: framed ? "var(--thumbnail-height)" : "unset" }}>
     <img src={icon} alt="" className={cn({ "tile-icon": true, "tile-icon--framed": framed })} />
 
     {framed && (
