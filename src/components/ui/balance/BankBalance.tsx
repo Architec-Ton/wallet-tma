@@ -12,6 +12,7 @@ import Row from "../../containers/Row";
 import Block from "../../typography/Block";
 import Address from "./Address";
 import "./Balance.styles.css";
+import useIsIphone from "hooks/useIsIphone";
 
 type Props = {
   address?: string;
@@ -23,6 +24,7 @@ type Props = {
 function BankBalance({ children, arcAmount, bnkAmount, address }: Props) {
   const navigate = useRouter();
   const t = useLanguage("bank-balance");
+  const isIphone = useIsIphone();
   return (
     <Block className="balance-block space-between">
       <Column className="w-100 start">
@@ -47,9 +49,10 @@ function BankBalance({ children, arcAmount, bnkAmount, address }: Props) {
             margin: "var(--spacing-16) 0",
           }}
         >
-          <Button icon={iconBankButton} onClick={() => navigate("/bank/buy")} className="buy-button">
+          {!isIphone && <Button icon={iconBankButton} onClick={() => navigate("/bank/buy")} className="buy-button">
             {t("Buy", "button")}
           </Button>
+          }
         </Row>
 
         {children}
