@@ -8,7 +8,6 @@
 
 .tile-icon-wrapper {
   position: relative;
-  height: var(--thumbnail-height);
 }
 
 .tile-icon--framed {
