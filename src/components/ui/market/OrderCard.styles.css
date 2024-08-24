@@ -1,0 +1,28 @@
+.card-icon-container {
+  position: relative;
+}
+
+.primary-icon {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  border-radius: 50%;
+  background-color: var(--text-secondary-color);
+}
+
+.secondary-icon {
+  position: absolute;
+  width: var(--spacing-20);
+  height: var(--spacing-20);
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  bottom: 0;
+  right: 0;
+}
+
+.market-order-card .order-data-row {
+  justify-content: flex-start;
+}
+
+.market-order-card .order-data-row div:first-child {
+  width: 40%;
+}

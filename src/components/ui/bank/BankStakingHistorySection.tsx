@@ -9,6 +9,7 @@ import Block from "../../typography/Block";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import "./BankStakingHistorySection.styles.css";
+import DataLossBlock from "components/typography/DataLossBlock";
 
 export type StakeHistoryType = {
   date: string;
@@ -28,7 +29,7 @@ const BankStakingHistorySection = ({ stakeHistory, title, readMore, onClaim }: O
   const t = useLanguage("bank-stake-history");
   return (
     <Section title={title} readMore={readMore}>
-      {!stakeHistory && <Block className="stake-history-loss">{t("empty-description")}</Block>}
+      {!stakeHistory && <DataLossBlock>{t("empty-description")}</DataLossBlock>}
       {stakeHistory && (
         <ListBlock>
           <ListBaseItem>

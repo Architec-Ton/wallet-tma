@@ -18,6 +18,7 @@ import tmaReducer from "../features/tma/tmaSlice";
 import tonReducer from "../features/ton/tonSlice";
 import { walletApi } from "../features/wallet/walletApi";
 import walletSlice from "../features/wallet/walletSlice";
+import marketSlice from "features/market/marketSlice";
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +34,7 @@ export const store = configureStore({
     alert: alertReducer,
     pincode: pinCodeModalReducer,
     trx: trxModalReducer,
+    market: marketSlice,
     [trxApi.reducerPath]: trxApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,

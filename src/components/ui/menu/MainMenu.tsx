@@ -3,6 +3,7 @@ import React from "react";
 import {
   iconMenuMainAccount,
   iconMenuMainApps,
+  iconMenuMainMarket,
   iconMenuMainNews,
   iconMenuMainWallet,
 } from "assets/icons/menus/main/index";
@@ -19,6 +20,7 @@ function MainMenu() {
   const menuItems: MenuItem[] = [
     { to: "/", icon: iconMenuMainWallet, label: t("wallet") },
     { to: "/playground", icon: iconMenuMainApps, label: t("apps") },
+    { to: "/market", icon: iconMenuMainMarket, label: t("market") },
     { to: "/news", icon: iconMenuMainNews, label: t("news") },
     { to: "/account", icon: iconMenuMainAccount, label: t("account") },
   ];

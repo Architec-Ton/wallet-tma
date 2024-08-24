@@ -1,0 +1,9 @@
+.select-button {
+  display: flex;
+  gap: var(--spacing-4);
+  border: none;
+  color: var(--primary-color);
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}

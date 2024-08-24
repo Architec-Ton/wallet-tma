@@ -21,6 +21,7 @@ import iconSettingsButton from "./setting-2.svg";
 import iconSortButton from "./sort.svg";
 import iconStakeButton from "./stake.svg";
 import iconTasksButton from "./tasks.svg";
+import iconArrowDropdownButton from "./arrow-dropdown.svg";
 
 export {
   logOutIcon,
@@ -47,4 +48,5 @@ export {
   iconTasksButton,
   iconButtonCopyLight,
   iconButtonProfileUsers,
+  iconArrowDropdownButton,
 };

@@ -38,6 +38,10 @@ import Welcome from "./pages/registration/Welcome";
 import SendPage from "./pages/send/send";
 import Swap from "./pages/swap";
 import Market from "pages/market";
+import CreateMarketOrder from "pages/market/createOrder";
+import ConfirmOrder from "pages/market/confirmOrder";
+import MarketBuy from "pages/market/buy";
+import MarketSell from "pages/market/sell";
 
 const router = createBrowserRouter(
   [
@@ -173,6 +177,22 @@ const router = createBrowserRouter(
     {
       path: "/market",
       element: <Market />,
+    },
+    {
+      path: "/market/buy",
+      element: <MarketBuy />,
+    },
+    {
+      path: "/market/sell",
+      element: <MarketSell />,
+    },
+    {
+      path: "/market/create-order",
+      element: <CreateMarketOrder />,
+    },
+    {
+      path: "/market/create-order/confirm",
+      element: <ConfirmOrder />,
     },
   ],
   { basename: "/wallet" },

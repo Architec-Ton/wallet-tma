@@ -1,0 +1,75 @@
+import classNames from "classnames";
+import Page from "components/containers/Page";
+import Row from "components/containers/Row";
+import Section from "components/containers/Section";
+import Block from "components/typography/Block";
+import ListBlock from "components/ui/listBlock";
+import ListBaseItem from "components/ui/listBlock/ListBaseItem";
+import { marketSelector } from "features/market/marketSelectors";
+import { MarketModeEnum } from "features/market/marketSlice";
+import { useAppSelector } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+import { usePage } from "hooks/usePage";
+import { useTmaMainButton } from "hooks/useTma";
+import React, { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+
+const ConfirmOrder = () => {
+  const t = useLanguage("market-order-confirm")
+  const btn = useTmaMainButton()
+  const page = usePage()
+  const navigate = useNavigate()
+  const { primaryAsset, secondaryAsset, mode: orderMode, primaryValue, secondaryValue } = useAppSelector(marketSelector)
+
+  useEffect(() => {
+    page.setLoading(false)
+  }, [])
+
+  useEffect(() => {
+    btn.init("Confirm", () => {
+      // TODO: send transaction
+      navigate("/market", {replace: true})
+    }, true)
+  }, [primaryValue, secondaryValue])
+
+  const textContents = orderMode === MarketModeEnum.BUY 
+  ? { primaryTitle: t("you-buy"), secondaryTitle: t("you-give")}
+  : { primaryTitle: t("you-sell"), secondaryTitle: t("you-receive")}
+
+  return (
+    <Page>
+      <Section title={textContents.primaryTitle}>
+        <Block>
+          <Row className="w-full">
+            <img src="" alt="" className="market-asset-icon" />
+            <div className="grow">{primaryAsset?.meta?.symbol}</div>
+            <div>{primaryValue}</div>
+          </Row>
+        </Block>
+      </Section>
+      <Section title={textContents.secondaryTitle}>
+        <Block>
+          <Row className="w-full">
+            <img src="" alt="" className="market-asset-icon" />
+            <div className="grow">{secondaryAsset?.meta?.symbol}</div>
+            <div>{secondaryValue}</div>
+          </Row>
+        </Block>
+      </Section>
+      <Section title={t("info")}>
+        <ListBlock>
+          <ListBaseItem className="w-full">
+            <div className="grow">{t("commission", "transaction")}</div>
+            <div>0.02 TON</div>
+          </ListBaseItem>
+          <ListBaseItem className="w-full">
+            <div className="grow">{t("gas", "transaction")}</div>
+            <div>~ 0.3 TON</div>
+          </ListBaseItem>
+        </ListBlock>
+      </Section>
+    </Page>
+  )
+}
+
+export default ConfirmOrder
