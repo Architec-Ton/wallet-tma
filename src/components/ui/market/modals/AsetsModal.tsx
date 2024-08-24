@@ -25,6 +25,7 @@ const AssetsModal = ({title, onSelect, onClose, assets}: AssetsModalPropsType) =
   const t = useLanguage("")
   const [showAssets, setShowAssets] = useState<boolean>(true)
   const [showNfts, setShowNfts] = useState<boolean>(false)
+  const [filteredAssets, setFilteredAssets] = useState<CoinDto[]>(assets)
 
   const assetsTabHandler = () => {
     setShowAssets(true)
@@ -37,7 +38,11 @@ const AssetsModal = ({title, onSelect, onClose, assets}: AssetsModalPropsType) =
   }
 
   const searchHandler = (value: string) => {
-    console.log("search", value)
+    if (showAssets) {
+      const lcValue = value.toLowerCase()
+      const filteredAssets = assets.filter(asset => asset.meta?.symbol?.toLowerCase().includes(lcValue))
+      setFilteredAssets(filteredAssets)
+    }
   }
 
   return (
@@ -53,7 +58,7 @@ const AssetsModal = ({title, onSelect, onClose, assets}: AssetsModalPropsType) =
         </Row>
         {showAssets && (
           <ListBlock>
-            {assets && assets.map(asset => (
+            {filteredAssets && filteredAssets.map(asset => (
               <ListBaseItem onClick={() => onSelect(asset)} key={asset.meta?.address}>
                 <img className="asset-modal-icon" src={asset.meta?.image || asset.meta?.imageData} alt="" />
                 <div className="grow">{asset.meta?.symbol}</div>

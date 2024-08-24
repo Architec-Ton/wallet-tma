@@ -40,8 +40,8 @@ import Swap from "./pages/swap";
 import Market from "pages/market";
 import CreateMarketOrder from "pages/market/createOrder";
 import ConfirmOrder from "pages/market/confirmOrder";
-import MarketBuy from "pages/market/buy";
-import MarketSell from "pages/market/sell";
+import ConfirmAction from "pages/market/confirmAction";
+import MarketOrder from "pages/market/order";
 
 const router = createBrowserRouter(
   [
@@ -179,12 +179,12 @@ const router = createBrowserRouter(
       element: <Market />,
     },
     {
-      path: "/market/buy",
-      element: <MarketBuy />,
+      path: "/market/order",
+      element: <MarketOrder />,
     },
     {
-      path: "/market/sell",
-      element: <MarketSell />,
+      path: "/market/order/:id",
+      element: <ConfirmAction />,
     },
     {
       path: "/market/create-order",

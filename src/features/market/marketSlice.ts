@@ -35,6 +35,10 @@ const marketSlice = createSlice({
       state.primaryValue = action.payload.primaryValue
       state.secondaryValue = action.payload.secondaryValue
     },
+    clearOrderAssets(state: MarketState) {
+      state.primaryAsset = undefined
+      state.secondaryAsset = undefined
+    }
   }
 })
 
@@ -43,6 +47,7 @@ export const {
   setOrderPrimaryAsset,
   setOrderSecondaryAsset,
   setOrderValues,
+  clearOrderAssets,
 } = marketSlice.actions
 
 export default marketSlice.reducer

@@ -7,65 +7,22 @@ import Row from "components/containers/Row";
 import Column from "components/containers/Column";
 import { iconMenuWalletAdd, iconMenuWalletSend } from "assets/icons/menus/wallet";
 import { Link } from "react-router-dom";
-
-import "./index.css";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { iconMessageQuestion } from "assets/icons/globals";
 import { iconButtonArraw } from "assets/icons/buttons";
 import { useClosure } from "hooks/useClosure";
-import { MarketModeEnum, setMarketMode } from "features/market/marketSlice";
+import { clearOrderAssets, MarketModeEnum, setMarketMode } from "features/market/marketSlice";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { usePage } from "hooks/usePage";
 import Page from "components/containers/Page";
 import DataLossBlock from "components/typography/DataLossBlock";
-import SelectButton from "components/ui/buttons/selectButton";
 import MarketOrderCard from "components/ui/market/OrderCard";
-import { MarketOrderDto } from "types/market";
 import DropDown, { DropDownDto } from "components/ui/dropdown";
 import OrderHistory from "components/ui/market/OrderHistory";
+import { order } from "./mock";
 
-const order: MarketOrderDto = {
-  type: MarketModeEnum.BUY,
-  assets: {
-    primaryAsset: {
-      type: "jetton",
-      amount: 100,
-      usdPrice: 1,
-      changePrice: 1.1,
-      meta: {
-        name: "BNK",
-        description: "",
-        address: "bnk-adress",
-        url: "",
-        image: "",
-        imageData: "",
-        decimals: 6,
-        symbol: "BNK",
-      }
-    },
-    secondaryAsset: {
-      type: "jetton",
-      amount: 10,
-      usdPrice: 10,
-      changePrice: 10.1,
-      meta: {
-        name: "USDT",
-        description: "",
-        address: "usdt-adress",
-        url: "",
-        image: "",
-        imageData: "",
-        decimals: 6,
-        symbol: "USDT",
-      }
-    }
-  },
-  date: 1724238416,
-  status: "Created",
-  primaryValue: 10,
-  secondaryValue: 90,
-}
+import "./index.css";
 
 const historyDropDownData: DropDownDto[] = [
   {key: "active", value: "Active"},
@@ -86,6 +43,7 @@ const Market = () => {
 
   const marketActionHandler = useClosure((mode: MarketModeEnum) => {
     dispatch(setMarketMode(mode))
+    dispatch(clearOrderAssets())
   })
 
   const myAdsHandler = () => {}
@@ -116,13 +74,13 @@ const Market = () => {
         <Column>
           <Block>
             <Row className="market-menu">
-              <Link to="buy" onClick={marketActionHandler(MarketModeEnum.BUY)}>
+              <Link to="order" onClick={marketActionHandler(MarketModeEnum.BUY)}>
                 <Column className="market-menu-item">
                   <img src={iconMenuWalletAdd} alt="" />
                   <span>{t("buy")}</span>
                 </Column>
               </Link>
-              <Link to="sell" onClick={marketActionHandler(MarketModeEnum.SELL)}>
+              <Link to="order" onClick={marketActionHandler(MarketModeEnum.SELL)}>
                 <Column className="market-menu-item">
                   <img src={iconMenuWalletSend} alt="" />
                   <span>{t("sell")}</span>

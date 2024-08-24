@@ -7,6 +7,9 @@ export interface MarketOrderDto {
   status: string;
   primaryValue: number;
   secondaryValue: number;
+  uid: string;
+  userName?: string;
+  stats?: string;
   assets: {
     primaryAsset: CoinDto;
     secondaryAsset: CoinDto;

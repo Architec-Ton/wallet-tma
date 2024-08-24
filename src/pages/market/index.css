@@ -46,10 +46,24 @@
   justify-content: space-between;
 }
 
-.amount-filter {
+.orders-filter {
+  align-items: stretch;
+}
+
+.amount-block .responsive-input {
+  height: var(--font-size-mlarge);
+}
+
+.amount-block .responsive-input-title {
   padding: 0;
-  width: fit-content;
-  min-width: var(--spacing-16);
+}
+
+.amount-block .responsive-input input,
+.amount-block .responsive-input .asset-value {
+  font-size: var(--font-size-medium);
+  line-height: var(--font-size-mlarge);
+  height: var(--font-size-mlarge);
+  text-align: left;
 }
 
 @media (prefers-color-scheme: dark) {

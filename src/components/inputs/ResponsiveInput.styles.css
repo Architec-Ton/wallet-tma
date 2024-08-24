@@ -1,0 +1,53 @@
+.responsive-input-container {
+  gap: var(--spacing-4);
+  align-items: flex-end;
+}
+
+.responsive-input input {
+  border: none;
+  background: none;
+  padding: 0;
+  width: 100%;
+  color: transparent;
+  position: absolute;
+  height: var(--font-size-xlarge);
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-medium);
+  line-height: var(--font-size-xlarge);
+  text-align: right;
+  caret-color: black;
+  bottom: 0;
+}
+.responsive-input {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  min-width: 1.2rem;
+  max-width: 182px;
+  gap: 0;
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-medium);
+  line-height: var(--font-size-xlarge);
+  height: var(--font-size-xlarge);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.responsive-input.warning {
+  color: var(--error-color);
+}
+
+.asset-value {
+  position: relative;
+  text-wrap: nowrap;
+}
+
+.responsive-input input::placeholder {
+  color: var(--text-secondary-color);
+}
+
+.responsive-input-title {
+  color: var(--text-secondary-color);
+  padding-bottom: var(--spacing-2);
+}
