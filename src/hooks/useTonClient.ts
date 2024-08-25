@@ -9,13 +9,13 @@ export function useTonClient() {
       endpoint: await getHttpEndpoint({
         network: "testnet",
       }),
-      apiKey: TONAPI_KEY,
+      //apiKey: TONAPI_KEY,
     }));
   const mainnet = useAsyncInitialize(async (): Promise<TonClient> => new TonClient({
       endpoint: await getHttpEndpoint({
         network: "mainnet",
       }),
-      apiKey: TONAPI_KEY,
+      //apiKey: TONAPI_KEY,
     }));
 
   return {
