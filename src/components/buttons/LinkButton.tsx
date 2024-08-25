@@ -51,6 +51,7 @@ function LinkButton({ children, to, style, className, visible = true }: Props) {
         {children}
       </LinkButtonTMA>
     );
+
   return (
     <>
       {visible && (

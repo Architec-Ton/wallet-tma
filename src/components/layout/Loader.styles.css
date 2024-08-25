@@ -13,4 +13,28 @@
 .loader-text {
   font-size: 32px;
   transition: all 200ms ease;
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.loader-button {
+  width: 70%;
+  margin-top: var(--spacing-32);
+  padding-top: var(--spacing-24) !important;
+  padding-bottom: var(--spacing-24) !important;
+  font-size: var(--spacing-24);
 }
