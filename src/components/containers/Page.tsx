@@ -40,7 +40,6 @@ function Page({ children, style, className, title, titleAccent, hintMessage, pag
 
   const handleClickButton = (value: boolean) => dispatch(setIsContinueButtonClicked(value));
 
-  console.log({ isContinueButtonClicked });
   if (isLoading || !isContinueButtonClicked)
     return <Loader isLoading={isLoading} isClicked={isContinueButtonClicked} onClick={handleClickButton} />;
 
