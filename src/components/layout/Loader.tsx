@@ -23,6 +23,15 @@ function Loader({
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isClicked) {
+        onClick(true)
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     if (!isClicked && !isLoading && lottieRef.current) {
       lottieRef.current.pause();
     }
