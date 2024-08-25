@@ -73,7 +73,7 @@ export function TonProvider({ children }: Props) {
       );
       dispatch(setIsTonReady(true));
     }
-  }, []);
+  }, [bcData, tonConnectUI]);
 
   return (
     <>
