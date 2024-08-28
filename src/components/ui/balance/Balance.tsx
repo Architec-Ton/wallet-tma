@@ -72,25 +72,24 @@ function Balance({ children, walletInfoData }: Props) {
     }
   }, [qrText]);
 
-  const humanizedTotalAssetPrice = useMemo(
-    () =>
-      // HACK: используем французкий для разделения как в дизайне
-      `$${new Intl.NumberFormat("fr-FR", {
-        style: "decimal",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-        useGrouping: true,
-      })
-        .format(totalAssetPrice)
-        .replace(/\s/g, " ")}`,
-    [totalAssetPrice],
-  );
+  const humanizedTotalAssetPrice = useMemo(() => {
+    if (!walletInfoData || totalAssetPrice === undefined) return "$0pnpm";
+    // HACK: используем французкий для разделения как в дизайне
+    return `$${new Intl.NumberFormat("fr-FR", {
+      style: "decimal",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+      useGrouping: true,
+    })
+      .format(totalAssetPrice)
+      .replace(/\s/g, " ")}`;
+  }, [walletInfoData, totalAssetPrice]);
 
   return (
     <Block className="balance-block space-between">
       <Column className="w-100">
         <Row className="space-between">
-          <div className="balance-block-value">{walletInfoData && totalAssetPrice && humanizedTotalAssetPrice}</div>
+          <div className="balance-block-value">{humanizedTotalAssetPrice}</div>
           <div>
             <QrButton icon={iconInputScan} onChange={(s: string | undefined) => setQrText(s)} />
           </div>
