@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { useBackButton } from "@tma.js/sdk-react";
 import classNames from "classnames";
 import { selectAuthIsReady } from "features/auth/authSelector";
 import { useGetGameQuery } from "features/gaming/gamingApi";
@@ -10,7 +11,9 @@ import { SwiperSlide } from "swiper/react";
 import { iconCoinButton, iconGlobalButton, iconSendButton } from "assets/icons/buttons";
 
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import { useBB } from "hooks/useBB";
 import useLanguage from "hooks/useLanguage";
+import useRouter from "hooks/useRouter";
 
 // import { GameResource } from 'types/gameTypes';
 import LinkButton from "components/buttons/LinkButton";

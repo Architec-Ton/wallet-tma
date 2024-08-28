@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { selectAuthIsReady } from "features/auth/authSelector";
 import { useGetCategoriesMutation, useGetTopRateGamesMutation } from "features/gaming/gamingApi";
 import { selectGames, selectGamesFilter } from "features/gaming/gamingSelectors";
 import { clearFilter } from "features/gaming/gamingSlice";
@@ -8,6 +9,7 @@ import { SwiperSlide } from "swiper/react";
 import type { AppsList, GameFilterType } from "types/gameTypes";
 
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import { useBB } from "hooks/useBB";
 import useDebounce from "hooks/useDebounce";
 import useLanguage from "hooks/useLanguage";
 import { usePage } from "hooks/usePage";
@@ -23,7 +25,6 @@ import Tabs from "components/ui/tabs";
 import Tab from "components/ui/tabs/Tab";
 
 import "./index.css";
-import { selectAuthIsReady } from "features/auth/authSelector";
 
 type SearchParamsType = {
   direction?: string;
@@ -34,6 +35,7 @@ type SerchParamsKeys = keyof SearchParamsType;
 type FilterKeys = keyof GameFilterType;
 
 function PlayGround() {
+  useBB();
   const dispatch = useAppDispatch();
   const debounce = useDebounce();
   const t = useLanguage("game");
