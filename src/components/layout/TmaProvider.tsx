@@ -2,7 +2,7 @@
 import type { ReactNode } from "react";
 import React, { useEffect, useMemo, useState } from "react";
 
-import { isTMA, useInitDataRaw } from "@tma.js/sdk-react";
+import { isTMA, LaunchParams, retrieveLaunchParams, useInitDataRaw } from "@tma.js/sdk-react";
 import { useApiAuthMutation } from "features/auth/authApi";
 import { selectAccessToken, selectAuth, selectAuthIsTmaReady, selectAuthIsTonReady } from "features/auth/authSelector";
 import type { AccountState } from "features/auth/authSlice";
@@ -47,6 +47,7 @@ export function TmaProvider({ children }: TmaProviderProps) {
   const accessToken = useAppSelector(selectAccessToken);
 
   const initDataRaw = useInitDataRaw();
+  const r  = retrieveLaunchParams();
 
   useEffect(() => {
     dispatch(setTmaLoading(true));
@@ -57,11 +58,11 @@ export function TmaProvider({ children }: TmaProviderProps) {
       });
   }, []);
 
-  const handleAuth = async (auth?: AccountState, initTon?: AuthInitTon) => {
+  const handleAuth = async (auth?: AccountState, initTon?: AuthInitTon, lp?: LaunchParams) => {
     try {
       const result = await authApi({
         authType: auth ? "telegram" : "web",
-        initDataRaw: auth?.account,
+        initDataRaw: `${lp?.initDataRaw}`,
         initTon,
       }).unwrap();
 
@@ -104,7 +105,7 @@ export function TmaProvider({ children }: TmaProviderProps) {
   }, [isTma, isTmaLoading, initDataRaw]);
 
   useEffect(() => {
-    if (isTmaReady && isTonReady && ton.wallet?.address) {
+    if (isTmaReady && isTonReady && ton.wallet?.address && r.initDataRaw) {
       const initTon = ton.wallet
         ? ({
             network: ton.wallet.network,
@@ -112,9 +113,9 @@ export function TmaProvider({ children }: TmaProviderProps) {
             publicKey: ton.wallet.publicKey,
           } as AuthInitTon)
         : undefined;
-      handleAuth(auth, initTon);
+      handleAuth(auth, initTon, r);
     }
-  }, [isTmaReady, isTonReady, ton.wallet]);
+  }, [isTmaReady, isTonReady, ton.wallet, r.initDataRaw ]);
 
   const tmaContextValue = useMemo(() => ({ setMainButtonHandler }), [setMainButtonHandler]);
 
