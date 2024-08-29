@@ -30,7 +30,7 @@ export const useSender = (): Sender => {
   const { sender } = useTonConnect();
   const privateHashKey = useAppSelector(selectAddressPrivateKey);
   // const publicKey = useAppSelector(selectAddressPublicKey);
-  const client = useTonClient();
+  const { client } = useTonClient();
   const pincode = usePinCodeModalManagement();
   const trxModal = useTrxModalManagement();
   const btn = useTmaMainButton();
@@ -82,8 +82,8 @@ export const useSender = (): Sender => {
       });
 
       try {
-        if (client.client) {
-          const contract = client.client?.open(wallet);
+        if (client) {
+          const contract = client?.open(wallet);
 
           // Get balance
           const balance: bigint = await contract.getBalance();

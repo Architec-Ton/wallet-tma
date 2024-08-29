@@ -6,6 +6,7 @@ export function useAsyncInitialize<T>(
   deps: any[] = [],
 ) {
   const [state, setState] = useState<T | undefined>();
+
   useEffect(() => {
     (async () => {
       setState(await func());
