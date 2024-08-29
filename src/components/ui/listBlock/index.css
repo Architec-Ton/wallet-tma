@@ -23,6 +23,7 @@
 .list-block__title {
   font-size: var(--font-size-base);
   line-height: var(--line-height-medium);
+  font-weight: var(--font-medium);
 }
 
 .list-block__icon {

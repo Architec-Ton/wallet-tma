@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import Column from "../components/containers/Column";
-import Page from "../components/containers/Page";
-import Assets from "../components/ui/balance/Assets";
-import Balance from "../components/ui/balance/Balance";
-import HistoryWidget from "../components/ui/balance/HistoryWidget";
-import WalletMenu from "../components/ui/menu/WalletMenu";
-import { selectAuthIsReady } from "../features/auth/authSelector";
-import { selectIsTonLoading, selectTonMode } from "../features/ton/tonSelector";
-import { TonConnectionMode } from "../features/ton/tonSlice";
-import { useApiWalletInfoMutation } from "../features/wallet/walletApi";
-import { useAppSelector } from "../hooks/useAppDispatch";
-import { usePage } from "../hooks/usePage";
-import useRouter from "../hooks/useRouter";
-import { useTon } from "../hooks/useTon";
-import type { WalletInfoData } from "../types/wallet";
+import { selectAuthIsReady } from "features/auth/authSelector";
+import { selectIsTonLoading, selectTonMode } from "features/ton/tonSelector";
+import { TonConnectionMode } from "features/ton/tonSlice";
+import { useApiWalletInfoMutation } from "features/wallet/walletApi";
+import type { WalletInfoData } from "types/wallet";
+
+import { useAppSelector } from "hooks/useAppDispatch";
+import { usePage } from "hooks/usePage";
+import useRouter from "hooks/useRouter";
+import { useTon } from "hooks/useTon";
+
+import Column from "components/containers/Column";
+import Page from "components/containers/Page";
+import Balance from "components/ui/balance/Balance";
+import HistoryWidget from "components/ui/balance/HistoryWidget";
+import WalletMenu from "components/ui/menu/WalletMenu";
+import Assets from "components/v2/assets";
 
 function Main() {
   const navigate = useRouter();
