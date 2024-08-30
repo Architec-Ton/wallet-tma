@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 
 import { selectAuthIsReady } from "features/auth/authSelector";
 import { selectIsTonLoading, selectTonMode } from "features/ton/tonSelector";
@@ -15,9 +14,9 @@ import { useTon } from "hooks/useTon";
 import Column from "components/containers/Column";
 import Page from "components/containers/Page";
 import Balance from "components/ui/balance/Balance";
-import HistoryWidget from "components/ui/balance/HistoryWidget";
 import WalletMenu from "components/ui/menu/WalletMenu";
 import Assets from "components/v2/assets";
+import History from "components/v2/history";
 
 function Main() {
   const navigate = useRouter();
@@ -68,11 +67,7 @@ function Main() {
         <Balance walletInfoData={walletInfoData} />
         <WalletMenu />
         <Assets assets={walletInfoData ? walletInfoData.wallets[walletInfoData.currentWallet].assets : []} />
-        {walletInfoData && walletInfoData.wallets[walletInfoData.currentWallet].history.length > 0 && (
-          <HistoryWidget items={walletInfoData.wallets[walletInfoData.currentWallet].history}>
-            <NavLink to="/histories">See more</NavLink>
-          </HistoryWidget>
-        )}
+        <History items={walletInfoData?.wallets[walletInfoData.currentWallet].history} />
       </Column>
     </Page>
   );
