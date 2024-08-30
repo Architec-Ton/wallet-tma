@@ -64,3 +64,11 @@
   padding: var(--spacing-4);
   width: 100%;
 }
+
+.add-crypto__tile {
+  margin-bottom: var(--spacing-12);
+}
+
+.add-crypto__tile--disabled {
+  opacity: 0.48;
+}

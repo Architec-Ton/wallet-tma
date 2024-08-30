@@ -93,10 +93,6 @@ function Balance({ children, walletInfoData }: Props) {
           <div>
             <QrButton icon={iconInputScan} onChange={(s: string | undefined) => setQrText(s)} />
           </div>
-          {/* <h1>
-            <span>Wallet</span> Architec.TON
-          </h1>
-          <div>...</div> */}
         </Row>
 
         {children}
