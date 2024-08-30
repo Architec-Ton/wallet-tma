@@ -8,7 +8,7 @@
   position: fixed;
   color: white;
   max-width: 80%;
-  word-break: break-all;
+  word-break: break-words;
   text-align: center;
   background-color: var(--hint-message-back-background-color);
   padding: var(--spacing-4) var(--spacing-8);

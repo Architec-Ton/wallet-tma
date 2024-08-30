@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  padding: var(--spacing-12);
+  padding: var(--spacing-16);
 }
 
 .container-column {

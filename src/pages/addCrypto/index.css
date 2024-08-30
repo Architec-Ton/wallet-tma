@@ -3,7 +3,6 @@
 }
 
 .add-crypto__container .section__header h2 {
-  font-size: 1.25rem;
   font-weight: var(--font-medium);
 }
 
@@ -64,4 +63,12 @@
   border-radius: var(--spacing-12);
   padding: var(--spacing-4);
   width: 100%;
+}
+
+.add-crypto__tile {
+  margin-bottom: var(--spacing-12);
+}
+
+.add-crypto__tile--disabled {
+  opacity: 0.48;
 }

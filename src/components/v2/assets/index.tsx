@@ -23,6 +23,7 @@ function Assets({ assets }: AssetsProps) {
       <div className="assets-v2__container">
         {assets.map((asset) => (
           <Asset
+            key={asset.meta?.address}
             assetImage={asset.meta?.image ? asset.meta?.image : `data:image;base64, ${asset.meta?.imageData}`}
             assetAddress={asset.type === "ton" ? TON_JETTON : asset.meta?.address}
             assetName={asset.meta?.name}

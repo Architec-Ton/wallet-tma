@@ -1,6 +1,6 @@
 .balance-block {
   /* aspect-ratio: 365/205; */
-  min-height: 10rem;
+  min-height: 8rem;
   background-image: url("/wallet/images/balance-bg.svg");
   background-position: center;
   background-repeat: no-repeat;
