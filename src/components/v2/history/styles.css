@@ -49,13 +49,10 @@
 }
 
 .history-v2__normal-text {
-  font-family: "Roboto";
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.1px;
-
   color: #222222;
 }
 
@@ -69,7 +66,7 @@
 }
 
 .history-v2__expand {
-  padding: 12px;
+  padding: var(--spacing-12) var(--spacing-12) var(--spacing-8);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -77,4 +74,5 @@
   border-top: 1px solid rgba(0, 0, 0, 0.04);
   background-color: transparent;
   color: var(--primary-color);
+  cursor: pointer;
 }

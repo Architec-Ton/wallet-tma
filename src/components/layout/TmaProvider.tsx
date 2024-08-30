@@ -2,7 +2,8 @@
 import type { ReactNode } from "react";
 import React, { useEffect, useMemo, useState } from "react";
 
-import { isTMA, LaunchParams, retrieveLaunchParams, useInitDataRaw } from "@tma.js/sdk-react";
+import type { LaunchParams } from "@tma.js/sdk-react";
+import { isTMA, retrieveLaunchParams, useInitDataRaw } from "@tma.js/sdk-react";
 import { useApiAuthMutation } from "features/auth/authApi";
 import { selectAccessToken, selectAuth, selectAuthIsTmaReady, selectAuthIsTonReady } from "features/auth/authSelector";
 import type { AccountState } from "features/auth/authSlice";
@@ -47,7 +48,7 @@ export function TmaProvider({ children }: TmaProviderProps) {
   const accessToken = useAppSelector(selectAccessToken);
 
   const initDataRaw = useInitDataRaw();
-  const r  = retrieveLaunchParams();
+  const launchParams = retrieveLaunchParams();
 
   useEffect(() => {
     dispatch(setTmaLoading(true));
@@ -105,7 +106,7 @@ export function TmaProvider({ children }: TmaProviderProps) {
   }, [isTma, isTmaLoading, initDataRaw]);
 
   useEffect(() => {
-    if (isTmaReady && isTonReady && ton.wallet?.address && r.initDataRaw) {
+    if (isTmaReady && isTonReady && ton.wallet?.address && launchParams.initDataRaw) {
       const initTon = ton.wallet
         ? ({
             network: ton.wallet.network,
@@ -113,9 +114,9 @@ export function TmaProvider({ children }: TmaProviderProps) {
             publicKey: ton.wallet.publicKey,
           } as AuthInitTon)
         : undefined;
-      handleAuth(auth, initTon, r);
+      handleAuth(auth, initTon, launchParams);
     }
-  }, [isTmaReady, isTonReady, ton.wallet, r.initDataRaw ]);
+  }, [isTmaReady, isTonReady, ton.wallet, launchParams.initDataRaw]);
 
   const tmaContextValue = useMemo(() => ({ setMainButtonHandler }), [setMainButtonHandler]);
 
