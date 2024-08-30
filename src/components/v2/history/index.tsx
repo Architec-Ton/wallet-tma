@@ -26,7 +26,7 @@ function History({ items }: HistoryProps) {
     navigate("/histories");
   };
 
-  if (!items) return null;
+  if (!items || !items.length) return null;
 
   return (
     <section>
@@ -43,9 +43,11 @@ function History({ items }: HistoryProps) {
             eventSymbol={event.symbol}
           />
         ))}
-        <button className="history-v2__item history-v2__expand" onClick={handleExpandClick}>
-          See all
-        </button>
+        {items.length > 2 && (
+          <button className="history-v2__item history-v2__expand" onClick={handleExpandClick}>
+            See all
+          </button>
+        )}
       </div>
     </section>
   );
