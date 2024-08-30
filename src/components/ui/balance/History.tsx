@@ -1,16 +1,13 @@
 import React, { useMemo } from "react";
 
-import { formatDate } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 import type { TransactionHistoryItemDto } from "types/history";
-
-import { iconTrxRecv, iconTrxSend } from "assets/icons/jettons";
 
 import useLanguage from "hooks/useLanguage";
 
+import { HistoryEvent } from "components/v2/history";
+
 import Section from "../../containers/Section";
-import ListBlock from "../listBlock";
-import ListTileItem from "../listBlock/ListTileItem";
-import { shortenString } from "./Address";
 import "./History.styles.css";
 
 type Props = {
@@ -18,18 +15,17 @@ type Props = {
 };
 
 function History({ items = [] }: Props) {
-  //   const ton = useTon();
   const t = useLanguage("history");
-  // const navigate = useNavigate();
 
   const groupedItems = useMemo(() => {
     if (items) {
       const groupedData = items.reduce(
         (acc, history: TransactionHistoryItemDto) => {
-          const date = formatDate(new Date(history.utime * 1000).toString(), "yyyy-MM-dd");
-          const group = acc.get(date) || [];
+          const date = new Date(history.utime * 1000);
+          const formattedDate = format(date, "yyyy-MM-dd");
+          const group = acc.get(formattedDate) || [];
           group.push(history);
-          acc.set(date, group);
+          acc.set(formattedDate, group);
           return acc;
         },
         new Map() as Map<string, TransactionHistoryItemDto[]>,
@@ -37,6 +33,8 @@ function History({ items = [] }: Props) {
 
       return Object.fromEntries(groupedData);
     }
+
+    return {};
   }, [items]);
 
   return (
@@ -45,24 +43,30 @@ function History({ items = [] }: Props) {
         <Section title={t("title")}>
           {Object.keys(groupedItems).map((key) => {
             const dataList = groupedItems[key] as TransactionHistoryItemDto[];
+            const date = new Date(key);
+            let displayDate;
+
+            if (isToday(date)) {
+              displayDate = "Today";
+            } else if (isYesterday(date)) {
+              displayDate = "Yesterday";
+            } else {
+              displayDate = format(date, "dd MMM");
+            }
+
             return (
-              <Section key={key} title={formatDate(key, "dd MMM")} className="history-list-section">
-                {dataList.map((h, index) => (
-                  <ListBlock className="history-list-block" key={`${key}-${index}`}>
-                    <ListTileItem
-                      icon={h.type === "in" ? iconTrxRecv : iconTrxSend}
-                      title={t(h.type)}
-                      description={shortenString(h.addressTo)}
-                      // onClick={assetClickHandler(asset)}
-                    >
-                      <div className="list-block__right">
-                        <div
-                          className={`list-block__title ${h.type === "in" ? "change-up" : ""} `}
-                        >{`${h.value ? h.value : ""} ${h.symbol}`}</div>
-                        <div className="list-block__description">{new Date(h.utime * 1000).toLocaleString()}</div>
-                      </div>
-                    </ListTileItem>
-                  </ListBlock>
+              <Section key={key} title={displayDate} className="history-list-section">
+                {dataList.map((event) => (
+                  <div key={event.utime} className="history-list-item_wrapper">
+                    <HistoryEvent
+                      eventType={event.type}
+                      eventDescription={t(event.type)}
+                      eventValue={event.value}
+                      eventAddress={event.type === "out" ? event.addressTo : event.addressFrom}
+                      eventTs={event.utime}
+                      eventSymbol={event.symbol}
+                    />
+                  </div>
                 ))}
               </Section>
             );

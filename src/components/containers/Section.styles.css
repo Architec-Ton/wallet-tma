@@ -16,6 +16,9 @@
 
 .section__header h2 {
   font-size: var(--font-size-large);
+  font-weight: var(--font-medium);
+  line-height: 28px;
+  color: var(--text-color);
 }
 
 .section__read-more {

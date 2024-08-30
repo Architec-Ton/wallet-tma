@@ -4,4 +4,15 @@
 
 .history-list-section .section__header h2 {
   font-size: var(--font-size-mlarge);
+  font-style: normal;
+  line-height: 24px;
+  color: var(--text-color);
+}
+
+.history-list-item_wrapper {
+  background: var(--background-selected-color);
+  width: 100%;
+  border-radius: var(--spacing-16);
+  padding: var(--spacing-4) 0px;
+  margin-bottom: var(--spacing-8);
 }

@@ -1,5 +1,6 @@
 :root {
   color-scheme: light dark;
+  font-size: 16px;
 
   /* Основные цвета */
   --primary-color: #07acff;
