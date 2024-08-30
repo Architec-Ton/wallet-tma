@@ -73,7 +73,7 @@ function Balance({ children, walletInfoData }: Props) {
   }, [qrText]);
 
   const humanizedTotalAssetPrice = useMemo(() => {
-    if (!walletInfoData || totalAssetPrice === undefined) return "$0pnpm";
+    if (!walletInfoData || totalAssetPrice === undefined) return "$0";
     // HACK: используем французкий для разделения как в дизайне
     return `$${new Intl.NumberFormat("fr-FR", {
       style: "decimal",
