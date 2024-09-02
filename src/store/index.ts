@@ -19,6 +19,7 @@ import tonReducer from "../features/ton/tonSlice";
 import { walletApi } from "../features/wallet/walletApi";
 import walletSlice from "../features/wallet/walletSlice";
 import marketSlice from "features/market/marketSlice";
+import { marketApi } from "features/market/marketApi";
 
 export const store = configureStore({
   reducer: {
@@ -41,6 +42,7 @@ export const store = configureStore({
     [gamingApi.reducerPath]: gamingApi.reducer,
     [walletApi.reducerPath]: walletApi.reducer,
     [stonFiApi.reducerPath]: stonFiApi.reducer,
+    [marketApi.reducerPath]: marketApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -50,6 +52,7 @@ export const store = configureStore({
       walletApi.middleware,
       gamingApi.middleware,
       stonFiApi.middleware,
+      marketApi.middleware,
     ),
 });
 

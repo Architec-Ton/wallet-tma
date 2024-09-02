@@ -23,16 +23,20 @@ import OrderHistory from "components/ui/market/OrderHistory";
 import { order } from "./mock";
 
 import "./index.css";
+import { useGetOrdersHistoryQuery } from "features/market/marketApi";
 
 const historyDropDownData: DropDownDto[] = [
   {key: "active", value: "Active"},
   {key: "history", value: "History"},
 ]
 
+const ordersHistoryData = [order, order, order]
+
 const Market = () => {
   const t = useLanguage("market")
   const dispatch = useAppDispatch()
   const page = usePage()
+  // const {data: ordersHistoryData, isLoading} = useGetOrdersHistoryQuery(undefined)
 
   const [dropdownValue, setDropdownValue] = useState<DropDownDto | undefined>()
 
@@ -108,7 +112,7 @@ const Market = () => {
       <Section title={t("my-orders")} readMore={getHistoryDropdown}>
         {!order && <DataLossBlock>{t("my-orders-hint")}</DataLossBlock>}
         {dropdownValue?.key === "active" && order && <MarketOrderCard order={order} isActive />}
-        {dropdownValue?.key === "history" && <OrderHistory history={[order, order, order]} />}
+        {dropdownValue?.key === "history" && <OrderHistory history={ordersHistoryData} />}
       </Section>
     </Page>
   )

@@ -5,13 +5,13 @@ export interface MarketOrderDto {
   type: MarketModeEnum;
   date: number;
   status: string;
-  primaryValue: number;
-  secondaryValue: number;
+  from_value: number;
+  to_value: number;
   uid: string;
   userName?: string;
   stats?: string;
   assets: {
-    primaryAsset: CoinDto;
-    secondaryAsset: CoinDto;
+    from_asset: CoinDto;
+    to_asset: CoinDto;
   }
 }

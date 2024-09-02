@@ -25,7 +25,7 @@ const MarketOrder = () => {
   const page = usePage()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { primaryAsset, secondaryAsset, mode } = useAppSelector(marketSelector)
+  const { from_asset, to_asset, mode } = useAppSelector(marketSelector)
   const [showPrimaryAssetModal, setShowPrimaryAssetModal] = useState<boolean>()
   const [showSecondaryAssetModal, setShowSecondaryAssetModal] = useState<boolean>()
   const [filteredOrders, setFilteredOrders] = useState<MarketOrderDto[]>()
@@ -39,13 +39,13 @@ const MarketOrder = () => {
   useEffect(() => {
     const amount = Number(amountValue)
     const filteredOrders = orders.filter(order => {
-      let condition = order.primaryValue >= amount
-      condition = primaryAsset ? condition && order.assets.primaryAsset.meta?.symbol === primaryAsset.meta?.symbol : condition
-      condition = secondaryAsset ? condition && order.assets.secondaryAsset.meta?.symbol === secondaryAsset.meta?.symbol : condition
+      let condition = order.from_value >= amount
+      condition = from_asset ? condition && order.assets.from_asset.meta?.symbol === from_asset.meta?.symbol : condition
+      condition = to_asset ? condition && order.assets.to_asset.meta?.symbol === to_asset.meta?.symbol : condition
       return condition
     })
     setFilteredOrders(filteredOrders)
-  }, [primaryAsset, secondaryAsset, amountValue])
+  }, [from_asset, to_asset, amountValue])
 
   useEffect(() => {
     const textData = mode === MarketModeEnum.BUY
@@ -106,8 +106,8 @@ const MarketOrder = () => {
   return (
     <Page title={textData?.pageTitle}>
       <Row className="orders-filter">
-        <FilterBlock title={textData?.primaryAssetLabel} value={primaryAsset?.meta?.symbol || t("all")} onClick={buyingAssetHandler} withIcon />
-        <FilterBlock title={textData?.secondaryAssetLabel} value={secondaryAsset?.meta?.symbol || t("all")} onClick={givingAssetHandler} withIcon />
+        <FilterBlock title={textData?.primaryAssetLabel} value={from_asset?.meta?.symbol || t("all")} onClick={buyingAssetHandler} withIcon />
+        <FilterBlock title={textData?.secondaryAssetLabel} value={to_asset?.meta?.symbol || t("all")} onClick={givingAssetHandler} withIcon />
         <FilterBlock title={t("amount")} className="amount-block">
           <ResponsiveInput onChangeHandler={amountChangeHandler} value={amountValue} />
         </FilterBlock>
@@ -118,12 +118,12 @@ const MarketOrder = () => {
           <ListBlock key={orderData.uid}>
             <ListBaseItem className="market-order-card">
               <div className="card-icon-container">
-                <img src={orderData.assets.primaryAsset.meta?.image} alt="" className="primary-icon" />
-                <img src={orderData.assets.secondaryAsset.meta?.image} alt="" className="secondary-icon" />
+                <img src={orderData.assets.from_asset.meta?.image} alt="" className="primary-icon" />
+                <img src={orderData.assets.to_asset.meta?.image} alt="" className="secondary-icon" />
               </div>
               <Column className="grow">
-                <div>{orderData.primaryValue} {orderData.assets.primaryAsset.meta?.symbol}</div>
-                <div className="secondary-content text-sm">{orderData.secondaryValue} {orderData.assets.secondaryAsset.meta?.symbol}</div>
+                <div>{orderData.from_value} {orderData.assets.from_asset.meta?.symbol}</div>
+                <div className="secondary-content text-sm">{orderData.to_value} {orderData.assets.to_asset.meta?.symbol}</div>
               </Column>
               <button className="small-button rounded-button primary-button" onClick={orderClickHandler(order.uid)}>{textData?.buttonText}</button>
             </ListBaseItem>

@@ -19,7 +19,7 @@ const ConfirmOrder = () => {
   const btn = useTmaMainButton()
   const page = usePage()
   const navigate = useNavigate()
-  const { primaryAsset, secondaryAsset, mode: orderMode, primaryValue, secondaryValue } = useAppSelector(marketSelector)
+  const { from_asset, to_asset, mode: orderMode, from_value, to_value } = useAppSelector(marketSelector)
 
   useEffect(() => {
     page.setLoading(false)
@@ -30,7 +30,7 @@ const ConfirmOrder = () => {
       // TODO: send transaction
       navigate("/market", {replace: true})
     }, true)
-  }, [primaryValue, secondaryValue])
+  }, [from_value, to_value])
 
   const textContents = orderMode === MarketModeEnum.BUY 
   ? { primaryTitle: t("you-buy"), secondaryTitle: t("you-give")}
@@ -42,8 +42,8 @@ const ConfirmOrder = () => {
         <Block>
           <Row className="w-full">
             <img src="" alt="" className="market-asset-icon" />
-            <div className="grow">{primaryAsset?.meta?.symbol}</div>
-            <div>{primaryValue}</div>
+            <div className="grow">{from_asset?.meta?.symbol}</div>
+            <div>{from_value}</div>
           </Row>
         </Block>
       </Section>
@@ -51,8 +51,8 @@ const ConfirmOrder = () => {
         <Block>
           <Row className="w-full">
             <img src="" alt="" className="market-asset-icon" />
-            <div className="grow">{secondaryAsset?.meta?.symbol}</div>
-            <div>{secondaryValue}</div>
+            <div className="grow">{to_asset?.meta?.symbol}</div>
+            <div>{to_value}</div>
           </Row>
         </Block>
       </Section>

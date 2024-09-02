@@ -29,12 +29,12 @@ const MarketOrderCard = ({ order, isActive = false }: OwnPropsType) => {
         {orderData && (
           <>
             <div className="card-icon-container">
-              <img src={orderData.assets.primaryAsset.meta?.image} alt="" className="primary-icon" />
-              <img src={orderData.assets.secondaryAsset.meta?.image} alt="" className="secondary-icon" />
+              <img src={orderData.assets.from_asset.meta?.image} alt="" className="primary-icon" />
+              <img src={orderData.assets.to_asset.meta?.image} alt="" className="secondary-icon" />
             </div>
             <Column className="grow">
-              <div>{orderData.primaryValue} {orderData.assets.primaryAsset.meta?.symbol}</div>
-              <div className="secondary-content text-sm">{orderData.secondaryValue} {orderData.assets.secondaryAsset.meta?.symbol}</div>
+              <div>{orderData.from_value} {orderData.assets.from_asset.meta?.symbol}</div>
+              <div className="secondary-content text-sm">{orderData.to_value} {orderData.assets.to_asset.meta?.symbol}</div>
             </Column>
             {isActive && <button className="small-button rounded-button primary-button">Cancel</button>}
           </>

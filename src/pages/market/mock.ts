@@ -56,7 +56,7 @@ export const assets: CoinDto[] = [
 export const order: MarketOrderDto = {
   type: MarketModeEnum.BUY,
   assets: {
-    primaryAsset: {
+    from_asset: {
       type: "jetton",
       amount: 100,
       usdPrice: 1,
@@ -72,7 +72,7 @@ export const order: MarketOrderDto = {
         symbol: "BNK",
       }
     },
-    secondaryAsset: {
+    to_asset: {
       type: "jetton",
       amount: 10,
       usdPrice: 10,
@@ -91,8 +91,8 @@ export const order: MarketOrderDto = {
   },
   date: 1724238416,
   status: "Created",
-  primaryValue: 10,
-  secondaryValue: 90,
+  from_value: 10,
+  to_value: 90,
   userName: "Username112233",
   stats: "20 Trades",
   uid: "usdlfk-345345-sdlajfslkjdflkjlkj",

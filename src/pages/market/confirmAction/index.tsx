@@ -51,8 +51,8 @@ const ConfirmAction = () => {
       <Section title={textData?.youSell}>
         <Row>
           <img src="" alt="" className="market-asset-icon" />
-          <div className="grow">{selectedOrder?.assets.primaryAsset?.meta?.symbol}</div>
-          <div>{selectedOrder?.assets.primaryAsset.amount}</div>
+          <div className="grow">{selectedOrder?.assets.from_asset?.meta?.symbol}</div>
+          <div>{selectedOrder?.assets.from_asset.amount}</div>
         </Row>
       </Section>
       <Section title={textData?.sellerInfo}>
@@ -78,8 +78,8 @@ const ConfirmAction = () => {
       <Section title={textData?.youReceive}>
         <Row>
           <img src="" alt="" className="market-asset-icon" />
-          <div className="grow">{selectedOrder?.assets.secondaryAsset?.meta?.symbol}</div>
-          <div>{selectedOrder?.assets.secondaryAsset.amount}</div>
+          <div className="grow">{selectedOrder?.assets.to_asset?.meta?.symbol}</div>
+          <div>{selectedOrder?.assets.to_asset.amount}</div>
         </Row>
       </Section>
     </Page>
