@@ -9,7 +9,7 @@ import { marketSelector } from "features/market/marketSelectors";
 import { MarketModeEnum } from "features/market/marketSlice";
 import { useAppSelector } from "hooks/useAppDispatch";
 import { useNavigate, useParams } from "react-router-dom";
-import { MarketOrderDto } from "types/market";
+import { HistoryOrderDto } from "types/market";
 import { useTmaMainButton } from "hooks/useTma";
 import { order } from "../mock";
 
@@ -20,7 +20,7 @@ const ConfirmAction = () => {
   const { id } = useParams()
   const { mode } = useAppSelector(marketSelector)
 
-  const [selectedOrder, setSelectedOrder] = useState<MarketOrderDto | undefined>()
+  const [selectedOrder, setSelectedOrder] = useState<HistoryOrderDto | undefined>()
   const [textData, setTextData] = useState<{youSell: string, sellerInfo: string, youReceive: string} | undefined>()
 
   useEffect(() => {
@@ -51,8 +51,8 @@ const ConfirmAction = () => {
       <Section title={textData?.youSell}>
         <Row>
           <img src="" alt="" className="market-asset-icon" />
-          <div className="grow">{selectedOrder?.assets.from_asset?.meta?.symbol}</div>
-          <div>{selectedOrder?.assets.from_asset.amount}</div>
+          <div className="grow">{selectedOrder?.fromAsset?.meta?.symbol}</div>
+          <div>{selectedOrder?.fromAsset.amount}</div>
         </Row>
       </Section>
       <Section title={textData?.sellerInfo}>
@@ -78,8 +78,8 @@ const ConfirmAction = () => {
       <Section title={textData?.youReceive}>
         <Row>
           <img src="" alt="" className="market-asset-icon" />
-          <div className="grow">{selectedOrder?.assets.to_asset?.meta?.symbol}</div>
-          <div>{selectedOrder?.assets.to_asset.amount}</div>
+          <div className="grow">{selectedOrder?.toAsset?.meta?.symbol}</div>
+          <div>{selectedOrder?.toAsset.amount}</div>
         </Row>
       </Section>
     </Page>

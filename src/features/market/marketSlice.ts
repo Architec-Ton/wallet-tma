@@ -8,10 +8,10 @@ export enum MarketModeEnum {
 
 interface MarketState {
   mode: MarketModeEnum
-  from_asset?: CoinDto
-  to_asset?: CoinDto
-  from_value?: number
-  to_value?: number
+  fromAsset?: CoinDto
+  toAsset?: CoinDto
+  fromValue?: number
+  toValue?: number
 }
 
 const initialState: MarketState = {
@@ -26,18 +26,18 @@ const marketSlice = createSlice({
       state.mode = action.payload
     },
     setOrderPrimaryAsset(state: MarketState, action: PayloadAction<CoinDto>) {
-      state.from_asset = action.payload
+      state.fromAsset = action.payload
     },
     setOrderSecondaryAsset(state: MarketState, action: PayloadAction<CoinDto>) {
-      state.to_asset = action.payload
+      state.toAsset = action.payload
     },
-    setOrderValues(state: MarketState, action: PayloadAction<{from_value: number, to_value: number}>) {
-      state.from_value = action.payload.from_value
-      state.to_value = action.payload.to_value
+    setOrderValues(state: MarketState, action: PayloadAction<{fromValue: number, toValue: number}>) {
+      state.fromValue = action.payload.fromValue
+      state.toValue = action.payload.toValue
     },
     clearOrderAssets(state: MarketState) {
-      state.from_asset = undefined
-      state.to_asset = undefined
+      state.fromAsset = undefined
+      state.toAsset = undefined
     }
   }
 })

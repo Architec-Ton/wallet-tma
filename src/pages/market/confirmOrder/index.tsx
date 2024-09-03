@@ -5,6 +5,7 @@ import Section from "components/containers/Section";
 import Block from "components/typography/Block";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
+import { useCreateOrderMutation } from "features/market/marketApi";
 import { marketSelector } from "features/market/marketSelectors";
 import { MarketModeEnum } from "features/market/marketSlice";
 import { useAppSelector } from "hooks/useAppDispatch";
@@ -19,7 +20,8 @@ const ConfirmOrder = () => {
   const btn = useTmaMainButton()
   const page = usePage()
   const navigate = useNavigate()
-  const { from_asset, to_asset, mode: orderMode, from_value, to_value } = useAppSelector(marketSelector)
+  const { fromAsset, toAsset, mode: orderMode, fromValue, toValue } = useAppSelector(marketSelector)
+  const [createOrderApi] = useCreateOrderMutation()
 
   useEffect(() => {
     page.setLoading(false)
@@ -28,9 +30,18 @@ const ConfirmOrder = () => {
   useEffect(() => {
     btn.init("Confirm", () => {
       // TODO: send transaction
-      navigate("/market", {replace: true})
+      createOrderApi({
+        type: orderMode,
+        fromAsset,
+        toAsset,
+        fromValue,
+        toValue,
+      }).then(result => {
+        console.log("create_order", result)
+        navigate("/market", {replace: true})
+      })
     }, true)
-  }, [from_value, to_value])
+  }, [fromValue, toValue])
 
   const textContents = orderMode === MarketModeEnum.BUY 
   ? { primaryTitle: t("you-buy"), secondaryTitle: t("you-give")}
@@ -42,8 +53,8 @@ const ConfirmOrder = () => {
         <Block>
           <Row className="w-full">
             <img src="" alt="" className="market-asset-icon" />
-            <div className="grow">{from_asset?.meta?.symbol}</div>
-            <div>{from_value}</div>
+            <div className="grow">{fromAsset?.meta?.symbol}</div>
+            <div>{fromValue}</div>
           </Row>
         </Block>
       </Section>
@@ -51,8 +62,8 @@ const ConfirmOrder = () => {
         <Block>
           <Row className="w-full">
             <img src="" alt="" className="market-asset-icon" />
-            <div className="grow">{to_asset?.meta?.symbol}</div>
-            <div>{to_value}</div>
+            <div className="grow">{toAsset?.meta?.symbol}</div>
+            <div>{toValue}</div>
           </Row>
         </Block>
       </Section>

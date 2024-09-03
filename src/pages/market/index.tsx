@@ -13,37 +13,50 @@ import { iconMessageQuestion } from "assets/icons/globals";
 import { iconButtonArraw } from "assets/icons/buttons";
 import { useClosure } from "hooks/useClosure";
 import { clearOrderAssets, MarketModeEnum, setMarketMode } from "features/market/marketSlice";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import { usePage } from "hooks/usePage";
 import Page from "components/containers/Page";
 import DataLossBlock from "components/typography/DataLossBlock";
-import MarketOrderCard from "components/ui/market/OrderCard";
 import DropDown, { DropDownDto } from "components/ui/dropdown";
 import OrderHistory from "components/ui/market/OrderHistory";
-import { order } from "./mock";
 
 import "./index.css";
-import { useGetOrdersHistoryQuery } from "features/market/marketApi";
+import { useLazyGetOrdersHistoryQuery } from "features/market/marketApi";
+import { HistoryOrderDto } from "types/market";
+import { selectAuthIsReady } from "features/auth/authSelector";
 
 const historyDropDownData: DropDownDto[] = [
   {key: "active", value: "Active"},
   {key: "history", value: "History"},
 ]
 
-const ordersHistoryData = [order, order, order]
 
 const Market = () => {
   const t = useLanguage("market")
   const dispatch = useAppDispatch()
   const page = usePage()
-  // const {data: ordersHistoryData, isLoading} = useGetOrdersHistoryQuery(undefined)
+  const isReady = useAppSelector(selectAuthIsReady);
+  const [getMyOrders] = useLazyGetOrdersHistoryQuery()
 
   const [dropdownValue, setDropdownValue] = useState<DropDownDto | undefined>()
+  const [ordersHistoryData, setOrdersHistoryData] = useState<HistoryOrderDto[]>([])
+  const [ordersActiveData, setOrdersActiveData] = useState<HistoryOrderDto[]>([])
 
   useEffect(() => {
     dropdownChangeHandler()
     page.setLoading(false, true)
   }, [])
+
+  useEffect(() => {
+    if (isReady) {
+      getMyOrders(undefined).then((myOrders) => {
+        const historyOrders = myOrders.data?.items?.filter(order => order.status !== "created")
+        const activeOrders = myOrders.data?.items?.filter(order => order.status === "created")
+        setOrdersHistoryData(historyOrders || [])
+        setOrdersActiveData(activeOrders || [])
+      })
+    }
+  }, [isReady])
 
   const marketActionHandler = useClosure((mode: MarketModeEnum) => {
     dispatch(setMarketMode(mode))
@@ -110,9 +123,9 @@ const Market = () => {
         </Column>
       </Section>
       <Section title={t("my-orders")} readMore={getHistoryDropdown}>
-        {!order && <DataLossBlock>{t("my-orders-hint")}</DataLossBlock>}
-        {dropdownValue?.key === "active" && order && <MarketOrderCard order={order} isActive />}
-        {dropdownValue?.key === "history" && <OrderHistory history={ordersHistoryData} />}
+        {!ordersActiveData && <DataLossBlock>{t("my-orders-hint")}</DataLossBlock>}
+        {dropdownValue?.key === "active" && ordersActiveData?.length > 0 && <OrderHistory history={ordersActiveData} />}
+        {dropdownValue?.key === "history" && ordersHistoryData?.length > 0 && <OrderHistory history={ordersHistoryData} />}
       </Section>
     </Page>
   )

@@ -3,15 +3,13 @@ import { CoinDto } from "./assest";
 
 export interface MarketOrderDto {
   type: MarketModeEnum;
-  date: number;
+  createdAt: string;
   status: string;
-  from_value: number;
-  to_value: number;
-  uid: string;
+  fromValue: number;
+  toValue: number;
+  uuid: string;
   userName?: string;
   stats?: string;
-  assets: {
-    from_asset: CoinDto;
-    to_asset: CoinDto;
-  }
+  fromAsset: CoinDto;
+  toAsset: CoinDto;
 }

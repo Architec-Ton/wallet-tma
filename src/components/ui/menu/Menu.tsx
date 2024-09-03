@@ -32,7 +32,7 @@ function Menu({ menuItems, style, className }: MenuProps) {
     if (location.pathname !== to) {
       // page.setLoading(true, false);
       hapticFeedback.impactOccurred("medium");
-      navigate(to);
+      // navigate(to);
     }
   });
 

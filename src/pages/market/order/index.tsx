@@ -16,7 +16,7 @@ import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { useClosure } from "hooks/useClosure";
 import { useNavigate } from "react-router-dom";
-import { MarketOrderDto } from "types/market";
+import { HistoryOrderDto } from "types/market";
 
 const orders = [order, order, order]
 
@@ -25,10 +25,10 @@ const MarketOrder = () => {
   const page = usePage()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { from_asset, to_asset, mode } = useAppSelector(marketSelector)
+  const { fromAsset, toAsset, mode } = useAppSelector(marketSelector)
   const [showPrimaryAssetModal, setShowPrimaryAssetModal] = useState<boolean>()
   const [showSecondaryAssetModal, setShowSecondaryAssetModal] = useState<boolean>()
-  const [filteredOrders, setFilteredOrders] = useState<MarketOrderDto[]>()
+  const [filteredOrders, setFilteredOrders] = useState<HistoryOrderDto[]>()
   const [amountValue, setAmountValue] = useState<string>("")
   const [textData, setTextData] = useState<any>()
 
@@ -39,13 +39,13 @@ const MarketOrder = () => {
   useEffect(() => {
     const amount = Number(amountValue)
     const filteredOrders = orders.filter(order => {
-      let condition = order.from_value >= amount
-      condition = from_asset ? condition && order.assets.from_asset.meta?.symbol === from_asset.meta?.symbol : condition
-      condition = to_asset ? condition && order.assets.to_asset.meta?.symbol === to_asset.meta?.symbol : condition
+      let condition = order.fromValue >= amount
+      condition = fromAsset ? condition && order.fromAsset.meta?.symbol === fromAsset.meta?.symbol : condition
+      condition = toAsset ? condition && order.toAsset.meta?.symbol === toAsset.meta?.symbol : condition
       return condition
     })
     setFilteredOrders(filteredOrders)
-  }, [from_asset, to_asset, amountValue])
+  }, [fromAsset, toAsset, amountValue])
 
   useEffect(() => {
     const textData = mode === MarketModeEnum.BUY
@@ -106,8 +106,8 @@ const MarketOrder = () => {
   return (
     <Page title={textData?.pageTitle}>
       <Row className="orders-filter">
-        <FilterBlock title={textData?.primaryAssetLabel} value={from_asset?.meta?.symbol || t("all")} onClick={buyingAssetHandler} withIcon />
-        <FilterBlock title={textData?.secondaryAssetLabel} value={to_asset?.meta?.symbol || t("all")} onClick={givingAssetHandler} withIcon />
+        <FilterBlock title={textData?.primaryAssetLabel} value={fromAsset?.meta?.symbol || t("all")} onClick={buyingAssetHandler} withIcon />
+        <FilterBlock title={textData?.secondaryAssetLabel} value={toAsset?.meta?.symbol || t("all")} onClick={givingAssetHandler} withIcon />
         <FilterBlock title={t("amount")} className="amount-block">
           <ResponsiveInput onChangeHandler={amountChangeHandler} value={amountValue} />
         </FilterBlock>
@@ -115,17 +115,17 @@ const MarketOrder = () => {
 
       <Column>
         {filteredOrders?.map(orderData => (
-          <ListBlock key={orderData.uid}>
+          <ListBlock key={orderData.uuid}>
             <ListBaseItem className="market-order-card">
               <div className="card-icon-container">
-                <img src={orderData.assets.from_asset.meta?.image} alt="" className="primary-icon" />
-                <img src={orderData.assets.to_asset.meta?.image} alt="" className="secondary-icon" />
+                <img src={orderData.fromAsset.meta?.image} alt="" className="primary-icon" />
+                <img src={orderData.toAsset.meta?.image} alt="" className="secondary-icon" />
               </div>
               <Column className="grow">
-                <div>{orderData.from_value} {orderData.assets.from_asset.meta?.symbol}</div>
-                <div className="secondary-content text-sm">{orderData.to_value} {orderData.assets.to_asset.meta?.symbol}</div>
+                <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
+                <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
               </Column>
-              <button className="small-button rounded-button primary-button" onClick={orderClickHandler(order.uid)}>{textData?.buttonText}</button>
+              <button className="small-button rounded-button primary-button" onClick={orderClickHandler(order.uuid)}>{textData?.buttonText}</button>
             </ListBaseItem>
             <ListBaseItem>
               <Column className="w-full">

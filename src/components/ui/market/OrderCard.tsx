@@ -3,23 +3,23 @@ import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import Column from "components/containers/Column";
 import Row from "components/containers/Row";
-import { MarketOrderDto } from "types/market";
+import { HistoryOrderDto } from "types/market";
 import { formatDate } from "date-fns";
 
 import "./OrderCard.styles.css"
 
 type OwnPropsType = {
-  order: MarketOrderDto
+  order: HistoryOrderDto
   isActive?: boolean
 }
 
 const MarketOrderCard = ({ order, isActive = false }: OwnPropsType) => {
   const orderData = useMemo(() => {
     if (order) {
-      const { date } = order
+      const { createdAt } = order
       return {
         ...order,
-        date: formatDate(new Date(date * 1000).toString(), "dd MMMM yyyy")
+        date: formatDate(new Date(createdAt).toString(), "dd MMMM yyyy")
       }
     }
   }, [order])
@@ -29,12 +29,12 @@ const MarketOrderCard = ({ order, isActive = false }: OwnPropsType) => {
         {orderData && (
           <>
             <div className="card-icon-container">
-              <img src={orderData.assets.from_asset.meta?.image} alt="" className="primary-icon" />
-              <img src={orderData.assets.to_asset.meta?.image} alt="" className="secondary-icon" />
+              <img src={orderData.fromAsset.meta?.image} alt="" className="primary-icon" />
+              <img src={orderData.toAsset.meta?.image} alt="" className="secondary-icon" />
             </div>
             <Column className="grow">
-              <div>{orderData.from_value} {orderData.assets.from_asset.meta?.symbol}</div>
-              <div className="secondary-content text-sm">{orderData.to_value} {orderData.assets.to_asset.meta?.symbol}</div>
+              <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
+              <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
             </Column>
             {isActive && <button className="small-button rounded-button primary-button">Cancel</button>}
           </>

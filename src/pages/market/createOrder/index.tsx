@@ -29,47 +29,47 @@ const CreateMarketOrder = () => {
   const navigate = useNavigate()
 
   const orderMode = useAppSelector(marketModeSelector)
-  const from_asset = useAppSelector(orderPrimaryAssetSelector)
-  const to_asset = useAppSelector(orderSecondaryAssetSelector)
+  const fromAsset = useAppSelector(orderPrimaryAssetSelector)
+  const toAsset = useAppSelector(orderSecondaryAssetSelector)
   const [showAssetsModal, setShowAssetsModal] = useState<boolean>(false)
   const [assetsModalTitle, setAssetsModalTitle] = useState<string>("")
   const [selectedAsset, setSelectedAsset] = useState<"primary" | "secondary" | undefined>()
-  const [from_value, setFromValue] = useState<string>("")
-  const [to_value, setToValue] = useState<string>("")
+  const [fromValue, setFromValue] = useState<string>("")
+  const [toValue, setToValue] = useState<string>("")
   
   useEffect(() => {
-    if (!from_asset) {
+    if (!fromAsset) {
       dispatch(setOrderPrimaryAsset(assets[0]))
     }
-    if (!to_asset) {
+    if (!toAsset) {
       dispatch(setOrderSecondaryAsset(assets[1]))
     }
     page.setLoading(false)
   }, [])
 
   const isValid = useMemo(() => {
-    if (from_asset && to_asset) {
+    if (fromAsset && toAsset) {
       return (
         orderMode === MarketModeEnum.SELL
-        ? Number(from_value) > 0 && Number(from_value) <= from_asset.amount && Number(to_value) > 0
-        : Number(to_value) > 0 && Number(to_value) <= to_asset.amount && Number(from_value) > 0
+        ? Number(fromValue) > 0 && Number(fromValue) <= fromAsset.amount && Number(toValue) > 0
+        : Number(toValue) > 0 && Number(toValue) <= toAsset.amount && Number(fromValue) > 0
       )
     }
-  }, [from_asset, to_asset, from_value, to_value])
+  }, [fromAsset, toAsset, fromValue, toValue])
 
   useEffect(() => {
     if (isValid) {
       btn.init(t("create-ad", "market"), () => {
         dispatch(setOrderValues({
-          from_value: Number(from_value),
-          to_value: Number(to_value)
+          fromValue: Number(fromValue),
+          toValue: Number(toValue)
         }))
         navigate("confirm")
       }, true)
     } else {
       btn.setVisible(false)
     }
-  }, [isValid, from_value, to_value])
+  }, [isValid, fromValue, toValue])
 
   const assetLabels = {
     "sell": {
@@ -119,10 +119,8 @@ const CreateMarketOrder = () => {
     const value = Number(e.currentTarget.value)
     if (!isNaN(value) && value > 0) {
       setFromValue(value.toString())
-      // setToValue((value * Number(from_asset?.usdPrice) / Number(to_asset?.usdPrice)).toString())
     } else {
       setFromValue("")
-      // setToValue("")
     }
   }
 
@@ -130,10 +128,8 @@ const CreateMarketOrder = () => {
     const value = Number(e.currentTarget.value)
     if (!isNaN(value) && value > 0) {
       setToValue(value.toString())
-      // setFromValue((value * Number(to_asset?.usdPrice) / Number(from_asset?.usdPrice)).toString())
     } else {
       setToValue("")
-      // setFromValue("")
     }
   }
 
@@ -157,13 +153,13 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="order-data-row grow">
               <div>{assetLabels[orderMode]["sell-asset"]}</div>
-              <SelectButton onClick={selectPrimaryAsset}>{from_asset?.meta?.symbol}</SelectButton>
+              <SelectButton onClick={selectPrimaryAsset}>{fromAsset?.meta?.symbol}</SelectButton>
             </Row>
           </ListBaseItem>
           <ListBaseItem>
             <Row className="order-data-row grow">
               <div>{assetLabels[orderMode]["receive-asset"]}</div>
-              <SelectButton onClick={selectReceiveAsset}>{to_asset?.meta?.symbol}</SelectButton>
+              <SelectButton onClick={selectReceiveAsset}>{toAsset?.meta?.symbol}</SelectButton>
             </Row>
           </ListBaseItem>
         </ListBlock>
@@ -173,13 +169,13 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow market-asset-info">
               <img src="" alt="" className="market-asset-icon" />
-              <div className="grow">{from_asset?.meta?.symbol}</div>
+              <div className="grow">{fromAsset?.meta?.symbol}</div>
               <div className="secondary-content">
                 <input
-                  className={classNames("order-asset-input", {"error": orderMode === MarketModeEnum.SELL && Number(from_value) > Number(from_asset?.amount)})}
+                  className={classNames("order-asset-input", {"error": orderMode === MarketModeEnum.SELL && Number(fromValue) > Number(fromAsset?.amount)})}
                   type="number"
                   inputMode="numeric"
-                  value={from_value}
+                  value={fromValue}
                   placeholder="0"
                   onChange={primaryValueChangeHandler}
                 />
@@ -189,7 +185,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow order-data-row">
               <div>{t("your-balance")}</div>
-              <div>{from_asset?.amount}</div>
+              <div>{fromAsset?.amount}</div>
             </Row>
           </ListBaseItem>
         </ListBlock>
@@ -199,13 +195,13 @@ const CreateMarketOrder = () => {
         <ListBaseItem>
             <Row className="grow market-asset-info">
               <img src="" alt="" className="market-asset-icon" />
-              <div className="grow">{to_asset?.meta?.symbol}</div>
+              <div className="grow">{toAsset?.meta?.symbol}</div>
               <div className="secondary-content">
                 <input
-                  className={classNames("order-asset-input", {"error": orderMode === MarketModeEnum.BUY && Number(to_value) > Number(to_asset?.amount)})}
+                  className={classNames("order-asset-input", {"error": orderMode === MarketModeEnum.BUY && Number(toValue) > Number(toAsset?.amount)})}
                   type="number"
                   inputMode="numeric"
-                  value={to_value}
+                  value={toValue}
                   placeholder="0"
                   onChange={secondaryValueChangeHandler}
                 />
@@ -215,7 +211,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow order-data-row">
               <div>{t("your-balance")}</div>
-              <div>{to_asset?.amount}</div>
+              <div>{toAsset?.amount}</div>
             </Row>
           </ListBaseItem>
         </ListBlock>

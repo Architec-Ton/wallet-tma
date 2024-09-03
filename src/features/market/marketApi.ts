@@ -1,13 +1,23 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import baseQuery from "../api/api";
-import { MarketOrderDto } from "types/market";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { MarketOrdersDto } from "types/market";
 import { CoinDto } from "types/assest";
+import { P2P_BE_URL } from "../../constants";
+import { RootState } from "../../store";
 
 export const marketApi = createApi({
   reducerPath: "marketApi",
-  baseQuery,
+  baseQuery: fetchBaseQuery({
+    baseUrl: P2P_BE_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.accessToken;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
-    getOrders: builder.query<MarketOrderDto[], unknown>({
+    getOrders: builder.query<MarketOrdersDto, unknown>({
       query: () => `orders`,
     }),
     getAssets: builder.query<CoinDto[], undefined>({
@@ -15,15 +25,15 @@ export const marketApi = createApi({
         url: `assets`,
       }),
     }),
-    getOrdersHistory: builder.query<MarketOrderDto[], undefined>({
+    getOrdersHistory: builder.query<MarketOrdersDto, undefined>({
       query: () => ({
-        url: `orders/history`,
+        url: `orders/my-orders`,
       }),
     }),
     createOrder: builder.mutation<any, any>({
-      query: ({ offer_address, ask_address, units, slippage_tolerance }: any) => ({
-        url: "order",
-        params: { offer_address, ask_address, units, slippage_tolerance },
+      query: ({ type, fromAsset, toAsset, fromValue, toValue }: any) => ({
+        url: "orders",
+        body: { type, fromAsset, toAsset, fromValue, toValue },
         method: "POST",
       }),
     }),
@@ -33,6 +43,6 @@ export const marketApi = createApi({
 export const {
   useLazyGetAssetsQuery,
   useLazyGetOrdersQuery,
-  useGetOrdersHistoryQuery,
+  useLazyGetOrdersHistoryQuery,
   useCreateOrderMutation,
 } = marketApi;
