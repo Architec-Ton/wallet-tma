@@ -22,7 +22,6 @@
   width: var(--spacing-48);
   height: var(--spacing-48);
   border-radius: 50%;
-  background-color: var(--text-secondary-color);
 }
 
 .market-asset-info {

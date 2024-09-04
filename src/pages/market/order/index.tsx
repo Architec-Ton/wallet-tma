@@ -4,11 +4,11 @@ import useLanguage from "hooks/useLanguage";
 import { usePage } from "hooks/usePage";
 import FilterBlock from "components/ui/market/FilterBlock";
 import AssetsModal from "components/ui/market/modals/AsetsModal";
-import { assets, order } from "../mock"
+import { assets } from "../mock"
 import { CoinDto } from "types/assest";
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
-import { MarketModeEnum, setOrderPrimaryAsset, setOrderSecondaryAsset } from "features/market/marketSlice";
-import { marketSelector } from "features/market/marketSelectors";
+import { MarketModeEnum, setOrderPrimaryAsset, setOrders, setOrderSecondaryAsset } from "features/market/marketSlice";
+import { marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
 import Row from "components/containers/Row";
 import ResponsiveInput from "components/inputs/ResponsiveInput";
 import Column from "components/containers/Column";
@@ -16,15 +16,18 @@ import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { useClosure } from "hooks/useClosure";
 import { useNavigate } from "react-router-dom";
-import { HistoryOrderDto } from "types/market";
+import { HistoryOrderDto, MarketOrdersDto } from "types/market";
+import { useLazyGetOrdersQuery } from "features/market/marketApi";
+import OrderCardIcon from "components/ui/market/OrderCardIcon";
 
-const orders = [order, order, order]
 
 const MarketOrder = () => {
   const t = useLanguage("market")
   const page = usePage()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [getOrders] = useLazyGetOrdersQuery()
+  const orders = useAppSelector(marketOrdersSelector)
   const { fromAsset, toAsset, mode } = useAppSelector(marketSelector)
   const [showPrimaryAssetModal, setShowPrimaryAssetModal] = useState<boolean>()
   const [showSecondaryAssetModal, setShowSecondaryAssetModal] = useState<boolean>()
@@ -33,19 +36,24 @@ const MarketOrder = () => {
   const [textData, setTextData] = useState<any>()
 
   useEffect(() => {
-    setFilteredOrders(orders)
+    getOrders(mode).then(result => {
+      const { items } = result.data as MarketOrdersDto
+      dispatch(setOrders(items))
+    })
   }, [])
 
   useEffect(() => {
+    if (orders) {
     const amount = Number(amountValue)
-    const filteredOrders = orders.filter(order => {
-      let condition = order.fromValue >= amount
-      condition = fromAsset ? condition && order.fromAsset.meta?.symbol === fromAsset.meta?.symbol : condition
-      condition = toAsset ? condition && order.toAsset.meta?.symbol === toAsset.meta?.symbol : condition
-      return condition
-    })
-    setFilteredOrders(filteredOrders)
-  }, [fromAsset, toAsset, amountValue])
+      const filteredOrders = orders.filter(order => {
+        let condition = order.fromValue >= amount
+        condition = fromAsset ? condition && order.fromAsset.meta?.symbol === fromAsset.meta?.symbol : condition
+        condition = toAsset ? condition && order.toAsset.meta?.symbol === toAsset.meta?.symbol : condition
+        return condition
+      })
+      setFilteredOrders(filteredOrders)
+    }
+  }, [fromAsset, toAsset, amountValue, orders])
 
   useEffect(() => {
     const textData = mode === MarketModeEnum.BUY
@@ -117,15 +125,12 @@ const MarketOrder = () => {
         {filteredOrders?.map(orderData => (
           <ListBlock key={orderData.uuid}>
             <ListBaseItem className="market-order-card">
-              <div className="card-icon-container">
-                <img src={orderData.fromAsset.meta?.image} alt="" className="primary-icon" />
-                <img src={orderData.toAsset.meta?.image} alt="" className="secondary-icon" />
-              </div>
+              <OrderCardIcon order={orderData} />
               <Column className="grow">
                 <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
                 <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
               </Column>
-              <button className="small-button rounded-button primary-button" onClick={orderClickHandler(order.uuid)}>{textData?.buttonText}</button>
+              <button className="small-button rounded-button primary-button" onClick={orderClickHandler(orderData.uuid)}>{textData?.buttonText}</button>
             </ListBaseItem>
             <ListBaseItem>
               <Column className="w-full">

@@ -13,6 +13,7 @@ import { t } from "i18next";
 
 import "./AssetsModal.styles.css"
 import { CoinDto } from "types/assest";
+import AssetIcon from "components/ui/assets/AssetIcon";
 
 type AssetsModalPropsType = {
   title: string;
@@ -60,7 +61,7 @@ const AssetsModal = ({title, onSelect, onClose, assets}: AssetsModalPropsType) =
           <ListBlock>
             {filteredAssets && filteredAssets.map(asset => (
               <ListBaseItem onClick={() => onSelect(asset)} key={asset.meta?.address}>
-                <img className="asset-modal-icon" src={asset.meta?.image || asset.meta?.imageData} alt="" />
+                <AssetIcon asset={asset} className="asset-modal-icon" />
                 <div className="grow">{asset.meta?.symbol}</div>
               </ListBaseItem>
             ))}

@@ -5,13 +5,14 @@ import Section from "components/containers/Section";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import useLanguage from "hooks/useLanguage";
-import { marketSelector } from "features/market/marketSelectors";
+import { marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
 import { MarketModeEnum } from "features/market/marketSlice";
 import { useAppSelector } from "hooks/useAppDispatch";
 import { useNavigate, useParams } from "react-router-dom";
 import { HistoryOrderDto } from "types/market";
 import { useTmaMainButton } from "hooks/useTma";
-import { order } from "../mock";
+import { CoinDto } from "types/assest";
+import AssetIcon from "components/ui/assets/AssetIcon";
 
 const ConfirmAction = () => {
   const t = useLanguage("market-order")
@@ -19,6 +20,7 @@ const ConfirmAction = () => {
   const navigate = useNavigate()
   const { id } = useParams()
   const { mode } = useAppSelector(marketSelector)
+  const orders = useAppSelector(marketOrdersSelector)
 
   const [selectedOrder, setSelectedOrder] = useState<HistoryOrderDto | undefined>()
   const [textData, setTextData] = useState<{youSell: string, sellerInfo: string, youReceive: string} | undefined>()
@@ -28,6 +30,7 @@ const ConfirmAction = () => {
   }, [])
 
   useEffect(() => {
+    const order = orders?.find(o => o.uuid === id)
     setSelectedOrder(order)
   }, [id, mode])
 
@@ -44,15 +47,15 @@ const ConfirmAction = () => {
     console.log("sendTransaction confirm")
     // TODO: send confirm transaction
     navigate("/market", {replace: true})
-  }  
+  }
 
   return (
     <Page>
       <Section title={textData?.youSell}>
         <Row>
-          <img src="" alt="" className="market-asset-icon" />
+          <AssetIcon asset={selectedOrder?.fromAsset as CoinDto} className="market-asset-icon" />
           <div className="grow">{selectedOrder?.fromAsset?.meta?.symbol}</div>
-          <div>{selectedOrder?.fromAsset.amount}</div>
+          <div>{selectedOrder?.fromValue}</div>
         </Row>
       </Section>
       <Section title={textData?.sellerInfo}>
@@ -77,9 +80,9 @@ const ConfirmAction = () => {
       </Section>
       <Section title={textData?.youReceive}>
         <Row>
-          <img src="" alt="" className="market-asset-icon" />
+          <AssetIcon asset={selectedOrder?.toAsset as CoinDto} className="market-asset-icon" />
           <div className="grow">{selectedOrder?.toAsset?.meta?.symbol}</div>
-          <div>{selectedOrder?.toAsset.amount}</div>
+          <div>{selectedOrder?.toValue}</div>
         </Row>
       </Section>
     </Page>

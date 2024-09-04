@@ -3,6 +3,7 @@ import { MarketOrdersDto } from "types/market";
 import { CoinDto } from "types/assest";
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
+import { MarketModeEnum } from "./marketSlice";
 
 export const marketApi = createApi({
   reducerPath: "marketApi",
@@ -17,8 +18,11 @@ export const marketApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getOrders: builder.query<MarketOrdersDto, unknown>({
-      query: () => `orders`,
+    getOrders: builder.query<MarketOrdersDto, MarketModeEnum>({
+      query: (mode) => ({
+        url: `orders/all-orders`,
+        params: {order_type: mode}
+      }),
     }),
     getAssets: builder.query<CoinDto[], undefined>({
       query: () => ({

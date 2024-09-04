@@ -7,6 +7,7 @@ import { HistoryOrderDto } from "types/market";
 import { formatDate } from "date-fns";
 
 import "./OrderCard.styles.css"
+import OrderCardIcon from "./OrderCardIcon";
 
 type OwnPropsType = {
   order: HistoryOrderDto
@@ -28,10 +29,7 @@ const MarketOrderCard = ({ order, isActive = false }: OwnPropsType) => {
       <ListBaseItem>
         {orderData && (
           <>
-            <div className="card-icon-container">
-              <img src={orderData.fromAsset.meta?.image} alt="" className="primary-icon" />
-              <img src={orderData.toAsset.meta?.image} alt="" className="secondary-icon" />
-            </div>
+            <OrderCardIcon order={orderData} />
             <Column className="grow">
               <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
               <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>

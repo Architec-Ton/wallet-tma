@@ -3,6 +3,7 @@ import Page from "components/containers/Page";
 import Row from "components/containers/Row";
 import Section from "components/containers/Section";
 import Block from "components/typography/Block";
+import AssetIcon from "components/ui/assets/AssetIcon";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { useCreateOrderMutation } from "features/market/marketApi";
@@ -14,6 +15,7 @@ import { usePage } from "hooks/usePage";
 import { useTmaMainButton } from "hooks/useTma";
 import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { CoinDto } from "types/assest";
 
 const ConfirmOrder = () => {
   const t = useLanguage("market-order-confirm")
@@ -52,7 +54,7 @@ const ConfirmOrder = () => {
       <Section title={textContents.primaryTitle}>
         <Block>
           <Row className="w-full">
-            <img src="" alt="" className="market-asset-icon" />
+            {fromAsset && <AssetIcon asset={fromAsset as CoinDto} className="market-asset-icon" />}
             <div className="grow">{fromAsset?.meta?.symbol}</div>
             <div>{fromValue}</div>
           </Row>
@@ -61,7 +63,7 @@ const ConfirmOrder = () => {
       <Section title={textContents.secondaryTitle}>
         <Block>
           <Row className="w-full">
-            <img src="" alt="" className="market-asset-icon" />
+            <AssetIcon asset={toAsset as CoinDto} className="market-asset-icon" />
             <div className="grow">{toAsset?.meta?.symbol}</div>
             <div>{toValue}</div>
           </Row>
