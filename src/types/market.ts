@@ -1,7 +1,7 @@
 import { MarketModeEnum } from "features/market/marketSlice";
 import { CoinDto } from "./assest";
 
-export interface MarketOrderDto {
+export interface HistoryOrderDto {
   type: MarketModeEnum;
   createdAt: string;
   status: string;
@@ -12,4 +12,12 @@ export interface MarketOrderDto {
   stats?: string;
   fromAsset: CoinDto;
   toAsset: CoinDto;
+}
+
+export interface MarketOrdersDto {
+  items: HistoryOrderDto[];
+  page: number;
+  pages: number;
+  size: number;
+  total: number;
 }

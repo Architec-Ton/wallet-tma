@@ -50,8 +50,8 @@ const Market = () => {
   useEffect(() => {
     if (isReady) {
       getMyOrders(undefined).then((myOrders) => {
-        const historyOrders = myOrders.data?.items?.filter(order => order.status !== "created")
-        const activeOrders = myOrders.data?.items?.filter(order => order.status === "created")
+        const historyOrders = myOrders.data?.items?.filter((order: HistoryOrderDto) => order.status !== "created")
+        const activeOrders = myOrders.data?.items?.filter((order: HistoryOrderDto) => order.status === "created")
         setOrdersHistoryData(historyOrders || [])
         setOrdersActiveData(activeOrders || [])
       })
