@@ -20,7 +20,6 @@ const MainButtonTMA = memo(({ title, onClick, visible }: MainButtonProps) => {
   const storage = useCloudStorage();
   const dispatch = useAppDispatch();
   const initData = useInitData();
-
   useEffect(() => {
     mb.setBgColor("#07ACFF");
     mb.setTextColor("#FFFFFF");
