@@ -9,15 +9,18 @@ const endpointPromise = getHttpEndpoint({
 });
 
 export function useTonClient() {
-  const client = useAsyncInitialize(async (): Promise<TonClient> => {
-    const ep = await endpointPromise;
-    console.log("ep", ep);
-    return new TonClient({
-      endpoint: ep, // "https://tonb.architecton.site/jsonRPC",
-      // await endpointPromise,
-      // apiKey: TONAPI_KEY,
-    });
-  }, [TON_CLIENT_NETWORK]);
+  const client = useAsyncInitialize(
+    async (): Promise<TonClient> =>
+      new TonClient({
+        endpoint:
+          TON_CLIENT_NETWORK === "mainnet"
+            ? "https://toncenter.com/api/v2/jsonRPC"
+            : "https://testnet.toncenter.com/api/v2/jsonRPC",
+        // await endpointPromise,
+        // apiKey: TONAPI_KEY,
+      }),
+    [],
+  );
 
   return {
     client, // TON_CLIENT_NETWORK === "mainnet" ? mainnet : testnet,
