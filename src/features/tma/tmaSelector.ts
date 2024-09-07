@@ -8,4 +8,6 @@ export const selectIsTmaLoading = createSelector(selectTmaState, (tma) => tma.is
 
 export const selectIsTma = createSelector(selectTmaState, (tma) => tma.isTma);
 
+export const selectInitDataRaw = createSelector(selectTmaState, (tma) => tma.initDataRaw);
+
 export const selectReferral = createSelector(selectTmaState, (tma) => tma.referral);

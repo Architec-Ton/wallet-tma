@@ -2,15 +2,14 @@
 import type { ReactNode } from "react";
 import React, { useEffect, useMemo, useState } from "react";
 
-import type { LaunchParams } from "@tma.js/sdk-react";
 import { isTMA, retrieveLaunchParams, useInitDataRaw } from "@tma.js/sdk-react";
 import { useApiAuthMutation } from "features/auth/authApi";
 import { selectAccessToken, selectAuth, selectAuthIsTmaReady, selectAuthIsTonReady } from "features/auth/authSelector";
 import type { AccountState } from "features/auth/authSlice";
 import { setAccessToken, setAccount, setIsReady, setIsTmaReady } from "features/auth/authSlice";
 import { selectMainButtonIsVisible, selectMainButtonTitle } from "features/tma/mainButtonSelector";
-import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
-import { setTma, setTmaLoading } from "features/tma/tmaSlice";
+import { selectInitDataRaw, selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
+import { setTma, setTmaInitDataRaw, setTmaLoading } from "features/tma/tmaSlice";
 import type { AuthInitData, AuthInitTon } from "types/auth";
 
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
@@ -26,6 +25,18 @@ interface TmaProviderProps {
   children: ReactNode;
 }
 
+export function TmaLaunch() {
+  const launchParams = retrieveLaunchParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (launchParams && launchParams.initDataRaw) {
+      dispatch(setTmaInitDataRaw(launchParams.initDataRaw));
+    }
+  }, [launchParams]);
+  return null;
+}
+
 export function TmaProvider({ children }: TmaProviderProps) {
   const dispatch = useAppDispatch();
 
@@ -34,6 +45,7 @@ export function TmaProvider({ children }: TmaProviderProps) {
   const mainButtonTitle = useAppSelector(selectMainButtonTitle);
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
   const isTma = useAppSelector(selectIsTma);
+  const tmaInitDataRaw = useAppSelector(selectInitDataRaw);
   const ton = useTon();
   const pincode = usePinCodeModalManagement();
   const auth = useAppSelector(selectAuth);
@@ -48,7 +60,6 @@ export function TmaProvider({ children }: TmaProviderProps) {
   const accessToken = useAppSelector(selectAccessToken);
 
   const initDataRaw = useInitDataRaw();
-  const launchParams = retrieveLaunchParams();
 
   useEffect(() => {
     dispatch(setTmaLoading(true));
@@ -59,11 +70,11 @@ export function TmaProvider({ children }: TmaProviderProps) {
       });
   }, []);
 
-  const handleAuth = async (auth?: AccountState, initTon?: AuthInitTon, lp?: LaunchParams) => {
+  const handleAuth = async (auth?: AccountState, initTon?: AuthInitTon, initDataRawValue?: string) => {
     try {
       const result = await authApi({
         authType: auth ? "telegram" : "web",
-        initDataRaw: `${lp?.initDataRaw}`,
+        initDataRaw: `${initDataRawValue || ""}`,
         initTon,
       }).unwrap();
 
@@ -106,7 +117,7 @@ export function TmaProvider({ children }: TmaProviderProps) {
   }, [isTma, isTmaLoading, initDataRaw]);
 
   useEffect(() => {
-    if (isTmaReady && isTonReady && ton.wallet?.address && launchParams.initDataRaw) {
+    if (isTmaReady && isTonReady && ton.wallet?.address) {
       const initTon = ton.wallet
         ? ({
             network: ton.wallet.network,
@@ -114,15 +125,17 @@ export function TmaProvider({ children }: TmaProviderProps) {
             publicKey: ton.wallet.publicKey,
           } as AuthInitTon)
         : undefined;
-      handleAuth(auth, initTon, launchParams);
+      handleAuth(auth, initTon, tmaInitDataRaw);
     }
-  }, [isTmaReady, isTonReady, ton.wallet, launchParams.initDataRaw]);
+  }, [isTmaReady, isTonReady, ton.wallet, tmaInitDataRaw]);
 
   const tmaContextValue = useMemo(() => ({ setMainButtonHandler }), [setMainButtonHandler]);
 
   return (
     <TmaStateContext.Provider value={tmaContextValue}>
       {children}
+
+      {isTma && <TmaLaunch />}
 
       <MainButton
         title={mainButtonTitle}
