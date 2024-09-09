@@ -8,8 +8,8 @@ export interface HistoryOrderDto {
   fromValue: number;
   toValue: number;
   uuid: string;
-  userName?: string;
-  stats?: string;
+  userUsername?: string;
+  userTotalOrders: number;
   fromAsset: CoinDto;
   toAsset: CoinDto;
 }
@@ -20,4 +20,16 @@ export interface MarketOrdersDto {
   pages: number;
   size: number;
   total: number;
+}
+
+export interface CreateOrderRequestQuery {
+  type: MarketModeEnum;
+  fromAsset: CoinDto;
+  toAsset: CoinDto;
+  fromValue: number;
+  toValue: number;
+}
+
+export interface CreateOrderDto {
+
 }

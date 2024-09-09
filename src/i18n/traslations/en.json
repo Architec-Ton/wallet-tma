@@ -243,5 +243,9 @@
   "market-given-asset": "Given Asset",
   "market-selling": "Selling",
   "market-selling-asset": "Selling Asset",
-  "market-receiving-asset": "Receiving Asset"
+  "market-receiving-asset": "Receiving Asset",
+  "market-seller": "Seller",
+  "market-buyer": "Buyer",
+  "market-stats": "Stats",
+  "market-stats-value": "{{total}} trades"
 }

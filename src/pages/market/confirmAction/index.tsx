@@ -62,11 +62,11 @@ const ConfirmAction = () => {
         <ListBlock>
           <ListBaseItem className="w-full">
             <div>{t("username")}</div>
-            <div>{selectedOrder?.userName}</div>
+            <div>{selectedOrder?.userUsername}</div>
           </ListBaseItem>
           <ListBaseItem className="w-full">
             <div>{t("total-trades")}</div>
-            <div>{selectedOrder?.stats}</div>
+            <div>{selectedOrder?.userTotalOrders}</div>
           </ListBaseItem>
           <ListBaseItem className="w-full">
             <div className="grow">{t("commission", "transaction")}</div>

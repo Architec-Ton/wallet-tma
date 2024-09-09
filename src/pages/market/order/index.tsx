@@ -62,7 +62,7 @@ const MarketOrder = () => {
       primaryAssetLabel: t("buying-asset"),
       secondaryAssetLabel: t("given-asset"),
       buttonText: t("buy"),
-      ownerLabel: t("buyer"),
+      ownerLabel: t("seller"),
       stats: t("stats"),
     }
     : {
@@ -70,7 +70,7 @@ const MarketOrder = () => {
       primaryAssetLabel: t("selling-asset"),
       secondaryAssetLabel: t("receiving-asset"),
       buttonText: t("sell"),
-      ownerLabel: t("seller"),
+      ownerLabel: t("buyer"),
       stats: t("stats"),
     }
     setTextData(textData)
@@ -136,11 +136,11 @@ const MarketOrder = () => {
               <Column className="w-full">
                 <Row className="order-data-row">
                   <div className="secondary-content">{textData?.ownerLabel}</div>
-                  <div>{orderData?.userName}</div>
+                  <div>{orderData?.userUsername}</div>
                 </Row>
                 <Row className="order-data-row">
                   <div className="secondary-content">{textData?.stats}</div>
-                  <div>{orderData?.stats}</div>
+                  <div>{t("stats-value", "", {total: orderData?.userTotalOrders})}</div>
                 </Row>
               </Column>
             </ListBaseItem>

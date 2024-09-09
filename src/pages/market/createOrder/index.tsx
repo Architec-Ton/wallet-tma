@@ -17,9 +17,10 @@ import { CoinDto } from "types/assest";
 import classNames from "classnames";
 import { useTmaMainButton } from "hooks/useTma";
 import { useNavigate } from "react-router-dom";
-import { assets } from "../mock"
+// import { assets } from "../mock"
 
 import "./index.css"
+import { useLazyGetAssetsQuery } from "features/market/marketApi";
 
 const CreateMarketOrder = () => {
   const t = useLanguage("market-order-form")
@@ -31,20 +32,27 @@ const CreateMarketOrder = () => {
   const orderMode = useAppSelector(marketModeSelector)
   const fromAsset = useAppSelector(orderPrimaryAssetSelector)
   const toAsset = useAppSelector(orderSecondaryAssetSelector)
+  const [getAssets] = useLazyGetAssetsQuery()
   const [showAssetsModal, setShowAssetsModal] = useState<boolean>(false)
   const [assetsModalTitle, setAssetsModalTitle] = useState<string>("")
   const [selectedAsset, setSelectedAsset] = useState<"primary" | "secondary" | undefined>()
   const [fromValue, setFromValue] = useState<string>("")
   const [toValue, setToValue] = useState<string>("")
+  const [assets, setAsseets] = useState<CoinDto[]>()
   
   useEffect(() => {
-    if (!fromAsset) {
-      dispatch(setOrderPrimaryAsset(assets[0]))
-    }
-    if (!toAsset) {
-      dispatch(setOrderSecondaryAsset(assets[1]))
-    }
-    page.setLoading(false)
+    getAssets(undefined).then(({ data }) => {
+      if (data?.assets) {
+        setAsseets(data?.assets)
+        if (!fromAsset) {
+          dispatch(setOrderPrimaryAsset(data?.assets[0]))
+        }
+        if (!toAsset) {
+          dispatch(setOrderSecondaryAsset(data?.assets[1]))
+        }
+      }
+      page.setLoading(false)
+    })
   }, [])
 
   const isValid = useMemo(() => {
@@ -217,7 +225,7 @@ const CreateMarketOrder = () => {
         </ListBlock>
       </Section>
       {showAssetsModal && (
-        <AssetsModal assets={assets} onSelect={onAssetSelect} title={assetsModalTitle} onClose={() => setShowAssetsModal(false)} />
+        <AssetsModal assets={assets as CoinDto[]} onSelect={onAssetSelect} title={assetsModalTitle} onClose={() => setShowAssetsModal(false)} />
       )}
     </Page>
   )

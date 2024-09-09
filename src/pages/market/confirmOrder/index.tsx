@@ -1,3 +1,4 @@
+import { Cell } from "@ton/core";
 import classNames from "classnames";
 import Page from "components/containers/Page";
 import Row from "components/containers/Row";
@@ -13,12 +14,14 @@ import { useAppSelector } from "hooks/useAppDispatch";
 import useLanguage from "hooks/useLanguage";
 import { usePage } from "hooks/usePage";
 import { useTmaMainButton } from "hooks/useTma";
+import { useTon } from "hooks/useTon";
 import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { CoinDto } from "types/assest";
 
 const ConfirmOrder = () => {
   const t = useLanguage("market-order-confirm")
+  const ton = useTon()
   const btn = useTmaMainButton()
   const page = usePage()
   const navigate = useNavigate()
@@ -30,18 +33,28 @@ const ConfirmOrder = () => {
   }, [])
 
   useEffect(() => {
-    btn.init("Confirm", () => {
-      // TODO: send transaction
-      createOrderApi({
+    btn.init("Confirm", async () => {
+      const order = await createOrderApi({
         type: orderMode,
-        fromAsset,
-        toAsset,
-        fromValue,
-        toValue,
-      }).then(result => {
-        console.log("create_order", result)
-        navigate("/market", {replace: true})
+        fromAsset: fromAsset as CoinDto,
+        toAsset: toAsset as CoinDto,
+        fromValue: Number(fromValue),
+        toValue: Number(toValue),
       })
+
+      // TODO: send transaction
+      const { rawTxn } = order.data
+
+      const body = Cell.fromBase64(rawTxn.body)
+      console.log("body", body)
+
+      await ton.sender.send({
+        value: rawTxn.value,
+        to: rawTxn.to,
+        body: body,
+      });
+
+      navigate("/market", {replace: true})
     }, true)
   }, [fromValue, toValue])
 

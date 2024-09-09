@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { MarketOrdersDto } from "types/market";
+import { CreateOrderRequestQuery, MarketOrdersDto } from "types/market";
 import { CoinDto } from "types/assest";
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
@@ -24,7 +24,7 @@ export const marketApi = createApi({
         params: {order_type: mode}
       }),
     }),
-    getAssets: builder.query<CoinDto[], undefined>({
+    getAssets: builder.query<{assets: CoinDto[], nft: any}, undefined>({
       query: () => ({
         url: `assets`,
       }),
@@ -34,8 +34,8 @@ export const marketApi = createApi({
         url: `orders/my-orders`,
       }),
     }),
-    createOrder: builder.mutation<any, any>({
-      query: ({ type, fromAsset, toAsset, fromValue, toValue }: any) => ({
+    createOrder: builder.mutation<any, CreateOrderRequestQuery>({
+      query: ({ type, fromAsset, toAsset, fromValue, toValue }: CreateOrderRequestQuery) => ({
         url: "orders",
         body: { type, fromAsset, toAsset, fromValue, toValue },
         method: "POST",
