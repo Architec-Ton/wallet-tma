@@ -1,10 +1,17 @@
 import { MarketModeEnum } from "features/market/marketSlice";
 import { CoinDto } from "./assest";
+import { Address } from "@ton/core";
 
-export interface HistoryOrderDto {
+export enum OrderStatus {
+  CREATED="created",
+  FINISHED="finished",
+  CANCELED="canceled"
+}
+
+export interface MarketOrderDto {
   type: MarketModeEnum;
   createdAt: string;
-  status: string;
+  status: OrderStatus;
   fromValue: number;
   toValue: number;
   uuid: string;
@@ -15,7 +22,7 @@ export interface HistoryOrderDto {
 }
 
 export interface MarketOrdersDto {
-  items: HistoryOrderDto[];
+  items: MarketOrderDto[];
   page: number;
   pages: number;
   size: number;
@@ -31,5 +38,21 @@ export interface CreateOrderRequestQuery {
 }
 
 export interface CreateOrderDto {
+  type: MarketModeEnum;
+  createdAt: string;
+  status: OrderStatus;
+  fromValue: number;
+  toValue: number;
+  uuid: string;
+  fromAsset: CoinDto;
+  toAsset: CoinDto;
+  rawTxn: OrderTxParams;
+}
 
+export interface OrderTxParams {
+  to: Address;
+  body: string;
+  value: bigint;
+  mode: number;
+  bodyHash: string;
 }

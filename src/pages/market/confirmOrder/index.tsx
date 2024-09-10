@@ -43,16 +43,17 @@ const ConfirmOrder = () => {
       })
 
       // TODO: send transaction
-      const { rawTxn } = order.data
 
-      const body = Cell.fromBase64(rawTxn.body)
-      console.log("body", body)
+      if (order.data && order.data.rawTxn) { 
+        const { rawTxn } = order.data
+        const body = Cell.fromBase64(rawTxn.body)
 
-      await ton.sender.send({
-        value: rawTxn.value,
-        to: rawTxn.to,
-        body: body,
-      });
+        await ton.sender.send({
+          value: rawTxn.value,
+          to: rawTxn.to,
+          body: body,
+        });
+      }
 
       navigate("/market", {replace: true})
     }, true)

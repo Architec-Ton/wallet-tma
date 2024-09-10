@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CoinDto } from "types/assest";
-import { HistoryOrderDto } from "types/market";
+import { MarketOrderDto } from "types/market";
 
 export enum MarketModeEnum {
   SELL="sell",
@@ -13,7 +13,8 @@ interface MarketState {
   toAsset?: CoinDto
   fromValue?: number
   toValue?: number
-  orders?: HistoryOrderDto[]
+  orders?: MarketOrderDto[],
+  assets?: CoinDto[]
 }
 
 const initialState: MarketState = {
@@ -41,9 +42,12 @@ const marketSlice = createSlice({
       state.fromAsset = undefined
       state.toAsset = undefined
     },
-    setOrders(state: MarketState, action: PayloadAction<HistoryOrderDto[] | undefined>) {
+    setOrders(state: MarketState, action: PayloadAction<MarketOrderDto[] | undefined>) {
       state.orders = action.payload
-    }
+    },
+    setAssets(state: MarketState, action: PayloadAction<CoinDto[]>) {
+      state.assets = action.payload
+    },
   }
 })
 
@@ -54,6 +58,7 @@ export const {
   setOrderValues,
   clearOrderAssets,
   setOrders,
+  setAssets,
 } = marketSlice.actions
 
 export default marketSlice.reducer

@@ -9,7 +9,7 @@ import { marketOrdersSelector, marketSelector } from "features/market/marketSele
 import { MarketModeEnum } from "features/market/marketSlice";
 import { useAppSelector } from "hooks/useAppDispatch";
 import { useNavigate, useParams } from "react-router-dom";
-import { HistoryOrderDto } from "types/market";
+import { MarketOrderDto } from "types/market";
 import { useTmaMainButton } from "hooks/useTma";
 import { CoinDto } from "types/assest";
 import AssetIcon from "components/ui/assets/AssetIcon";
@@ -22,7 +22,7 @@ const ConfirmAction = () => {
   const { mode } = useAppSelector(marketSelector)
   const orders = useAppSelector(marketOrdersSelector)
 
-  const [selectedOrder, setSelectedOrder] = useState<HistoryOrderDto | undefined>()
+  const [selectedOrder, setSelectedOrder] = useState<MarketOrderDto | undefined>()
   const [textData, setTextData] = useState<{youSell: string, sellerInfo: string, youReceive: string} | undefined>()
 
   useEffect(() => {

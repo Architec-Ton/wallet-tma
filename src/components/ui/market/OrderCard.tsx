@@ -3,18 +3,19 @@ import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import Column from "components/containers/Column";
 import Row from "components/containers/Row";
-import { HistoryOrderDto } from "types/market";
+import { MarketOrderDto } from "types/market";
 import { formatDate } from "date-fns";
 
 import "./OrderCard.styles.css"
 import OrderCardIcon from "./OrderCardIcon";
 
 type OwnPropsType = {
-  order: HistoryOrderDto
+  order: MarketOrderDto
   isActive?: boolean
+  onCancel: (uuid: string) => void
 }
 
-const MarketOrderCard = ({ order, isActive = false }: OwnPropsType) => {
+const MarketOrderCard = ({ order, isActive = false, onCancel }: OwnPropsType) => {
   const orderData = useMemo(() => {
     if (order) {
       const { createdAt } = order
@@ -34,7 +35,7 @@ const MarketOrderCard = ({ order, isActive = false }: OwnPropsType) => {
               <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
               <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
             </Column>
-            {isActive && <button className="small-button rounded-button primary-button">Cancel</button>}
+            {isActive && <button className="small-button rounded-button primary-button" onClick={() => onCancel(orderData.uuid)}>Cancel</button>}
           </>
         )}
       </ListBaseItem>

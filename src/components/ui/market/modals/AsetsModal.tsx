@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import Column from "components/containers/Column";
 import Row from "components/containers/Row";
@@ -9,7 +9,6 @@ import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import Modal from "components/ui/modal";
 import SearchBar from "components/ui/searchBar";
 import useLanguage from "hooks/useLanguage";
-import { t } from "i18next";
 
 import "./AssetsModal.styles.css"
 import { CoinDto } from "types/assest";
@@ -19,14 +18,14 @@ type AssetsModalPropsType = {
   title: string;
   onSelect: (asset: CoinDto) => void;
   onClose: () => void;
-  assets: CoinDto[]
+  assets?: CoinDto[]
 }
 
 const AssetsModal = ({title, onSelect, onClose, assets}: AssetsModalPropsType) => {
   const t = useLanguage("")
   const [showAssets, setShowAssets] = useState<boolean>(true)
   const [showNfts, setShowNfts] = useState<boolean>(false)
-  const [filteredAssets, setFilteredAssets] = useState<CoinDto[]>(assets)
+  const [filteredAssets, setFilteredAssets] = useState<CoinDto[] | undefined>(assets)
 
   const assetsTabHandler = () => {
     setShowAssets(true)
@@ -41,7 +40,7 @@ const AssetsModal = ({title, onSelect, onClose, assets}: AssetsModalPropsType) =
   const searchHandler = (value: string) => {
     if (showAssets) {
       const lcValue = value.toLowerCase()
-      const filteredAssets = assets.filter(asset => asset.meta?.symbol?.toLowerCase().includes(lcValue))
+      const filteredAssets = assets?.filter(asset => asset.meta?.symbol?.toLowerCase().includes(lcValue))
       setFilteredAssets(filteredAssets)
     }
   }

@@ -10,17 +10,17 @@ import Tabs from "components/ui/tabs";
 import Tab from "components/ui/tabs/Tab";
 import SelectButton from "components/ui/buttons/selectButton";
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
-import { marketModeSelector, orderPrimaryAssetSelector, orderSecondaryAssetSelector } from "features/market/marketSelectors";
+import { marketAssets, marketModeSelector, orderPrimaryAssetSelector, orderSecondaryAssetSelector } from "features/market/marketSelectors";
 import { MarketModeEnum, setMarketMode, setOrderPrimaryAsset, setOrderSecondaryAsset, setOrderValues } from "features/market/marketSlice";
 import AssetsModal from "components/ui/market/modals/AsetsModal";
 import { CoinDto } from "types/assest";
 import classNames from "classnames";
 import { useTmaMainButton } from "hooks/useTma";
 import { useNavigate } from "react-router-dom";
-// import { assets } from "../mock"
+import { useApiWalletInfoMutation } from "features/wallet/walletApi";
+import { WalletInfoData } from "types/wallet";
 
 import "./index.css"
-import { useLazyGetAssetsQuery } from "features/market/marketApi";
 
 const CreateMarketOrder = () => {
   const t = useLanguage("market-order-form")
@@ -32,28 +32,39 @@ const CreateMarketOrder = () => {
   const orderMode = useAppSelector(marketModeSelector)
   const fromAsset = useAppSelector(orderPrimaryAssetSelector)
   const toAsset = useAppSelector(orderSecondaryAssetSelector)
-  const [getAssets] = useLazyGetAssetsQuery()
+  const assets = useAppSelector(marketAssets)
+  const [walletInfoApi] = useApiWalletInfoMutation();
   const [showAssetsModal, setShowAssetsModal] = useState<boolean>(false)
   const [assetsModalTitle, setAssetsModalTitle] = useState<string>("")
   const [selectedAsset, setSelectedAsset] = useState<"primary" | "secondary" | undefined>()
   const [fromValue, setFromValue] = useState<string>("")
   const [toValue, setToValue] = useState<string>("")
-  const [assets, setAsseets] = useState<CoinDto[]>()
+  const [walletAssets, setWalletAssets] = useState<CoinDto[]>()
   
   useEffect(() => {
-    getAssets(undefined).then(({ data }) => {
-      if (data?.assets) {
-        setAsseets(data?.assets)
-        if (!fromAsset) {
-          dispatch(setOrderPrimaryAsset(data?.assets[0]))
-        }
-        if (!toAsset) {
-          dispatch(setOrderSecondaryAsset(data?.assets[1]))
-        }
-      }
-      page.setLoading(false)
+    walletInfoApi(null)
+    .unwrap()
+    .then((result: WalletInfoData) => {
+      const { assets } = result.wallets[result.currentWallet];
+      setWalletAssets(assets);
     })
+    .catch((e) => {
+      console.error(e);
+      page.setLoading(false);
+    });    
   }, [])
+
+  useEffect(() => {
+    if (assets) {
+      if (!fromAsset) {
+        dispatch(setOrderPrimaryAsset(assets[0]))
+      }
+      if (!toAsset) {
+        dispatch(setOrderSecondaryAsset(assets[1]))
+      }
+    }
+  }, [assets])
+
 
   const isValid = useMemo(() => {
     if (fromAsset && toAsset) {
@@ -141,6 +152,14 @@ const CreateMarketOrder = () => {
     }
   }
 
+  const modalAssets = useMemo(() => {
+    if (orderMode === MarketModeEnum.BUY) {
+      return selectedAsset === "primary" ? assets: walletAssets?.filter(a => a.meta?.symbol !== fromAsset?.meta?.symbol)
+    } else {
+      return selectedAsset === "primary" ? walletAssets : assets?.filter(a => a.meta?.symbol !== fromAsset?.meta?.symbol)
+    }
+  }, [orderMode, assets, fromAsset, toAsset, selectedAsset])
+
   return (
     <Page>
       <Section title={t("create-order", "market")} className="market-order-form">
@@ -225,7 +244,7 @@ const CreateMarketOrder = () => {
         </ListBlock>
       </Section>
       {showAssetsModal && (
-        <AssetsModal assets={assets as CoinDto[]} onSelect={onAssetSelect} title={assetsModalTitle} onClose={() => setShowAssetsModal(false)} />
+        <AssetsModal assets={modalAssets as CoinDto[]} onSelect={onAssetSelect} title={assetsModalTitle} onClose={() => setShowAssetsModal(false)} />
       )}
     </Page>
   )

@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React from "react";
-import { HistoryOrderDto } from "types/market";
+import { MarketOrderDto } from "types/market";
 import AssetIcon from "../assets/AssetIcon";
 
 const OrderCardIcon = ({ order, className }: {
-  order: HistoryOrderDto,
+  order: MarketOrderDto,
   className?: string,
 }) => {
   return (

@@ -247,5 +247,7 @@
   "market-seller": "Seller",
   "market-buyer": "Buyer",
   "market-stats": "Stats",
-  "market-stats-value": "{{total}} trades"
+  "market-stats-value": "{{total}} trades",
+  "market-cancel-popup-message": "Are you sure want to cancel order?",
+  "market-cancel-confirm": "Confirm"
 }

@@ -4,11 +4,10 @@ import useLanguage from "hooks/useLanguage";
 import { usePage } from "hooks/usePage";
 import FilterBlock from "components/ui/market/FilterBlock";
 import AssetsModal from "components/ui/market/modals/AsetsModal";
-import { assets } from "../mock"
 import { CoinDto } from "types/assest";
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import { MarketModeEnum, setOrderPrimaryAsset, setOrders, setOrderSecondaryAsset } from "features/market/marketSlice";
-import { marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
+import { marketAssets, marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
 import Row from "components/containers/Row";
 import ResponsiveInput from "components/inputs/ResponsiveInput";
 import Column from "components/containers/Column";
@@ -16,7 +15,7 @@ import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { useClosure } from "hooks/useClosure";
 import { useNavigate } from "react-router-dom";
-import { HistoryOrderDto, MarketOrdersDto } from "types/market";
+import { MarketOrderDto, MarketOrdersDto } from "types/market";
 import { useLazyGetOrdersQuery } from "features/market/marketApi";
 import OrderCardIcon from "components/ui/market/OrderCardIcon";
 
@@ -28,10 +27,11 @@ const MarketOrder = () => {
   const navigate = useNavigate()
   const [getOrders] = useLazyGetOrdersQuery()
   const orders = useAppSelector(marketOrdersSelector)
+  const assets = useAppSelector(marketAssets)
   const { fromAsset, toAsset, mode } = useAppSelector(marketSelector)
   const [showPrimaryAssetModal, setShowPrimaryAssetModal] = useState<boolean>()
   const [showSecondaryAssetModal, setShowSecondaryAssetModal] = useState<boolean>()
-  const [filteredOrders, setFilteredOrders] = useState<HistoryOrderDto[]>()
+  const [filteredOrders, setFilteredOrders] = useState<MarketOrderDto[]>()
   const [amountValue, setAmountValue] = useState<string>("")
   const [textData, setTextData] = useState<any>()
 
