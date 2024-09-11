@@ -13,7 +13,7 @@ interface MarketState {
   toAsset?: CoinDto
   fromValue?: number
   toValue?: number
-  orders?: MarketOrderDto[],
+  orders?: MarketOrderDto[]
   assets?: CoinDto[]
 }
 

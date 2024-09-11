@@ -8,6 +8,11 @@ export enum OrderStatus {
   CANCELED="canceled"
 }
 
+export type CreateOrderAsset = {
+  type: string
+  address: string
+}
+
 export interface MarketOrderDto {
   type: MarketModeEnum;
   createdAt: string;
@@ -31,8 +36,8 @@ export interface MarketOrdersDto {
 
 export interface CreateOrderRequestQuery {
   type: MarketModeEnum;
-  fromAsset: CoinDto;
-  toAsset: CoinDto;
+  fromAsset: CreateOrderAsset;
+  toAsset: CreateOrderAsset;
   fromValue: number;
   toValue: number;
 }

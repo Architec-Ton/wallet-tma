@@ -57,31 +57,32 @@ const Market = () => {
 
   useEffect(() => {
     dropdownChangeHandler()
-    walletInfoApi(null)
-    .unwrap()
-    .then((result: WalletInfoData) => {
-      const { assets } = result.wallets[result.currentWallet];
-      getAssets(undefined).then(({ data }) => {
-        if (data?.assets) {
-          const combinedAssets = [...assets, ...data?.assets.filter(a => !assets.find(wa => wa.meta?.symbol === a.meta?.symbol))] satisfies CoinDto[]
-          dispatch(setAssets(combinedAssets))
-        }
-        page.setLoading(false, true)
-      })
-    })
-    .catch((e) => {
-      console.error(e);
-      page.setLoading(false, true);
-    });
+    page.setLoading(false, true);
   }, [])
 
   useEffect(() => {
     if (isReady) {
       getOrders()
+      walletInfoApi(null)
+      .unwrap()
+      .then((result: WalletInfoData) => {
+        const { assets } = result.wallets[result.currentWallet];
+        getAssets(undefined).then(({ data }) => {
+          if (data?.assets) {
+            const combinedAssets = [...assets, ...data?.assets.filter(a => !assets.find(wa => wa.meta?.symbol === a.meta?.symbol))] satisfies CoinDto[]
+            dispatch(setAssets(combinedAssets))
+          }
+          page.setLoading(false, true)
+        })
+      })
+      .catch((e) => {
+        console.error(e);
+      });
     }
   }, [isReady])
 
   const getOrders = () => {
+    console.log("getOrders")
     getMyOrders(undefined).then((myOrders) => {
       const historyOrders = myOrders.data?.items?.filter((order: MarketOrderDto) => order.status !== OrderStatus.CREATED)
       const activeOrders = myOrders.data?.items?.filter((order: MarketOrderDto) => order.status === OrderStatus.CREATED)

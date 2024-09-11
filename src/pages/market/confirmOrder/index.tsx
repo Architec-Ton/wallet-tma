@@ -36,8 +36,8 @@ const ConfirmOrder = () => {
     btn.init("Confirm", async () => {
       const order = await createOrderApi({
         type: orderMode,
-        fromAsset: fromAsset as CoinDto,
-        toAsset: toAsset as CoinDto,
+        fromAsset: {type: fromAsset?.type as string, address: fromAsset?.meta?.address as string},
+        toAsset: {type: toAsset?.type as string, address: toAsset?.meta?.address as string},
         fromValue: Number(fromValue),
         toValue: Number(toValue),
       })

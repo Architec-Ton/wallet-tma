@@ -36,9 +36,11 @@ const MarketOrder = () => {
   const [textData, setTextData] = useState<any>()
 
   useEffect(() => {
-    getOrders(mode).then(result => {
-      const { items } = result.data as MarketOrdersDto
+    getOrders(mode).then(result => result.data).then(data => {
+      const { items } = data as MarketOrdersDto
       dispatch(setOrders(items))
+    }).catch(error => {
+      console.error(error)
     })
   }, [])
 

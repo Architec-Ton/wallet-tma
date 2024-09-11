@@ -20,7 +20,7 @@ export const marketApi = createApi({
   endpoints: (builder) => ({
     getOrders: builder.query<MarketOrdersDto, MarketModeEnum>({
       query: (mode) => ({
-        url: `orders/all-orders`,
+        url: `orders/all`,
         params: {order_type: mode}
       }),
     }),
@@ -31,19 +31,19 @@ export const marketApi = createApi({
     }),
     getOrdersHistory: builder.query<MarketOrdersDto, undefined>({
       query: () => ({
-        url: `orders/my-orders`,
+        url: `orders`,
       }),
     }),
     createOrder: builder.mutation<CreateOrderDto, CreateOrderRequestQuery>({
       query: ({ type, fromAsset, toAsset, fromValue, toValue }: CreateOrderRequestQuery) => ({
-        url: "orders",
+        url: "order",
         body: { type, fromAsset, toAsset, fromValue, toValue },
         method: "POST",
       }),
     }),
     cancelOrder: builder.query<OrderTxParams, {uuid: string}>({
       query: ({ uuid }) => ({
-        url: `orders/${uuid}/cancel`,
+        url: `order/${uuid}/cancel`,
         method: "POST",
       }),
     }),
