@@ -55,7 +55,7 @@ const ConfirmOrder = () => {
         });
       }
 
-      navigate("/market", {replace: true})
+      //navigate("/market", {replace: true})
     }, true)
   }, [fromValue, toValue])
 
