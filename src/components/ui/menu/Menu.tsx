@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
-import { useHapticFeedback } from "@tma.js/sdk-react";
+// import { useHapticFeedback } from "@tma.js/sdk-react";
 import classNames from "classnames";
 
 import { useClosure } from "hooks/useClosure";
@@ -26,13 +26,13 @@ function Menu({ menuItems, style, className }: MenuProps) {
   // const page = usePage();
   const location = useLocation();
   const navigate = useRouter();
-  const hapticFeedback = useHapticFeedback();
+  // const hapticFeedback = useHapticFeedback();
 
   const handlerClick = useClosure((to: string) => {
     if (location.pathname !== to) {
       // page.setLoading(true, false);
-      hapticFeedback.impactOccurred("medium");
-      // navigate(to);
+      // hapticFeedback.impactOccurred("medium");
+      navigate(to);
     }
   });
 

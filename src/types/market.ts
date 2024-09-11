@@ -1,11 +1,12 @@
-import { MarketModeEnum } from "features/market/marketSlice";
-import { CoinDto } from "./assest";
-import { Address } from "@ton/core";
+import type { Address } from "@ton/core";
+import type { MarketModeEnum } from "features/market/marketSlice";
+
+import type { CoinDto } from "./assest";
 
 export enum OrderStatus {
-  CREATED="created",
-  FINISHED="finished",
-  CANCELED="canceled"
+  CREATED = "created",
+  FINISHED = "finished",
+  CANCELED = "canceled",
 }
 
 export interface MarketOrderDto {

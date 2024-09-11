@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CreateOrderDto, CreateOrderRequestQuery, MarketOrdersDto, OrderTxParams } from "types/market";
+
 import { CoinDto } from "types/assest";
+import { CreateOrderDto, CreateOrderRequestQuery, MarketOrdersDto, OrderTxParams } from "types/market";
+
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
 import { MarketModeEnum } from "./marketSlice";
@@ -20,30 +22,30 @@ export const marketApi = createApi({
   endpoints: (builder) => ({
     getOrders: builder.query<MarketOrdersDto, MarketModeEnum>({
       query: (mode) => ({
-        url: `orders/all-orders`,
-        params: {order_type: mode}
+        url: `orders/all`,
+        params: { order_type: mode },
       }),
     }),
-    getAssets: builder.query<{assets: CoinDto[], nft: any}, undefined>({
+    getAssets: builder.query<{ assets: CoinDto[]; nft: any }, undefined>({
       query: () => ({
         url: `assets`,
       }),
     }),
     getOrdersHistory: builder.query<MarketOrdersDto, undefined>({
       query: () => ({
-        url: `orders/my-orders`,
+        url: `orders`,
       }),
     }),
     createOrder: builder.mutation<CreateOrderDto, CreateOrderRequestQuery>({
       query: ({ type, fromAsset, toAsset, fromValue, toValue }: CreateOrderRequestQuery) => ({
-        url: "orders",
+        url: "order",
         body: { type, fromAsset, toAsset, fromValue, toValue },
         method: "POST",
       }),
     }),
-    cancelOrder: builder.query<OrderTxParams, {uuid: string}>({
+    cancelOrder: builder.query<OrderTxParams, { uuid: string }>({
       query: ({ uuid }) => ({
-        url: `orders/${uuid}/cancel`,
+        url: `order/${uuid}/cancel`,
         method: "POST",
       }),
     }),
