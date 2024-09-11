@@ -47,6 +47,12 @@ export const marketApi = createApi({
         method: "POST",
       }),
     }),
+    executeOrder: builder.query<OrderTxParams, {uuid: string}>({
+      query: ({ uuid }) => ({
+        url: `order/${uuid}/execute`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -56,4 +62,5 @@ export const {
   useLazyGetOrdersHistoryQuery,
   useCreateOrderMutation,
   useLazyCancelOrderQuery,
+  useLazyExecuteOrderQuery,
 } = marketApi;
