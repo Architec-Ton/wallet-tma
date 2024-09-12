@@ -10,9 +10,9 @@ export enum OrderStatus {
 }
 
 export type CreateOrderAsset = {
-  type: string
-  address: string
-}
+  type: string;
+  address: string;
+};
 
 export interface MarketOrderDto {
   type: MarketModeEnum;
