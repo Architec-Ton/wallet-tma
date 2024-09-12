@@ -7,7 +7,7 @@ import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import useLanguage from "hooks/useLanguage";
 import { marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
 import { MarketModeEnum } from "features/market/marketSlice";
-import { useAppSelector } from "hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import { useNavigate, useParams } from "react-router-dom";
 import { MarketOrderDto } from "types/market";
 import { useTmaMainButton } from "hooks/useTma";
@@ -16,11 +16,13 @@ import AssetIcon from "components/ui/assets/AssetIcon";
 import { useLazyExecuteOrderQuery } from "features/market/marketApi";
 import { useTon } from "hooks/useTon";
 import { Cell } from "@ton/core";
+import { showAlert } from "features/alert/alertSlice";
 
 const ConfirmAction = () => {
   const t = useLanguage("market-order")
   const btn = useTmaMainButton()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const ton = useTon()
   const { id } = useParams()
   const { mode } = useAppSelector(marketSelector)
@@ -66,7 +68,7 @@ const ConfirmAction = () => {
         navigate("/market", {replace: true})
       }
     } catch (error) {
-      console.error(error)
+      dispatch(showAlert({message: "Transaction faild", duration: 3000 }))
     }
   }
 

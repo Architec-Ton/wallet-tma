@@ -15,6 +15,7 @@ interface MarketState {
   toValue?: number
   orders?: MarketOrderDto[]
   assets?: CoinDto[]
+  walletAssets?: CoinDto[]
 }
 
 const initialState: MarketState = {
@@ -48,6 +49,9 @@ const marketSlice = createSlice({
     setAssets(state: MarketState, action: PayloadAction<CoinDto[]>) {
       state.assets = action.payload
     },
+    setWalletAssets(state: MarketState, action: PayloadAction<CoinDto[]>) {
+      state.walletAssets = action.payload
+    },
   }
 })
 
@@ -59,6 +63,7 @@ export const {
   clearOrderAssets,
   setOrders,
   setAssets,
+  setWalletAssets,
 } = marketSlice.actions
 
 export default marketSlice.reducer

@@ -8,7 +8,7 @@ import { marketSelector } from "features/market/marketSelectors";
 import { MarketModeEnum } from "features/market/marketSlice";
 import { CoinDto } from "types/assest";
 
-import { useAppSelector } from "hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import useLanguage from "hooks/useLanguage";
 import { usePage } from "hooks/usePage";
 import { useTmaMainButton } from "hooks/useTma";
@@ -21,6 +21,7 @@ import Block from "components/typography/Block";
 import AssetIcon from "components/ui/assets/AssetIcon";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
+import { showAlert } from "features/alert/alertSlice";
 
 const ConfirmOrder = () => {
   const t = useLanguage("market-order-confirm");
@@ -28,6 +29,7 @@ const ConfirmOrder = () => {
   const btn = useTmaMainButton();
   const page = usePage();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { fromAsset, toAsset, mode: orderMode, fromValue, toValue } = useAppSelector(marketSelector);
   const [createOrderApi] = useCreateOrderMutation();
 
@@ -43,32 +45,28 @@ const ConfirmOrder = () => {
           type: orderMode,
           fromAsset: { type: fromAsset?.type as string, address: fromAsset?.meta?.address as string },
           toAsset: { type: toAsset?.type as string, address: toAsset?.meta?.address as string },
-          fromValue: Number(fromValue) * Math.pow(10, fromAsset?.meta?.decimals || 0),
+          fromValue: Number(fromValue),
           toValue: Number(toValue),
         };
-        console.log("data", data);
-        const order = await createOrderApi(data);
+        
+        try {
+          const order = await createOrderApi(data);
+          if (order.data && order.data.rawTxn) {
+            const { rawTxn } = order.data;
+            const body = Cell.fromBase64(rawTxn.body);
 
-        // TODO: send transaction
+            await ton.sender.send({
+              value: rawTxn.value,
+              to: rawTxn.to,
+              body: body,
+              sendMode: rawTxn.mode,
+            });
+          }
 
-        console.log("order:", order);
-
-        if (order.data && order.data.rawTxn) {
-          const { rawTxn } = order.data;
-          const body = Cell.fromBase64(rawTxn.body);
-
-          console.log("body hash", body.hash());
-
-          const resp = await ton.sender.send({
-            value: rawTxn.value,
-            to: rawTxn.to,
-            body: body,
-            sendMode: rawTxn.mode,
-          });
-          console.log("resp", resp);
+          navigate("/market", { replace: true });
+        } catch (e) {
+          dispatch(showAlert({message: "Transaction faild", duration: 3000 }))
         }
-
-        navigate("/market", { replace: true });
       },
       true,
     );

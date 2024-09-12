@@ -1,15 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-
-import { usePopup } from "@tma.js/sdk-react";
-import { Cell } from "@ton/core";
+import { Address, Cell } from "@ton/core";
 import { selectAuthIsReady } from "features/auth/authSelector";
 import {
   useLazyCancelOrderQuery,
   useLazyGetAssetsQuery,
   useLazyGetOrdersHistoryQuery,
 } from "features/market/marketApi";
-import { MarketModeEnum, clearOrderAssets, setAssets, setMarketMode } from "features/market/marketSlice";
+import { MarketModeEnum, clearOrderAssets, setAssets, setMarketMode, setWalletAssets } from "features/market/marketSlice";
 import { selectIsTma } from "features/tma/tmaSelector";
 import { useApiWalletInfoMutation } from "features/wallet/walletApi";
 import { CoinDto } from "types/assest";
@@ -38,6 +36,7 @@ import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import OrdersList from "components/ui/market/OrdersList";
 
 import "./index.css";
+import { showAlert } from "features/alert/alertSlice";
 
 const historyDropDownData: DropDownDto[] = [
   { key: "active", value: "Active" },
@@ -49,7 +48,6 @@ const Market = () => {
   const dispatch = useAppDispatch();
   const page = usePage();
   const ton = useTon();
-  const webappPopup = usePopup();
   const isReady = useAppSelector(selectAuthIsReady);
   const isTma = useAppSelector(selectIsTma);
   const [getMyOrders] = useLazyGetOrdersHistoryQuery();
@@ -75,10 +73,22 @@ const Market = () => {
           const { assets } = result.wallets[result.currentWallet];
           getAssets(undefined).then(({ data }) => {
             if (data?.assets) {
+              const walletAssets = assets.filter(asset => {
+                if (asset.type === "ton") {
+                  return true
+                }
+                return data.assets.find(dAsset => (
+                  Address.normalize(dAsset.meta?.address as string) === Address.normalize(asset.meta?.address as string)
+                ))
+              })
               const combinedAssets = [
-                ...assets,
-                ...data?.assets.filter((a) => !assets.find((wa) => wa.meta?.symbol === a.meta?.symbol)),
+                ...walletAssets,
+                ...data?.assets.filter((a) => !walletAssets.find((wa) => (
+                  wa.meta?.address &&
+                  Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
+                ))),
               ] satisfies CoinDto[];
+              dispatch(setWalletAssets(walletAssets))
               dispatch(setAssets(combinedAssets));
             }
             page.setLoading(false, true);
@@ -133,20 +143,7 @@ const Market = () => {
   }, [dropdownChangeHandler, historyDropDownData, dropdownValue]);
 
   const cancelOrderHandler = (uuid: string) => {
-    if (isTma) {
-      webappPopup
-        .open({
-          message: t("cancel-popup-message"),
-          buttons: [{ type: "cancel" }, { type: "destructive", text: t("cancel-confirm"), id: "confirmBtn" }],
-        })
-        .then((buttonId) => {
-          if (buttonId === "confirmBtn") {
-            sendCancelTransaction(uuid);
-          }
-        });
-    } else {
-      sendCancelTransaction(uuid);
-    }
+    sendCancelTransaction(uuid);
   };
 
   const sendCancelTransaction = async (uuid: string) => {
@@ -164,7 +161,7 @@ const Market = () => {
         getOrders();
       }
     } catch (e) {
-      console.error(e);
+      dispatch(showAlert({message: "Transaction was not sent", duration: 3000 }))
     }
   };
 

@@ -10,7 +10,7 @@ import Tabs from "components/ui/tabs";
 import Tab from "components/ui/tabs/Tab";
 import SelectButton from "components/ui/buttons/selectButton";
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
-import { marketAssets, marketModeSelector, orderPrimaryAssetSelector, orderSecondaryAssetSelector } from "features/market/marketSelectors";
+import { marketAssets, marketModeSelector, marketWalletAssets, orderPrimaryAssetSelector, orderSecondaryAssetSelector } from "features/market/marketSelectors";
 import { MarketModeEnum, setMarketMode, setOrderPrimaryAsset, setOrderSecondaryAsset, setOrderValues } from "features/market/marketSlice";
 import AssetsModal from "components/ui/market/modals/AsetsModal";
 import { CoinDto } from "types/assest";
@@ -18,7 +18,6 @@ import classNames from "classnames";
 import { useTmaMainButton } from "hooks/useTma";
 import { useNavigate } from "react-router-dom";
 import { useApiWalletInfoMutation } from "features/wallet/walletApi";
-import { WalletInfoData } from "types/wallet";
 
 import "./index.css"
 import AssetIcon from "components/ui/assets/AssetIcon";
@@ -40,20 +39,8 @@ const CreateMarketOrder = () => {
   const [selectedAsset, setSelectedAsset] = useState<"primary" | "secondary" | undefined>()
   const [fromValue, setFromValue] = useState<string>("")
   const [toValue, setToValue] = useState<string>("")
-  const [walletAssets, setWalletAssets] = useState<CoinDto[]>()
+  const walletAssets = useAppSelector(marketWalletAssets)
   
-  useEffect(() => {
-    walletInfoApi(null)
-    .unwrap()
-    .then((result: WalletInfoData) => {
-      const { assets } = result.wallets[result.currentWallet];
-      setWalletAssets(assets);
-    })
-    .catch((e) => {
-      console.error(e);
-      page.setLoading(false);
-    });    
-  }, [])
 
   useEffect(() => {
     if (assets) {

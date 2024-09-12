@@ -6,3 +6,4 @@ export const orderPrimaryAssetSelector = (state: RootState) => state.market.from
 export const orderSecondaryAssetSelector = (state: RootState) => state.market.toAsset
 export const marketOrdersSelector = (state: RootState) => state.market.orders
 export const marketAssets = (state: RootState) => state.market.assets
+export const marketWalletAssets = (state: RootState) => state.market.walletAssets
