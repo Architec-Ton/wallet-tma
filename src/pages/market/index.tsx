@@ -12,9 +12,9 @@ import {
 import { MarketModeEnum, clearOrderAssets, setAssets, setMarketMode } from "features/market/marketSlice";
 import { selectIsTma } from "features/tma/tmaSelector";
 import { useApiWalletInfoMutation } from "features/wallet/walletApi";
-import type { CoinDto } from "types/assest";
-import type { MarketOrderDto, OrderStatus } from "types/market";
-import type { WalletInfoData } from "types/wallet";
+import { CoinDto } from "types/assest";
+import { MarketOrderDto, OrderStatus } from "types/market";
+import { WalletInfoData } from "types/wallet";
 
 import { iconButtonArraw } from "assets/icons/buttons";
 import { iconMessageQuestion } from "assets/icons/globals";
@@ -63,34 +63,35 @@ const Market = () => {
 
   useEffect(() => {
     dropdownChangeHandler();
-    walletInfoApi(null)
-      .unwrap()
-      .then((result: WalletInfoData) => {
-        const { assets } = result.wallets[result.currentWallet];
-        getAssets(undefined).then(({ data }) => {
-          if (data?.assets) {
-            const combinedAssets = [
-              ...assets,
-              ...data?.assets.filter((a) => !assets.find((wa) => wa.meta?.symbol === a.meta?.symbol)),
-            ] satisfies CoinDto[];
-            dispatch(setAssets(combinedAssets));
-          }
-          page.setLoading(false, true);
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-        page.setLoading(false, true);
-      });
+    page.setLoading(false, true);
   }, []);
 
   useEffect(() => {
     if (isReady) {
       getOrders();
+      walletInfoApi(null)
+        .unwrap()
+        .then((result: WalletInfoData) => {
+          const { assets } = result.wallets[result.currentWallet];
+          getAssets(undefined).then(({ data }) => {
+            if (data?.assets) {
+              const combinedAssets = [
+                ...assets,
+                ...data?.assets.filter((a) => !assets.find((wa) => wa.meta?.symbol === a.meta?.symbol)),
+              ] satisfies CoinDto[];
+              dispatch(setAssets(combinedAssets));
+            }
+            page.setLoading(false, true);
+          });
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
   }, [isReady]);
 
   const getOrders = () => {
+    console.log("getOrders");
     getMyOrders(undefined).then((myOrders) => {
       const historyOrders = myOrders.data?.items?.filter(
         (order: MarketOrderDto) => order.status !== OrderStatus.CREATED,
@@ -120,17 +121,16 @@ const Market = () => {
     }
   };
 
-  const getHistoryDropdown = useMemo(
-    () => (
+  const getHistoryDropdown = useMemo(() => {
+    return (
       <DropDown
         className="right"
         onChange={dropdownChangeHandler}
         data={historyDropDownData}
         defaultValue={dropdownValue}
       />
-    ),
-    [dropdownChangeHandler, historyDropDownData, dropdownValue],
-  );
+    );
+  }, [dropdownChangeHandler, historyDropDownData, dropdownValue]);
 
   const cancelOrderHandler = (uuid: string) => {
     if (isTma) {

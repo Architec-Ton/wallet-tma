@@ -2,7 +2,7 @@ import React from "react";
 import { CoinDto } from "types/assest";
 
 const AssetIcon = ({asset, className}: {
-  asset: CoinDto,
+  asset: CoinDto | undefined,
   className: string,
 }) => {
   return (

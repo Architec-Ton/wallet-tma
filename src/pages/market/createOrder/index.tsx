@@ -21,6 +21,7 @@ import { useApiWalletInfoMutation } from "features/wallet/walletApi";
 import { WalletInfoData } from "types/wallet";
 
 import "./index.css"
+import AssetIcon from "components/ui/assets/AssetIcon";
 
 const CreateMarketOrder = () => {
   const t = useLanguage("market-order-form")
@@ -77,6 +78,7 @@ const CreateMarketOrder = () => {
   }, [fromAsset, toAsset, fromValue, toValue])
 
   useEffect(() => {
+    console.log("isValid", isValid)
     if (isValid) {
       btn.init(t("create-ad", "market"), () => {
         dispatch(setOrderValues({
@@ -85,6 +87,7 @@ const CreateMarketOrder = () => {
         }))
         navigate("confirm")
       }, true)
+      btn.setVisible(true)
     } else {
       btn.setVisible(false)
     }
@@ -195,7 +198,7 @@ const CreateMarketOrder = () => {
         <ListBlock>
           <ListBaseItem>
             <Row className="grow market-asset-info">
-              <img src="" alt="" className="market-asset-icon" />
+              <AssetIcon asset={fromAsset} className="market-asset-icon" />
               <div className="grow">{fromAsset?.meta?.symbol}</div>
               <div className="secondary-content">
                 <input
@@ -221,7 +224,7 @@ const CreateMarketOrder = () => {
         <ListBlock>
         <ListBaseItem>
             <Row className="grow market-asset-info">
-              <img src="" alt="" className="market-asset-icon" />
+            <AssetIcon asset={toAsset} className="market-asset-icon" />
               <div className="grow">{toAsset?.meta?.symbol}</div>
               <div className="secondary-content">
                 <input
