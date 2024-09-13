@@ -41,12 +41,16 @@ const ConfirmOrder = () => {
     btn.init(
       "Confirm",
       async () => {
+        const _fromAsset = orderMode === MarketModeEnum.BUY ? toAsset : fromAsset
+        const _toAsset = orderMode === MarketModeEnum.BUY ? fromAsset : toAsset
+        const _fromValue = orderMode === MarketModeEnum.BUY ? toValue : fromValue
+        const _toValue = orderMode === MarketModeEnum.BUY ? fromValue : toValue
         const data = {
           type: orderMode,
-          fromAsset: { type: fromAsset?.type as string, address: fromAsset?.meta?.address as string },
-          toAsset: { type: toAsset?.type as string, address: toAsset?.meta?.address as string },
-          fromValue: Number(fromValue),
-          toValue: Number(toValue),
+          fromAsset: { type: _fromAsset?.type as string, address: _fromAsset?.meta?.address as string },
+          toAsset: { type: _toAsset?.type as string, address: _toAsset?.meta?.address as string },
+          fromValue: Number(_fromValue),
+          toValue: Number(_toValue),
         };
         
         try {

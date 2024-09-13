@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { CoinDto } from "types/assest";
-import { CreateOrderDto, CreateOrderRequestQuery, MarketOrdersDto, OrderTxParams } from "types/market";
+import { CreateOrderDto, CreateOrderRequestQuery, MarketOrderDto, MarketOrdersDto, OrderTxParams } from "types/market";
 
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
@@ -23,8 +23,44 @@ export const marketApi = createApi({
     getOrders: builder.query<MarketOrdersDto, MarketModeEnum>({
       query: (mode) => ({
         url: `orders/all`,
-        params: { order_type: mode },
+        // params: { order_type: mode },
       }),
+      transformResponse: (response: MarketOrdersDto, meta, mode) => {
+        console.log("mode", response, mode)
+        let transformedOrders: MarketOrderDto[] = []
+        if (mode === MarketModeEnum.BUY) {
+          response.items.reduce((acc, currentOrder: MarketOrderDto) => {
+            if (currentOrder.type === MarketModeEnum.BUY) {
+              acc.push({
+                ...currentOrder,
+                fromAsset: currentOrder.toAsset,
+                toAsset: currentOrder.fromAsset,
+                fromValue: currentOrder.toValue,
+                toValue: currentOrder.fromValue,
+              })
+            } else {
+              acc.push(currentOrder)
+            }
+            return acc
+          }, transformedOrders)
+        } else {
+          response.items.reduce((acc, currentOrder: MarketOrderDto) => {
+            if (currentOrder.type === MarketModeEnum.SELL) {
+              acc.push({
+                ...currentOrder,
+                fromAsset: currentOrder.toAsset,
+                toAsset: currentOrder.fromAsset,
+                fromValue: currentOrder.toValue,
+                toValue: currentOrder.fromValue,
+              })
+            } else {
+              acc.push(currentOrder)
+            }
+            return acc
+          }, transformedOrders)
+        }
+        return { ...response, items: transformedOrders }
+      }
     }),
     getAssets: builder.query<{ assets: CoinDto[]; nft: any }, undefined>({
       query: () => ({

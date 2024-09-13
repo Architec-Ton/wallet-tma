@@ -36,7 +36,7 @@ export interface MarketOrdersDto {
 }
 
 export interface CreateOrderRequestQuery {
-  type: MarketModeEnum;
+  type?: MarketModeEnum;
   fromAsset: CreateOrderAsset;
   toAsset: CreateOrderAsset;
   fromValue: number;

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Page from "components/containers/Page";
-import { usePage } from "hooks/usePage";
 import useLanguage from "hooks/useLanguage";
 import ListBlock from "components/ui/listBlock";
 import Section from "components/containers/Section";
@@ -17,14 +16,12 @@ import { CoinDto } from "types/assest";
 import classNames from "classnames";
 import { useTmaMainButton } from "hooks/useTma";
 import { useNavigate } from "react-router-dom";
-import { useApiWalletInfoMutation } from "features/wallet/walletApi";
+import AssetIcon from "components/ui/assets/AssetIcon";
 
 import "./index.css"
-import AssetIcon from "components/ui/assets/AssetIcon";
 
 const CreateMarketOrder = () => {
   const t = useLanguage("market-order-form")
-  const page = usePage()
   const dispatch = useAppDispatch()
   const btn = useTmaMainButton()
   const navigate = useNavigate()
@@ -33,7 +30,6 @@ const CreateMarketOrder = () => {
   const fromAsset = useAppSelector(orderPrimaryAssetSelector)
   const toAsset = useAppSelector(orderSecondaryAssetSelector)
   const assets = useAppSelector(marketAssets)
-  const [walletInfoApi] = useApiWalletInfoMutation();
   const [showAssetsModal, setShowAssetsModal] = useState<boolean>(false)
   const [assetsModalTitle, setAssetsModalTitle] = useState<string>("")
   const [selectedAsset, setSelectedAsset] = useState<"primary" | "secondary" | undefined>()

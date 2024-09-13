@@ -45,7 +45,7 @@ const ConfirmAction = () => {
 
   useEffect(() => {
     if (selectedOrder) {
-      const textData = selectedOrder.type === MarketModeEnum.BUY
+      const textData = mode === MarketModeEnum.BUY
       ? {youSell: t("confirm-you-buy"), youReceive: t("confirm-you-pay"), sellerInfo: t("confirm-seller-info")}
       : {youSell: t("confirm-you-sell"), youReceive: t("confirm-you-receive"), sellerInfo: t("confirm-buyer-info")}
       setTextData(textData)

@@ -29,7 +29,6 @@ import Page from "components/containers/Page";
 import Row from "components/containers/Row";
 import Section from "components/containers/Section";
 import Block from "components/typography/Block";
-import DataLossBlock from "components/typography/DataLossBlock";
 import DropDown, { DropDownDto } from "components/ui/dropdown";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
@@ -205,11 +204,10 @@ const Market = () => {
         </Column>
       </Section>
       <Section title={t("my-orders")} readMore={getHistoryDropdown}>
-        {!ordersActiveData && <DataLossBlock>{t("my-orders-hint")}</DataLossBlock>}
-        {dropdownValue?.key === "active" && ordersActiveData?.length > 0 && (
+        {dropdownValue?.key === "active" && (
           <OrdersList orders={ordersActiveData} onOrderCancel={cancelOrderHandler} />
         )}
-        {dropdownValue?.key === "history" && ordersHistoryData?.length > 0 && (
+        {dropdownValue?.key === "history" && (
           <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />
         )}
       </Section>
