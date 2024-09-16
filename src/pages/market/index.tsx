@@ -103,10 +103,10 @@ const Market = () => {
     console.log("getOrders");
     getMyOrders(undefined).then((myOrders) => {
       const historyOrders = myOrders.data?.items?.filter(
-        (order: MarketOrderDto) => order.status !== OrderStatus.CREATED,
+        (order: MarketOrderDto) => order.status !== OrderStatus.ACTIVE,
       );
       const activeOrders = myOrders.data?.items?.filter(
-        (order: MarketOrderDto) => order.status === OrderStatus.CREATED,
+        (order: MarketOrderDto) => order.status === OrderStatus.ACTIVE,
       );
       setOrdersHistoryData(historyOrders || []);
       setOrdersActiveData(activeOrders || []);
