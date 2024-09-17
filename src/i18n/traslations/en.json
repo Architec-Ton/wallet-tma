@@ -250,5 +250,11 @@
   "market-stats-value": "{{total}} trades",
   "market-cancel-popup-message": "Are you sure want to cancel order?",
   "market-cancel-confirm": "Confirm",
-  "market-amount": "Amount"
+  "market-amount": "Amount",
+  "market-order-labels-type": "Type",
+  "market-order-labels-date": "Date",
+  "market-order-labels-time": "Time",
+  "market-order-labels-status": "Status",
+  "market-order-type-sell": "Sell Order",
+  "market-order-type-buy": "Buy Order"
 }

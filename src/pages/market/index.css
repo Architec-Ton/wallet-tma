@@ -66,6 +66,10 @@
   text-align: left;
 }
 
+.market-order-asset {
+  margin-bottom: var(--spacing-4);
+}
+
 @media (prefers-color-scheme: dark) {
   .icon-color-secondary {
     filter: invert(0.5);

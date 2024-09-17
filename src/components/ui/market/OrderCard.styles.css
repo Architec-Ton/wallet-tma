@@ -13,8 +13,8 @@
   width: var(--spacing-20);
   height: var(--spacing-20);
   border-radius: 50%;
-  border: 2px solid #fff;
-  background-color: #fff;
+  border: 2px solid var(--background-selected-color);
+  background-color: var(--background-selected-color);
   bottom: 0;
   right: 0;
 }
@@ -25,4 +25,8 @@
 
 .market-order-card .order-data-row div:first-child {
   width: 40%;
+}
+
+.market-order-card .order-status {
+  text-transform: capitalize;
 }

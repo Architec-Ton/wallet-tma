@@ -82,7 +82,15 @@ export const useSender = (): Sender => {
       });
 
       try {
-        if (client) {
+        if (!client) {
+          dispatch(
+            showAlert({
+              message:
+                "Transaction failed",
+              duration: 8000,
+            }),
+          );
+        } else {
           const contract = client?.open(wallet);
 
           // Get balance

@@ -19,12 +19,14 @@ import { useNavigate } from "react-router-dom";
 import AssetIcon from "components/ui/assets/AssetIcon";
 
 import "./index.css"
+import { usePage } from "hooks/usePage";
 
 const CreateMarketOrder = () => {
   const t = useLanguage("market-order-form")
   const dispatch = useAppDispatch()
   const btn = useTmaMainButton()
   const navigate = useNavigate()
+  const page = usePage()
 
   const orderMode = useAppSelector(marketModeSelector)
   const fromAsset = useAppSelector(orderPrimaryAssetSelector)
@@ -37,6 +39,9 @@ const CreateMarketOrder = () => {
   const [toValue, setToValue] = useState<string>("")
   const walletAssets = useAppSelector(marketWalletAssets)
   
+  useEffect(() => {
+    page.setNavbarVisible(false)
+  }, [])
 
   useEffect(() => {
     if (assets) {

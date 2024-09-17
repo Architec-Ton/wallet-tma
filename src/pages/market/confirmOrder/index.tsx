@@ -22,6 +22,8 @@ import AssetIcon from "components/ui/assets/AssetIcon";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { showAlert } from "features/alert/alertSlice";
+import { selectAuthIsReady } from "features/auth/authSelector";
+import { useTonClient } from "hooks/useTonClient";
 
 const ConfirmOrder = () => {
   const t = useLanguage("market-order-confirm");
@@ -30,51 +32,57 @@ const ConfirmOrder = () => {
   const page = usePage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { client } = useTonClient()
   const { fromAsset, toAsset, mode: orderMode, fromValue, toValue } = useAppSelector(marketSelector);
+  const isReady = useAppSelector(selectAuthIsReady);
   const [createOrderApi] = useCreateOrderMutation();
 
   useEffect(() => {
-    page.setLoading(false);
+    page.setLoading(false);    
   }, []);
 
   useEffect(() => {
-    btn.init(
-      "Confirm",
-      async () => {
-        const _fromAsset = orderMode === MarketModeEnum.BUY ? toAsset : fromAsset
-        const _toAsset = orderMode === MarketModeEnum.BUY ? fromAsset : toAsset
-        const _fromValue = orderMode === MarketModeEnum.BUY ? toValue : fromValue
-        const _toValue = orderMode === MarketModeEnum.BUY ? fromValue : toValue
-        const data = {
-          type: orderMode,
-          fromAsset: { type: _fromAsset?.type as string, address: _fromAsset?.meta?.address as string },
-          toAsset: { type: _toAsset?.type as string, address: _toAsset?.meta?.address as string },
-          fromValue: Number(_fromValue),
-          toValue: Number(_toValue),
-        };
-        
-        try {
-          const order = await createOrderApi(data);
-          if (order.data && order.data.rawTxn) {
-            const { rawTxn } = order.data;
-            const body = Cell.fromBase64(rawTxn.body);
+    if (isReady) {
+      btn.init(
+        "Confirm",
+        confirmHandler,
+        true,
+      );
+    }
+  }, [isReady, client]);
 
-            await ton.sender.send({
-              value: rawTxn.value,
-              to: rawTxn.to,
-              body: body,
-              sendMode: rawTxn.mode,
-            });
-          }
+  const confirmHandler = async () => {
+    const _fromAsset = orderMode === MarketModeEnum.BUY ? toAsset : fromAsset
+    const _toAsset = orderMode === MarketModeEnum.BUY ? fromAsset : toAsset
+    const _fromValue = orderMode === MarketModeEnum.BUY ? toValue : fromValue
+    const _toValue = orderMode === MarketModeEnum.BUY ? fromValue : toValue
+    const data = {
+      type: orderMode,
+      fromAsset: { type: _fromAsset?.type as string, address: _fromAsset?.meta?.address as string },
+      toAsset: { type: _toAsset?.type as string, address: _toAsset?.meta?.address as string },
+      fromValue: Number(_fromValue),
+      toValue: Number(_toValue),
+    };
+    
+    try {
+      const order = await createOrderApi(data);
+      if (order.data && order.data.rawTxn) {
+        const { rawTxn } = order.data;
+        const body = Cell.fromBase64(rawTxn.body);
 
-          navigate("/market", { replace: true });
-        } catch (e) {
-          dispatch(showAlert({message: "Transaction faild", duration: 3000 }))
-        }
-      },
-      true,
-    );
-  }, [fromValue, toValue]);
+        await ton.sender.send({
+          value: BigInt(rawTxn.value).valueOf(),
+          to: rawTxn.to,
+          body: body,
+          sendMode: rawTxn.mode,
+        });
+      }
+
+      navigate("/market", { replace: true });
+    } catch (e) {
+      dispatch(showAlert({message: "Transaction faild", duration: 3000 }))
+    }
+  }
 
   const textContents =
     orderMode === MarketModeEnum.BUY
@@ -83,7 +91,7 @@ const ConfirmOrder = () => {
 
   return (
     <Page>
-      <Section title={textContents.primaryTitle}>
+      <Section title={textContents.primaryTitle} className="market-order-asset">
         <Block>
           <Row className="w-full">
             {fromAsset && <AssetIcon asset={fromAsset as CoinDto} className="market-asset-icon" />}
@@ -92,7 +100,7 @@ const ConfirmOrder = () => {
           </Row>
         </Block>
       </Section>
-      <Section title={textContents.secondaryTitle}>
+      <Section title={textContents.secondaryTitle} className="market-order-asset">
         <Block>
           <Row className="w-full">
             <AssetIcon asset={toAsset as CoinDto} className="market-asset-icon" />

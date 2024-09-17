@@ -17,6 +17,7 @@ import { useLazyExecuteOrderQuery } from "features/market/marketApi";
 import { useTon } from "hooks/useTon";
 import { Cell } from "@ton/core";
 import { showAlert } from "features/alert/alertSlice";
+import { useTonClient } from "hooks/useTonClient";
 
 const ConfirmAction = () => {
   const t = useLanguage("market-order")
@@ -24,6 +25,7 @@ const ConfirmAction = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const ton = useTon()
+  const { client } = useTonClient()
   const { id } = useParams()
   const { mode } = useAppSelector(marketSelector)
   const orders = useAppSelector(marketOrdersSelector)
@@ -36,7 +38,7 @@ const ConfirmAction = () => {
     if (selectedOrder) {
       btn.init(t("confirm", "button"), sendTransaction, true)
     }
-  }, [selectedOrder])
+  }, [selectedOrder, client])
 
   useEffect(() => {
     const order = orders?.find(o => o.uuid === id)
@@ -52,9 +54,7 @@ const ConfirmAction = () => {
     }
   }, [selectedOrder])
 
-  const sendTransaction = async () => {
-    console.log("sendTransaction confirm")
-    
+  const sendTransaction = async () => {    
     try {
       const response = await executeOrder({uuid: selectedOrder?.uuid as string})
       if (response.data) {
