@@ -81,6 +81,7 @@
   "game-tournament-button": "Participate",
   "game-tournament-success": "You are in!",
   "game-tournament-info": "Woo Hoo!!!",
+  "game-vote-button": "Vote",
 
   "add-crypto-your-coin-address": "Your {{coin}} Address",
   "add-crypto-description": "Send only <strong>{{coinInfo}}</strong> to this address. Sending other assets, such as jettons or NFTs will result in permanent loss.",
@@ -204,5 +205,10 @@
   "bank-referral-referral-title": "Referral",
   "bank-referral-referral-hint": "Number of users you have referred",
   "bank-referral-bought-bank": "Bought a Bank",
-  "bank-referral-count": "<span>{{count}}</span> Referrals"
+  "bank-referral-count": "<span>{{count}}</span> Referrals",
+
+  "vote-modal-vote": "Vote",
+  "vote-modal-title": "Vote for Projects",
+  "vote-modal-description": "Vote for your favorite projects and promote them in our internal ranking. Votes act as donations for the project team \uD83D\uDCB8",
+  "vote-modal-project": "You want to vote for the <span>{{gameName}}</span> project"
 }

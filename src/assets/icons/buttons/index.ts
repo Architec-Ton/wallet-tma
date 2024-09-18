@@ -21,8 +21,12 @@ import iconSettingsButton from "./setting-2.svg";
 import iconSortButton from "./sort.svg";
 import iconStakeButton from "./stake.svg";
 import iconTasksButton from "./tasks.svg";
+import iconGameVote from './voteGameIcon.svg'
+import iconButtonTwoArrows from './icon-button-two-arrows.svg'
 
 export {
+  iconButtonTwoArrows,
+  iconGameVote,
   logOutIcon,
   iconBankButton,
   iconButtonArraw,
