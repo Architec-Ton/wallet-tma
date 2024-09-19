@@ -40,6 +40,10 @@
   "account-my-wallet": "MyWallet",
   "account-logout-title": "Log Out?",
   "account-logout-description": "Are you sure want to log out from wallet?",
+  "account-change-pin": "Change the PIN Code",
+  "account-view-secret-key": "View the Secret Key",
+  "account-safety-disclaimer": "Do not share the data stored in this section with anyone",
+  "account-back": "Back",
 
   "addwallet-addwallet": "Add Wallet",
   "addwallet-create-title": "New Wallet",
@@ -208,7 +212,7 @@
   "bank-referral-referral-hint": "Number of users you have referred",
   "bank-referral-bought-bank": "Bought a Bank",
   "bank-referral-count": "<span>{{count}}</span> Referrals",
-  
+
   "market-all": "All",
   "market-page-title": "P2P Community Market",
   "market-my-orders": "My Orders",
