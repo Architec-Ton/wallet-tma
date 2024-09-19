@@ -66,7 +66,6 @@ const CreateMarketOrder = () => {
   }, [fromAsset, toAsset, fromValue, toValue])
 
   useEffect(() => {
-    console.log("isValid", isValid)
     if (isValid) {
       btn.init(t("create-ad", "market"), () => {
         dispatch(setOrderValues({

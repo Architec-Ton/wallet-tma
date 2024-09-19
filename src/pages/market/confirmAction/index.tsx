@@ -62,7 +62,7 @@ const ConfirmAction = () => {
         const body = Cell.fromBase64(txParams.body)
         await ton.sender.send({
           to: txParams.to,
-          value: txParams.value,
+          value: BigInt(txParams.value),
           body
         })
         navigate("/market", {replace: true})

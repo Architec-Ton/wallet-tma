@@ -30,7 +30,7 @@ export const marketApi = createApi({
         let transformedOrders: MarketOrderDto[] = []
         if (mode === MarketModeEnum.BUY) {
           response.items.reduce((acc, currentOrder: MarketOrderDto) => {
-            if (currentOrder.type === MarketModeEnum.BUY) {
+            if (currentOrder.type === MarketModeEnum.SELL) {
               acc.push({
                 ...currentOrder,
                 fromAsset: currentOrder.toAsset,
@@ -45,7 +45,7 @@ export const marketApi = createApi({
           }, transformedOrders)
         } else {
           response.items.reduce((acc, currentOrder: MarketOrderDto) => {
-            if (currentOrder.type === MarketModeEnum.SELL) {
+            if (currentOrder.type === MarketModeEnum.BUY) {
               acc.push({
                 ...currentOrder,
                 fromAsset: currentOrder.toAsset,
