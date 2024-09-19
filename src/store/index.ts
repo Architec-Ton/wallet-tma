@@ -20,6 +20,7 @@ import { walletApi } from "../features/wallet/walletApi";
 import walletSlice from "../features/wallet/walletSlice";
 import marketSlice from "features/market/marketSlice";
 import { marketApi } from "features/market/marketApi";
+import popupSlice from "features/tma/popupSlice";
 
 export const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ export const store = configureStore({
     pincode: pinCodeModalReducer,
     trx: trxModalReducer,
     market: marketSlice,
+    popup: popupSlice,
     [trxApi.reducerPath]: trxApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,

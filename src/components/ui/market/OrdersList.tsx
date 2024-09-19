@@ -26,7 +26,13 @@ const OrdersList = ({ orders, onOrderCancel }: {
   return (
     <Column>
       {orders.length && orders.map((order: MarketOrderDto) => (
-        <MarketOrderCard order={order} key={order.uuid} isActive={order.status === OrderStatus.ACTIVE} onCancel={cancelHandler}/>
+        <MarketOrderCard
+          key={order.uuid}
+          order={order}
+          disabled={[OrderStatus.CREATED, OrderStatus.EXECUTING, OrderStatus.CANCELING].includes(order.status)}
+          isActive={ ![OrderStatus.CANCELED, OrderStatus.FINISHED].includes(order.status) }
+          onCancel={cancelHandler}
+        />
       ))}
     </Column>
   )

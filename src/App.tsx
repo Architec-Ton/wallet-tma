@@ -15,6 +15,7 @@ import AlertContainer from "./components/ui/alert/AlertContainer";
 import { FE_URL, GA_ID, MANIFEST_URL } from "./constants";
 import "./i18n";
 import { store } from "./store";
+import PopupProvider from "components/layout/PopupProvider";
 
 if (GA_ID) ReactGA.initialize(GA_ID);
 
@@ -32,10 +33,12 @@ function App() {
           <SDKProvider acceptCustomStyles>
             <TonProvider>
               <TmaProvider>
-                <Layout>
-                  <AlertContainer />
-                  <RouterProvider router={router} />
-                </Layout>
+                <PopupProvider>
+                  <Layout>
+                    <AlertContainer />
+                    <RouterProvider router={router} />
+                  </Layout>
+                </PopupProvider>
               </TmaProvider>
             </TonProvider>
           </SDKProvider>

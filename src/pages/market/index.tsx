@@ -36,6 +36,8 @@ import OrdersList from "components/ui/market/OrdersList";
 
 import "./index.css";
 import { showAlert } from "features/alert/alertSlice";
+import { useTmaPopup } from "hooks/useTmaPopup";
+import LinkRow from "components/ui/linkRow";
 
 const historyDropDownData: DropDownDto[] = [
   { key: "active", value: "Active" },
@@ -49,6 +51,7 @@ const Market = () => {
   const ton = useTon();
   const isReady = useAppSelector(selectAuthIsReady);
   const isTma = useAppSelector(selectIsTma);
+  const popup = useTmaPopup()
   const [getMyOrders] = useLazyGetOrdersHistoryQuery();
   const [cancelOrderApi] = useLazyCancelOrderQuery();
   const [walletInfoApi] = useApiWalletInfoMutation();
@@ -100,13 +103,12 @@ const Market = () => {
   }, [isReady]);
 
   const getOrders = () => {
-    console.log("getOrders");
     getMyOrders(undefined).then((myOrders) => {
       const historyOrders = myOrders.data?.items?.filter(
-        (order: MarketOrderDto) => order.status !== OrderStatus.ACTIVE,
+        (order: MarketOrderDto) => order.status === OrderStatus.CANCELED || order.status === OrderStatus.FINISHED,
       );
       const activeOrders = myOrders.data?.items?.filter(
-        (order: MarketOrderDto) => order.status === OrderStatus.ACTIVE,
+        (order: MarketOrderDto) => order.status !== OrderStatus.CANCELED && order.status !== OrderStatus.FINISHED,
       );
       setOrdersHistoryData(historyOrders || []);
       setOrdersActiveData(activeOrders || []);
@@ -117,10 +119,6 @@ const Market = () => {
     dispatch(setMarketMode(mode));
     dispatch(clearOrderAssets());
   });
-
-  const myAdsHandler = () => {};
-
-  const createAdHandler = () => {};
 
   const dropdownChangeHandler = (d?: DropDownDto) => {
     if (!d) {
@@ -142,7 +140,21 @@ const Market = () => {
   }, [dropdownChangeHandler, historyDropDownData, dropdownValue]);
 
   const cancelOrderHandler = (uuid: string) => {
-    sendCancelTransaction(uuid);
+    if (isTma) {
+      popup.init({
+        message: t("cancel-popup-message"),
+        buttons: [
+          {type: "cancel"},
+          {type: "destructive", id: "confirm", text: t("cancel-confirm")}
+        ]
+      }, (buttonId) => {
+        if (buttonId === "confirm") {
+          sendCancelTransaction(uuid);
+        }
+      })
+    } else {
+      sendCancelTransaction(uuid);
+    }
   };
 
   const sendCancelTransaction = async (uuid: string) => {
@@ -186,17 +198,17 @@ const Market = () => {
           </Block>
           <ListBlock>
             <ListBaseItem>
-              <Row className="grow" onClick={myAdsHandler}>
+              <LinkRow className="grow" to="https://t.me/architecton_support">
                 <img src={iconMessageQuestion} className="block-row-icon" alt="" />
                 <div className="grow">
                   <div className="ads-block-title">{t("help-title")}</div>
                   <div className="ads-block-hint">{t("help-description")}</div>
                 </div>
                 <img src={iconButtonArraw} alt="" className="icon-color-secondary" />
-              </Row>
+              </LinkRow>
             </ListBaseItem>
             <ListBaseItem className="center">
-              <Link to="create-order" className="new-ad-btn" onClick={createAdHandler}>
+              <Link to="create-order" className="new-ad-btn">
                 {t("create-order")}
               </Link>
             </ListBaseItem>

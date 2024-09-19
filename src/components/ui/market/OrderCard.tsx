@@ -13,10 +13,11 @@ import useLanguage from "hooks/useLanguage";
 type OwnPropsType = {
   order: MarketOrderDto
   isActive?: boolean
+  disabled?: boolean
   onCancel: (uuid: string) => void
 }
 
-const MarketOrderCard = ({ order, isActive = false, onCancel }: OwnPropsType) => {
+const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPropsType) => {
   const t = useLanguage("market-order")
 
   const orderData = useMemo(() => {
@@ -41,7 +42,13 @@ const MarketOrderCard = ({ order, isActive = false, onCancel }: OwnPropsType) =>
               <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
               <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
             </Column>
-            {isActive && <button className="small-button rounded-button primary-button" onClick={() => onCancel(orderData.uuid)}>Cancel</button>}
+            {isActive && (
+              <button
+                className="small-button rounded-button primary-button"
+                onClick={() => onCancel(orderData.uuid)}
+                disabled={disabled}
+              >Cancel</button>
+            )}
           </>
         )}
       </ListBaseItem>
