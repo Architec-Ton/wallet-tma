@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Address, Cell } from "@ton/core";
 import { selectAuthIsReady } from "features/auth/authSelector";
@@ -44,27 +44,63 @@ const historyDropDownData: DropDownDto[] = [
   { key: "history", value: "History" },
 ];
 
+const POLLING_INTERVAL = 5000
+
 const Market = () => {
+  const [dropdownValue, setDropdownValue] = useState<DropDownDto | undefined>();
+  const [ordersHistoryData, setOrdersHistoryData] = useState<MarketOrderDto[]>([]);
+  const [ordersActiveData, setOrdersActiveData] = useState<MarketOrderDto[]>([]);
+  const [pollingInterval, setPollingInterval] = useState<number>(0)
+  const [updateHistory, setUpdateHistory] = useState<boolean>(false)
+
   const t = useLanguage("market");
   const dispatch = useAppDispatch();
+  const myOrdersPollingStatus = useRef(false)
   const page = usePage();
   const ton = useTon();
   const isReady = useAppSelector(selectAuthIsReady);
   const isTma = useAppSelector(selectIsTma);
   const popup = useTmaPopup()
-  const [getMyOrders] = useLazyGetOrdersHistoryQuery();
+
+  const [getMyActiveOrders, {data: myActiveOrders, isFetching}] = useLazyGetOrdersHistoryQuery({
+    pollingInterval,
+    skipPollingIfUnfocused: true,
+    selectFromResult: (result) => {
+      const startPolling = !!result.data?.items.find(order => [OrderStatus.CANCELING, OrderStatus.CREATED, OrderStatus.EXECUTING].includes(order.status))
+      if (startPolling) {
+        myOrdersPollingStatus.current = true
+      } else {
+        myOrdersPollingStatus.current = false
+      }
+      return result
+    }
+  });
+  const [getMyHistoryOrders] = useLazyGetOrdersHistoryQuery();
   const [cancelOrderApi] = useLazyCancelOrderQuery();
   const [walletInfoApi] = useApiWalletInfoMutation();
   const [getAssets] = useLazyGetAssetsQuery();
-
-  const [dropdownValue, setDropdownValue] = useState<DropDownDto | undefined>();
-  const [ordersHistoryData, setOrdersHistoryData] = useState<MarketOrderDto[]>([]);
-  const [ordersActiveData, setOrdersActiveData] = useState<MarketOrderDto[]>([]);
 
   useEffect(() => {
     dropdownChangeHandler();
     page.setLoading(false, true);
   }, []);
+
+  useEffect(() => {
+    if (myOrdersPollingStatus.current) {
+      setPollingInterval(POLLING_INTERVAL)
+    } else {
+      setPollingInterval(0)
+    }
+  }, [myOrdersPollingStatus.current])
+
+  useEffect(() => {
+    if (myActiveOrders?.items && !isFetching) {
+      setOrdersActiveData(myActiveOrders.items)
+      getMyHistoryOrders("history").then((myOrders) => {
+        setOrdersHistoryData(myOrders.data?.items || []);
+      });
+    }
+  }, [myActiveOrders, isFetching])
 
   useEffect(() => {
     if (isReady) {
@@ -80,15 +116,22 @@ const Market = () => {
                   return true
                 }
                 return data.assets.find(dAsset => (
+                  dAsset.meta?.address &&
                   Address.normalize(dAsset.meta?.address as string) === Address.normalize(asset.meta?.address as string)
                 ))
               })
               const combinedAssets = [
                 ...walletAssets,
-                ...data?.assets.filter((a) => !walletAssets.find((wa) => (
-                  wa.meta?.address &&
-                  Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
-                ))),
+                ...data?.assets.filter((a) => !walletAssets.find((wa) => {
+                    if (a.type === "ton") {
+                      return true
+                    }
+                    return (
+                      wa.meta?.address &&
+                      Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
+                    )
+                  }
+                )),
               ] satisfies CoinDto[];
               dispatch(setWalletAssets(walletAssets))
               dispatch(setAssets(combinedAssets));
@@ -103,15 +146,11 @@ const Market = () => {
   }, [isReady]);
 
   const getOrders = () => {
-    getMyOrders(undefined).then((myOrders) => {
-      const historyOrders = myOrders.data?.items?.filter(
-        (order: MarketOrderDto) => order.status === OrderStatus.CANCELED || order.status === OrderStatus.FINISHED,
-      );
-      const activeOrders = myOrders.data?.items?.filter(
-        (order: MarketOrderDto) => order.status !== OrderStatus.CANCELED && order.status !== OrderStatus.FINISHED,
-      );
-      setOrdersHistoryData(historyOrders || []);
-      setOrdersActiveData(activeOrders || []);
+    getMyActiveOrders("active").then((myOrders) => {
+      setOrdersActiveData(myOrders.data?.items || []);
+    });
+    getMyHistoryOrders("history").then((myOrders) => {
+      setOrdersHistoryData(myOrders.data?.items || []);
     });
   };
 
@@ -169,7 +208,7 @@ const Market = () => {
           to: txParams.to,
           body: body,
         });
-        getOrders();
+        setPollingInterval(POLLING_INTERVAL);
       }
     } catch (e) {
       dispatch(showAlert({message: "Transaction was not sent", duration: 3000 }))

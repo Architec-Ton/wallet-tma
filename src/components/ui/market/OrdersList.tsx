@@ -30,7 +30,7 @@ const OrdersList = ({ orders, onOrderCancel }: {
           key={order.uuid}
           order={order}
           disabled={[OrderStatus.CREATED, OrderStatus.EXECUTING, OrderStatus.CANCELING].includes(order.status)}
-          isActive={ ![OrderStatus.CANCELED, OrderStatus.FINISHED].includes(order.status) }
+          isActive={ ![OrderStatus.CANCELED, OrderStatus.FINISHED, OrderStatus.EXPIRED].includes(order.status) }
           onCancel={cancelHandler}
         />
       ))}

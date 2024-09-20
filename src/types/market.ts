@@ -10,6 +10,7 @@ export enum OrderStatus {
   FINISHED = "finished",
   CANCELED = "canceled",
   CANCELING = "cancelling",
+  EXPIRED = "expired",
 }
 
 export type CreateOrderAsset = {

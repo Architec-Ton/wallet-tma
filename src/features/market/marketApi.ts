@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { CoinDto } from "types/assest";
-import { CreateOrderDto, CreateOrderRequestQuery, MarketOrderDto, MarketOrdersDto, OrderTxParams } from "types/market";
+import { CreateOrderDto, CreateOrderRequestQuery, MarketOrderDto, MarketOrdersDto, OrderStatus, OrderTxParams } from "types/market";
 
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
@@ -67,9 +67,10 @@ export const marketApi = createApi({
         url: `assets`,
       }),
     }),
-    getOrdersHistory: builder.query<MarketOrdersDto, undefined>({
-      query: () => ({
+    getOrdersHistory: builder.query<MarketOrdersDto, "active" | "history">({
+      query: (status=OrderStatus.ACTIVE) => ({
         url: `orders`,
+        params: {status},
       }),
     }),
     createOrder: builder.mutation<CreateOrderDto, CreateOrderRequestQuery>({
@@ -97,8 +98,8 @@ export const marketApi = createApi({
 export const {
   useLazyGetAssetsQuery,
   useLazyGetOrdersQuery,
-  useLazyGetOrdersHistoryQuery,
   useCreateOrderMutation,
   useLazyCancelOrderQuery,
   useLazyExecuteOrderQuery,
+  useLazyGetOrdersHistoryQuery,
 } = marketApi;

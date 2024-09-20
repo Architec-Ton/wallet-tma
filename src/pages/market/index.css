@@ -70,6 +70,10 @@
   margin-bottom: var(--spacing-4);
 }
 
+.new-ad-btn {
+  color: var(--link-color);
+}
+
 @media (prefers-color-scheme: dark) {
   .icon-color-secondary {
     filter: invert(0.5);

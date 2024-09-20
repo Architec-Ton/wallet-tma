@@ -20,6 +20,7 @@ import AssetIcon from "components/ui/assets/AssetIcon";
 
 import "./index.css"
 import { usePage } from "hooks/usePage";
+import { selectAuthIsReady } from "features/auth/authSelector";
 
 const CreateMarketOrder = () => {
   const t = useLanguage("market-order-form")
@@ -38,10 +39,21 @@ const CreateMarketOrder = () => {
   const [fromValue, setFromValue] = useState<string>("")
   const [toValue, setToValue] = useState<string>("")
   const walletAssets = useAppSelector(marketWalletAssets)
+  const isReady = useAppSelector(selectAuthIsReady);
   
   useEffect(() => {
-    page.setNavbarVisible(false)
+    page.setNavbarVisible(false)    
   }, [])
+
+  useEffect(() => {
+    if (isReady) {
+      if (!assets && !walletAssets) {
+        navigate("/market", {replace: true})
+      } else {
+        page.setLoading(false)
+      }      
+    }
+  }, [isReady])
 
   useEffect(() => {
     if (assets) {
