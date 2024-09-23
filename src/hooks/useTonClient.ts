@@ -16,7 +16,8 @@ export function useTonClient() {
         endpoint:
           TON_CLIENT_NETWORK === "mainnet"
             ? "https://toncenter.com/api/v2/jsonRPC"
-            : "https://testnet.toncenter.com/api/v2/jsonRPC",
+            : "https://dev.architecton.site/api/v2/node/rpc/jsonRPC",
+        // : "https://testnet.toncenter.com/api/v2/jsonRPC",
         // await endpointPromise,
         // apiKey: TONAPI_KEY,
       }),
