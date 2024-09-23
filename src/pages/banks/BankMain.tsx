@@ -52,6 +52,7 @@ function BankMain() {
 
   const handleInfo = async () => {
     try {
+      page.setLoading(true);
       const result = await bankInfoApi(null).unwrap();
 
       setBankInfoData(result);

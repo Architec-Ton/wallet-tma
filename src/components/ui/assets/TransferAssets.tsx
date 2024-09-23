@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import type { CoinDto } from "types/assest";
 
@@ -8,6 +8,7 @@ import useLanguage from "hooks/useLanguage";
 import Column from "../../containers/Column";
 import { SuffixInput } from "../../inputs/SuffixInput";
 import "./TransferAssets.styles.css";
+import { usdPriceFormatter } from "utils/formatter";
 
 type OwnPropsType = {
   asset?: CoinDto;
@@ -15,9 +16,10 @@ type OwnPropsType = {
   value: string;
   disabled?: boolean;
   setMaxAmount?: () => void;
+  assetPrice?: string
 };
 
-const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPropsType) => {
+const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPrice }: OwnPropsType) => {
   // const [assetValue, setAssetValue] = useState<string>('');
   // const [error, setError] = useState<boolean>(false);
 
@@ -27,8 +29,12 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPr
     // setAssetValue(value || '');
   }, [value]);
 
+  const formatedPrice = useMemo(() => {
+    return usdPriceFormatter(Number(assetPrice))
+  }, [assetPrice])
+
   return (
-    <Column className="justify-between asset-row">
+    <Column className="justify-between asset-row send-asset-row">
       <div className="trans" />
       <SuffixInput
         suffix={asset?.meta?.symbol}
@@ -37,6 +43,9 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPr
         className="transfer-input"
         disabled={disabled}
       />
+      { assetPrice && (
+        <div className="asset-price">1 {asset?.meta?.symbol} &asymp; {formatedPrice}</div>
+      ) }
       <button
         className="rounded-button control-button"
         style={{

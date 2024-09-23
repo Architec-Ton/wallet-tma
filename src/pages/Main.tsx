@@ -31,6 +31,7 @@ function Main() {
 
   const handleInfo = async () => {
     try {
+      page.setLoading(true);
       const result = await walletInfoApi(null).unwrap();
       setWalletInfoData(result);
 
