@@ -215,6 +215,7 @@ const VoteModal = ({ modalHandler, voteHandler, gameName, categories }: OwnProps
           </div>
         </Row>
 
+
         <div className="vote-description-container">
           {description}
         </div>

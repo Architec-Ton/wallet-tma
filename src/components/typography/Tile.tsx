@@ -75,7 +75,7 @@ const GameIcon = ({ icon, framed,maxHeightIcon }: { icon: string; framed: boolea
         alt=""
         className={cn({ "tile-icon": true, "tile-icon--framed": framed })}
         style={{
-          maxHeight: maxHeightIcon
+          maxHeight: maxHeightIcon || undefined
         }}
     />
 
