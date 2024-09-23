@@ -17,6 +17,7 @@
 
 .selected-option {
     white-space: pre-wrap;
+    padding:  0 var(--spacing-12);
 }
 
 .arrow {
@@ -33,38 +34,4 @@
     border-color: var(--secondary-color);
     border-width: 1px;
     margin-left: 10px;
-    transform: rotate(90deg);
-}
-
-.arrow.open {
-    transform: rotate(270deg);
-    width: 32px;
-    height: 32px;
-}
-
-.custom-options-container {
-    /*position: absolute;*/
-    width: 100%;
-    top: 100%;
-    /*left: 0;*/
-    /*right: 0;*/
-    /*border-top: 0;*/
-    display: none;
-}
-
-.custom-select.open .custom-options-container {
-    display: block;
-}
-
-.custom-options {
-    max-height: 100px;
-    overflow-y: auto;
-}
-
-.custom-option {
-    font-size: var(--font-size-base);
-    padding: var(--spacing-4) 0;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
 }

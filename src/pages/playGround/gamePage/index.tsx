@@ -33,6 +33,12 @@ import VoteModal from "components/ui/games/voteModal";
 import TransactionCompleteModal from "components/ui/modals/transactionCompleteModal";
 import Button from "components/buttons/Button.tsx";
 
+// import baseCategories from '../gamePage/test/base_categories.json'
+import RatingCategories from "components/ui/games/raiting-categories/RatingCategories.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store";
+
+
 const typedIcons = {
   website: iconGlobalButton,
   telegram: iconSendButton,
@@ -48,6 +54,7 @@ const GamePage = () => {
   const { data: game, isLoading } = useGetGameQuery(id as string, { skip: !isReady });
   const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
 
+  const baseCategories = useSelector((state: RootState) => state.rating);
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false);
   const [assets, setAssets] = useState<CoinDto[]>()
   const [isPinCode, setIsPinCode] = useState<boolean>(false)
@@ -183,19 +190,22 @@ const GamePage = () => {
           ))}
         </Section>
       )}
-      {/*todo после определения бэка поправить и сделать нормальную валидацию категорий*/}
-      {game?.ratingCategoties && (
-          <div>
 
-          </div>
-      )}
+
+      {/*todo после определения бэка поправить и сделать нормальную валидацию категорий*/}
+      <Section title={t('rating')}>
+        <RatingCategories
+            baseCategories={baseCategories}
+            gameName={game?.title}
+        />
+      </Section>
 
       {isVoteModal && <VoteModal
           modalHandler={modalHandler}
           voteHandler={voteGameHandler}
           gameName={game?.title}
           //todo после определения бэка убрать хардкод
-          // categories={game?.ratingCategoties?.title}
+          categories={baseCategories}
       />}
 
       {isPinCode && <ModalPinCode

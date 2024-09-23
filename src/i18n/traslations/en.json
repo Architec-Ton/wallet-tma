@@ -82,6 +82,7 @@
   "game-tournament-success": "You are in!",
   "game-tournament-info": "Woo Hoo!!!",
   "game-vote-button": "Vote",
+  "game-rating": "Rating",
 
   "add-crypto-your-coin-address": "Your {{coin}} Address",
   "add-crypto-description": "Send only <strong>{{coinInfo}}</strong> to this address. Sending other assets, such as jettons or NFTs will result in permanent loss.",
@@ -210,5 +211,29 @@
   "vote-modal-vote": "Vote",
   "vote-modal-title": "Vote for Projects",
   "vote-modal-description": "Vote for your favorite projects and promote them in our internal ranking. Votes act as donations for the project team \uD83D\uDCB8",
-  "vote-modal-project": "You want to vote for the <span>{{gameName}}</span> project"
+  "vote-modal-project": "You want to vote for the <span>{{gameName}}</span> project",
+  "vote-modal-title-select-category": "Category",
+  "vote-modal-description-select-category": "Here you can choose the category you want to vote for!",
+  "vote-modal-mainbutton-text-select-category": "Continue",
+  "vote-modal-confirm-title":"<div>{{votes }}</div> Vote for Project",
+  "vote-modal-confirm-titles":"<div>{{votes }}</div> Votes for Project",
+  "vote-modal-confirm-project":"Project",
+  "vote-modal-confirm-category":"Category",
+  "vote-modal-confirm-number-of-votes":"Number of Votes",
+  "vote-modal-confirm-amount":"Amount",
+  "vote-modal-confirm-gas":"Gas",
+  "vote-modal-confirm-mainbutton-text":"Confirm",
+
+  "new-category-modal-title": "New Category",
+  "new-category-modal-mainbutton-text": "Create",
+  "new-category-modal-description-text": "You can create a new rating category for the <span>{{gameName}}</span> game that players will use in the future. — Each new vote will bring you a fixed percentage of the transaction",
+  "new-category-modal-category-name": "Category name",
+  "new-category-modal-category-description": "Description",
+  "new-category-modal-category-description-placeholder": "Description",
+  "new-category-modal-category-name-placeholder": "Name",
+  "new-category-modal-confirm-project": "Project",
+  "new-category-modal-confirm-category-name": "Category Name",
+  "new-category-modal-confirm-amount": "Amount",
+  "new-category-modal-confirm-gas": "Gas",
+  "new-category-modal-confirm-mainbutton-text": "Create"
 }

@@ -1,5 +1,5 @@
 .vote-modal__content {
-  /*height: 50svh;*/
+  height: 50svh;
   align-items: center;
   justify-content: center;
   margin: 0 var(--spacing-16);
@@ -69,4 +69,20 @@
 
 .number-counter__container {
   gap: 0;
+}
+
+.vote-selector-categories-container {
+  display: flex;
+}
+
+.vote-selector-categories-switch {
+
+}
+
+.vote-selector-categories-name {
+
+}
+
+.vote-selector-categories-description {
+  color: var(--secondary-color);
 }

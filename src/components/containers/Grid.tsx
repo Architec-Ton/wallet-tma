@@ -14,14 +14,30 @@ type OwnProps = {
   className?: string;
   isOrderedList?: boolean;
   children: React.ReactNode;
+  templateColumns?: string;
+  templateRows?: string;
+  columnGap?: string;
 };
 
-const Grid = ({ children, gap, columns, colSpan, rowSpan, rows, isOrderedList, className }: OwnProps) => (
+const Grid = ({
+      children,
+      gap,
+      columns,
+      colSpan,
+      rowSpan,
+      rows,
+      isOrderedList,
+      className,
+      templateColumns,
+      templateRows,
+      columnGap
+}: OwnProps) => (
   <div
     className={classNames("grid", className, {
       "grid-columns": columns,
       "grid-rows": rows,
       "grid-ordered-list": isOrderedList,
+
     })}
     style={{
       // @ts-ignore
@@ -30,6 +46,9 @@ const Grid = ({ children, gap, columns, colSpan, rowSpan, rows, isOrderedList, c
       "--grid-rows": rows,
       gridColumn: colSpan ? `span ${colSpan}` : undefined,
       gridRow: rowSpan ? `span ${rowSpan}` : undefined,
+      gridTemplateColumns: templateColumns,
+      gridTemplateRows: templateRows,
+      columnGap: columnGap,
     }}
   >
     {children}
