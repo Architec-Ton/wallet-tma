@@ -8,3 +8,11 @@ input.transfer-input {
 .inputWrapper .suffix {
   color: var(--text-secondary-color);
 }
+
+.send-asset-row .inputWrapper {
+  height: auto;
+}
+
+.asset-price {
+  color: var(--text-secondary-color)
+}
