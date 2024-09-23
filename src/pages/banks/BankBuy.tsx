@@ -134,7 +134,7 @@ function BankBuy() {
         const tx = await contracts.bank.buy(toNano(amount));
         console.log("transaction:", tx);
       }
-      navigate("/bank");
+      navigate("/bank", { replace: true });
     } catch (e) {
       console.error(e);
     }

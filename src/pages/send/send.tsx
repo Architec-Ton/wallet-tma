@@ -60,7 +60,7 @@ const SendPage = () => {
     try {
       Address.parse(event.target.value);
       setError(false);
-      setIsButtonEnabled(event.target.value != "");
+      setIsButtonEnabled(event.target.value !== "");
     } catch (err) {
       setError(true);
       setIsButtonEnabled(false);
@@ -157,6 +157,7 @@ const SendPage = () => {
 
   const handleInfo = async () => {
     try {
+      page.setLoading(true);
       const result = await walletApiAssets(null).unwrap();
 
       setAssets(result);
@@ -169,12 +170,13 @@ const SendPage = () => {
 
   useEffect(() => {
     page.setTitle(t("choose-asset"));
+
     if (state) {
       setAddress(state);
     }
 
-    if (isReady) handleInfo();
-  }, [isReady]);
+    if (isReady && !assets.length) handleInfo();
+  }, [isReady, assets]);
 
   useEffect(() => {
     if (step === 1) {

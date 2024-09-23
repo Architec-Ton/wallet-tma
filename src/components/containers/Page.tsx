@@ -24,7 +24,7 @@ type Props = {
   pageControl?: ReactNode;
 };
 
-const backButtonExclude: string[] = ["/", "/playground", "/news", "/account", "/registration/welcome"];
+const backButtonExclude: string[] = ["/", "/playground", "/news", "/account", "/market", "/registration/welcome"];
 
 function Page({ children, style, className, title, titleAccent, hintMessage, pageControl }: Props) {
   const location = useLocation();
@@ -46,6 +46,7 @@ function Page({ children, style, className, title, titleAccent, hintMessage, pag
   return (
     <>
       <BackButton visible={backButtonIsVisible} />
+
       <Container style={style} className={className} key={location.key}>
         {(title || pageControl) && (
           <div className="page-header">
