@@ -52,7 +52,7 @@ const ConfirmOrder = () => {
     }
   }, [isReady, client]);
 
-  const confirmHandler = async () => {
+  const confirmHandler = async (): Promise<any> => {
     const _fromAsset = orderMode === MarketModeEnum.BUY ? toAsset : fromAsset
     const _toAsset = orderMode === MarketModeEnum.BUY ? fromAsset : toAsset
     const _fromValue = orderMode === MarketModeEnum.BUY ? toValue : fromValue
