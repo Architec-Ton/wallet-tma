@@ -66,6 +66,9 @@ const ConfirmOrder = () => {
     
     try {
       const order = await createOrderApi(data);
+      if (order.error) {
+        throw new Error("Transaction failed")
+      }
       if (order.data && order.data.rawTxn) {
         const { rawTxn } = order.data;
         const body = Cell.fromBase64(rawTxn.body);
@@ -80,7 +83,7 @@ const ConfirmOrder = () => {
 
       navigate("/market", { replace: true });
     } catch (e) {
-      dispatch(showAlert({message: "Transaction faild", duration: 3000 }))
+      dispatch(showAlert({message: "Transaction failed", duration: 3000 }))
     }
   }
 

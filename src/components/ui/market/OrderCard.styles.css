@@ -23,10 +23,65 @@
   justify-content: flex-start;
 }
 
-.market-order-card .order-data-row div:first-child {
+.market-order-card .order-data-row > div:first-child {
   width: 40%;
 }
 
 .market-order-card .order-status {
   text-transform: capitalize;
+}
+
+.market-order-card.own-order {
+  background-color: light-dark(#E2F3FC, #173746);
+}
+
+.order-type-info {
+  align-items: flex-start;
+  gap: var(--spacing-8);
+}
+
+.history-asset-icon {
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  border-radius: 50%;
+}
+
+.asset-value {
+  font-size: var(--font-size-large);
+}
+
+.asset-value > span {
+  color: var(--text-secondary-color);
+  font-size: var(--font-size-small);
+  margin-left: var(--spacing-8);
+}
+
+.order-type-info img {
+  filter: invert(43%) sepia(99%) saturate(1481%) hue-rotate(175deg) brightness(108%) contrast(97%);;
+}
+
+.order-id {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  color: var(--text-color);
+}
+
+.order-status-row {
+  justify-content: flex-start;
+  gap: var(--spacing-8);
+  color: var(--text-secondary-color);
+}
+
+.order-finally-status {
+  color: var(--text-secondary-color);
+  padding: var(--spacing-4) var(--spacing-8);
+  border-radius: var(--spacing-8);
+  background-color: var(--background-secondary-color-alpha);
+}
+
+.order-finally-status .row {
+  align-items: start;
+  gap: var(--spacing-4);
 }

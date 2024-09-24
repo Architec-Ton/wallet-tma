@@ -46,7 +46,7 @@ const MarketOrder = () => {
 
   useEffect(() => {
     if (orders) {
-    const amount = Number(amountValue)
+      const amount = Number(amountValue)
       const filteredOrders = orders.filter(order => {
         let condition = order.fromValue >= amount
         condition = fromAsset ? condition && order.fromAsset.meta?.symbol === fromAsset.meta?.symbol : condition
@@ -129,8 +129,19 @@ const MarketOrder = () => {
             <ListBaseItem className="market-order-card">
               <OrderCardIcon order={orderData} />
               <Column className="grow">
-                <div>{orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
-                <div className="secondary-content text-sm">{orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
+              { mode === MarketModeEnum.BUY && (
+                <>
+                  <div>+ {orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
+                  <div className="secondary-content text-sm">- {orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
+                </>
+              )}
+              { mode === MarketModeEnum.SELL && (
+                <>
+                  <div>- {orderData.fromValue} {orderData.fromAsset.meta?.symbol}</div>
+                  <div className="secondary-content text-sm">+ {orderData.toValue} {orderData.toAsset.meta?.symbol}</div>
+                </>
+              )}
+                
               </Column>
               <button className="small-button rounded-button primary-button" onClick={orderClickHandler(orderData.uuid)}>{textData?.buttonText}</button>
             </ListBaseItem>

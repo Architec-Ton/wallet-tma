@@ -26,7 +26,6 @@ export const marketApi = createApi({
         // params: { order_type: mode },
       }),
       transformResponse: (response: MarketOrdersDto, meta, mode) => {
-        console.log("mode", response, mode)
         let transformedOrders: MarketOrderDto[] = []
         if (mode === MarketModeEnum.BUY) {
           response.items.reduce((acc, currentOrder: MarketOrderDto) => {
@@ -59,6 +58,7 @@ export const marketApi = createApi({
             return acc
           }, transformedOrders)
         }
+        return response
         return { ...response, items: transformedOrders }
       }
     }),

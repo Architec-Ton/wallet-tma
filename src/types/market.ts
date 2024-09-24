@@ -29,6 +29,10 @@ export interface MarketOrderDto {
   userTotalOrders: number;
   fromAsset: CoinDto;
   toAsset: CoinDto;
+  isOwner: boolean;
+  executedByAddress?: string;
+  executedByTgId?: string;
+  executedByUsername?: string;
 }
 
 export interface MarketOrdersDto {

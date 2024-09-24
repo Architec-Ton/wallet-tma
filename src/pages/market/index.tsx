@@ -38,6 +38,7 @@ import "./index.css";
 import { showAlert } from "features/alert/alertSlice";
 import { useTmaPopup } from "hooks/useTmaPopup";
 import LinkRow from "components/ui/linkRow";
+import useTrxModalManagement from "hooks/useTon/useTrxModalManagment";
 
 const historyDropDownData: DropDownDto[] = [
   { key: "active", value: "Active" },
@@ -61,6 +62,7 @@ const Market = () => {
   const isReady = useAppSelector(selectAuthIsReady);
   const isTma = useAppSelector(selectIsTma);
   const popup = useTmaPopup()
+  const trxModal = useTrxModalManagement()
 
   const [getMyActiveOrders, {data: myActiveOrders, isFetching}] = useLazyGetOrdersHistoryQuery({
     pollingInterval,
@@ -95,10 +97,23 @@ const Market = () => {
 
   useEffect(() => {
     if (myActiveOrders?.items && !isFetching) {
+      const activeOrders = ordersActiveData.map(o => `${o.uuid}--${o.status}`)
+      const newActiveOrders = myActiveOrders.items.map(o => `${o.uuid}--${o.status}`)
+      const needHistoryUpdate = (
+        activeOrders.length === newActiveOrders.length && newActiveOrders.find(no => !activeOrders.includes(no)) 
+        || activeOrders.length !== newActiveOrders.length
+      )
+      
       setOrdersActiveData(myActiveOrders.items)
-      getMyHistoryOrders("history").then((myOrders) => {
-        setOrdersHistoryData(myOrders.data?.items || []);
-      });
+
+      if (needHistoryUpdate) {
+        if (trxModal.isOpened) {
+          trxModal.confirm(undefined)
+        }
+        getMyHistoryOrders("history").then((myOrders) => {
+          setOrdersHistoryData(myOrders.data?.items || []);
+        });
+      }
     }
   }, [myActiveOrders, isFetching])
 
