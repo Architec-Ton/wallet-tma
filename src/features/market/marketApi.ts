@@ -27,38 +27,34 @@ export const marketApi = createApi({
       }),
       transformResponse: (response: MarketOrdersDto, meta, mode) => {
         let transformedOrders: MarketOrderDto[] = []
-        if (mode === MarketModeEnum.BUY) {
+        if (mode === MarketModeEnum.SELL) {
           response.items.reduce((acc, currentOrder: MarketOrderDto) => {
-            if (currentOrder.type === MarketModeEnum.SELL) {
-              acc.push({
-                ...currentOrder,
-                fromAsset: currentOrder.toAsset,
-                toAsset: currentOrder.fromAsset,
-                fromValue: currentOrder.toValue,
-                toValue: currentOrder.fromValue,
-              })
-            } else {
-              acc.push(currentOrder)
-            }
+            acc.push({
+              ...currentOrder,
+              fromAsset: currentOrder.toAsset,
+              toAsset: currentOrder.fromAsset,
+              fromValue: currentOrder.toValue,
+              toValue: currentOrder.fromValue,
+            })
             return acc
           }, transformedOrders)
         } else {
-          response.items.reduce((acc, currentOrder: MarketOrderDto) => {
-            if (currentOrder.type === MarketModeEnum.BUY) {
-              acc.push({
-                ...currentOrder,
-                fromAsset: currentOrder.toAsset,
-                toAsset: currentOrder.fromAsset,
-                fromValue: currentOrder.toValue,
-                toValue: currentOrder.fromValue,
-              })
-            } else {
-              acc.push(currentOrder)
-            }
-            return acc
-          }, transformedOrders)
+          // response.items.reduce((acc, currentOrder: MarketOrderDto) => {
+          //   if (currentOrder.type === MarketModeEnum.BUY) {
+          //     acc.push({
+          //       ...currentOrder,
+          //       fromAsset: currentOrder.toAsset,
+          //       toAsset: currentOrder.fromAsset,
+          //       fromValue: currentOrder.toValue,
+          //       toValue: currentOrder.fromValue,
+          //     })
+          //   } else {
+          //     acc.push(currentOrder)
+          //   }
+          //   return acc
+          // }, transformedOrders)
+          transformedOrders = response.items
         }
-        return response
         return { ...response, items: transformedOrders }
       }
     }),

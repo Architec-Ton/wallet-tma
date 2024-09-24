@@ -15,7 +15,7 @@ import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import { useClosure } from "hooks/useClosure";
 import { useNavigate } from "react-router-dom";
-import { MarketOrderDto, MarketOrdersDto } from "types/market";
+import { MarketOrderDto, MarketOrdersDto, OrderStatus } from "types/market";
 import { useLazyGetOrdersQuery } from "features/market/marketApi";
 import OrderCardIcon from "components/ui/market/OrderCardIcon";
 
@@ -143,7 +143,11 @@ const MarketOrder = () => {
               )}
                 
               </Column>
-              <button className="small-button rounded-button primary-button" onClick={orderClickHandler(orderData.uuid)}>{textData?.buttonText}</button>
+              <button
+                className="small-button rounded-button primary-button"
+                onClick={orderClickHandler(orderData.uuid)}
+                disabled={orderData.status !== OrderStatus.ACTIVE}
+              >{textData?.buttonText}</button>
             </ListBaseItem>
             <ListBaseItem>
               <Column className="w-full">

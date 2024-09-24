@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Cell } from "@ton/core";
@@ -36,6 +36,7 @@ const ConfirmOrder = () => {
   const { fromAsset, toAsset, mode: orderMode, fromValue, toValue } = useAppSelector(marketSelector);
   const isReady = useAppSelector(selectAuthIsReady);
   const [createOrderApi] = useCreateOrderMutation();
+  const [retryCount, setRetryCount] = useState<number>(0)
 
   useEffect(() => {
     page.setLoading(false);    
@@ -67,6 +68,10 @@ const ConfirmOrder = () => {
     try {
       const order = await createOrderApi(data);
       if (order.error) {
+        if (retryCount < 3) {
+          setRetryCount(r => r + 1)
+          return confirmHandler()
+        }
         throw new Error("Transaction failed")
       }
       if (order.data && order.data.rawTxn) {
