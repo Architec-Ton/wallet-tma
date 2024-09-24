@@ -1,0 +1,37 @@
+.custom-select {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    padding: var(--spacing-8);
+}
+
+.custom-select-trigger {
+    font-size: var(--font-size-base);
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.3s;
+}
+
+.selected-option {
+    white-space: pre-wrap;
+    padding:  0 var(--spacing-12);
+}
+
+.arrow {
+    background: var(--background-color);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: var(--font-size-medium);
+    border-radius: var(--border-radius-8);
+    border-style: solid;
+    border-color: var(--secondary-color);
+    border-width: 1px;
+    margin-left: 10px;
+}

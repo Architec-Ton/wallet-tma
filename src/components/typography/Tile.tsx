@@ -17,8 +17,9 @@ interface OwnProps<T> extends HTMLAttributes<T> {
   style?: CSSProperties;
   className?: string;
   isVerified?: boolean;
-
+  info?: string;
   children?: React.ReactNode;
+  maxHeightIcon?: string;
 }
 
 function Tile({
@@ -30,12 +31,14 @@ function Tile({
   className,
   isVerified,
   children,
+  info,
+  maxHeightIcon,
   ...divProps
 }: OwnProps<HTMLDivElement>) {
   return (
     <Block style={style} direction="row" className={cn("tile", className)} {...divProps}>
       <Row>
-        {icon && <GameIcon icon={icon} framed={!!isVerified} />}
+        {icon && <GameIcon icon={icon} framed={!!isVerified} maxHeightIcon={maxHeightIcon}/>}
         <div className="tile-body">
           <h2 className="tile-header2">
             {title} {isVerified && <VerifiedIcon />}
@@ -44,6 +47,14 @@ function Tile({
           {children}
         </div>
       </Row>
+        { info &&
+            <div style={{
+                justifySelf: "end",
+            }}>
+                {info}
+            </div>
+
+        }
       {iconAction && (
         <img
           src={iconAction}
@@ -57,9 +68,16 @@ function Tile({
   );
 }
 
-const GameIcon = ({ icon, framed }: { icon: string; framed: boolean }) => (
+const GameIcon = ({ icon, framed,maxHeightIcon }: { icon: string; framed: boolean }) => (
   <div className="tile-icon-wrapper" style={{ height: framed ? "var(--thumbnail-height)" : "unset" }}>
-    <img src={icon} alt="" className={cn({ "tile-icon": true, "tile-icon--framed": framed })} />
+    <img
+        src={icon}
+        alt=""
+        className={cn({ "tile-icon": true, "tile-icon--framed": framed })}
+        style={{
+          maxHeight: maxHeightIcon || undefined
+        }}
+    />
 
     {framed && (
       <div className="tile-icon--framed-logo">
