@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import { formatDate } from "date-fns";
 import { showAlert } from "features/alert/alertSlice";
-import { MarketOrderDto, OrderStatus } from "types/market";
+import { type MarketOrderDto, OrderStatus } from "types/market";
 
 import { clockIcon, closeIcon, copyIcon, tickIcon } from "assets/icons/pages/market";
 
@@ -17,6 +17,7 @@ import AssetIcon from "../assets/AssetIcon";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import "./OrderCard.styles.css";
+import InlineLoader from "../inlineLoader";
 
 type OwnPropsType = {
   order: MarketOrderDto;
@@ -31,6 +32,7 @@ export type OrderDataType = MarketOrderDto & {
   isActive: boolean;
   isDone: boolean;
   isCanceled: boolean;
+  isExecuting: boolean;
 };
 
 const ORDER_EXPIRED_TIME = 10 * 60000;
@@ -54,9 +56,11 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
         time: formatDate(new Date(createdAt).toString(), "HH:mm:ss"),
         isActive: order?.status === OrderStatus.ACTIVE,
         isDone: order?.status === OrderStatus.FINISHED,
+        isExecuting: [OrderStatus.EXECUTING, OrderStatus.CANCELING].includes(order?.status),
         isCanceled: [OrderStatus.CANCELED, OrderStatus.EXPIRED].includes(order?.status),
       };
     }
+    return undefined
   }, [order]);
 
   useEffect(() => {
@@ -83,13 +87,12 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
   }, [time]);
 
   const formatTimer = (pattern: string) => {
-    let minutes: number | string = Math.floor(time / 60);
+    const minutes: number | string = Math.floor(time / 60);
     let seconds: number | string = time % 60;
 
-    if (minutes < 10) minutes = minutes;
-    if (seconds < 10) seconds = "0" + seconds;
+    if (seconds < 10) seconds = `0${  seconds}`;
     let timeString =
-      pattern.search("ii") !== -1 ? pattern.replace("ii", "0" + minutes) : pattern.replace("i", minutes.toString());
+      pattern.search("ii") !== -1 ? pattern.replace("ii", `0${  minutes}`) : pattern.replace("i", minutes.toString());
     timeString = timeString.replace("ss", seconds.toString());
 
     return timeString;
@@ -119,7 +122,9 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
           <Row className="order-status-row">
             <div>Order</div>
             <div className="order-id">{`#${order.uuid}`}</div>
-            <img src={copyIcon} alt="" onClick={copyHandler} />
+            <div onClick={copyHandler} role="presentation">
+              <img src={copyIcon} alt="" />
+            </div>
           </Row>
           <div>
             {orderData.isDone && (
@@ -142,6 +147,12 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
               >
                 {(time > 0 && formatTimer("i:ss")) || t("cancel")}
               </button>
+            )}
+            {orderData.isExecuting && (
+              <Row className="order-finally-status">
+                <div>{orderData.status === OrderStatus.EXECUTING && t("executing", "market-order-status") || t("canceling", "market-order-status")}</div>
+                <InlineLoader className="medium-loader" />
+              </Row>
             )}
           </div>
         </Row>

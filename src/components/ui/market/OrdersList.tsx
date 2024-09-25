@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 
-import { MarketOrderDto, OrderStatus } from "types/market";
+import type { MarketOrderDto} from "types/market";
+import { OrderStatus } from "types/market";
 
 import useLanguage from "hooks/useLanguage";
 
@@ -17,7 +18,7 @@ const OrdersList = ({ orders, onOrderCancel }: { orders: MarketOrderDto[]; onOrd
     (uuid: string) => {
       onOrderCancel(uuid);
     },
-    [orders],
+    [onOrderCancel],
   );
 
   if (!orders.length) {

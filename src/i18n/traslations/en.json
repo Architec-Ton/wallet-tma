@@ -265,5 +265,7 @@
   "market-order-type-buy": "Buy Order",
   "market-order-cancel": "Cancel",
   "market-order-status-done": "Done",
-  "market-order-status-canceled": "Canceled"
+  "market-order-status-canceled": "Canceled",
+  "market-order-status-executing": "Executing",
+  "market-order-status-canceling": "Canceling"
 }

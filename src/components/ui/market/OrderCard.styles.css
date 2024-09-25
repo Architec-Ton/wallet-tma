@@ -61,7 +61,7 @@
 }
 
 .order-id {
-  width: 100px;
+  width: 84px;
   overflow: hidden;
   text-overflow: ellipsis;
   text-wrap: nowrap;
@@ -84,4 +84,9 @@
 .order-finally-status .row {
   align-items: start;
   gap: var(--spacing-4);
+}
+
+.inline-loader.medium-loader {
+  width: var(--font-size-medium);
+  height: var(--font-size-medium);
 }

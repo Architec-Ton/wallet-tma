@@ -100,10 +100,6 @@ const ConfirmAction = () => {
             <div>{selectedOrder?.userTotalOrders}</div>
           </ListBaseItem>
           <ListBaseItem className="w-full">
-            <div className="grow">{t("commission", "transaction")}</div>
-            <div>0.02 TON</div>
-          </ListBaseItem>
-          <ListBaseItem className="w-full">
             <div className="grow">{t("gas", "transaction")}</div>
             <div>~ 0.3 TON</div>
           </ListBaseItem>

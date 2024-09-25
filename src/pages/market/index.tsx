@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Address, Cell } from "@ton/core";
@@ -18,9 +18,9 @@ import {
 } from "features/market/marketSlice";
 import { selectIsTma } from "features/tma/tmaSelector";
 import { useApiWalletInfoMutation } from "features/wallet/walletApi";
-import { CoinDto } from "types/assest";
-import { MarketOrderDto, OrderStatus } from "types/market";
-import { WalletInfoData } from "types/wallet";
+import { type CoinDto } from "types/assest";
+import { OrderStatus, type MarketOrderDto } from "types/market";
+import { type WalletInfoData } from "types/wallet";
 
 import { iconButtonArraw } from "assets/icons/buttons";
 import { iconMessageQuestion } from "assets/icons/globals";
@@ -39,7 +39,8 @@ import Page from "components/containers/Page";
 import Row from "components/containers/Row";
 import Section from "components/containers/Section";
 import Block from "components/typography/Block";
-import DropDown, { DropDownDto } from "components/ui/dropdown";
+import DropDown from "components/ui/dropdown";
+import { type DropDownDto } from "components/ui/dropdown";
 import LinkRow from "components/ui/linkRow";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
@@ -114,16 +115,18 @@ const Market = () => {
 
       setOrdersActiveData(myActiveOrders.items);
 
-      if (needHistoryUpdate) {
-        if (trxModal.isOpened) {
+      if (trxModal.isOpened) {
+        setTimeout(() => {
           trxModal.confirm(undefined);
-        }
+        }, 30000)
+      }
+      if (needHistoryUpdate) {
         getMyHistoryOrders("history").then((myOrders) => {
           setOrdersHistoryData(myOrders.data?.items || []);
         });
       }
     }
-  }, [myActiveOrders, isFetching]);
+  }, [myActiveOrders, isFetching, ordersActiveData, trxModal, getMyHistoryOrders]);
 
   useEffect(() => {
     if (isReady) {
@@ -145,20 +148,21 @@ const Market = () => {
                       Address.normalize(asset.meta?.address as string),
                 );
               });
+              const dataAssets = data?.assets.filter(
+                (a) =>
+                  !walletAssets.find((wa) => {
+                    if (a.type === "ton") {
+                      return true;
+                    }
+                    return (
+                      wa.meta?.address &&
+                      Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
+                    );
+                  }),
+              ) || []
               const combinedAssets = [
                 ...walletAssets,
-                ...data?.assets.filter(
-                  (a) =>
-                    !walletAssets.find((wa) => {
-                      if (a.type === "ton") {
-                        return true;
-                      }
-                      return (
-                        wa.meta?.address &&
-                        Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
-                      );
-                    }),
-                ),
+                ...dataAssets,
               ] satisfies CoinDto[];
               dispatch(setWalletAssets(walletAssets));
               dispatch(setAssets(combinedAssets));
@@ -186,24 +190,22 @@ const Market = () => {
     dispatch(clearOrderAssets());
   });
 
-  const dropdownChangeHandler = (d?: DropDownDto) => {
+  const dropdownChangeHandler = useCallback((d?: DropDownDto) => {
     if (!d) {
       setDropdownValue(historyDropDownData[0]);
     } else if (d !== dropdownValue) {
       setDropdownValue(d);
     }
-  };
+  }, [dropdownValue]);
 
-  const getHistoryDropdown = useMemo(() => {
-    return (
-      <DropDown
-        className="right"
-        onChange={dropdownChangeHandler}
-        data={historyDropDownData}
-        defaultValue={dropdownValue}
-      />
-    );
-  }, [dropdownChangeHandler, historyDropDownData, dropdownValue]);
+  const getHistoryDropdown = useMemo(() => (
+    <DropDown
+      className="right"
+      onChange={dropdownChangeHandler}
+      data={historyDropDownData}
+      defaultValue={dropdownValue}
+    />
+  ), [dropdownChangeHandler, dropdownValue]);
 
   const cancelOrderHandler = (uuid: string) => {
     if (isTma) {
@@ -233,7 +235,7 @@ const Market = () => {
         await ton.sender.send({
           value: BigInt(txParams.value),
           to: txParams.to,
-          body: body,
+          body,
         });
         setPollingInterval(POLLING_INTERVAL);
       }
