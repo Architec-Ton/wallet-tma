@@ -13,9 +13,24 @@
   background-color: var(--hint-message-back-background-color);
   padding: var(--spacing-4) var(--spacing-8);
   border-radius: var(--border-radius-8);
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-base);
   animation: fadeInDown 0.5s forwards /*, fadeOutUp 0.5s forwards 2.5s*/;
   z-index: 999999;
+}
+
+.alert.warning {
+  background-color: var(--primary-color);
+  padding: var(--spacing-8);
+  border-radius: var(--border-radius-12);
+  line-height: var(--spacing-20);
+  text-align: left;
+}
+
+.alert.warning::before {
+  content: "⚠️";
+  line-height: var(--spacing-16);
+  margin-right: var(--spacing-4);
+  float: left;
 }
 
 @keyframes fadeInDown {

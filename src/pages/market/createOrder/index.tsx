@@ -101,7 +101,7 @@ const CreateMarketOrder = () => {
     },
     "buy": {
       "sell-asset": t("buy-asset"),
-      "receive-asset": t("receive-asset"),
+      "receive-asset": t("given-asset"),
       "sell-amount": t("purchase-amount"),
       "receive-amount": t("given-amount"),
     }

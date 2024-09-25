@@ -3,7 +3,7 @@ import { Address, internal } from "@ton/core";
 import type { KeyPair } from "@ton/crypto";
 import { mnemonicToPrivateKey } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
-import { showAlert } from "features/alert/alertSlice";
+import { showWarningAlert } from "features/alert/alertSlice";
 import {
   selectAddress,
   selectAddressPrivateKey, // selectAddressPublicKey,
@@ -43,7 +43,7 @@ export const useSender = (): Sender => {
   const tonSend = async (args: SenderArguments, seqno: number | null): Promise<any> => {
     if (expiration != null && new Date(expiration) > new Date()) {
       dispatch(
-        showAlert({
+        showWarningAlert({
           message:
             "The TON network cannot process multiple transactions at the same time. Please wait a bit and try again.",
           duration: 8000,
@@ -66,7 +66,7 @@ export const useSender = (): Sender => {
       keyPair = await mnemonicToPrivateKey(mnemonics);
     } catch (e) {
       console.error(e);
-      dispatch(showAlert({ message: `Pincode wrong. Try again`, duration: 8000 }));
+      dispatch(showWarningAlert({ message: `Pincode wrong. Try again`, duration: 8000 }));
       return;
     }
     const privateKey = keyPair.secretKey;
@@ -84,7 +84,7 @@ export const useSender = (): Sender => {
       try {
         if (!client) {
           dispatch(
-            showAlert({
+            showWarningAlert({
               message:
                 "Transaction failed",
               duration: 8000,
@@ -101,7 +101,7 @@ export const useSender = (): Sender => {
 
           if (seqno === seqno_current) {
             dispatch(
-              showAlert({
+              showWarningAlert({
                 message:
                   "The TON network cannot process multiple transactions at the same time. Please wait a bit and try again.",
                 duration: 8000,
@@ -141,14 +141,14 @@ export const useSender = (): Sender => {
 
             dispatch(setExpiration());
           } catch (e) {
-            if (e instanceof Error) dispatch(showAlert({ message: e.message, duration: 8000 }));
+            if (e instanceof Error) dispatch(showWarningAlert({ message: e.message, duration: 8000 }));
             return;
           }
 
           return transfer;
         }
       } catch (e) {
-        if (e instanceof Error) dispatch(showAlert({ message: `${e.name} ${e.message}`, duration: 8000 }));
+        if (e instanceof Error) dispatch(showWarningAlert({ message: `${e.name} ${e.message}`, duration: 8000 }));
       }
     }
 

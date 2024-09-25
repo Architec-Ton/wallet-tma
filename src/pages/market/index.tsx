@@ -35,7 +35,7 @@ import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import OrdersList from "components/ui/market/OrdersList";
 
 import "./index.css";
-import { showAlert } from "features/alert/alertSlice";
+import { showWarningAlert } from "features/alert/alertSlice";
 import { useTmaPopup } from "hooks/useTmaPopup";
 import LinkRow from "components/ui/linkRow";
 import useTrxModalManagement from "hooks/useTon/useTrxModalManagment";
@@ -219,14 +219,14 @@ const Market = () => {
         const body = Cell.fromBase64(txParams.body);
 
         await ton.sender.send({
-          value: txParams.value,
+          value: BigInt(txParams.value),
           to: txParams.to,
           body: body,
         });
         setPollingInterval(POLLING_INTERVAL);
       }
     } catch (e) {
-      dispatch(showAlert({message: "Transaction was not sent", duration: 3000 }))
+      dispatch(showWarningAlert({message: "Transaction was not sent", duration: 3000 }))
     }
   };
 
