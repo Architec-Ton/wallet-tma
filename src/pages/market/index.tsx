@@ -226,7 +226,7 @@ const Market = () => {
         setPollingInterval(POLLING_INTERVAL);
       }
     } catch (e) {
-      dispatch(showWarningAlert({message: "Transaction was not sent", duration: 3000 }))
+      dispatch(showWarningAlert({message: "Cancel failed. Try again later.", duration: 3000 }))
     }
   };
 
