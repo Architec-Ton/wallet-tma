@@ -2,10 +2,9 @@ import type { CSSProperties, ReactNode } from "react";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { selectIsContinueButtonClicked, selectIsLoading, selectIsNavbarVisible } from "features/page/pageSelectors";
-import { setIsContinueButtonClicked } from "features/page/pageSlice";
+import { selectIsLoading, selectIsNavbarVisible } from "features/page/pageSelectors";
 
-import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import { useAppSelector } from "hooks/useAppDispatch";
 
 import BackButton from "../buttons/BackButton";
 import Loader from "../layout/Loader";
@@ -28,20 +27,16 @@ const backButtonExclude: string[] = ["/", "/playground", "/news", "/account", "/
 
 function Page({ children, style, className, title, titleAccent, hintMessage, pageControl }: Props) {
   const location = useLocation();
-  const dispatch = useAppDispatch();
+
   const [backButtonIsVisible, setBackButtonIsVisible] = useState<boolean>(false);
   const isLoading = useAppSelector(selectIsLoading);
   const isNavbarVisible = useAppSelector(selectIsNavbarVisible);
-  const isContinueButtonClicked = useAppSelector(selectIsContinueButtonClicked);
 
   useEffect(() => {
     setBackButtonIsVisible(!backButtonExclude.includes(location.pathname) && !isLoading);
   }, [location, isLoading]);
 
-  const handleClickButton = (value: boolean) => dispatch(setIsContinueButtonClicked(value));
-
-  if (isLoading || !isContinueButtonClicked)
-    return <Loader isLoading={isLoading} isClicked={isContinueButtonClicked} onClick={handleClickButton} />;
+  if (isLoading) return <Loader />;
 
   return (
     <>
