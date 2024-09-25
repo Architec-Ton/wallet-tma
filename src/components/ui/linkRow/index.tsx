@@ -1,45 +1,46 @@
-import React from "react"
-import { selectIsTma } from "features/tma/tmaSelector"
-import { useAppSelector } from "hooks/useAppDispatch"
-import Row from "components/containers/Row"
-import { useUtils } from "@tma.js/sdk-react"
+import React from "react";
 
+import { useUtils } from "@tma.js/sdk-react";
+import { selectIsTma } from "features/tma/tmaSelector";
 
-const TmaLinkRow = ({ to, children, className }: {
-  to: string,
-  children: React.ReactNode,
-  className?: string
-}) => {
-  const utils = useUtils()
+import { useAppSelector } from "hooks/useAppDispatch";
+
+import Row from "components/containers/Row";
+
+const TmaLinkRow = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
+  const utils = useUtils();
 
   const clickHandler = () => {
-    utils.openTelegramLink(to)
-  }
+    utils.openTelegramLink(to);
+  };
 
   return (
-    <Row className={className} onClick={clickHandler}>{children}</Row>
-  )
-}
+    <Row className={className} onClick={clickHandler}>
+      {children}
+    </Row>
+  );
+};
 
-
-const LinkRow = ({ to, children, className }: {
-  to: string,
-  children: React.ReactNode,
-  className?: string
-}) => {
-  const isTma = useAppSelector(selectIsTma)
+const LinkRow = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
+  const isTma = useAppSelector(selectIsTma);
 
   if (isTma) {
-    return <TmaLinkRow to={to} className={className}>{children}</TmaLinkRow>
+    return (
+      <TmaLinkRow to={to} className={className}>
+        {children}
+      </TmaLinkRow>
+    );
   }
 
   const clickHandler = () => {
-    window.open(to, "__blank")
-  }
+    window.open(to, "__blank");
+  };
 
   return (
-    <Row className={className} onClick={clickHandler}>{children}</Row>
-  )
-}
+    <Row className={className} onClick={clickHandler}>
+      {children}
+    </Row>
+  );
+};
 
-export default LinkRow
+export default LinkRow;

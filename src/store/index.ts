@@ -1,5 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import { marketApi } from "features/market/marketApi";
+import marketSlice from "features/market/marketSlice";
+import popupSlice from "features/tma/popupSlice";
+
 import alertReducer from "../features/alert/alertSlice";
 import { authApi } from "../features/auth/authApi";
 import authSlice from "../features/auth/authSlice";
@@ -18,9 +22,6 @@ import tmaReducer from "../features/tma/tmaSlice";
 import tonReducer from "../features/ton/tonSlice";
 import { walletApi } from "../features/wallet/walletApi";
 import walletSlice from "../features/wallet/walletSlice";
-import marketSlice from "features/market/marketSlice";
-import { marketApi } from "features/market/marketApi";
-import popupSlice from "features/tma/popupSlice";
 
 export const store = configureStore({
   reducer: {

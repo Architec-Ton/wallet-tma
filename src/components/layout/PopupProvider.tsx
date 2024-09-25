@@ -1,21 +1,23 @@
-import Popup from "components/popup";
-import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
-import { useAppSelector } from "hooks/useAppDispatch";
-import { PopupEventListenerType, TmaPopupStateContext } from "hooks/useTmaPopup";
 import React, { useMemo, useState } from "react";
 
+import { selectIsTma, selectIsTmaLoading } from "features/tma/tmaSelector";
 
-export type PopupOnCloseDataType = {event: "popup_closed", listener: (buttonId: string | null) => void}
+import { useAppSelector } from "hooks/useAppDispatch";
+import { PopupEventListenerType, TmaPopupStateContext } from "hooks/useTmaPopup";
 
-const PopupProvider = ({ children }: {
-  children: React.ReactNode
-}) => {
+import Popup from "components/popup";
+
+export type PopupOnCloseDataType = { event: "popup_closed"; listener: (buttonId: string | null) => void };
+
+const PopupProvider = ({ children }: { children: React.ReactNode }) => {
   const isTmaLoading = useAppSelector(selectIsTmaLoading);
-  const [popupConfig, setPopupConfig] = useState<PopupOnCloseDataType>({} as PopupOnCloseDataType)
+  const [popupConfig, setPopupConfig] = useState<PopupOnCloseDataType>({} as PopupOnCloseDataType);
 
-  const popupContextValue = useMemo(() => ({ setPopupEventListener: setPopupConfig as PopupEventListenerType }), [setPopupConfig])
+  const popupContextValue = useMemo(
+    () => ({ setPopupEventListener: setPopupConfig as PopupEventListenerType }),
+    [setPopupConfig],
+  );
 
-  
   if (isTmaLoading) return null;
 
   return (
@@ -23,7 +25,7 @@ const PopupProvider = ({ children }: {
       {children}
       <Popup config={popupConfig} />
     </TmaPopupStateContext.Provider>
-  )
-}
+  );
+};
 
-export default PopupProvider
+export default PopupProvider;

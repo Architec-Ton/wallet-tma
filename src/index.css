@@ -13,7 +13,7 @@
   --selected-color: #6acdff;
   --text-color: light-dark(#232328, #f7f9fb);
   --hint-message-back-background-color: var(--secondary-color);
-  --alert-background-color: #2D2D2E;
+  --alert-background-color: #2d2d2e;
   --alert-warning-background-color: var(--primary-color);
 
   /* Цвета для текста */
@@ -53,7 +53,7 @@
   --border-color: var(--primary-color);
   --border-color-light: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
   --background-transparent-color: light-dark(rgba(0, 0, 0, 0.64), rgba(255, 255, 255, 0.05));
-  --background-secondary-color-alpha: light-dark(rgba(0,0,0,.04), rgba(255,255,255,.04));
+  --background-secondary-color-alpha: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.04));
 
   /* Отступы и поля */
   --spacing-2: 0.125rem;

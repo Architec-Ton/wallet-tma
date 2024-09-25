@@ -1,45 +1,49 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import ListBlock from "../listBlock";
-import ListBaseItem from "../listBlock/ListBaseItem";
+
+import classNames from "classnames";
+import { formatDate } from "date-fns";
+import { showAlert } from "features/alert/alertSlice";
+import { MarketOrderDto, OrderStatus } from "types/market";
+
+import { clockIcon, closeIcon, copyIcon, tickIcon } from "assets/icons/pages/market";
+
+import { useAppDispatch } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+
 import Column from "components/containers/Column";
 import Row from "components/containers/Row";
-import { MarketOrderDto, OrderStatus } from "types/market";
-import { formatDate } from "date-fns";
 
-import "./OrderCard.styles.css"
-import useLanguage from "hooks/useLanguage";
-import { clockIcon, closeIcon, copyIcon, tickIcon } from "assets/icons/pages/market";
-import classNames from "classnames";
 import AssetIcon from "../assets/AssetIcon";
-import { showAlert } from "features/alert/alertSlice";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import ListBlock from "../listBlock";
+import ListBaseItem from "../listBlock/ListBaseItem";
+import "./OrderCard.styles.css";
 
 type OwnPropsType = {
-  order: MarketOrderDto
-  isActive?: boolean
-  disabled?: boolean
-  onCancel: (uuid: string) => void
-}
+  order: MarketOrderDto;
+  isActive?: boolean;
+  disabled?: boolean;
+  onCancel: (uuid: string) => void;
+};
 
 export type OrderDataType = MarketOrderDto & {
-  date: string,
-  time: string,
-  isActive: boolean,
-  isDone: boolean,
-  isCanceled: boolean
-}
+  date: string;
+  time: string;
+  isActive: boolean;
+  isDone: boolean;
+  isCanceled: boolean;
+};
 
-const ORDER_EXPIRED_TIME = 10 * 60000
+const ORDER_EXPIRED_TIME = 10 * 60000;
 
 const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPropsType) => {
-  const t = useLanguage("market-order")
-  const dispatch = useAppDispatch()
-  const timer = useRef<NodeJS.Timeout>()
-  const [time, setTime] = useState<number>(0) 
+  const t = useLanguage("market-order");
+  const dispatch = useAppDispatch();
+  const timer = useRef<NodeJS.Timeout>();
+  const [time, setTime] = useState<number>(0);
 
   const orderData = useMemo<OrderDataType | undefined>(() => {
     if (order) {
-      const { createdAt } = order
+      const { createdAt } = order;
       return {
         ...order,
         fromAsset: order.isOwner ? order.fromAsset : order.toAsset,
@@ -51,60 +55,65 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
         isActive: order?.status === OrderStatus.ACTIVE,
         isDone: order?.status === OrderStatus.FINISHED,
         isCanceled: [OrderStatus.CANCELED, OrderStatus.EXPIRED].includes(order?.status),
-      }
+      };
     }
-  }, [order])
+  }, [order]);
 
   useEffect(() => {
     if (orderData) {
-      const timeDelta = Date.now() - (new Date(orderData.createdAt).valueOf())
-      const remainingTime = Math.floor((ORDER_EXPIRED_TIME - timeDelta) / 1000)
+      const timeDelta = Date.now() - new Date(orderData.createdAt).valueOf();
+      const remainingTime = Math.floor((ORDER_EXPIRED_TIME - timeDelta) / 1000);
       if (remainingTime > 0) {
-        setTime(remainingTime)
+        setTime(remainingTime);
       }
     }
-  }, [orderData])
+  }, [orderData]);
 
   useEffect(() => {
     if (time > 0) {
       timer.current = setTimeout(() => {
-        setTime(t => t - 1)
-      }, 1000)
+        setTime((t) => t - 1);
+      }, 1000);
       return () => {
-        clearTimeout(timer.current)
-      }
+        clearTimeout(timer.current);
+      };
     } else {
-      clearTimeout(timer.current)
+      clearTimeout(timer.current);
     }
-  }, [time])
+  }, [time]);
 
   const formatTimer = (pattern: string) => {
-    let minutes: number | string  = Math.floor(time / 60)
-    let seconds: number | string  = time % 60
+    let minutes: number | string = Math.floor(time / 60);
+    let seconds: number | string = time % 60;
 
-    if (minutes < 10) minutes = minutes
-    if (seconds < 10) seconds = '0' + seconds
-    let timeString = pattern.search("ii") !== -1 ? pattern.replace("ii", "0" + minutes) : pattern.replace("i", minutes.toString())
-    timeString = timeString.replace("ss", seconds.toString())
+    if (minutes < 10) minutes = minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+    let timeString =
+      pattern.search("ii") !== -1 ? pattern.replace("ii", "0" + minutes) : pattern.replace("i", minutes.toString());
+    timeString = timeString.replace("ss", seconds.toString());
 
-    return timeString
-  }
+    return timeString;
+  };
 
   const copyHandler = () => {
     navigator.clipboard
-    .writeText(order.uuid)
-    .then(() => {
-      dispatch(showAlert({ message: "copy", duration: 1500 }));
-    })
-    .catch((err) => console.error("Failed to copy text: ", err));
-  }
+      .writeText(order.uuid)
+      .then(() => {
+        dispatch(showAlert({ message: "copy", duration: 1500 }));
+      })
+      .catch((err) => console.error("Failed to copy text: ", err));
+  };
 
   if (!orderData) {
-    return null
+    return null;
   }
 
   return (
-    <ListBlock className={classNames("market-order-card", {"own-order": orderData.isOwner && (orderData.isDone || orderData.isCanceled)})}>
+    <ListBlock
+      className={classNames("market-order-card", {
+        "own-order": orderData.isOwner && (orderData.isDone || orderData.isCanceled),
+      })}
+    >
       <ListBaseItem>
         <Row className="justify-between grow">
           <Row className="order-status-row">
@@ -131,7 +140,7 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
                 onClick={() => onCancel(orderData.uuid)}
                 disabled={disabled || time > 0}
               >
-                {time > 0 && formatTimer("i:ss") || t("cancel")}
+                {(time > 0 && formatTimer("i:ss")) || t("cancel")}
               </button>
             )}
           </div>
@@ -142,17 +151,17 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
           <Row>
             <AssetIcon asset={orderData.toAsset} className="history-asset-icon" />
             <div className="grow asset-value">
-              + {orderData.toValue} 
+              + {orderData.toValue}
               <span className="asset-symbol">{orderData.toAsset.meta?.symbol}</span>
             </div>
           </Row>
           <Row>
             <AssetIcon asset={orderData.fromAsset} className="history-asset-icon" />
             <div className="grow asset-value">
-              - {orderData.fromValue} 
+              - {orderData.fromValue}
               <span className="asset-symbol">{orderData.fromAsset.meta?.symbol}</span>
             </div>
-          </Row>         
+          </Row>
         </Column>
       </ListBaseItem>
       <ListBaseItem>
@@ -179,17 +188,19 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
           )}
         </Column>
       </ListBaseItem>
-      {time > 0 && <ListBaseItem>
-        <Row className="order-data-row w-full">
-          <Row className="w-auto">
-            <div>{t("labels-unlock")}</div>
-            <img src={clockIcon} alt="" />
+      {time > 0 && (
+        <ListBaseItem>
+          <Row className="order-data-row w-full">
+            <Row className="w-auto">
+              <div>{t("labels-unlock")}</div>
+              <img src={clockIcon} alt="" />
+            </Row>
+            <div>{formatTimer("i m ss s")}</div>
           </Row>
-          <div>{formatTimer("i m ss s")}</div>
-        </Row>
-      </ListBaseItem>}
+        </ListBaseItem>
+      )}
     </ListBlock>
-  )
-}
+  );
+};
 
-export default MarketOrderCard
+export default MarketOrderCard;

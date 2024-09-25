@@ -32,7 +32,7 @@
 }
 
 .market-order-card.own-order {
-  background-color: light-dark(#E2F3FC, #173746);
+  background-color: light-dark(#e2f3fc, #173746);
 }
 
 .order-type-info {
@@ -57,7 +57,7 @@
 }
 
 .order-type-info img {
-  filter: invert(43%) sepia(99%) saturate(1481%) hue-rotate(175deg) brightness(108%) contrast(97%);;
+  filter: invert(43%) sepia(99%) saturate(1481%) hue-rotate(175deg) brightness(108%) contrast(97%);
 }
 
 .order-id {

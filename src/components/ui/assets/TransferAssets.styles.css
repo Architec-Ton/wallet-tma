@@ -14,5 +14,5 @@ input.transfer-input {
 }
 
 .asset-price {
-  color: var(--text-secondary-color)
+  color: var(--text-secondary-color);
 }

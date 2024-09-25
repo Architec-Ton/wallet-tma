@@ -6,6 +6,8 @@ import { RouterProvider } from "react-router-dom";
 import { SDKProvider } from "@tma.js/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
+import PopupProvider from "components/layout/PopupProvider";
+
 import "./App.css";
 import router from "./Routes";
 import Layout from "./components/layout/Layout";
@@ -15,7 +17,6 @@ import AlertContainer from "./components/ui/alert/AlertContainer";
 import { FE_URL, GA_ID, MANIFEST_URL } from "./constants";
 import "./i18n";
 import { store } from "./store";
-import PopupProvider from "components/layout/PopupProvider";
 
 if (GA_ID) ReactGA.initialize(GA_ID);
 

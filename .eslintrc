@@ -24,7 +24,7 @@
     "import/extensions": [".js", ".ts", ".jsx", ".tsx"],
   },
 
-  "plugins": ["unused-imports", "react-refresh"],
+  "plugins": ["unused-imports", "react-refresh", "@typescript-eslint"],
 
   "rules": {
     "unused-imports/no-unused-imports": "warn",

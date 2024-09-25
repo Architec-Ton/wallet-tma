@@ -1,9 +1,13 @@
 import { createContext, useContext, useEffect } from "react";
-import { useAppDispatch } from "./useAppDispatch";
+
 import { MiniAppsEventListener, MiniAppsEventName, OpenPopupOptions } from "@tma.js/sdk-react";
 import { setPopupInitData, setPopupIsVisible } from "features/tma/popupSlice";
 
-export type PopupEventListenerType = <T extends MiniAppsEventName>(config?: {listener: MiniAppsEventListener<T>}) => void
+import { useAppDispatch } from "./useAppDispatch";
+
+export type PopupEventListenerType = <T extends MiniAppsEventName>(config?: {
+  listener: MiniAppsEventListener<T>;
+}) => void;
 
 export const TmaPopupStateContext = createContext<{
   setPopupEventListener: PopupEventListenerType;
@@ -27,7 +31,7 @@ export function useTmaPopup() {
 
   return {
     init: (initData: OpenPopupOptions, closeHandler: (args: any) => void, visible: boolean = true) => {
-      setPopupEventListener({listener: closeHandler});
+      setPopupEventListener({ listener: closeHandler });
       dispatch(setPopupInitData(initData));
       dispatch(setPopupIsVisible(visible));
     },

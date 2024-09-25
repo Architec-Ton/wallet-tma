@@ -1,6 +1,12 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
+import Market from "pages/market";
+import ConfirmAction from "pages/market/confirmAction";
+import ConfirmOrder from "pages/market/confirmOrder";
+import CreateMarketOrder from "pages/market/createOrder";
+import MarketOrder from "pages/market/order";
+
 import BankStakingHistory from "./components/ui/bank/BankStakingHistory";
 import AccountDisconnect from "./pages/AccountDisconnect";
 import Main from "./pages/Main";
@@ -37,11 +43,6 @@ import Welcome from "./pages/registration/Welcome";
 // import SelectAmount from './pages/send/SelectAmount.tsx';
 import SendPage from "./pages/send/send";
 import Swap from "./pages/swap";
-import Market from "pages/market";
-import CreateMarketOrder from "pages/market/createOrder";
-import ConfirmOrder from "pages/market/confirmOrder";
-import ConfirmAction from "pages/market/confirmAction";
-import MarketOrder from "pages/market/order";
 
 const router = createBrowserRouter(
   [

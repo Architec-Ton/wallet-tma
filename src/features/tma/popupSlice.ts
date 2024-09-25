@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { OpenPopupOptions } from "@tma.js/sdk-react";
 
 interface PopupState {
@@ -7,26 +8,26 @@ interface PopupState {
 }
 
 const initialState: PopupState = {
-  isVisible: false
-}
+  isVisible: false,
+};
 
 const popupSlice = createSlice({
   name: "popup",
   initialState,
   reducers: {
     setPopupIsVisible: (state: PopupState, action: PayloadAction<boolean>) => {
-      state.isVisible = action.payload
+      state.isVisible = action.payload;
     },
     setPopupInitData: (state: PopupState, action: PayloadAction<OpenPopupOptions>) => {
-      state.initData = action.payload
+      state.initData = action.payload;
     },
     resetPopupState: (state: PopupState) => {
-      state.isVisible = false
-      state.initData = undefined
-    }
-  }
-})
+      state.isVisible = false;
+      state.initData = undefined;
+    },
+  },
+});
 
-export const { setPopupIsVisible, setPopupInitData, resetPopupState } = popupSlice.actions
+export const { setPopupIsVisible, setPopupInitData, resetPopupState } = popupSlice.actions;
 
-export default popupSlice.reducer
+export default popupSlice.reducer;

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Cell } from "@ton/core";
 import classNames from "classnames";
+import { showAlert } from "features/alert/alertSlice";
+import { selectAuthIsReady } from "features/auth/authSelector";
 import { useCreateOrderMutation } from "features/market/marketApi";
 import { marketSelector } from "features/market/marketSelectors";
 import { MarketModeEnum } from "features/market/marketSlice";
@@ -13,6 +15,7 @@ import useLanguage from "hooks/useLanguage";
 import { usePage } from "hooks/usePage";
 import { useTmaMainButton } from "hooks/useTma";
 import { useTon } from "hooks/useTon";
+import { useTonClient } from "hooks/useTonClient";
 
 import Page from "components/containers/Page";
 import Row from "components/containers/Row";
@@ -21,9 +24,6 @@ import Block from "components/typography/Block";
 import AssetIcon from "components/ui/assets/AssetIcon";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
-import { showAlert } from "features/alert/alertSlice";
-import { selectAuthIsReady } from "features/auth/authSelector";
-import { useTonClient } from "hooks/useTonClient";
 
 const ConfirmOrder = () => {
   const t = useLanguage("market-order-confirm");
@@ -32,31 +32,27 @@ const ConfirmOrder = () => {
   const page = usePage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { client } = useTonClient()
+  const { client } = useTonClient();
   const { fromAsset, toAsset, mode: orderMode, fromValue, toValue } = useAppSelector(marketSelector);
   const isReady = useAppSelector(selectAuthIsReady);
   const [createOrderApi] = useCreateOrderMutation();
-  const [retryCount, setRetryCount] = useState<number>(0)
+  const [retryCount, setRetryCount] = useState<number>(0);
 
   useEffect(() => {
-    page.setLoading(false);    
+    page.setLoading(false);
   }, []);
 
   useEffect(() => {
     if (isReady) {
-      btn.init(
-        "Confirm",
-        confirmHandler,
-        true,
-      );
+      btn.init("Confirm", confirmHandler, true);
     }
   }, [isReady, client]);
 
   const confirmHandler = async (): Promise<any> => {
-    const _fromAsset = orderMode === MarketModeEnum.BUY ? toAsset : fromAsset
-    const _toAsset = orderMode === MarketModeEnum.BUY ? fromAsset : toAsset
-    const _fromValue = orderMode === MarketModeEnum.BUY ? toValue : fromValue
-    const _toValue = orderMode === MarketModeEnum.BUY ? fromValue : toValue
+    const _fromAsset = orderMode === MarketModeEnum.BUY ? toAsset : fromAsset;
+    const _toAsset = orderMode === MarketModeEnum.BUY ? fromAsset : toAsset;
+    const _fromValue = orderMode === MarketModeEnum.BUY ? toValue : fromValue;
+    const _toValue = orderMode === MarketModeEnum.BUY ? fromValue : toValue;
     const data = {
       type: orderMode,
       fromAsset: { type: _fromAsset?.type as string, address: _fromAsset?.meta?.address as string },
@@ -64,15 +60,15 @@ const ConfirmOrder = () => {
       fromValue: Number(_fromValue),
       toValue: Number(_toValue),
     };
-    
+
     try {
       const order = await createOrderApi(data);
       if (order.error) {
         if (retryCount < 3) {
-          setRetryCount(r => r + 1)
-          return confirmHandler()
+          setRetryCount((r) => r + 1);
+          return confirmHandler();
         }
-        throw new Error("Transaction failed")
+        throw new Error("Transaction failed");
       }
       if (order.data && order.data.rawTxn) {
         const { rawTxn } = order.data;
@@ -88,9 +84,9 @@ const ConfirmOrder = () => {
 
       navigate("/market", { replace: true });
     } catch (e) {
-      dispatch(showAlert({message: "Transaction failed", duration: 3000 }))
+      dispatch(showAlert({ message: "Transaction failed", duration: 3000 }));
     }
-  }
+  };
 
   const textContents =
     orderMode === MarketModeEnum.BUY

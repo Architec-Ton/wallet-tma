@@ -1,76 +1,84 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { Cell } from "@ton/core";
+import { showAlert } from "features/alert/alertSlice";
+import { useLazyExecuteOrderQuery } from "features/market/marketApi";
+import { marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
+import { MarketModeEnum } from "features/market/marketSlice";
+import { CoinDto } from "types/assest";
+import { MarketOrderDto } from "types/market";
+
+import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
+import useLanguage from "hooks/useLanguage";
+import { useTmaMainButton } from "hooks/useTma";
+import { useTon } from "hooks/useTon";
+import { useTonClient } from "hooks/useTonClient";
+
 import Page from "components/containers/Page";
 import Row from "components/containers/Row";
 import Section from "components/containers/Section";
+import AssetIcon from "components/ui/assets/AssetIcon";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
-import useLanguage from "hooks/useLanguage";
-import { marketOrdersSelector, marketSelector } from "features/market/marketSelectors";
-import { MarketModeEnum } from "features/market/marketSlice";
-import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
-import { useNavigate, useParams } from "react-router-dom";
-import { MarketOrderDto } from "types/market";
-import { useTmaMainButton } from "hooks/useTma";
-import { CoinDto } from "types/assest";
-import AssetIcon from "components/ui/assets/AssetIcon";
-import { useLazyExecuteOrderQuery } from "features/market/marketApi";
-import { useTon } from "hooks/useTon";
-import { Cell } from "@ton/core";
-import { showAlert } from "features/alert/alertSlice";
-import { useTonClient } from "hooks/useTonClient";
 
 const ConfirmAction = () => {
-  const t = useLanguage("market-order")
-  const btn = useTmaMainButton()
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const ton = useTon()
-  const { client } = useTonClient()
-  const { id } = useParams()
-  const { mode } = useAppSelector(marketSelector)
-  const orders = useAppSelector(marketOrdersSelector)
-  const [executeOrder] = useLazyExecuteOrderQuery()
+  const t = useLanguage("market-order");
+  const btn = useTmaMainButton();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const ton = useTon();
+  const { client } = useTonClient();
+  const { id } = useParams();
+  const { mode } = useAppSelector(marketSelector);
+  const orders = useAppSelector(marketOrdersSelector);
+  const [executeOrder] = useLazyExecuteOrderQuery();
 
-  const [selectedOrder, setSelectedOrder] = useState<MarketOrderDto | undefined>()
-  const [textData, setTextData] = useState<{youSell: string, sellerInfo: string, youReceive: string} | undefined>()
-
-  useEffect(() => {
-    if (selectedOrder) {
-      btn.init(t("confirm", "button"), sendTransaction, true)
-    }
-  }, [selectedOrder, client])
-
-  useEffect(() => {
-    const order = orders?.find(o => o.uuid === id)
-    setSelectedOrder(order)
-  }, [id, mode])
+  const [selectedOrder, setSelectedOrder] = useState<MarketOrderDto | undefined>();
+  const [textData, setTextData] = useState<{ youSell: string; sellerInfo: string; youReceive: string } | undefined>();
 
   useEffect(() => {
     if (selectedOrder) {
-      const textData = mode === MarketModeEnum.BUY
-      ? {youSell: t("confirm-you-buy"), youReceive: t("confirm-you-pay"), sellerInfo: t("confirm-seller-info")}
-      : {youSell: t("confirm-you-sell"), youReceive: t("confirm-you-receive"), sellerInfo: t("confirm-buyer-info")}
-      setTextData(textData)
+      btn.init(t("confirm", "button"), sendTransaction, true);
     }
-  }, [selectedOrder])
+  }, [selectedOrder, client]);
 
-  const sendTransaction = async () => {    
+  useEffect(() => {
+    const order = orders?.find((o) => o.uuid === id);
+    setSelectedOrder(order);
+  }, [id, mode]);
+
+  useEffect(() => {
+    if (selectedOrder) {
+      const textData =
+        mode === MarketModeEnum.BUY
+          ? { youSell: t("confirm-you-buy"), youReceive: t("confirm-you-pay"), sellerInfo: t("confirm-seller-info") }
+          : {
+              youSell: t("confirm-you-sell"),
+              youReceive: t("confirm-you-receive"),
+              sellerInfo: t("confirm-buyer-info"),
+            };
+      setTextData(textData);
+    }
+  }, [selectedOrder]);
+
+  const sendTransaction = async () => {
     try {
-      const response = await executeOrder({uuid: selectedOrder?.uuid as string})
+      const response = await executeOrder({ uuid: selectedOrder?.uuid as string });
       if (response.data) {
-        const txParams = response.data
-        const body = Cell.fromBase64(txParams.body)
+        const txParams = response.data;
+        const body = Cell.fromBase64(txParams.body);
         await ton.sender.send({
           to: txParams.to,
           value: BigInt(txParams.value),
-          body
-        })
-        navigate("/market", {replace: true})
+          body,
+        });
+        navigate("/market", { replace: true });
       }
     } catch (error) {
-      dispatch(showAlert({message: "Transaction faild", duration: 3000 }))
+      dispatch(showAlert({ message: "Transaction faild", duration: 3000 }));
     }
-  }
+  };
 
   return (
     <Page>
@@ -109,7 +117,7 @@ const ConfirmAction = () => {
         </Row>
       </Section>
     </Page>
-  )
-}
+  );
+};
 
-export default ConfirmAction
+export default ConfirmAction;

@@ -1,7 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { CoinDto } from "types/assest";
-import { CreateOrderDto, CreateOrderRequestQuery, MarketOrderDto, MarketOrdersDto, OrderStatus, OrderTxParams } from "types/market";
+import {
+  CreateOrderDto,
+  CreateOrderRequestQuery,
+  MarketOrderDto,
+  MarketOrdersDto,
+  OrderStatus,
+  OrderTxParams,
+} from "types/market";
 
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
@@ -26,7 +33,7 @@ export const marketApi = createApi({
         // params: { order_type: mode },
       }),
       transformResponse: (response: MarketOrdersDto, meta, mode) => {
-        let transformedOrders: MarketOrderDto[] = []
+        let transformedOrders: MarketOrderDto[] = [];
         if (mode === MarketModeEnum.SELL) {
           response.items.reduce((acc, currentOrder: MarketOrderDto) => {
             acc.push({
@@ -35,9 +42,9 @@ export const marketApi = createApi({
               toAsset: currentOrder.fromAsset,
               fromValue: currentOrder.toValue,
               toValue: currentOrder.fromValue,
-            })
-            return acc
-          }, transformedOrders)
+            });
+            return acc;
+          }, transformedOrders);
         } else {
           // response.items.reduce((acc, currentOrder: MarketOrderDto) => {
           //   if (currentOrder.type === MarketModeEnum.BUY) {
@@ -53,10 +60,10 @@ export const marketApi = createApi({
           //   }
           //   return acc
           // }, transformedOrders)
-          transformedOrders = response.items
+          transformedOrders = response.items;
         }
-        return { ...response, items: transformedOrders }
-      }
+        return { ...response, items: transformedOrders };
+      },
     }),
     getAssets: builder.query<{ assets: CoinDto[]; nft: any }, undefined>({
       query: () => ({
@@ -64,9 +71,9 @@ export const marketApi = createApi({
       }),
     }),
     getOrdersHistory: builder.query<MarketOrdersDto, "active" | "history">({
-      query: (status=OrderStatus.ACTIVE) => ({
+      query: (status = OrderStatus.ACTIVE) => ({
         url: `orders`,
-        params: {status},
+        params: { status },
       }),
     }),
     createOrder: builder.mutation<CreateOrderDto, CreateOrderRequestQuery>({

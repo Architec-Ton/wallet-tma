@@ -1,7 +1,8 @@
 import React from "react";
 
-import "./Alert.css";
 import classNames from "classnames";
+
+import "./Alert.css";
 
 interface AlertProps {
   text: string;
@@ -9,12 +10,11 @@ interface AlertProps {
   isWarning: boolean;
 }
 
-const Alert: React.FC<AlertProps> = ({ text, isVisible, isWarning }) => (
-    isVisible && (
-      <div className="alert-container">
-        <div className={classNames("alert", {"warning": isWarning})}>{text}</div>
-      </div>
-    )
+const Alert: React.FC<AlertProps> = ({ text, isVisible, isWarning }) =>
+  isVisible && (
+    <div className="alert-container">
+      <div className={classNames("alert", { warning: isWarning })}>{text}</div>
+    </div>
   );
 
 export default Alert;

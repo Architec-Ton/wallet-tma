@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import SelectButton from "../buttons/selectButton";
+
+import classNames from "classnames";
+
 import Block from "components/typography/Block";
 
-import "./index.css"
-import classNames from "classnames";
+import SelectButton from "../buttons/selectButton";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
+import "./index.css";
 
 export interface DropDownDto {
   key: string;
@@ -13,45 +15,45 @@ export interface DropDownDto {
 }
 
 export type DropDownPropsType = {
-  defaultValue?: DropDownDto
-  data: DropDownDto[]
-  placeHodler?: string
-  onChange: (v: DropDownDto | undefined) => void
-  className?: string
-}
+  defaultValue?: DropDownDto;
+  data: DropDownDto[];
+  placeHodler?: string;
+  onChange: (v: DropDownDto | undefined) => void;
+  className?: string;
+};
 
 const DropDown = ({ data, defaultValue, placeHodler, className, onChange }: DropDownPropsType) => {
-  const [showList, setShowList] = useState<boolean>(false)
+  const [showList, setShowList] = useState<boolean>(false);
 
   const clickHandler = (value: string) => {
-    const dataItem: DropDownDto | undefined = data.find(dropDown => dropDown.key === value)
-    openHandler()
-    onChange(dataItem)
-  }
+    const dataItem: DropDownDto | undefined = data.find((dropDown) => dropDown.key === value);
+    openHandler();
+    onChange(dataItem);
+  };
 
   const openHandler = () => {
-    setShowList(!showList)
-  }
+    setShowList(!showList);
+  };
   return (
     <div className="dropdown">
       <SelectButton onClick={openHandler}>{defaultValue?.value || placeHodler || "Select"}</SelectButton>
-      { showList && (
+      {showList && (
         <ListBlock className={classNames("dropdown-list", className)}>
-          {data.map(dropDownItem => {
+          {data.map((dropDownItem) => {
             return (
               <ListBaseItem
                 key={dropDownItem.key}
-                className={defaultValue && defaultValue.key === dropDownItem.key ? "checked": ""}
+                className={defaultValue && defaultValue.key === dropDownItem.key ? "checked" : ""}
                 onClick={() => clickHandler(dropDownItem.key)}
               >
                 {dropDownItem.value}
               </ListBaseItem>
-            )
+            );
           })}
         </ListBlock>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default DropDown
+export default DropDown;

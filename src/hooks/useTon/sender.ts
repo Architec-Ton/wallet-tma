@@ -85,8 +85,7 @@ export const useSender = (): Sender => {
         if (!client) {
           dispatch(
             showWarningAlert({
-              message:
-                "Transaction failed",
+              message: "Transaction failed",
               duration: 8000,
             }),
           );

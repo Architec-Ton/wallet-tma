@@ -9,7 +9,7 @@
 .market-order-form .tabs-block {
   width: 124px;
   padding: var(--spacing-4);
-  background-color: rgba(0,0,0, .12);
+  background-color: rgba(0, 0, 0, 0.12);
   align-items: stretch;
 }
 

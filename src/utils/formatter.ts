@@ -30,4 +30,4 @@ export const usdPriceFormatter = (price: number) => {
   })
     .format(price)
     .replace(/\s/g, " ")}`;
-}
+};

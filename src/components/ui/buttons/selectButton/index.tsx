@@ -1,8 +1,10 @@
 import React from "react";
 
-import "./index.css"
 import classNames from "classnames";
+
 import { iconArrowDropdownButton } from "assets/icons/buttons";
+
+import "./index.css";
 
 interface SelectButtonPropsInterface {
   children: React.ReactNode;
@@ -10,13 +12,13 @@ interface SelectButtonPropsInterface {
   className?: string;
 }
 
-const SelectButton = ({onClick, children, className}: SelectButtonPropsInterface) => {
+const SelectButton = ({ onClick, children, className }: SelectButtonPropsInterface) => {
   return (
     <button onClick={onClick} className={classNames("select-button", className)}>
       {children}
       <img src={iconArrowDropdownButton} alt="" />
     </button>
-  )
-}
+  );
+};
 
-export default SelectButton
+export default SelectButton;

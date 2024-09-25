@@ -1,4 +1,5 @@
 import iconReverseButton from "./Icon-reverse.svg";
+import iconArrowDropdownButton from "./arrow-dropdown.svg";
 import iconBankButton from "./bank.svg";
 import iconCloseButton from "./close-square.svg";
 import iconCoinButton from "./coin.svg";
@@ -21,7 +22,6 @@ import iconSettingsButton from "./setting-2.svg";
 import iconSortButton from "./sort.svg";
 import iconStakeButton from "./stake.svg";
 import iconTasksButton from "./tasks.svg";
-import iconArrowDropdownButton from "./arrow-dropdown.svg";
 
 export {
   logOutIcon,

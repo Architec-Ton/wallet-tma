@@ -4,12 +4,13 @@ import { formatDate } from "date-fns";
 
 import useLanguage from "hooks/useLanguage";
 
+import DataLossBlock from "components/typography/DataLossBlock";
+
 import Section from "../../containers/Section";
 import Block from "../../typography/Block";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import "./BankStakingHistorySection.styles.css";
-import DataLossBlock from "components/typography/DataLossBlock";
 
 export type StakeHistoryType = {
   date: string;

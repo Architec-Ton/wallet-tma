@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { Address, toNano } from "@ton/core";
 import { selectAuthIsReady } from "features/auth/authSelector";
+import { AssetKind, useLazyGetStonFiAssetQuery } from "features/stonfi/stonFiApi";
 import { useApiWalletAssetsMutation } from "features/wallet/walletApi";
 import type { CoinDto } from "types/assest";
 
@@ -25,7 +26,7 @@ import { shortenString } from "components/ui/balance/Address";
 import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import AssetsList from "components/ui/send/assets";
-import { AssetKind, useLazyGetStonFiAssetQuery } from "features/stonfi/stonFiApi";
+
 import { TON_JETTON } from "../../constants";
 
 interface ItemInfo {
@@ -52,7 +53,7 @@ const SendPage = () => {
   const ton = useTon();
   const contracts = useContracts();
   const [confirmInfo, setConfirmInfo] = useState<ItemInfo[]>([]);
-  const [assetPrice, setAssetPrice] = useState<string>()
+  const [assetPrice, setAssetPrice] = useState<string>();
   const { state } = useLocation(); // state is any or unknown
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -192,11 +193,10 @@ const SendPage = () => {
     if (step === 2) {
       if (asset) {
         const assetAddress = asset.type === AssetKind.Ton ? TON_JETTON : asset.meta?.address;
-        getStonFiAsset(assetAddress)
-        .then(({data}) => {
+        getStonFiAsset(assetAddress).then(({ data }) => {
           const assetPrice = data?.asset.dex_price_usd || data?.asset.third_party_usd_price;
-          setAssetPrice(assetPrice)
-        })
+          setAssetPrice(assetPrice);
+        });
       }
     }
     if (step === 4) {
@@ -225,7 +225,13 @@ const SendPage = () => {
             <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />
-          <TransferAsset asset={asset} value={amount} onChange={handleAmountInputChange} setMaxAmount={setMaxAmount} assetPrice={assetPrice} />
+          <TransferAsset
+            asset={asset}
+            value={amount}
+            onChange={handleAmountInputChange}
+            setMaxAmount={setMaxAmount}
+            assetPrice={assetPrice}
+          />
         </>
       )}
       {step === 3 && (

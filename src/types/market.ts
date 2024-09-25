@@ -4,7 +4,7 @@ import type { MarketModeEnum } from "features/market/marketSlice";
 import type { CoinDto } from "./assest";
 
 export enum OrderStatus {
-  CREATED="created",
+  CREATED = "created",
   ACTIVE = "active",
   EXECUTING = "executing",
   FINISHED = "finished",
