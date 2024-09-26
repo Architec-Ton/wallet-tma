@@ -19,7 +19,7 @@ import {
 import { selectIsTma } from "features/tma/tmaSelector";
 import { useApiWalletInfoMutation } from "features/wallet/walletApi";
 import { type CoinDto } from "types/assest";
-import { OrderStatus, type MarketOrderDto } from "types/market";
+import { type MarketOrderDto, OrderStatus } from "types/market";
 import { type WalletInfoData } from "types/wallet";
 
 import { iconButtonArraw } from "assets/icons/buttons";
@@ -118,7 +118,7 @@ const Market = () => {
       if (trxModal.isOpened) {
         setTimeout(() => {
           trxModal.confirm(undefined);
-        }, 10000)
+        }, 10000);
       }
       if (needHistoryUpdate) {
         getMyHistoryOrders("history").then((myOrders) => {
@@ -148,22 +148,20 @@ const Market = () => {
                       Address.normalize(asset.meta?.address as string),
                 );
               });
-              const dataAssets = data?.assets.filter(
-                (a) =>
-                  !walletAssets.find((wa) => {
-                    if (a.type === "ton") {
-                      return true;
-                    }
-                    return (
-                      wa.meta?.address &&
-                      Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
-                    );
-                  }),
-              ) || []
-              const combinedAssets = [
-                ...walletAssets,
-                ...dataAssets,
-              ] satisfies CoinDto[];
+              const dataAssets =
+                data?.assets.filter(
+                  (a) =>
+                    !walletAssets.find((wa) => {
+                      if (a.type === "ton") {
+                        return true;
+                      }
+                      return (
+                        wa.meta?.address &&
+                        Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
+                      );
+                    }),
+                ) || [];
+              const combinedAssets = [...walletAssets, ...dataAssets] satisfies CoinDto[];
               dispatch(setWalletAssets(walletAssets));
               dispatch(setAssets(combinedAssets));
             }
@@ -190,22 +188,28 @@ const Market = () => {
     dispatch(clearOrderAssets());
   });
 
-  const dropdownChangeHandler = useCallback((d?: DropDownDto) => {
-    if (!d) {
-      setDropdownValue(historyDropDownData[0]);
-    } else if (d !== dropdownValue) {
-      setDropdownValue(d);
-    }
-  }, [dropdownValue]);
+  const dropdownChangeHandler = useCallback(
+    (d?: DropDownDto) => {
+      if (!d) {
+        setDropdownValue(historyDropDownData[0]);
+      } else if (d !== dropdownValue) {
+        setDropdownValue(d);
+      }
+    },
+    [dropdownValue],
+  );
 
-  const getHistoryDropdown = useMemo(() => (
-    <DropDown
-      className="right"
-      onChange={dropdownChangeHandler}
-      data={historyDropDownData}
-      defaultValue={dropdownValue}
-    />
-  ), [dropdownChangeHandler, dropdownValue]);
+  const getHistoryDropdown = useMemo(
+    () => (
+      <DropDown
+        className="right"
+        onChange={dropdownChangeHandler}
+        data={historyDropDownData}
+        defaultValue={dropdownValue}
+      />
+    ),
+    [dropdownChangeHandler, dropdownValue],
+  );
 
   const cancelOrderHandler = (uuid: string) => {
     if (isTma) {

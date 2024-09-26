@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import type { MarketOrderDto} from "types/market";
+import type { MarketOrderDto } from "types/market";
 import { OrderStatus } from "types/market";
 
 import useLanguage from "hooks/useLanguage";

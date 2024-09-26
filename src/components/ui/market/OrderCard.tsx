@@ -14,10 +14,10 @@ import Column from "components/containers/Column";
 import Row from "components/containers/Row";
 
 import AssetIcon from "../assets/AssetIcon";
+import InlineLoader from "../inlineLoader";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
 import "./OrderCard.styles.css";
-import InlineLoader from "../inlineLoader";
 
 type OwnPropsType = {
   order: MarketOrderDto;
@@ -60,7 +60,7 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
         isCanceled: [OrderStatus.CANCELED, OrderStatus.EXPIRED].includes(order?.status),
       };
     }
-    return undefined
+    return undefined;
   }, [order]);
 
   useEffect(() => {
@@ -90,9 +90,9 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
     const minutes: number | string = Math.floor(time / 60);
     let seconds: number | string = time % 60;
 
-    if (seconds < 10) seconds = `0${  seconds}`;
+    if (seconds < 10) seconds = `0${seconds}`;
     let timeString =
-      pattern.search("ii") !== -1 ? pattern.replace("ii", `0${  minutes}`) : pattern.replace("i", minutes.toString());
+      pattern.search("ii") !== -1 ? pattern.replace("ii", `0${minutes}`) : pattern.replace("i", minutes.toString());
     timeString = timeString.replace("ss", seconds.toString());
 
     return timeString;
@@ -150,7 +150,10 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
             )}
             {orderData.isExecuting && (
               <Row className="order-finally-status">
-                <div>{orderData.status === OrderStatus.EXECUTING && t("executing", "market-order-status") || t("canceling", "market-order-status")}</div>
+                <div>
+                  {(orderData.status === OrderStatus.EXECUTING && t("executing", "market-order-status")) ||
+                    t("canceling", "market-order-status")}
+                </div>
                 <InlineLoader className="medium-loader" />
               </Row>
             )}
