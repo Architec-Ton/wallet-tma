@@ -74,6 +74,10 @@
   color: var(--link-color);
 }
 
+.uppercase-text {
+  text-transform: uppercase;
+}
+
 @media (prefers-color-scheme: dark) {
   .icon-color-secondary {
     filter: invert(0.5);

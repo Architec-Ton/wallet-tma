@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Address, Cell } from "@ton/core";
 import { showWarningAlert } from "features/alert/alertSlice";
@@ -17,6 +17,8 @@ import {
   setWalletAssets,
 } from "features/market/marketSlice";
 import { selectIsTma } from "features/tma/tmaSelector";
+import { selectIsTonLoading, selectTonMode } from "features/ton/tonSelector";
+import { TonConnectionMode } from "features/ton/tonSlice";
 import { useApiWalletInfoMutation } from "features/wallet/walletApi";
 import { type CoinDto } from "types/assest";
 import { type MarketOrderDto, OrderStatus } from "types/market";
@@ -64,6 +66,7 @@ const Market = () => {
 
   const t = useLanguage("market");
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const myOrdersPollingStatus = useRef(false);
   const page = usePage();
   const ton = useTon();
@@ -71,6 +74,8 @@ const Market = () => {
   const isTma = useAppSelector(selectIsTma);
   const popup = useTmaPopup();
   const trxModal = useTrxModalManagement();
+  const isTonLoading = useAppSelector(selectIsTonLoading);
+  const tonMode = useAppSelector(selectTonMode);
 
   const [getMyActiveOrders, { data: myActiveOrders, isFetching }] = useLazyGetOrdersHistoryQuery({
     pollingInterval,
@@ -93,9 +98,15 @@ const Market = () => {
   const [getAssets] = useLazyGetAssetsQuery();
 
   useEffect(() => {
-    dropdownChangeHandler();
-    page.setLoading(false, true);
-  }, []);
+    if (!isTonLoading) {
+      if (tonMode === TonConnectionMode.disconnect) {
+        navigate("/registration/welcome");
+      } else {
+        dropdownChangeHandler();
+        page.setLoading(false, true);
+      }
+    }
+  }, [isTonLoading, tonMode, isReady]);
 
   useEffect(() => {
     if (myOrdersPollingStatus.current) {
@@ -149,21 +160,29 @@ const Market = () => {
                 );
               });
               const dataAssets =
-                data?.assets.filter(
-                  (a) =>
-                    !walletAssets.find((wa) => {
-                      if (a.type === "ton") {
-                        return true;
-                      }
-                      return (
-                        wa.meta?.address &&
-                        Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
-                      );
-                    }),
-                ) || [];
-              const combinedAssets = [...walletAssets, ...dataAssets] satisfies CoinDto[];
+                data?.assets.reduce((acc, a) => {
+                  const walletAsset = walletAssets.find((wa) => {
+                    if (a.type === "ton") {
+                      return true;
+                    }
+                    return (
+                      wa.meta?.address &&
+                      Address.normalize(wa.meta.address as string) === Address.normalize(a.meta?.address as string)
+                    );
+                  });
+
+                  if (walletAsset) {
+                    acc.push({
+                      ...a,
+                      amount: walletAsset.amount,
+                    });
+                  } else {
+                    acc.push(a);
+                  }
+                  return acc;
+                }, [] as CoinDto[]) || [];
               dispatch(setWalletAssets(walletAssets));
-              dispatch(setAssets(combinedAssets));
+              dispatch(setAssets(dataAssets));
             }
             page.setLoading(false, true);
           });

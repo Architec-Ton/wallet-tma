@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+
 import { Cell } from "@ton/core";
 import classNames from "classnames";
 import { showAlert } from "features/alert/alertSlice";
@@ -64,9 +67,13 @@ const ConfirmOrder = () => {
     try {
       const order = await createOrderApi(data);
       if (order.error) {
+        const error = order.error as FetchBaseQueryError;
+        if (Number(error.status) < 500) {
+          throw new Error("Order creating is failed");
+        }
         if (retryCount < 3) {
           setRetryCount((r) => r + 1);
-          return confirmHandler();
+          return await confirmHandler();
         }
         throw new Error("Transaction failed");
       }
@@ -99,7 +106,7 @@ const ConfirmOrder = () => {
         <Block>
           <Row className="w-full">
             {fromAsset && <AssetIcon asset={fromAsset as CoinDto} className="market-asset-icon" />}
-            <div className="grow">{fromAsset?.meta?.symbol}</div>
+            <div className="grow">{fromAsset?.meta?.name}</div>
             <div>{fromValue}</div>
           </Row>
         </Block>
@@ -108,7 +115,7 @@ const ConfirmOrder = () => {
         <Block>
           <Row className="w-full">
             <AssetIcon asset={toAsset as CoinDto} className="market-asset-icon" />
-            <div className="grow">{toAsset?.meta?.symbol}</div>
+            <div className="grow">{toAsset?.meta?.name}</div>
             <div>{toValue}</div>
           </Row>
         </Block>

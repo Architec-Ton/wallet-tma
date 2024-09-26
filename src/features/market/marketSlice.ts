@@ -43,6 +43,8 @@ const marketSlice = createSlice({
     clearOrderAssets(state: MarketState) {
       state.fromAsset = undefined;
       state.toAsset = undefined;
+      state.fromValue = undefined;
+      state.toValue = undefined;
     },
     setOrders(state: MarketState, action: PayloadAction<MarketOrderDto[] | undefined>) {
       state.orders = action.payload;

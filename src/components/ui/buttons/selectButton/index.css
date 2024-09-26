@@ -7,3 +7,8 @@
   padding-left: 0;
   padding-right: 0;
 }
+
+.select-button-placeholder {
+  color: var(--text-secondary-color);
+  text-transform: capitalize;
+}

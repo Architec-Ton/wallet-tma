@@ -12,6 +12,7 @@ import {
 } from "features/market/marketSelectors";
 import {
   MarketModeEnum,
+  clearOrderAssets,
   setMarketMode,
   setOrderPrimaryAsset,
   setOrderSecondaryAsset,
@@ -79,6 +80,9 @@ const CreateMarketOrder = () => {
         dispatch(setOrderSecondaryAsset(assets[1]));
       }
     }
+    return () => {
+      dispatch(clearOrderAssets());
+    };
   }, [assets]);
 
   const isValid = useMemo(() => {
@@ -178,11 +182,11 @@ const CreateMarketOrder = () => {
   const modalAssets = useMemo(() => {
     if (orderMode === MarketModeEnum.BUY) {
       return selectedAsset === "primary"
-        ? assets
+        ? assets?.filter((a) => a.meta?.symbol !== toAsset?.meta?.symbol)
         : walletAssets?.filter((a) => a.meta?.symbol !== fromAsset?.meta?.symbol);
     } else {
       return selectedAsset === "primary"
-        ? walletAssets
+        ? walletAssets?.filter((a) => a.meta?.symbol !== toAsset?.meta?.symbol)
         : assets?.filter((a) => a.meta?.symbol !== fromAsset?.meta?.symbol);
     }
   }, [orderMode, assets, fromAsset, toAsset, selectedAsset]);
@@ -207,13 +211,17 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="order-data-row grow">
               <div>{assetLabels[orderMode]["sell-asset"]}</div>
-              <SelectButton onClick={selectPrimaryAsset}>{fromAsset?.meta?.symbol}</SelectButton>
+              <SelectButton className="uppercase-text" onClick={selectPrimaryAsset} placeHolder="Select">
+                {fromAsset?.meta?.name}
+              </SelectButton>
             </Row>
           </ListBaseItem>
           <ListBaseItem>
             <Row className="order-data-row grow">
               <div>{assetLabels[orderMode]["receive-asset"]}</div>
-              <SelectButton onClick={selectReceiveAsset}>{toAsset?.meta?.symbol}</SelectButton>
+              <SelectButton className="uppercase-text" onClick={selectReceiveAsset} placeHolder="Select">
+                {toAsset?.meta?.name}
+              </SelectButton>
             </Row>
           </ListBaseItem>
         </ListBlock>
@@ -223,7 +231,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow market-asset-info">
               <AssetIcon asset={fromAsset} className="market-asset-icon" />
-              <div className="grow">{fromAsset?.meta?.symbol}</div>
+              <div className="grow">{fromAsset?.meta?.name}</div>
               <div className="secondary-content">
                 <input
                   className={classNames("order-asset-input", {
@@ -251,7 +259,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow market-asset-info">
               <AssetIcon asset={toAsset} className="market-asset-icon" />
-              <div className="grow">{toAsset?.meta?.symbol}</div>
+              <div className="grow">{toAsset?.meta?.name}</div>
               <div className="secondary-content">
                 <input
                   className={classNames("order-asset-input", {

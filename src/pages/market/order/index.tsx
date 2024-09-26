@@ -124,13 +124,13 @@ const MarketOrder = () => {
       <Row className="orders-filter">
         <FilterBlock
           title={textData?.primaryAssetLabel}
-          value={fromAsset?.meta?.symbol || t("all")}
+          value={fromAsset?.meta?.name.toUpperCase() || t("all")}
           onClick={buyingAssetHandler}
           withIcon
         />
         <FilterBlock
           title={textData?.secondaryAssetLabel}
-          value={toAsset?.meta?.symbol || t("all")}
+          value={toAsset?.meta?.name.toUpperCase() || t("all")}
           onClick={givingAssetHandler}
           withIcon
         />
@@ -148,20 +148,20 @@ const MarketOrder = () => {
                 {mode === MarketModeEnum.BUY && (
                   <>
                     <div>
-                      + {orderData.fromValue} {orderData.fromAsset.meta?.symbol}
+                      + {orderData.fromValue} {orderData.fromAsset.meta?.name}
                     </div>
                     <div className="secondary-content text-sm">
-                      - {orderData.toValue} {orderData.toAsset.meta?.symbol}
+                      - {orderData.toValue} {orderData.toAsset.meta?.name}
                     </div>
                   </>
                 )}
                 {mode === MarketModeEnum.SELL && (
                   <>
                     <div>
-                      - {orderData.fromValue} {orderData.fromAsset.meta?.symbol}
+                      - {orderData.fromValue} {orderData.fromAsset.meta?.name}
                     </div>
                     <div className="secondary-content text-sm">
-                      + {orderData.toValue} {orderData.toAsset.meta?.symbol}
+                      + {orderData.toValue} {orderData.toAsset.meta?.name}
                     </div>
                   </>
                 )}

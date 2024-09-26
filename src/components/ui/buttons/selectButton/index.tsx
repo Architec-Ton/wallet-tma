@@ -10,12 +10,13 @@ interface SelectButtonPropsInterface {
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
+  placeHolder?: string;
 }
 
-const SelectButton = ({ onClick, children, className }: SelectButtonPropsInterface) => {
+const SelectButton = ({ onClick, children, className, placeHolder }: SelectButtonPropsInterface) => {
   return (
     <button onClick={onClick} className={classNames("select-button", className)}>
-      {children}
+      {children || <span className="select-button-placeholder">{placeHolder}</span>}
       <img src={iconArrowDropdownButton} alt="" />
     </button>
   );

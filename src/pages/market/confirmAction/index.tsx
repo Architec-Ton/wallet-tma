@@ -85,7 +85,7 @@ const ConfirmAction = () => {
       <Section title={textData?.youSell}>
         <Row>
           <AssetIcon asset={selectedOrder?.fromAsset as CoinDto} className="market-asset-icon" />
-          <div className="grow">{selectedOrder?.fromAsset?.meta?.symbol}</div>
+          <div className="grow">{selectedOrder?.fromAsset?.meta?.name}</div>
           <div>{selectedOrder?.fromValue}</div>
         </Row>
       </Section>
@@ -108,7 +108,7 @@ const ConfirmAction = () => {
       <Section title={textData?.youReceive}>
         <Row>
           <AssetIcon asset={selectedOrder?.toAsset as CoinDto} className="market-asset-icon" />
-          <div className="grow">{selectedOrder?.toAsset?.meta?.symbol}</div>
+          <div className="grow">{selectedOrder?.toAsset?.meta?.name}</div>
           <div>{selectedOrder?.toValue}</div>
         </Row>
       </Section>

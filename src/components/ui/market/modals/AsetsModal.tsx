@@ -69,7 +69,7 @@ const AssetsModal = ({ title, onSelect, onClose, assets }: AssetsModalPropsType)
               filteredAssets.map((asset) => (
                 <ListBaseItem onClick={() => onSelect(asset)} key={asset.meta?.address}>
                   <AssetIcon asset={asset} className="asset-modal-icon" />
-                  <div className="grow">{asset.meta?.symbol}</div>
+                  <div className="grow uppercase-text">{asset.meta?.name}</div>
                 </ListBaseItem>
               ))}
           </ListBlock>
