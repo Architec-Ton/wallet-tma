@@ -80,9 +80,6 @@ const CreateMarketOrder = () => {
         dispatch(setOrderSecondaryAsset(assets[1]));
       }
     }
-    return () => {
-      dispatch(clearOrderAssets());
-    };
   }, [assets]);
 
   const isValid = useMemo(() => {
