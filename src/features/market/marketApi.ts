@@ -6,6 +6,7 @@ import {
   CreateOrderRequestQuery,
   MarketOrderDto,
   MarketOrdersDto,
+  MarketOrdersRequestQuery,
   OrderStatus,
   OrderTxParams,
 } from "types/market";
@@ -13,6 +14,12 @@ import {
 import { P2P_BE_URL } from "../../constants";
 import { RootState } from "../../store";
 import { MarketModeEnum } from "./marketSlice";
+
+interface MyOrdersRequestQuery {
+  status: "active" | "history";
+  page?: number;
+  size?: number;
+}
 
 export const marketApi = createApi({
   reducerPath: "marketApi",
@@ -27,12 +34,12 @@ export const marketApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getOrders: builder.query<MarketOrdersDto, MarketModeEnum>({
-      query: (mode) => ({
+    getOrders: builder.query<MarketOrdersDto, MarketOrdersRequestQuery>({
+      query: ({ page, size }) => ({
         url: `orders/all`,
-        // params: { order_type: mode },
+        params: { page, size },
       }),
-      transformResponse: (response: MarketOrdersDto, meta, mode) => {
+      transformResponse: (response: MarketOrdersDto, meta, { mode }) => {
         let transformedOrders: MarketOrderDto[] = [];
         if (mode === MarketModeEnum.SELL) {
           response.items.reduce((acc, currentOrder: MarketOrderDto) => {
@@ -46,20 +53,6 @@ export const marketApi = createApi({
             return acc;
           }, transformedOrders);
         } else {
-          // response.items.reduce((acc, currentOrder: MarketOrderDto) => {
-          //   if (currentOrder.type === MarketModeEnum.BUY) {
-          //     acc.push({
-          //       ...currentOrder,
-          //       fromAsset: currentOrder.toAsset,
-          //       toAsset: currentOrder.fromAsset,
-          //       fromValue: currentOrder.toValue,
-          //       toValue: currentOrder.fromValue,
-          //     })
-          //   } else {
-          //     acc.push(currentOrder)
-          //   }
-          //   return acc
-          // }, transformedOrders)
           transformedOrders = response.items;
         }
         return { ...response, items: transformedOrders };
@@ -70,10 +63,10 @@ export const marketApi = createApi({
         url: `assets`,
       }),
     }),
-    getOrdersHistory: builder.query<MarketOrdersDto, "active" | "history">({
-      query: (status = OrderStatus.ACTIVE) => ({
+    getOrdersHistory: builder.query<MarketOrdersDto, MyOrdersRequestQuery>({
+      query: ({ status, page, size }) => ({
         url: `orders`,
-        params: { status },
+        params: { status, page, size },
       }),
     }),
     createOrder: builder.mutation<CreateOrderDto, CreateOrderRequestQuery>({

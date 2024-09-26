@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useLazyGetOrdersQuery } from "features/market/marketApi";
@@ -21,13 +21,18 @@ import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import FilterBlock from "components/ui/market/FilterBlock";
 import OrderCardIcon from "components/ui/market/OrderCardIcon";
 import AssetsModal from "components/ui/market/modals/AsetsModal";
+import InfiniteScroll from "react-infinite-scroller";
+import InlineLoader from "components/ui/inlineLoader";
+
+const PAGE_SIZE = 30
 
 const MarketOrder = () => {
   const t = useLanguage("market");
   const page = usePage();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [getOrders] = useLazyGetOrdersQuery();
+  const fetchingRef = useRef<boolean | null>(null)
+  const [getOrders, { isFetching }] = useLazyGetOrdersQuery();
   const orders = useAppSelector(marketOrdersSelector);
   const assets = useAppSelector(marketAssets);
   const { fromAsset, toAsset, mode } = useAppSelector(marketSelector);
@@ -36,17 +41,14 @@ const MarketOrder = () => {
   const [filteredOrders, setFilteredOrders] = useState<MarketOrderDto[]>();
   const [amountValue, setAmountValue] = useState<string>("");
   const [textData, setTextData] = useState<any>();
+  const [isPageFetching, setIsPageFetching] = useState<boolean>(false)
+  const [isEndPage, setIsEndPage] = useState<boolean>(false)
+  const [nextPage, setNextPage] = useState<number>(1)
 
   useEffect(() => {
-    getOrders(mode)
-      .then((result) => result.data)
-      .then((data) => {
-        const { items } = data as MarketOrdersDto;
-        dispatch(setOrders(items));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    return () => {
+      dispatch(setOrders(undefined))
+    }
   }, []);
 
   useEffect(() => {
@@ -59,6 +61,7 @@ const MarketOrder = () => {
         return condition;
       });
       setFilteredOrders(filteredOrders);
+      console.log("filteredOrders", filteredOrders)
     }
   }, [fromAsset, toAsset, amountValue, orders]);
 
@@ -119,6 +122,31 @@ const MarketOrder = () => {
     navigate(uid);
   });
 
+  const fetchOrdersNextPage = useCallback(
+    async () => {
+      if (isPageFetching || fetchingRef.current) {
+        return
+      }
+
+      fetchingRef.current = true
+      setIsPageFetching(true)
+      
+      try {
+        const { data } = await getOrders({ page: nextPage, size: PAGE_SIZE, mode })
+        const { items, page, pages } = data as MarketOrdersDto;
+        dispatch(setOrders(items));
+        setIsEndPage(page === pages)
+        setNextPage(page + 1)
+      } catch (error) {
+        console.error(error);
+      }
+      
+      setIsPageFetching(false)
+      fetchingRef.current = false
+    },
+    [isPageFetching, nextPage]
+  )
+
   return (
     <Page title={textData?.pageTitle}>
       <Row className="orders-filter">
@@ -139,56 +167,62 @@ const MarketOrder = () => {
         </FilterBlock>
       </Row>
 
-      <Column>
-        {filteredOrders?.map((orderData) => (
-          <ListBlock key={orderData.uuid}>
-            <ListBaseItem className="market-order-card">
-              <OrderCardIcon order={orderData} />
-              <Column className="grow">
-                {mode === MarketModeEnum.BUY && (
-                  <>
-                    <div>
-                      + {orderData.fromValue} {orderData.fromAsset.meta?.name}
-                    </div>
-                    <div className="secondary-content text-sm">
-                      - {orderData.toValue} {orderData.toAsset.meta?.name}
-                    </div>
-                  </>
-                )}
-                {mode === MarketModeEnum.SELL && (
-                  <>
-                    <div>
-                      - {orderData.fromValue} {orderData.fromAsset.meta?.name}
-                    </div>
-                    <div className="secondary-content text-sm">
-                      + {orderData.toValue} {orderData.toAsset.meta?.name}
-                    </div>
-                  </>
-                )}
-              </Column>
-              <button
-                className="small-button rounded-button primary-button"
-                onClick={orderClickHandler(orderData.uuid)}
-                disabled={orderData.status !== OrderStatus.ACTIVE}
-              >
-                {textData?.buttonText}
-              </button>
-            </ListBaseItem>
-            <ListBaseItem>
-              <Column className="w-full">
-                <Row className="order-data-row">
-                  <div className="secondary-content">{textData?.ownerLabel}</div>
-                  <div>{orderData?.userUsername}</div>
-                </Row>
-                <Row className="order-data-row">
-                  <div className="secondary-content">{textData?.stats}</div>
-                  <div>{t("stats-value", "", { total: orderData?.userTotalOrders })}</div>
-                </Row>
-              </Column>
-            </ListBaseItem>
-          </ListBlock>
-        ))}
-      </Column>
+      <InfiniteScroll
+        loadMore={fetchOrdersNextPage}
+        hasMore={ !isEndPage }
+        loader={<center><InlineLoader /></center>}
+      >
+        <Column>
+          {filteredOrders?.map((orderData) => (
+            <ListBlock key={orderData.uuid}>
+              <ListBaseItem className="market-order-card">
+                <OrderCardIcon order={orderData} />
+                <Column className="grow">
+                  {mode === MarketModeEnum.BUY && (
+                    <>
+                      <div>
+                        + {orderData.fromValue} {orderData.fromAsset.meta?.name}
+                      </div>
+                      <div className="secondary-content text-sm">
+                        - {orderData.toValue} {orderData.toAsset.meta?.name}
+                      </div>
+                    </>
+                  )}
+                  {mode === MarketModeEnum.SELL && (
+                    <>
+                      <div>
+                        - {orderData.fromValue} {orderData.fromAsset.meta?.name}
+                      </div>
+                      <div className="secondary-content text-sm">
+                        + {orderData.toValue} {orderData.toAsset.meta?.name}
+                      </div>
+                    </>
+                  )}
+                </Column>
+                <button
+                  className="small-button rounded-button primary-button"
+                  onClick={orderClickHandler(orderData.uuid)}
+                  disabled={orderData.status !== OrderStatus.ACTIVE}
+                >
+                  {textData?.buttonText}
+                </button>
+              </ListBaseItem>
+              <ListBaseItem>
+                <Column className="w-full">
+                  <Row className="order-data-row">
+                    <div className="secondary-content">{textData?.ownerLabel}</div>
+                    <div>{orderData?.userUsername}</div>
+                  </Row>
+                  <Row className="order-data-row">
+                    <div className="secondary-content">{textData?.stats}</div>
+                    <div>{t("stats-value", "", { total: orderData?.userTotalOrders })}</div>
+                  </Row>
+                </Column>
+              </ListBaseItem>
+            </ListBlock>
+          ))}
+        </Column>
+      </InfiniteScroll>
 
       {showPrimaryAssetModal && (
         <AssetsModal

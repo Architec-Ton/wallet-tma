@@ -47,7 +47,7 @@ const marketSlice = createSlice({
       state.toValue = undefined;
     },
     setOrders(state: MarketState, action: PayloadAction<MarketOrderDto[] | undefined>) {
-      state.orders = action.payload;
+      state.orders = state.orders && action.payload ? [...state.orders, ...action.payload] : action.payload;
     },
     setAssets(state: MarketState, action: PayloadAction<CoinDto[]>) {
       state.assets = action.payload;

@@ -43,6 +43,12 @@ export interface MarketOrdersDto {
   total: number;
 }
 
+export interface MarketOrdersRequestQuery {
+  mode: MarketModeEnum;
+  page?: number;
+  size?: number;
+}
+
 export interface CreateOrderRequestQuery {
   type?: MarketModeEnum;
   fromAsset: CreateOrderAsset;

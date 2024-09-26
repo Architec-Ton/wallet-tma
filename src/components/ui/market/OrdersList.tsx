@@ -10,8 +10,6 @@ import DataLossBlock from "components/typography/DataLossBlock";
 
 import MarketOrderCard from "./OrderCard";
 
-const cancelableTimeDelta = 5 * 60 * 1000;
-
 const OrdersList = ({ orders, onOrderCancel }: { orders: MarketOrderDto[]; onOrderCancel: (uuid: string) => void }) => {
   const t = useLanguage("market");
   const cancelHandler = useCallback(
