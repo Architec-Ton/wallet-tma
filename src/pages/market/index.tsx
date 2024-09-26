@@ -118,7 +118,7 @@ const Market = () => {
       if (trxModal.isOpened) {
         setTimeout(() => {
           trxModal.confirm(undefined);
-        }, 30000)
+        }, 10000)
       }
       if (needHistoryUpdate) {
         getMyHistoryOrders("history").then((myOrders) => {
