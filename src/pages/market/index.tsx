@@ -260,7 +260,7 @@ const Market = () => {
           to: txParams.to,
           body,
         });
-        setPollingInterval(POLLING_INTERVAL);
+        getOrders()
       }
     } catch (e) {
       dispatch(showWarningAlert({ message: "Cancel failed. Try again later.", duration: 3000 }));
