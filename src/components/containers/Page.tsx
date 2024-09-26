@@ -23,7 +23,15 @@ type Props = {
   pageControl?: ReactNode;
 };
 
-const backButtonExclude: string[] = ["/", "/playground", "/news", "/account", "/market", "/registration/welcome"];
+const backButtonExclude: string[] = [
+  "/",
+  "/playground",
+  "/news",
+  "/account",
+  "/market",
+  "/registration/welcome",
+  "/registration/completed",
+];
 
 function Page({ children, style, className, title, titleAccent, hintMessage, pageControl }: Props) {
   const location = useLocation();
