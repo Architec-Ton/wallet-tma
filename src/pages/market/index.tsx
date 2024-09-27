@@ -62,6 +62,7 @@ const Market = () => {
   const [ordersHistoryData, setOrdersHistoryData] = useState<MarketOrderDto[]>([]);
   const [ordersActiveData, setOrdersActiveData] = useState<MarketOrderDto[]>([]);
   const [pollingInterval, setPollingInterval] = useState<number>(0);
+  const [updateHistory, setUpdateHistory] = useState<boolean>(false);
 
   const t = useLanguage("market");
   const dispatch = useAppDispatch();
@@ -131,12 +132,16 @@ const Market = () => {
         }, 10000);
       }
       if (needHistoryUpdate) {
+        getMyHistoryOrders("history").then((myOrders) => {
+          setOrdersHistoryData(myOrders.data?.items || []);
+        });
       }
     }
   }, [myActiveOrders, isFetching, ordersActiveData, trxModal, getMyHistoryOrders]);
 
   useEffect(() => {
     if (isReady) {
+      getOrders();
       walletInfoApi(null)
         .unwrap()
         .then((result: WalletInfoData) => {
@@ -187,6 +192,15 @@ const Market = () => {
         });
     }
   }, [isReady]);
+
+  const getOrders = () => {
+    getMyActiveOrders("active").then((myOrders) => {
+      setOrdersActiveData(myOrders.data?.items || []);
+    });
+    getMyHistoryOrders("history").then((myOrders) => {
+      setOrdersHistoryData(myOrders.data?.items || []);
+    });
+  };
 
   const marketActionHandler = useClosure((mode: MarketModeEnum) => {
     dispatch(setMarketMode(mode));
@@ -246,6 +260,7 @@ const Market = () => {
           to: txParams.to,
           body,
         });
+        getOrders()
       }
     } catch (e) {
       dispatch(showWarningAlert({ message: "Cancel failed. Try again later.", duration: 3000 }));
@@ -293,7 +308,9 @@ const Market = () => {
       </Section>
       <Section title={t("my-orders")} readMore={getHistoryDropdown}>
         {dropdownValue?.key === "active" && <OrdersList orders={ordersActiveData} onOrderCancel={cancelOrderHandler} />}
-        {dropdownValue?.key === "history" && <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />}
+        {dropdownValue?.key === "history" && (
+          <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />
+        )}
       </Section>
     </Page>
   );
