@@ -1,7 +1,7 @@
 import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { TonClient } from "@ton/ton";
 
-import { TON_CLIENT_NETWORK } from "../constants";
+import { TON_CLIENT_NETWORK, TONAPI_KEY } from "../constants";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 
 const endpointPromise = getHttpEndpoint({
