@@ -5,10 +5,11 @@ import type { CoinDto } from "types/assest";
 
 import useLanguage from "hooks/useLanguage";
 
+import { usdPriceFormatter } from "utils/formatter";
+
 import Column from "../../containers/Column";
 import { SuffixInput } from "../../inputs/SuffixInput";
 import "./TransferAssets.styles.css";
-import { usdPriceFormatter } from "utils/formatter";
 
 type OwnPropsType = {
   asset?: CoinDto;
@@ -16,7 +17,7 @@ type OwnPropsType = {
   value: string;
   disabled?: boolean;
   setMaxAmount?: () => void;
-  assetPrice?: string
+  assetPrice?: string;
 };
 
 const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPrice }: OwnPropsType) => {
@@ -29,9 +30,15 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPr
     // setAssetValue(value || '');
   }, [value]);
 
-  const formatedPrice = useMemo(() => {
-    return usdPriceFormatter(Number(assetPrice))
-  }, [assetPrice])
+  const formatedPrice = useMemo(() => usdPriceFormatter(Number(assetPrice)), [assetPrice]);
+
+  const multipliedFormatedPrice = useMemo(() => {
+    if (!assetPrice || !value || Number.isNaN(Number(value))) return null;
+
+    const multipliedPrice = Number(assetPrice) * Number(value);
+
+    return usdPriceFormatter(multipliedPrice);
+  }, [assetPrice, value]);
 
   return (
     <Column className="justify-between asset-row send-asset-row">
@@ -43,9 +50,15 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPr
         className="transfer-input"
         disabled={disabled}
       />
-      { assetPrice && (
-        <div className="asset-price">1 {asset?.meta?.symbol} &asymp; {formatedPrice}</div>
-      ) }
+
+      {assetPrice && (
+        <div className="asset-price">
+          {value && multipliedFormatedPrice
+            ? `≈ ${multipliedFormatedPrice}`
+            : `1 ${asset?.meta?.symbol} ≈ ${formatedPrice}`}
+        </div>
+      )}
+
       <button
         className="rounded-button control-button"
         style={{
