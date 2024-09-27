@@ -132,7 +132,7 @@ const Market = () => {
         }, 10000);
       }
       if (needHistoryUpdate) {
-        getMyHistoryOrders("history").then((myOrders) => {
+        getMyHistoryOrders({ status: "history" }).then((myOrders) => {
           setOrdersHistoryData(myOrders.data?.items || []);
         });
       }
@@ -194,10 +194,10 @@ const Market = () => {
   }, [isReady]);
 
   const getOrders = () => {
-    getMyActiveOrders("active").then((myOrders) => {
+    getMyActiveOrders({ status: "active" }).then((myOrders) => {
       setOrdersActiveData(myOrders.data?.items || []);
     });
-    getMyHistoryOrders("history").then((myOrders) => {
+    getMyHistoryOrders({ status: "history" }).then((myOrders) => {
       setOrdersHistoryData(myOrders.data?.items || []);
     });
   };
