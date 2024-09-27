@@ -161,7 +161,9 @@ const CreateMarketOrder = () => {
   const primaryValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.currentTarget.value);
     if (!isNaN(value) && value > 0) {
-      setFromValue(value.toString());
+      console.log("fromAsset", fromAsset)
+      const decimalsLength = Math.pow(10, Number(fromAsset?.meta?.decimals))
+      setFromValue((Math.round(value * decimalsLength) / decimalsLength).toString());
     } else {
       setFromValue("");
     }
@@ -170,7 +172,9 @@ const CreateMarketOrder = () => {
   const secondaryValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.currentTarget.value);
     if (!isNaN(value) && value > 0) {
-      setToValue(value.toString());
+      console.log("toAsset", toAsset)
+      const decimalsLength = Math.pow(10, Number(toAsset?.meta?.decimals))
+      setToValue((Math.round(value * decimalsLength) / decimalsLength).toString());
     } else {
       setToValue("");
     }
@@ -179,12 +183,12 @@ const CreateMarketOrder = () => {
   const modalAssets = useMemo(() => {
     if (orderMode === MarketModeEnum.BUY) {
       return selectedAsset === "primary"
-        ? assets?.filter((a) => a.meta?.symbol !== toAsset?.meta?.symbol)
-        : walletAssets?.filter((a) => a.meta?.symbol !== fromAsset?.meta?.symbol);
+        ? assets?.filter((a) => a.meta?.name.toLowerCase() !== toAsset?.meta?.name.toLowerCase())
+        : walletAssets?.filter((a) => a.meta?.name.toLowerCase() !== fromAsset?.meta?.name.toLowerCase());
     } else {
       return selectedAsset === "primary"
-        ? walletAssets?.filter((a) => a.meta?.symbol !== toAsset?.meta?.symbol)
-        : assets?.filter((a) => a.meta?.symbol !== fromAsset?.meta?.symbol);
+        ? walletAssets?.filter((a) => a.meta?.name.toLowerCase() !== toAsset?.meta?.name.toLowerCase())
+        : assets?.filter((a) => a.meta?.name.toLowerCase() !== fromAsset?.meta?.name.toLowerCase());
     }
   }, [orderMode, assets, fromAsset, toAsset, selectedAsset]);
 
