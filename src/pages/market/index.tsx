@@ -49,8 +49,6 @@ import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import OrdersList from "components/ui/market/OrdersList";
 
 import "./index.css";
-import InfiniteScroll from "react-infinite-scroller";
-import InlineLoader from "components/ui/inlineLoader";
 
 const historyDropDownData: DropDownDto[] = [
   { key: "active", value: "Active" },
@@ -58,24 +56,17 @@ const historyDropDownData: DropDownDto[] = [
 ];
 
 const POLLING_INTERVAL = 5000;
-const MY_ORDER_PAGE_SIZE = 30
 
 const Market = () => {
   const [dropdownValue, setDropdownValue] = useState<DropDownDto | undefined>();
   const [ordersHistoryData, setOrdersHistoryData] = useState<MarketOrderDto[]>([]);
   const [ordersActiveData, setOrdersActiveData] = useState<MarketOrderDto[]>([]);
   const [pollingInterval, setPollingInterval] = useState<number>(0);
-  const [isHistoryEnd, setIsHistoryEnd] = useState<boolean>(false);
-  const [nextHistoryPage, setNextHistoryPage] = useState<number>(1)
-  const [isActiveEnd, setIsActiveEnd] = useState<boolean>(false);
-  const [nextActivePage, setNextActivePage] = useState<number>(1)
 
   const t = useLanguage("market");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const myOrdersPollingStatus = useRef(false);
-  const myHistoryFetchingRef = useRef(false);
-  const myActiveFetchingRef = useRef(false);
   const page = usePage();
   const ton = useTon();
   const isReady = useAppSelector(selectAuthIsReady);
@@ -140,9 +131,6 @@ const Market = () => {
         }, 10000);
       }
       if (needHistoryUpdate) {
-        setIsHistoryEnd(false)
-        setOrdersHistoryData([])
-        setNextHistoryPage(1)
       }
     }
   }, [myActiveOrders, isFetching, ordersActiveData, trxModal, getMyHistoryOrders]);
@@ -199,46 +187,6 @@ const Market = () => {
         });
     }
   }, [isReady]);
-
-  const fetchMyActiveOrders = useCallback(
-    async() => {
-      if (myActiveFetchingRef.current) {
-        return
-      }
-      myActiveFetchingRef.current = true
-
-      const { data } = await getMyActiveOrders({ status: "active", page: nextActivePage, size: MY_ORDER_PAGE_SIZE })
-      if (data) {
-        const { page, items, pages } = data
-        setOrdersActiveData(activeOrders => [...activeOrders, ...items])
-        setNextActivePage(page + 1)
-        setIsActiveEnd(page === pages)
-      }
-
-      myActiveFetchingRef.current = false
-    },
-    [nextActivePage]
-  )
-
-  const fetchMyHistoryOrders = useCallback(
-    async() => {
-      if (myHistoryFetchingRef.current) {
-        return
-      }
-      myHistoryFetchingRef.current = true
-
-      const { data } = await getMyHistoryOrders({ status: "history", page: nextHistoryPage, size: MY_ORDER_PAGE_SIZE })
-      if (data) {
-        const { page, items, pages } = data
-        setOrdersHistoryData(historyOrders => [...historyOrders, ...items])
-        setNextHistoryPage(page + 1)
-        setIsHistoryEnd(page === pages)
-      }
-
-      myHistoryFetchingRef.current = false
-    },
-    [nextHistoryPage]
-  )
 
   const marketActionHandler = useClosure((mode: MarketModeEnum) => {
     dispatch(setMarketMode(mode));
@@ -298,10 +246,6 @@ const Market = () => {
           to: txParams.to,
           body,
         });
-        setIsActiveEnd(false)
-        setNextActivePage(1)
-        setIsHistoryEnd(false)
-        setNextHistoryPage(1)
       }
     } catch (e) {
       dispatch(showWarningAlert({ message: "Cancel failed. Try again later.", duration: 3000 }));
@@ -348,24 +292,8 @@ const Market = () => {
         </Column>
       </Section>
       <Section title={t("my-orders")} readMore={getHistoryDropdown}>
-        {dropdownValue?.key === "active" && (
-          <InfiniteScroll
-            loadMore={fetchMyActiveOrders}
-            hasMore={ !isActiveEnd }
-            loader={<center><InlineLoader /></center>}
-          >
-            <OrdersList orders={ordersActiveData} onOrderCancel={cancelOrderHandler} />
-          </InfiniteScroll>
-        )}
-        {dropdownValue?.key === "history" && (
-          <InfiniteScroll
-            loadMore={fetchMyHistoryOrders}
-            hasMore={ !isHistoryEnd }
-            loader={<center><InlineLoader /></center>}
-          >
-            <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />
-          </InfiniteScroll>
-        )}
+        {dropdownValue?.key === "active" && <OrdersList orders={ordersActiveData} onOrderCancel={cancelOrderHandler} />}
+        {dropdownValue?.key === "history" && <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />}
       </Section>
     </Page>
   );
