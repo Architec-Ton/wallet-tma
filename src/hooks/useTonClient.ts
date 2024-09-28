@@ -1,7 +1,7 @@
 import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { TonClient } from "@ton/ton";
 
-import { TON_CLIENT_NETWORK, TONAPI_KEY } from "../constants";
+import { TON_CLIENT_NETWORK } from "../constants";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 
 const endpointPromise = getHttpEndpoint({
@@ -12,12 +12,12 @@ export function useTonClient() {
   const client = useAsyncInitialize(
     async (): Promise<TonClient> =>
       new TonClient({
-        //endpoint: await endpointPromise,
-        endpoint:  TON_CLIENT_NETWORK === "mainnet"
-           ? "https://toncenter.com/api/v2/jsonRPC"
-           : "https://testnet.toncenter.com/api/v2/jsonRPC",
+        endpoint: await endpointPromise,
+        // endpoint:  TON_CLIENT_NETWORK === "mainnet"
+        //    ? "https://toncenter.com/api/v2/jsonRPC"
+        //    : "https://testnet.toncenter.com/api/v2/jsonRPC",
         // await endpointPromise,
-        apiKey: TONAPI_KEY,
+        // apiKey: TONAPI_KEY,
       }),
     [],
   );
