@@ -163,26 +163,30 @@ const ConfirmKey: React.FC = () => {
   };
 
   useEffect(() => {
-    const randomIdx = generateUniqueRandomNumbers(3, 0, 23);
+    const randomIdx = generateUniqueRandomNumbers(3, 0, 23).sort((a, b) => a - b);
     // const randomIdx = Array(3)
     //   .fill(0)
     //   .map(() => randomInt(0, 23));
 
     setMnemonicsVerifyIdx(randomIdx);
+
     if (!state || state.mnemonic === null) {
       navigate("/", { replace: true });
       return;
     }
 
-    const mnemonics = state.mnemonic.split(" ");
+    const mnemonics = state.mnemonic.toLowerCase().split(" ");
+
     if (state) {
       setMnemonics(mnemonics);
-    } else {
     }
+
     page.setLoading(false, false);
+
     btn.init(t("next", "button"), () => {
       confirmHandler(mnemonics);
     });
+
     if (!state?.confirm) {
       setIsConfirmed(true);
     }
@@ -211,6 +215,7 @@ const ConfirmKey: React.FC = () => {
           </Column>
         </>
       )}
+
       {!isConfirmed && <div>Next step You need setup pincode for wallet</div>}
     </Page>
   );

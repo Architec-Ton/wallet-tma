@@ -40,6 +40,10 @@
   "account-my-wallet": "MyWallet",
   "account-logout-title": "Log Out?",
   "account-logout-description": "Are you sure want to log out from wallet?",
+  "account-change-pin": "Change the PIN Code",
+  "account-view-secret-key": "View the Secret Key",
+  "account-safety-disclaimer": "Do not share the data stored in this section with anyone",
+  "account-back": "Back",
 
   "addwallet-addwallet": "Add Wallet",
   "addwallet-create-title": "New Wallet",

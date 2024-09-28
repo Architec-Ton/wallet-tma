@@ -75,15 +75,28 @@ export const HistoryEvent = memo(
     const icon = useMemo(() => (eventType === "in" ? iconTrxRecv : iconTrxSend), [eventType]);
     const formattedAmount = useMemo(() => {
       const prefix = eventType === "out" ? "-" : "+";
-      const amount = new Intl.NumberFormat(lang, {
-        style: "decimal",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-        useGrouping: true,
-      })
-        .format(eventValue)
-        .replace(/\s/g, " ");
+      let amount;
 
+      if (eventValue < 0.01) {
+        // Для маленьких значений используем maximumSignificantDigits
+        amount = new Intl.NumberFormat(lang, {
+          style: "decimal",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 6,
+          maximumSignificantDigits: 6,
+          useGrouping: true,
+        }).format(eventValue);
+      } else {
+        // Для остальных значений используем maximumFractionDigits
+        amount = new Intl.NumberFormat(lang, {
+          style: "decimal",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+          useGrouping: true,
+        }).format(eventValue);
+      }
+
+      amount = amount.replace(/\s/g, " ");
       return `${prefix}${amount} ${eventSymbol}`;
     }, [eventSymbol, eventType, eventValue]);
 
