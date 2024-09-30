@@ -308,9 +308,7 @@ const Market = () => {
       </Section>
       <Section title={t("my-orders")} readMore={getHistoryDropdown}>
         {dropdownValue?.key === "active" && <OrdersList orders={ordersActiveData} onOrderCancel={cancelOrderHandler} />}
-        {dropdownValue?.key === "history" && (
-          <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />
-        )}
+        {dropdownValue?.key === "history" && <OrdersList orders={ordersHistoryData} onOrderCancel={cancelOrderHandler} />}
       </Section>
     </Page>
   );

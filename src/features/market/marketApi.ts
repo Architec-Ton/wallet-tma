@@ -35,9 +35,9 @@ export const marketApi = createApi({
   }),
   endpoints: (builder) => ({
     getOrders: builder.query<MarketOrdersDto, MarketOrdersRequestQuery>({
-      query: ({ page, size }) => ({
+      query: ({ mode, ...pageParams }) => ({
         url: `orders/all`,
-        params: { page, size },
+        params: pageParams,
       }),
       transformResponse: (response: MarketOrdersDto, meta, { mode }) => {
         let transformedOrders: MarketOrderDto[] = [];

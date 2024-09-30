@@ -47,6 +47,9 @@ export interface MarketOrdersRequestQuery {
   mode: MarketModeEnum;
   page?: number;
   size?: number;
+  from_asset?: string;
+  to_asset?: string;
+  from_amount?: string;
 }
 
 export interface CreateOrderRequestQuery {
