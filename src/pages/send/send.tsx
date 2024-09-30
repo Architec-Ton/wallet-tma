@@ -70,6 +70,7 @@ const SendPage = () => {
 
   const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const amount = Number(event.target.value);
+
     if (step === 2 && !Number.isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
       btn.init(
         t("continue", "button"),
@@ -139,6 +140,7 @@ const SendPage = () => {
     } else if (step === 2) {
       btn.setVisible(false);
     }
+
     setAmount(event.target.value);
   };
 
@@ -177,6 +179,7 @@ const SendPage = () => {
     }
 
     if (isReady && !assets.length) handleInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, assets]);
 
   useEffect(() => {
@@ -193,9 +196,11 @@ const SendPage = () => {
     if (step === 2) {
       if (asset) {
         const assetAddress = asset.type === AssetKind.Ton ? TON_JETTON : asset.meta?.address;
+
         getStonFiAsset(assetAddress).then(({ data }) => {
-          const assetPrice = data?.asset.dex_price_usd || data?.asset.third_party_usd_price;
-          setAssetPrice(assetPrice);
+          const price = data?.asset.dex_price_usd || data?.asset.third_party_usd_price;
+
+          setAssetPrice(price);
         });
       }
     }
@@ -221,7 +226,7 @@ const SendPage = () => {
       {step === 2 && (
         <>
           <Row>
-            <img src={iconPageSend} />
+            <img src={iconPageSend} alt="Send Page" />
             <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />
@@ -237,7 +242,7 @@ const SendPage = () => {
       {step === 3 && (
         <>
           <Row>
-            <img src={iconPageSend} />
+            <img src={iconPageSend} alt="Send Page" />
             <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />

@@ -30,9 +30,15 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPr
     // setAssetValue(value || '');
   }, [value]);
 
-  const formatedPrice = useMemo(() => {
-    return usdPriceFormatter(Number(assetPrice));
-  }, [assetPrice]);
+  const formatedPrice = useMemo(() => usdPriceFormatter(Number(assetPrice)), [assetPrice]);
+
+  const multipliedFormatedPrice = useMemo(() => {
+    if (!assetPrice || !value || Number.isNaN(Number(value))) return null;
+
+    const multipliedPrice = Number(assetPrice) * Number(value);
+
+    return usdPriceFormatter(multipliedPrice);
+  }, [assetPrice, value]);
 
   return (
     <Column className="justify-between asset-row send-asset-row">
@@ -44,11 +50,15 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPr
         className="transfer-input"
         disabled={disabled}
       />
+
       {assetPrice && (
         <div className="asset-price">
-          1 {asset?.meta?.symbol} &asymp; {formatedPrice}
+          {value && multipliedFormatedPrice
+            ? `≈ ${multipliedFormatedPrice}`
+            : `1 ${asset?.meta?.symbol} ≈ ${formatedPrice}`}
         </div>
       )}
+
       <button
         className="rounded-button control-button"
         style={{

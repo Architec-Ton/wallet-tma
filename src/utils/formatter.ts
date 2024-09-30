@@ -21,8 +21,8 @@ export function parseTonTransferUrl(url: string | undefined): string | undefined
   return undefined;
 }
 
-export const usdPriceFormatter = (price: number) => {
-  return `$${new Intl.NumberFormat("fr-FR", {
+export const usdPriceFormatter = (price: number) =>
+  `$${new Intl.NumberFormat("fr-FR", {
     style: "decimal",
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
@@ -30,4 +30,3 @@ export const usdPriceFormatter = (price: number) => {
   })
     .format(price)
     .replace(/\s/g, " ")}`;
-};
