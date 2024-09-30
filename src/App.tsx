@@ -6,6 +6,8 @@ import { RouterProvider } from "react-router-dom";
 import { SDKProvider } from "@tma.js/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
+import PopupProvider from "components/layout/PopupProvider";
+
 import "./App.css";
 import router from "./Routes";
 import Layout from "./components/layout/Layout";
@@ -32,10 +34,12 @@ function App() {
           <SDKProvider acceptCustomStyles>
             <TonProvider>
               <TmaProvider>
-                <Layout>
-                  <AlertContainer />
-                  <RouterProvider router={router} />
-                </Layout>
+                <PopupProvider>
+                  <Layout>
+                    <AlertContainer />
+                    <RouterProvider router={router} />
+                  </Layout>
+                </PopupProvider>
               </TmaProvider>
             </TonProvider>
           </SDKProvider>

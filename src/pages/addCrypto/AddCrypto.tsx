@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useHapticFeedback } from "@tma.js/sdk-react";
+// import { useHapticFeedback } from "@tma.js/sdk-react";
 import { showAlert } from "features/alert/alertSlice";
 
 import { iconButtonArraw } from "assets/icons/buttons";
@@ -15,15 +15,15 @@ import Tile from "components/typography/Tile";
 const ChooseAddMethod = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const hapticFeedback = useHapticFeedback();
+  // const hapticFeedback = useHapticFeedback();
 
   const clickHandler = () => {
-    hapticFeedback.impactOccurred("soft");
+    // hapticFeedback.impactOccurred("soft");
     navigate("address");
   };
 
   const clickHandlerDisabled = () => {
-    hapticFeedback.impactOccurred("soft");
+    // hapticFeedback.impactOccurred("soft");
     dispatch(
       showAlert({ message: `This feature is currently under development and will be available soon.`, duration: 5000 }),
     );

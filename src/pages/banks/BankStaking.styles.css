@@ -7,14 +7,6 @@
   justify-content: space-between;
 }
 
-.stake-history-loss {
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-80) var(--spacing-12);
-  color: var(--text-secondary-color);
-}
-
 .staking-asset-container {
   gap: var(--spacing-4);
   align-items: flex-end;

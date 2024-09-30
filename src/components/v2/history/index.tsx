@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from "react";
 
-import { useHapticFeedback } from "@tma.js/sdk-react";
+// import { useHapticFeedback } from "@tma.js/sdk-react";
 import type { TransactionHistoryItemDto } from "types/history";
 
 import { iconTrxRecv, iconTrxSend } from "assets/icons/jettons";
@@ -19,10 +19,10 @@ interface HistoryProps {
 function History({ items }: HistoryProps) {
   const t = useLanguage("history");
   const navigate = useRouter();
-  const hapticFeedback = useHapticFeedback();
+  // const hapticFeedback = useHapticFeedback();
 
   const handleExpandClick = () => {
-    hapticFeedback.impactOccurred("soft");
+    // hapticFeedback.impactOccurred("soft");
     navigate("/histories");
   };
 

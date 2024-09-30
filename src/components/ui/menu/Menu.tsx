@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import React, { useCallback } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
-import { useHapticFeedback } from "@tma.js/sdk-react";
+// import { useHapticFeedback } from "@tma.js/sdk-react";
 import classNames from "classnames";
 
 import useRouter from "hooks/useRouter";
@@ -25,18 +25,18 @@ function Menu({ menuItems, style, className }: MenuProps) {
   // const page = usePage();
   const location = useLocation();
   const navigate = useRouter();
-  const hapticFeedback = useHapticFeedback();
+  // const hapticFeedback = useHapticFeedback();
 
   const handlerClick = useCallback(
     (to: string, event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       event.preventDefault();
       if (location.pathname !== to) {
         // page.setLoading(true, false);
-        hapticFeedback.impactOccurred("medium");
+        // hapticFeedback.impactOccurred("medium");
         navigate(to);
       }
     },
-    [location.pathname, navigate, hapticFeedback],
+    [location.pathname, navigate],
   );
 
   return (
