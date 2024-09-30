@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import ratingReducer from "../features/rating/ratingSlice.ts";
 import alertReducer from "../features/alert/alertSlice";
 import { authApi } from "../features/auth/authApi";
 import authSlice from "../features/auth/authSlice";
@@ -31,6 +32,7 @@ export const store = configureStore({
     swap: swapSlice,
     wallet: walletSlice,
     alert: alertReducer,
+    rating: ratingReducer,
     pincode: pinCodeModalReducer,
     trx: trxModalReducer,
     [trxApi.reducerPath]: trxApi.reducer,

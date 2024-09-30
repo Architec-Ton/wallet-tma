@@ -3,6 +3,7 @@ import React from "react";
 
 import { iconBankButton } from "assets/icons/buttons";
 
+import useIsIphone from "hooks/useIsIphone";
 import useLanguage from "hooks/useLanguage";
 import useRouter from "hooks/useRouter";
 
@@ -12,7 +13,6 @@ import Row from "../../containers/Row";
 import Block from "../../typography/Block";
 import Address from "./Address";
 import "./Balance.styles.css";
-import useIsIphone from "hooks/useIsIphone";
 
 type Props = {
   address?: string;
@@ -49,10 +49,11 @@ function BankBalance({ children, arcAmount, bnkAmount, address }: Props) {
             margin: "var(--spacing-16) 0",
           }}
         >
-          {!isIphone && <Button icon={iconBankButton} onClick={() => navigate("/bank/buy")} className="buy-button">
-            {t("Buy", "button")}
-          </Button>
-          }
+          {!isIphone && (
+            <Button icon={iconBankButton} onClick={() => navigate("/bank/buy")} className="buy-button">
+              {t("Buy", "button")}
+            </Button>
+          )}
         </Row>
 
         {children}

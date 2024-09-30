@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 import classNames from "classnames";
 import { selectAuthIsReady } from "features/auth/authSelector";
-import { useGetGameQuery } from "features/gaming/gamingApi";
+import {useGetGameLeadersQuery, useGetGameQuery} from "features/gaming/gamingApi";
 import { setLoading } from "features/page/pageSlice";
 import { SwiperSlide } from "swiper/react";
 
-import { iconCoinButton, iconGlobalButton, iconSendButton } from "assets/icons/buttons";
+import {iconCoinButton, iconGameVote, iconGlobalButton, iconSendButton} from "assets/icons/buttons";
 
 import { useAppDispatch, useAppSelector } from "hooks/useAppDispatch";
 import useLanguage from "hooks/useLanguage";
 
-// import { GameResource } from 'types/gameTypes';
 import LinkButton from "components/buttons/LinkButton";
 import Page from "components/containers/Page";
 import Row from "components/containers/Row";
@@ -24,6 +23,21 @@ import Tournament from "components/ui/games/tournament";
 import Slider from "components/ui/slider";
 
 import "./index.css";
+import {WalletInfoData} from "types/wallet.ts";
+import {CoinDto} from "types/assest.ts";
+import {useApiWalletInfoMutation} from "features/wallet/walletApi.ts";
+import {initialAssets} from "mocks/mockAssets.ts";
+import TransactionModal from "components/ui/modals/transactionModal";
+import ModalPinCode from "components/ui/modals/modalPinCode";
+import VoteModal from "components/ui/games/voteModal";
+import TransactionCompleteModal from "components/ui/modals/transactionCompleteModal";
+import Button from "components/buttons/Button.tsx";
+
+// import baseCategories from '../gamePage/test/base_categories.json'
+import RatingCategories from "components/ui/games/raiting-categories/RatingCategories.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store";
+
 
 const typedIcons = {
   website: iconGlobalButton,
@@ -35,96 +49,72 @@ const GamePage = () => {
   const t = useLanguage("game");
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  // const utils = useUtils();
-  // const [walletInfoApi] = useApiWalletInfoMutation();
-  // const navigate = useNavigate();
+  const [walletInfoApi] = useApiWalletInfoMutation();
   const isReady = useAppSelector(selectAuthIsReady);
   const { data: game, isLoading } = useGetGameQuery(id as string, { skip: !isReady });
-  // const isTma = useAppSelector(selectIsTma);
-  // const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
+  const {data: leaders, isLoading: leadersIsLoading} = useGetGameLeadersQuery({id: id as string, limit: 3})
 
+  const baseCategories = useSelector((state: RootState) => state.rating);
   const [readMoreDescription, setReacMoreDescription] = useState<boolean>(false);
-  // const [assets, setAssets] = useState<CoinDto[]>()
-  // const [isPinCode, setIsPinCode] = useState<boolean>(false)
-  // const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
-  // const [showTransaction, setShowTransaction] = useState<boolean>(false);
-  // const [showTransactionComplete, setShowTransactionComplete] =
-  //   useState<boolean>(false);
-  // const [isTransactionInProgress, setIsTransactionInProgress] =
-  //   useState<boolean>(false);
+  const [assets, setAssets] = useState<CoinDto[]>()
+  const [isPinCode, setIsPinCode] = useState<boolean>(false)
+  const [isVoteModal, setIsVoteModal] = useState<boolean>(false)
+  const [showTransaction, setShowTransaction] = useState<boolean>(false);
+  const [showTransactionComplete, setShowTransactionComplete] =
+    useState<boolean>(false);
+  const [isTransactionInProgress, setIsTransactionInProgress] =
+    useState<boolean>(false);
 
   useEffect(() => {
     dispatch(setLoading(isLoading));
   }, [isLoading]);
 
-  // useEffect(() => {
-  //   walletInfoApi(null)
-  //     .unwrap()
-  //     .then((result: WalletInfoData) => {
-  //       const { assets } = result.wallets[result.currentWallet];
-  //       setAssets(assets);
-  //     })
-  //     .catch(() => {
-  //       setAssets(initialAssets);
-  //     });
-  // }, []);
+  useEffect(() => {
+    walletInfoApi(null)
+      .unwrap()
+      .then((result: WalletInfoData) => {
+        const { assets } = result.wallets[result.currentWallet];
+        setAssets(assets);
+      })
+      .catch(() => {
+        setAssets(initialAssets);
+      });
+  }, []);
 
   const readMoreHandler = () => {
     setReacMoreDescription(!readMoreDescription);
   };
-  /* TODO: раскомментировать после определения бекенда */
-  // const seeAllHandler = () => {
-  //   navigate(`/playground/${id}/leaders`)
-  // }
 
-  // const resourceHandler = useCallback(
-  //   (resource: GameResource) => {
-  //     return () => {
-  //       const { url, type } = resource;
-  //       if (isTma) {
-  //         if (type === 'telegram') {
-  //           utils.openTelegramLink(url);
-  //         } else {
-  //           utils.openLink(url);
-  //         }
-  //       } else {
-  //         navigate(url);
-  //       }
-  //       console.log(url, type);
-  //     };
-  //   },
-  //   [game]
-  // );
+  const voteGameHandler = () => {
+    setIsPinCode(true)
+    setIsVoteModal(false)
+  }
 
-  // const voteGameHandler = () => {
-  //   setIsPinCode(true)
-  //   setIsVoteModal(false)
-  // }
+  const modalHandler = () => {
+    setIsVoteModal(!isVoteModal)
+  }
 
-  // const modalHandler = () => {
-  //   setIsVoteModal(!isVoteModal)
-  // }
+  const onPinSuccess = () => {
+    setIsPinCode(false);
+    setShowTransaction(true);
+  };
 
-  // const onPinSuccess = () => {
-  //   setIsPinCode(false);
-  //   setShowTransaction(true);
-  // };
+  const delay = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 10000);
+    });
+  };
 
-  // const delay = () => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(true);
-  //     }, 10000);
-  //   });
-  // };
+  const transactionSuccessHandler = async () => {
+    setIsTransactionInProgress(true);
 
-  // const transactionSuccessHandler = async () => {
-  //   setIsTransactionInProgress(true);
+    await delay();
+    setIsTransactionInProgress(false);
+    setShowTransaction(false);
+    setShowTransactionComplete(true);  };
 
-  //   await delay();
-  //   setIsTransactionInProgress(false);
-  //   setShowTransaction(false);
-  //   setShowTransactionComplete(true);  // };
 
   return (
     <Page>
@@ -136,14 +126,22 @@ const GamePage = () => {
         className="game-page__header"
       >
         <div className="game-controls">
+          <Row>
           <LinkButton className="primary-button primary-btn" to={game?.url || ""}>
             {t("play")}
           </LinkButton>
 
-          {/* <button className="rounded-button vote-button" onClick={modalHandler}>
-            <img src={iconLogoButton} alt="" />
-            <span>350k+</span>
-          </button> */}
+          <Button
+              style={{
+                padding: "var(--spacing-8) var(--spacing-12)",
+                gap: "var(--spacing-8)"
+              }}
+              onClick={modalHandler}
+              primary={false}
+              icon={iconGameVote}
+              title={t('vote-button')}
+          />
+          </Row>
         </div>
       </Tile>
       <Row className="w-screen">
@@ -174,22 +172,6 @@ const GamePage = () => {
           </div>
         </Block>
       </Section>
-      {/* TODO: раскомментировать после определения бекенда */}
-      {/* <Section title={t("leaderbord")} readMore={t("see-all")} readMoreHandle={seeAllHandler} className="leaders-section">
-        <Grid columns={12} gap={2} className="game-leader__head" isOrderedList>
-          <GameLeaderRow num="#" name={t("leader-name")} totalCoins={t("leader-total-coins")} asset={t("leader-asset")} time={t("leader-time")} isHeader />
-        </Grid>
-        {leaders && leaders.map((leader, index) => {
-          return (
-            <Grid key={`${leader.name}-${index}`} columns={12} gap={2} className="block game-leader__row" isOrderedList>
-              <GameLeaderRow num={index + 1} name={leader.name} totalCoins={leader.totalCoins} asset={leader.asset} time={leader.time} />
-            </Grid>
-          )
-        }) }
-        <Grid columns={12} gap={2} className="block game-leader__row primary-block" isOrderedList>
-          <GameLeaderRow num={12458} name="You" totalCoins="45678" asset="$PNK" time="12 H" />
-        </Grid>
-      </Section> */}
       {game?.resources && game.resources.length > 0 && (
         <Section title={t("project-resources")}>
           {game?.resources.map((resource) => (
@@ -208,8 +190,29 @@ const GamePage = () => {
           ))}
         </Section>
       )}
-      {/* {isVoteModal && <VoteModal modalHandler={modalHandler} voteHandler={voteGameHandler} />}
-      {isPinCode && <ModalPinCode onSuccess={onPinSuccess} mode="registration" />}
+
+
+      {/*todo после определения бэка поправить и сделать нормальную валидацию категорий*/}
+      <Section title={t('rating')}>
+        <RatingCategories
+            baseCategories={baseCategories}
+            gameName={game?.title}
+        />
+      </Section>
+
+      {isVoteModal && <VoteModal
+          modalHandler={modalHandler}
+          voteHandler={voteGameHandler}
+          gameName={game?.title}
+          //todo после определения бэка убрать хардкод
+          categories={baseCategories}
+      />}
+
+      {isPinCode && <ModalPinCode
+          onSuccess={onPinSuccess}
+          mode="registration"
+      />}
+
       {showTransaction && (
         <TransactionModal
           from={assets && assets[0]}
@@ -230,7 +233,7 @@ const GamePage = () => {
         <TransactionCompleteModal
           onClose={() => setShowTransactionComplete(false)}
         />
-      )} */}
+      )}
     </Page>
   );
 };

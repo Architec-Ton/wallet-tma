@@ -53,6 +53,7 @@ main {
   left: 0;
   right: 0;
   padding: var(--spacing-16);
+  z-index: 1000;
 }
 
 .mainbutton-container button {

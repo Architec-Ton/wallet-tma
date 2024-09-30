@@ -1,0 +1,4 @@
+.rating-categories-container {
+    display: flex;
+    gap: 16px;
+}
