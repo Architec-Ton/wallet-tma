@@ -139,7 +139,7 @@ const CreateMarketOrder = () => {
   };
 
   const onAssetSelect = useCallback(
-    (asset: CoinDto) => {
+    (asset?: CoinDto) => {
       if (selectedAsset === "primary") {
         dispatch(setOrderPrimaryAsset(asset));
       } else {
