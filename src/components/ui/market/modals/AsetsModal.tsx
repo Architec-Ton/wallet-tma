@@ -19,7 +19,7 @@ import "./AssetsModal.styles.css";
 
 type AssetsModalPropsType = {
   title: string;
-  onSelect: (asset: CoinDto) => void;
+  onSelect: (asset?: CoinDto) => void;
   onClose: () => void;
   assets?: CoinDto[];
 };
@@ -65,6 +65,9 @@ const AssetsModal = ({ title, onSelect, onClose, assets }: AssetsModalPropsType)
         </Row>
         {showAssets && (
           <ListBlock>
+            <ListBaseItem onClick={() => onSelect(undefined)}>
+              <span className="grow">{t("clear-asset", "assets")}</span>
+            </ListBaseItem>
             {filteredAssets &&
               filteredAssets.map((asset) => (
                 <ListBaseItem onClick={() => onSelect(asset)} key={asset.meta?.address}>
