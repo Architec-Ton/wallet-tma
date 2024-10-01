@@ -30,10 +30,10 @@ const marketSlice = createSlice({
     setMarketMode(state: MarketState, action: PayloadAction<MarketModeEnum>) {
       state.mode = action.payload;
     },
-    setOrderPrimaryAsset(state: MarketState, action: PayloadAction<CoinDto>) {
+    setOrderPrimaryAsset(state: MarketState, action: PayloadAction<CoinDto | undefined>) {
       state.fromAsset = action.payload;
     },
-    setOrderSecondaryAsset(state: MarketState, action: PayloadAction<CoinDto>) {
+    setOrderSecondaryAsset(state: MarketState, action: PayloadAction<CoinDto | undefined>) {
       state.toAsset = action.payload;
     },
     setOrderValues(state: MarketState, action: PayloadAction<{ fromValue: number; toValue: number }>) {

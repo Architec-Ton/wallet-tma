@@ -26,7 +26,7 @@ import InlineLoader from "components/ui/inlineLoader";
 import useDebounce from "hooks/useDebounce";
 import DataLossBlock from "components/typography/DataLossBlock";
 
-const PAGE_SIZE = 3
+const PAGE_SIZE = 30
 
 const MarketOrder = () => {
   const t = useLanguage("market");
@@ -90,7 +90,7 @@ const MarketOrder = () => {
     setShowSecondaryAssetModal(!showSecondaryAssetModal);
   };
 
-  const onPrimaryAssetSelect = useCallback((asset: CoinDto) => {
+  const onPrimaryAssetSelect = useCallback((asset?: CoinDto) => {
     dispatch(setOrderPrimaryAsset(asset));
     dispatch(setOrders(undefined));
     setShowPrimaryAssetModal(false);  
@@ -99,7 +99,7 @@ const MarketOrder = () => {
     setIsEndPage(false);
   }, []);
 
-  const onSecondaryAssetSelect = useCallback((asset: CoinDto) => {
+  const onSecondaryAssetSelect = useCallback((asset?: CoinDto) => {
     dispatch(setOrderSecondaryAsset(asset));
     dispatch(setOrders(undefined));
     setShowSecondaryAssetModal(false);  
@@ -150,7 +150,8 @@ const MarketOrder = () => {
           pageParams = {...pageParams, [assetParamKey]: toAsset.meta?.name.toLowerCase() === "ton" ? "ton": toAsset.meta?.address }
         }
         if (amountValue && Number(amountValue) > 0) {
-          pageParams = {...pageParams, from_amount: amountValue }
+          const amountParamKey = mode === MarketModeEnum.SELL ? "to_amount" : "from_amount";
+          pageParams = {...pageParams, [amountParamKey]: amountValue }
         }
         const { data } = await getOrders(pageParams)
         const { items, page, pages } = data as MarketOrdersDto;
