@@ -65,6 +65,7 @@ const ConfirmOrder = () => {
     };
 
     try {
+      btn.setVisible(false)
       const order = await createOrderApi(data);
       if (order.error) {
         const error = order.error as FetchBaseQueryError;
@@ -88,11 +89,10 @@ const ConfirmOrder = () => {
           sendMode: rawTxn.mode,
         });
       }
-
-      navigate("/market", { replace: true });
     } catch (e) {
       dispatch(showAlert({ message: "Transaction failed", duration: 3000 }));
     }
+    navigate("/market", { replace: true });
   };
 
   const textContents =
