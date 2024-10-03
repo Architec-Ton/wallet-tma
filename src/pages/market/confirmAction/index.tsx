@@ -76,7 +76,8 @@ const ConfirmAction = () => {
         navigate("/market", { replace: true });
       }
     } catch (error) {
-      dispatch(showAlert({ message: "Transaction faild", duration: 3000 }));
+      // TODO: вынести в константу useTranslate
+      dispatch(showAlert({ message: "Transaction failed", duration: 3000 }));
     }
   };
 
