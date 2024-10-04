@@ -124,11 +124,11 @@ const ConfirmOrder = () => {
         <ListBlock>
           <ListBaseItem className="w-full">
             <div className="grow">{t("commission", "transaction")}</div>
-            <div>0.02 TON</div>
+            <div>0.01 TON</div>
           </ListBaseItem>
           <ListBaseItem className="w-full">
             <div className="grow">{t("gas", "transaction")}</div>
-            <div>~ 0.3 TON</div>
+            <div>~ 0.14 TON</div>
           </ListBaseItem>
         </ListBlock>
       </Section>
