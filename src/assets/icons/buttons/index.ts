@@ -1,4 +1,5 @@
 import iconReverseButton from "./Icon-reverse.svg";
+import iconArrowDropdownButton from "./arrow-dropdown.svg";
 import iconBankButton from "./bank.svg";
 import iconCloseButton from "./close-square.svg";
 import iconCoinButton from "./coin.svg";
@@ -47,4 +48,5 @@ export {
   iconTasksButton,
   iconButtonCopyLight,
   iconButtonProfileUsers,
+  iconArrowDropdownButton,
 };

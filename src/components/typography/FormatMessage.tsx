@@ -1,7 +1,6 @@
 import React from "react";
 import { Trans } from "react-i18next";
 
-
 type FormatMessageProps = {
   children: React.ReactNode;
   components?: any;

@@ -1,0 +1,24 @@
+.p2p-filter__block_title {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--text-secondary-color);
+}
+
+.p2p-filter__block_value {
+  font-size: var(--font-medium);
+  line-height: 20px;
+}
+
+.p2p-filter__block .column {
+  gap: 0;
+}
+
+.p2p-filter__block .row {
+  gap: var(--spacing-8);
+}
+
+@media (prefers-color-scheme: dark) {
+  .p2p-filter__block_icon img {
+    filter: grayscale(100%) brightness(150%) contrast(100%);
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { selectAuthIsReady } from "features/auth/authSelector";
 import { useGetCategoriesMutation, useGetTopRateGamesMutation } from "features/gaming/gamingApi";
 import { selectGames, selectGamesFilter } from "features/gaming/gamingSelectors";
 import { clearFilter } from "features/gaming/gamingSlice";
@@ -23,7 +24,6 @@ import Tabs from "components/ui/tabs";
 import Tab from "components/ui/tabs/Tab";
 
 import "./index.css";
-import { selectAuthIsReady } from "features/auth/authSelector";
 
 type SearchParamsType = {
   direction?: string;

@@ -11,7 +11,7 @@ import Alert from "./Alert";
 const AlertContainer: React.FC = () => {
   const dispatch = useDispatch();
   const t = useLanguage("copy");
-  const { isVisible, message, duration } = useSelector((state: RootState) => state.alert);
+  const { isVisible, message, duration, isWarning } = useSelector((state: RootState) => state.alert);
   const [messageToAlert, setMessageToAlert] = useState("");
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const AlertContainer: React.FC = () => {
     }
   }, [isVisible, duration, dispatch]);
 
-  return <Alert text={messageToAlert} isVisible={isVisible} />;
+  return <Alert text={messageToAlert} isVisible={isVisible} isWarning={isWarning} />;
 };
 
 export default AlertContainer;
