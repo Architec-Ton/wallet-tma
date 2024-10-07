@@ -24,21 +24,23 @@ type AssetsModalPropsType = {
   assets?: CoinDto[];
 };
 
+// TODO: Раскоментировать код для NFT после реализации nft функционала
+
 const AssetsModal = ({ title, onSelect, onClose, assets }: AssetsModalPropsType) => {
   const t = useLanguage("");
   const [showAssets, setShowAssets] = useState<boolean>(true);
-  const [showNfts, setShowNfts] = useState<boolean>(false);
+  // const [showNfts, setShowNfts] = useState<boolean>(false);
   const [filteredAssets, setFilteredAssets] = useState<CoinDto[] | undefined>(assets);
 
   const assetsTabHandler = () => {
     setShowAssets(true);
-    setShowNfts(false);
+    // setShowNfts(false);
   };
 
-  const nftsTabHandler = () => {
-    setShowAssets(false);
-    setShowNfts(true);
-  };
+  // const nftsTabHandler = () => {
+  //   setShowAssets(false);
+  //   setShowNfts(true);
+  // };
 
   const searchHandler = (value: string) => {
     if (showAssets) {
@@ -59,9 +61,9 @@ const AssetsModal = ({ title, onSelect, onClose, assets }: AssetsModalPropsType)
           <div className={classNames({ selected: showAssets })} onClick={assetsTabHandler}>
             {t("title", "assets")}
           </div>
-          <div className={classNames({ selected: showNfts })} onClick={nftsTabHandler}>
+          {/* <div className={classNames({ selected: showNfts })} onClick={nftsTabHandler}>
             {t("title", "nft")}
-          </div>
+          </div> */}
         </Row>
         {showAssets && (
           <ListBlock>
@@ -77,7 +79,7 @@ const AssetsModal = ({ title, onSelect, onClose, assets }: AssetsModalPropsType)
               ))}
           </ListBlock>
         )}
-        {showNfts && (
+        {/* {showNfts && (
           <ListBlock className="nft-list-block">
             <ListBaseItem>
               <img className="nft-modal-icon" src={""} alt="" />
@@ -101,7 +103,7 @@ const AssetsModal = ({ title, onSelect, onClose, assets }: AssetsModalPropsType)
               </Column>
             </ListBaseItem>
           </ListBlock>
-        )}
+        )} */}
       </Column>
     </Modal>
   );
