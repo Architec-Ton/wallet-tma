@@ -269,5 +269,6 @@
   "market-order-status-done": "Done",
   "market-order-status-canceled": "Canceled",
   "market-order-status-executing": "Executing",
-  "market-order-status-canceling": "Canceling"
+  "market-order-status-canceling": "Canceling",
+  "market-order-status-expired": "Expired"
 }

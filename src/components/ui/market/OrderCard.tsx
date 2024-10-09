@@ -33,9 +33,10 @@ export type OrderDataType = MarketOrderDto & {
   isDone: boolean;
   isCanceled: boolean;
   isExecuting: boolean;
+  isExpired: boolean;
 };
 
-const ORDER_EXPIRED_TIME = 10 * 60000;
+const ORDER_EXPIRED_TIME = 1 * 60000;
 
 const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPropsType) => {
   const t = useLanguage("market-order");
@@ -57,7 +58,8 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
         isActive: order?.status === OrderStatus.ACTIVE,
         isDone: order?.status === OrderStatus.FINISHED,
         isExecuting: [OrderStatus.EXECUTING, OrderStatus.CANCELING].includes(order?.status),
-        isCanceled: [OrderStatus.CANCELED, OrderStatus.EXPIRED].includes(order?.status),
+        isCanceled: order?.status === OrderStatus.CANCELED,
+        isExpired: order?.status === OrderStatus.EXPIRED
       };
     }
     return undefined;
@@ -141,7 +143,7 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
             )}
             {(orderData.isActive || orderData.status === OrderStatus.CREATED) && (
               <button
-                className="small-button rounded-button primary-button"
+                className="small-button rounded-button primary-button timer-button"
                 onClick={() => onCancel(orderData.uuid)}
                 disabled={disabled || time > 0}
               >
@@ -155,6 +157,12 @@ const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPro
                     t("canceling", "market-order-status")}
                 </div>
                 <InlineLoader className="medium-loader" />
+              </Row>
+            )}
+            {orderData.isExpired && (
+              <Row className="order-finally-status">
+                <div>{t("expired", "market-order-status")}</div>
+                <img src={closeIcon} alt="" />
               </Row>
             )}
           </div>
