@@ -36,7 +36,7 @@ export type OrderDataType = MarketOrderDto & {
   isExpired: boolean;
 };
 
-const ORDER_EXPIRED_TIME = 1 * 60000;
+const ORDER_EXPIRED_TIME = 10 * 60000;
 
 const MarketOrderCard = ({ order, isActive = false, disabled, onCancel }: OwnPropsType) => {
   const t = useLanguage("market-order");
