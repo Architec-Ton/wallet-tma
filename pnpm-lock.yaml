@@ -17,6 +17,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^2.2.5
         version: 2.2.7(react-redux@9.1.2(@types/react@18.3.3)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
+      '@sentry/browser':
+        specifier: 8.34.0-internal.0
+        version: 8.34.0-internal.0
       '@ston-fi/sdk':
         specifier: ^1.0.0
         version: 1.0.2(@ston-fi/api@0.7.0)(@ton/ton@13.11.2(@ton/core@0.56.3(@ton/crypto@3.3.0))(@ton/crypto@3.3.0))
@@ -540,6 +543,38 @@ packages:
     resolution: {integrity: sha512-aJ1EJSuTdGnM6qbVC4B5DSmozPTqIag9fSzXRNNo+humQLG89XpPgdt16Ia56ORD7s+H8Pmyx44uczDQ0yDzpg==}
     cpu: [x64]
     os: [win32]
+
+  '@sentry-internal/browser-utils@8.34.0-internal.0':
+    resolution: {integrity: sha512-K/MTyGObRn4/Pu3i3fry1HFj5/GuFLa+SOaPxt9l2orp3WwAYlmVcy9VwQ4mZvxd8MbKbcNknEsENjGOs0gR/w==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/feedback@8.34.0-internal.0':
+    resolution: {integrity: sha512-STVFIpiXEabSWfFF9VoBjelHAvKSSZUzixb7Fr5rEHBrZUO9r1i8UQnWji+5iDEjGar06a1JpC1hqkE2ln4cOQ==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/replay-canvas@8.34.0-internal.0':
+    resolution: {integrity: sha512-HKq0C3wMbzc/TfPlBO4lDtHil1McVxsfxmj9lHp+z58AQFB5USMU14FlpAA504JrzWllztFkIKCG4Wqjj+82kQ==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/replay@8.34.0-internal.0':
+    resolution: {integrity: sha512-C8SdybYvqD1yoYj5enr/NVCD7PbV9S/1gqkYEDLBjT51FQprX+aL9iaPa9yizNCvOW6KUPfExgVj8UDF/ZOgsw==}
+    engines: {node: '>=14.18'}
+
+  '@sentry/browser@8.34.0-internal.0':
+    resolution: {integrity: sha512-c+6AGdGm6ssCPEAUiIOKRgbTkjvn0ZHu0OlOEtsVZfqq3K6SEZWAawuwM/fg7KLJNkjXm2yTmDrv6UnzTc3E5Q==}
+    engines: {node: '>=14.18'}
+
+  '@sentry/core@8.34.0-internal.0':
+    resolution: {integrity: sha512-qhgSoLInKwbsRMvNex/wM9WIhYF/wDXscp8+BUbPggFigNZQLMjLZRctX2lwO2auBqfiCWBi5j+VhcmJ39bXYA==}
+    engines: {node: '>=14.18'}
+
+  '@sentry/types@8.34.0-internal.0':
+    resolution: {integrity: sha512-fCs8ATj9En5flUmIkwIHQsZTMDs1m8lKvZK7RZ+gA07uN9X/6oEbyatZyzJFAhghY4ePONhw8SU25ag/jSoQwA==}
+    engines: {node: '>=14.18'}
+
+  '@sentry/utils@8.34.0-internal.0':
+    resolution: {integrity: sha512-ffdzoQN9GUnYwBK0MLT+NCOCCM52pjWAFRwidv2/ygK3cPs10D18GaFj3rXThuovZgVix/6SmNQfbogs8QsdXQ==}
+    engines: {node: '>=14.18'}
 
   '@ston-fi/api@0.7.0':
     resolution: {integrity: sha512-sLQ2JFWczUIWfyQ/RU3aZeVElHxgg6+Vn2PiNaF8eqxgk3BfsFy3DZ/E9J6WGdqSdsLjv50kKHvw6CiqmLAp1w==}
@@ -2740,6 +2775,53 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.20.0':
     optional: true
+
+  '@sentry-internal/browser-utils@8.34.0-internal.0':
+    dependencies:
+      '@sentry/core': 8.34.0-internal.0
+      '@sentry/types': 8.34.0-internal.0
+      '@sentry/utils': 8.34.0-internal.0
+
+  '@sentry-internal/feedback@8.34.0-internal.0':
+    dependencies:
+      '@sentry/core': 8.34.0-internal.0
+      '@sentry/types': 8.34.0-internal.0
+      '@sentry/utils': 8.34.0-internal.0
+
+  '@sentry-internal/replay-canvas@8.34.0-internal.0':
+    dependencies:
+      '@sentry-internal/replay': 8.34.0-internal.0
+      '@sentry/core': 8.34.0-internal.0
+      '@sentry/types': 8.34.0-internal.0
+      '@sentry/utils': 8.34.0-internal.0
+
+  '@sentry-internal/replay@8.34.0-internal.0':
+    dependencies:
+      '@sentry-internal/browser-utils': 8.34.0-internal.0
+      '@sentry/core': 8.34.0-internal.0
+      '@sentry/types': 8.34.0-internal.0
+      '@sentry/utils': 8.34.0-internal.0
+
+  '@sentry/browser@8.34.0-internal.0':
+    dependencies:
+      '@sentry-internal/browser-utils': 8.34.0-internal.0
+      '@sentry-internal/feedback': 8.34.0-internal.0
+      '@sentry-internal/replay': 8.34.0-internal.0
+      '@sentry-internal/replay-canvas': 8.34.0-internal.0
+      '@sentry/core': 8.34.0-internal.0
+      '@sentry/types': 8.34.0-internal.0
+      '@sentry/utils': 8.34.0-internal.0
+
+  '@sentry/core@8.34.0-internal.0':
+    dependencies:
+      '@sentry/types': 8.34.0-internal.0
+      '@sentry/utils': 8.34.0-internal.0
+
+  '@sentry/types@8.34.0-internal.0': {}
+
+  '@sentry/utils@8.34.0-internal.0':
+    dependencies:
+      '@sentry/types': 8.34.0-internal.0
 
   '@ston-fi/api@0.7.0':
     dependencies:
