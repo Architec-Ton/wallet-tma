@@ -3,6 +3,7 @@ import ReactGA from "react-ga4";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 
+import * as Sentry from "@sentry/browser";
 import { SDKProvider } from "@tma.js/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
@@ -19,6 +20,14 @@ import "./i18n";
 import { store } from "./store";
 
 if (GA_ID) ReactGA.initialize(GA_ID);
+
+if (import.meta.env.PROD) {
+  const dsnProd = "https://82aa908726ad43ee9b5dd7511e58dc60@glitchtip.architecton.site/1";
+  const dsnDev = "https://8e83fb5ea47542a5948003fa3e1c0a34@glitchtip.architecton.site/2";
+  const isDev = import.meta.env.VITE_APP_URL === "https://t.me/ATonDevBot/Wallet";
+
+  Sentry.init({ dsn: isDev ? dsnDev : dsnProd, environment: isDev ? "dev-stand" : "production" });
+}
 
 function App() {
   return (
