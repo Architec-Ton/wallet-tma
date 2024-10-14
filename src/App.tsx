@@ -21,7 +21,7 @@ import { store } from "./store";
 
 if (GA_ID) ReactGA.initialize(GA_ID);
 
-if (import.meta.env.PROD) {
+if (!import.meta.env.DEV) {
   const dsnProd = "https://82aa908726ad43ee9b5dd7511e58dc60@glitchtip.architecton.site/1";
   const dsnDev = "https://8e83fb5ea47542a5948003fa3e1c0a34@glitchtip.architecton.site/2";
   const isDev = import.meta.env.VITE_APP_URL === "https://t.me/ATonDevBot/Wallet";
