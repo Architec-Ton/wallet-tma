@@ -21,17 +21,13 @@ import { store } from "./store";
 
 if (GA_ID) ReactGA.initialize(GA_ID);
 
-const dsnProd = "https://82aa908726ad43ee9b5dd7511e58dc60@glitchtip.architecton.site/1";
-const dsnDev = "https://8e83fb5ea47542a5948003fa3e1c0a34@glitchtip.architecton.site/2";
-const isDev = import.meta.env.VITE_APP_URL === "https://t.me/ATonDevBot/Wallet";
+if (!import.meta.env.DEV) {
+  const dsnProd = "https://82aa908726ad43ee9b5dd7511e58dc60@glitchtip.architecton.site/1";
+  const dsnDev = "https://8e83fb5ea47542a5948003fa3e1c0a34@glitchtip.architecton.site/2";
+  const isDev = import.meta.env.VITE_APP_URL === "https://t.me/ATonDevBot/Wallet";
 
-Sentry.init({ dsn: isDev ? dsnDev : dsnProd, environment: isDev ? "dev-stand" : "production" });
-
-console.log(Sentry.getClient());
-console.log({ prod: import.meta.env.PROD });
-console.log({ dev: import.meta.env.DEV });
-console.log({ appUrl: import.meta.env.VITE_APP_URL });
-console.log({ mode: import.meta.env.MODE });
+  Sentry.init({ dsn: isDev ? dsnDev : dsnProd, environment: isDev ? "dev-stand" : "production" });
+}
 
 function App() {
   return (
