@@ -27,6 +27,12 @@ const isDev = import.meta.env.VITE_APP_URL === "https://t.me/ATonDevBot/Wallet";
 
 Sentry.init({ dsn: isDev ? dsnDev : dsnProd, environment: isDev ? "dev-stand" : "production" });
 
+console.log(Sentry.getClient());
+console.log({ prod: import.meta.env.PROD });
+console.log({ dev: import.meta.env.DEV });
+console.log({ appUrl: import.meta.env.VITE_APP_URL });
+console.log({ mode: import.meta.env.MODE });
+
 function App() {
   return (
     <>
