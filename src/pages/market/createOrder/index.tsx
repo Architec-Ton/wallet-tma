@@ -172,7 +172,6 @@ const CreateMarketOrder = () => {
   const secondaryValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.currentTarget.value);
     if (!isNaN(value) && value > 0) {
-      console.log("toAsset", toAsset)
       const decimalsLength = Math.pow(10, Number(toAsset?.meta?.decimals))
       setToValue((Math.round(value * decimalsLength) / decimalsLength).toString());
     } else {
@@ -236,7 +235,7 @@ const CreateMarketOrder = () => {
               <div className="secondary-content">
                 <input
                   className={classNames("order-asset-input", {
-                    error: orderMode === MarketModeEnum.SELL && Number(fromValue) > Number(fromAsset?.amount),
+                    error: orderMode === MarketModeEnum.SELL && Number(fromValue) > Number(fromAsset?.amount || 0),
                   })}
                   type="number"
                   inputMode="numeric"
@@ -250,7 +249,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow order-data-row">
               <div>{t("your-balance")}</div>
-              <div>{fromAsset?.amount}</div>
+              <div>{fromAsset?.amount || 0}</div>
             </Row>
           </ListBaseItem>
         </ListBlock>
@@ -264,7 +263,7 @@ const CreateMarketOrder = () => {
               <div className="secondary-content">
                 <input
                   className={classNames("order-asset-input", {
-                    error: orderMode === MarketModeEnum.BUY && Number(toValue) > Number(toAsset?.amount),
+                    error: orderMode === MarketModeEnum.BUY && Number(toValue) > Number(toAsset?.amount || 0),
                   })}
                   type="number"
                   inputMode="numeric"
@@ -278,7 +277,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow order-data-row">
               <div>{t("your-balance")}</div>
-              <div>{toAsset?.amount}</div>
+              <div>{toAsset?.amount || 0}</div>
             </Row>
           </ListBaseItem>
         </ListBlock>
