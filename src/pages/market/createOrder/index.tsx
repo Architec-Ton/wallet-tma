@@ -172,7 +172,6 @@ const CreateMarketOrder = () => {
   const secondaryValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.currentTarget.value);
     if (!isNaN(value) && value > 0) {
-      console.log("toAsset", toAsset)
       const decimalsLength = Math.pow(10, Number(toAsset?.meta?.decimals))
       setToValue((Math.round(value * decimalsLength) / decimalsLength).toString());
     } else {
