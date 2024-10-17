@@ -90,3 +90,11 @@
   width: var(--font-size-medium);
   height: var(--font-size-medium);
 }
+
+.timer-button,
+.timer-button:disabled {
+  min-width: 73px;
+  color: var(--text-color);
+  background-color: var(--button-bg-color);
+  border-color: var(--button-bg-color);
+}

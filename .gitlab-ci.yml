@@ -1,0 +1,81 @@
+---
+image: ubuntu:22.04
+
+stages:
+  - build
+  - deploy
+
+variables:
+  DOCKER_IMAGE: $CI_REGISTRY_IMAGE
+
+services:
+  - ubuntu:22.04
+
+.deploy_lifecycle: &deploy_lifecycle
+  stage: deploy
+  before_script:
+    - apt update
+    - apt install openssh-client -y
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+deploy_dev:
+  <<: *deploy_lifecycle
+  tags:
+    - docker
+  stage: deploy
+
+  script: |
+    eval $(ssh-agent -s)
+
+    echo "$DEV_SERVER_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    mkdir -p ~/.ssh
+    chmod 600 ~/.ssh
+
+    ssh -p22 deployer@185.212.47.198 << 'EOF'
+      cd /srv/adev/wallet-tma
+      git pull origin dev
+      cd ..
+      docker compose -f docker-compose.dev.yml build --no-cache
+      docker compose -f docker-compose.dev.yml down
+      docker compose -f docker-compose.dev.yml up -d
+      docker compose -f docker-compose.dev.yml ps -a
+      docker logs adev-wallet-1 --follow
+    EOF
+  only:
+    refs:
+      - dev
+
+before_script:
+  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+
+build_docker_image_main:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Building Docker image for main branch..."
+    - docker build -t $DOCKER_IMAGE:latest .
+    - docker tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+    - echo "Pushing Docker image for main branch..."
+    - docker push $DOCKER_IMAGE:latest || exit 1
+    - docker push $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA || exit 1
+  only:
+    - main
+
+build_docker_image_dev:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Building Docker image for dev branch..."
+    - docker build -t $DOCKER_IMAGE:develop .
+    - docker tag $DOCKER_IMAGE:develop $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+    - echo "Pushing Docker image for dev branch..."
+    - docker push $DOCKER_IMAGE:develop || exit 1
+    - docker push $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA || exit 1
+  only:
+    - dev

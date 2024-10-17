@@ -159,9 +159,13 @@ const CreateMarketOrder = () => {
   };
 
   const primaryValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.currentTarget.value);
+    if (e.currentTarget.value.endsWith(",") || e.currentTarget.value.endsWith(".")) {
+      setFromValue(e.currentTarget.value)
+      return
+    }
+
+    const value = Number(e.currentTarget.value.replace(",", "."));
     if (!isNaN(value) && value > 0) {
-      console.log("fromAsset", fromAsset)
       const decimalsLength = Math.pow(10, Number(fromAsset?.meta?.decimals))
       setFromValue((Math.round(value * decimalsLength) / decimalsLength).toString());
     } else {
@@ -170,9 +174,13 @@ const CreateMarketOrder = () => {
   };
 
   const secondaryValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.currentTarget.value);
+    if (e.currentTarget.value.endsWith(",") || e.currentTarget.value.endsWith(".")) {
+      setFromValue(e.currentTarget.value)
+      return
+    }
+    
+    const value = Number(e.currentTarget.value.replace(",", "."));
     if (!isNaN(value) && value > 0) {
-      console.log("toAsset", toAsset)
       const decimalsLength = Math.pow(10, Number(toAsset?.meta?.decimals))
       setToValue((Math.round(value * decimalsLength) / decimalsLength).toString());
     } else {
@@ -236,10 +244,11 @@ const CreateMarketOrder = () => {
               <div className="secondary-content">
                 <input
                   className={classNames("order-asset-input", {
-                    error: orderMode === MarketModeEnum.SELL && Number(fromValue) > Number(fromAsset?.amount),
+                    error: orderMode === MarketModeEnum.SELL && Number(fromValue) > Number(fromAsset?.amount || 0),
                   })}
-                  type="number"
-                  inputMode="numeric"
+                  type="text"
+                  inputMode="decimal"
+                  pattern="[0-9.,]"
                   value={fromValue}
                   placeholder="0"
                   onChange={primaryValueChangeHandler}
@@ -250,7 +259,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow order-data-row">
               <div>{t("your-balance")}</div>
-              <div>{fromAsset?.amount}</div>
+              <div>{fromAsset?.amount || 0}</div>
             </Row>
           </ListBaseItem>
         </ListBlock>
@@ -264,10 +273,11 @@ const CreateMarketOrder = () => {
               <div className="secondary-content">
                 <input
                   className={classNames("order-asset-input", {
-                    error: orderMode === MarketModeEnum.BUY && Number(toValue) > Number(toAsset?.amount),
+                    error: orderMode === MarketModeEnum.BUY && Number(toValue) > Number(toAsset?.amount || 0),
                   })}
-                  type="number"
-                  inputMode="numeric"
+                  type="text"
+                  inputMode="decimal"
+                  pattern="[0-9.,]"
                   value={toValue}
                   placeholder="0"
                   onChange={secondaryValueChangeHandler}
@@ -278,7 +288,7 @@ const CreateMarketOrder = () => {
           <ListBaseItem>
             <Row className="grow order-data-row">
               <div>{t("your-balance")}</div>
-              <div>{toAsset?.amount}</div>
+              <div>{toAsset?.amount || 0}</div>
             </Row>
           </ListBaseItem>
         </ListBlock>
