@@ -10,23 +10,19 @@ import MiniBlock from "../../typography/MiniBlock";
 import Title from "../../typography/Title";
 import ListBlock from "../listBlock";
 import ListBaseItem from "../listBlock/ListBaseItem";
-// import { useApiGetBankReferralsQuery } from "features/bank/bankApi";
 import "./ReferralsInfo.style.css";
 
-const ReferralsInfo = () => {
+const ReferralsInfo = ({ referrals }: {
+  referrals?: number
+}) => {
   const t = useLanguage("bank");
-  // const { data, isLoading } = useApiGetBankReferralsQuery(null)
-
-  // if (isLoading) {
-  //   return null
-  // }
 
   return (
     <ListBlock>
       <ListBaseItem className="referals-block grow">
         <Column className="referals-info grow">
           <Title title={t("Referrals")} hintMessage={t("Referrals-hint")} />
-          <MiniBlock icon={iconReferralsButton} text={0} className="grow" />
+          <MiniBlock icon={iconReferralsButton} text={Number(referrals)} className="grow" />
         </Column>
       </ListBaseItem>
       <ListBaseItem className="center">

@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import useLanguage from "hooks/useLanguage";
 
 import Grid from "../../containers/Grid";
 import BlockWithTitle from "../../typography/BlockWithTitle";
+import { BankInfoDto } from "types/banks";
+
 import "./BankMintingInfo.styles.css";
 
-const bankers = 6350;
-const freeBanks = 64267; // 271719;
-const progress = Math.round(100 - (100 * freeBanks) / 500000);
 
-const BankMintingInfo = () => {
+const BankMintingInfo = ({bankInfo}: {
+  bankInfo: BankInfoDto | null
+}) => {
   const t = useLanguage("bank");
+
+  const progress = useMemo(() => {
+    if (bankInfo) {
+      return Math.round(100 - (100 * bankInfo.freeBanks) / bankInfo.totalBanks);
+    }
+  }, [bankInfo])
+
   return (
     <BlockWithTitle title={t("minting")} hintMessage={t("minting-hint")} className="minting-info__block">
       <Grid columns={3} gap={4} className="minting-info">
@@ -24,11 +32,11 @@ const BankMintingInfo = () => {
         </Grid>
         <Grid colSpan={2} className="bankers">
           <div>{t("bankers")}</div>
-          <div>{bankers.toLocaleString()}</div>
+          <div>{bankInfo?.bankers.toLocaleString()}</div>
         </Grid>
         <Grid colSpan={2} className="free-banks">
           <div>{t("free-banks")}</div>
-          <span>{freeBanks.toLocaleString()}</span>
+          <span>{bankInfo?.freeBanks.toLocaleString()}</span>
         </Grid>
       </Grid>
     </BlockWithTitle>
