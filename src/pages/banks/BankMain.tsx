@@ -154,7 +154,7 @@ function BankMain() {
               onClick={() => navigate("/bank/tasks")}
             />
           </BlockWithTitle>
-          <ReferralsInfo referrals={bankInfoData?.referrals} />
+          <ReferralsInfo referrals={bankInfoData?.bankReferrals.referralsCount} />
           <BankMintingInfo bankInfo={bankInfoData} />
         </Column>
         <History items={bankInfoData ? bankInfoData.history : []} />
