@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { showAlert } from "features/alert/alertSlice";
-import { useApiGetBankReferralsQuery } from "features/bank/bankApi";
+import { useApiGetBankInfoMutation } from "features/bank/bankApi";
 
 import { iconBankButton, iconButtonCopyLight, iconButtonProfileUsers } from "assets/icons/buttons";
 
@@ -18,19 +18,26 @@ import MiniBlock from "components/typography/MiniBlock";
 
 import { APP_URL } from "../../constants";
 import "./BankReferral.styles.css";
+import { BankReferralsDto } from "types/banks";
 
 const BankReferral = () => {
   const t = useLanguage("bank-referral");
   const page = usePage();
   const ton = useTon();
-  const { data, isLoading } = useApiGetBankReferralsQuery(null);
+  const [bankInfoApi] = useApiGetBankInfoMutation();
   const dispatch = useDispatch();
 
   const [referralLink, setReferralLink] = useState<string>(APP_URL);
+  const [bankReferrals, setBankReferralls] = useState<BankReferralsDto>()
 
   useEffect(() => {
-    page.setLoading(isLoading);
-  }, [isLoading]);
+    const fetchBankInfoData = async () => {
+      const bankInfoData = await bankInfoApi(null).unwrap()
+      setBankReferralls(bankInfoData.bankReferrals)
+    }
+
+    fetchBankInfoData()
+  }, []);
 
   useEffect(() => {
     if (ton.wallet.address) {
@@ -71,15 +78,15 @@ const BankReferral = () => {
       </BlockWithTitle>
       <Row className="referral-data w-full">
         <BlockWithTitle title={t("reward-title")} hintMessage={t("reward-hint")} className="">
-          <MiniBlock icon={iconBankButton} text={data?.reward || 0} />
+          <MiniBlock icon={iconBankButton} text={bankReferrals?.reward || 0} />
         </BlockWithTitle>
         <BlockWithTitle title={t("referral-title")} hintMessage={t("referral-hint")}>
-          <MiniBlock icon={iconButtonProfileUsers} text={data?.count || 0} />
+          <MiniBlock icon={iconButtonProfileUsers} text={bankReferrals?.referralsCount || 0} />
           <div className="referral-count">
             <div className="font-medium">{t("bought-bank")}</div>
             <div className="">
               <FormatMessage components={{ span: <span /> }}>
-                {t("count", undefined, { count: data?.boughtBanks || 0 })}
+                {t("count", undefined, { count: bankReferrals?.referralsPurchaseCount || 0 })}
               </FormatMessage>
             </div>
           </div>

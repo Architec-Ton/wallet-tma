@@ -15,6 +15,12 @@ export interface BankBuyDto {
   contract: Address | string;
 }
 
+export interface BankReferralsDto {
+  reward: number;
+  referralsPurchaseCount: number;
+  referralsCount: number;
+}
+
 export interface BankInfoDto {
   bnkAmount: number;
   bnkStackedAmount: number;
@@ -26,4 +32,5 @@ export interface BankInfoDto {
   freeBanks: number;
   totalBanks: number;
   history: TransactionHistoryItemDto[];
+  bankReferrals: BankReferralsDto;
 }
