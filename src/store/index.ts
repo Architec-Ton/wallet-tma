@@ -1,6 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import ratingReducer from "../features/rating/ratingSlice.ts";
+import { marketApi } from "features/market/marketApi";
+import marketSlice from "features/market/marketSlice";
+import popupSlice from "features/tma/popupSlice";
+
 import alertReducer from "../features/alert/alertSlice";
 import { authApi } from "../features/auth/authApi";
 import authSlice from "../features/auth/authSlice";
@@ -32,15 +35,17 @@ export const store = configureStore({
     swap: swapSlice,
     wallet: walletSlice,
     alert: alertReducer,
-    rating: ratingReducer,
     pincode: pinCodeModalReducer,
     trx: trxModalReducer,
+    market: marketSlice,
+    popup: popupSlice,
     [trxApi.reducerPath]: trxApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,
     [gamingApi.reducerPath]: gamingApi.reducer,
     [walletApi.reducerPath]: walletApi.reducer,
     [stonFiApi.reducerPath]: stonFiApi.reducer,
+    [marketApi.reducerPath]: marketApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -50,6 +55,7 @@ export const store = configureStore({
       walletApi.middleware,
       gamingApi.middleware,
       stonFiApi.middleware,
+      marketApi.middleware,
     ),
 });
 

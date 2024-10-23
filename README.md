@@ -66,7 +66,6 @@ apt install git nginx certbot python3-certbot-nginx -y
 
 # Install certs
 
-
 ```bash
-certbot --nginx -d DOMAIN_NAME
+certbot --nginx --register-unsafely-without-email -d DOMAIN_NAME
 ```

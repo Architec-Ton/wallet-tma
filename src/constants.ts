@@ -23,3 +23,5 @@ export const TON_PINCODE_SALT = import.meta.env.VITE_TON_PINCODE_SALT;
 export const TON_JETTON = "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c";
 
 export const GA_ID = import.meta.env.VITE_GA_ID;
+
+export const P2P_BE_URL = import.meta.env.VITE_P2P_BE_URL;

@@ -57,7 +57,7 @@ function History({ items = [] }: Props) {
             return (
               <Section key={key} title={displayDate} className="history-list-section">
                 {dataList.map((event) => (
-                  <div key={event.utime} className="history-list-item_wrapper">
+                  <div key={event.utime + event.type} className="history-list-item_wrapper">
                     <HistoryEvent
                       eventType={event.type}
                       eventDescription={t(event.type)}

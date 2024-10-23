@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import { applicationSubmitIcon, walletSafetyIcon } from "assets/icons/settings";
+
+import LinkButton from "components/buttons/LinkButton";
+
 import { logOutIcon } from "../assets/icons/buttons";
 import TileButton from "../components/buttons/TileButton";
 import Column from "../components/containers/Column";
@@ -64,6 +68,29 @@ function AccountDisconnect() {
           <Address address={address} copy={false} />
         </TileButton>
         {/* {tonMode === TonConnectionMode.tonconnect && <TonConnectButton />} */}
+
+        <h2 className="title" style={{ marginTop: 24 }}>
+          Settings
+        </h2>
+
+        <TileButton
+          icon={walletSafetyIcon}
+          title={t("wallet-safety")}
+          onClick={() => navigate("/wallet-safety")}
+          style={{ lineHeight: "2opx" }}
+        />
+        <LinkButton
+          to="https://docs.google.com/forms/d/1VXgjs4JDzQ4uP8SNN9UM1TD5Hv_y3RxlVmoLJ5G_dMk/viewform?edit_requested=true"
+          className="w-full"
+        >
+          <TileButton
+            icon={applicationSubmitIcon}
+            title={t("application-submit")}
+            onClick={() => {}}
+            style={{ lineHeight: "2opx" }}
+            className="w-full"
+          />
+        </LinkButton>
       </Column>
     </Page>
   );

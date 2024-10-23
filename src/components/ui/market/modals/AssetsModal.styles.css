@@ -1,0 +1,25 @@
+.asset-modal-icon {
+  width: var(--spacing-20);
+  height: var(--spacing-20);
+  border-radius: 50%;
+}
+
+.nft-modal-icon {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  border-radius: var(--spacing-8);
+}
+
+.nft-list-block .column {
+  gap: var(--spacing-8);
+}
+
+.assets-tab {
+  color: var(--text-secondary-color);
+  font-size: var(--font-size-large);
+  margin-top: var(--spacing-8);
+}
+
+.assets-tab .selected {
+  color: var(--text-color);
+}

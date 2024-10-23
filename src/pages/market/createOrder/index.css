@@ -1,0 +1,40 @@
+.market-order-form .order-data-row {
+  height: var(--spacing-32);
+}
+
+.market-action {
+  --grid-cols: 2;
+}
+
+.market-order-form .tabs-block {
+  width: 124px;
+  padding: var(--spacing-4);
+  background-color: rgba(0, 0, 0, 0.12);
+  align-items: stretch;
+}
+
+.market-order-form .tab {
+  font-size: var(--font-size-medium);
+  padding: var(--spacing-8);
+}
+
+.market-asset-icon {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  border-radius: 50%;
+}
+
+.market-asset-info {
+  font-size: var(--font-size-mlarge);
+}
+
+.order-asset-input {
+  text-align: right;
+  padding: 0;
+  font-size: var(--font-size-mlarge);
+  width: 100%;
+}
+
+.order-asset-input.error {
+  color: var(--error-color);
+}

@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { Address, toNano } from "@ton/core";
 import { selectAuthIsReady } from "features/auth/authSelector";
+import { AssetKind, useLazyGetStonFiAssetQuery } from "features/stonfi/stonFiApi";
 import { useApiWalletAssetsMutation } from "features/wallet/walletApi";
 import type { CoinDto } from "types/assest";
 
@@ -26,6 +27,8 @@ import ListBlock from "components/ui/listBlock";
 import ListBaseItem from "components/ui/listBlock/ListBaseItem";
 import AssetsList from "components/ui/send/assets";
 
+import { TON_JETTON } from "../../constants";
+
 interface ItemInfo {
   title: string;
   value?: string;
@@ -35,6 +38,7 @@ const SendPage = () => {
   const t = useLanguage("send");
   //   const navigate = useNavigate();
   const [walletApiAssets] = useApiWalletAssetsMutation();
+  const [getStonFiAsset] = useLazyGetStonFiAssetQuery();
   const page = usePage();
   const navigate = useRouter();
   const [assets, setAssets] = useState<CoinDto[]>([]);
@@ -49,6 +53,7 @@ const SendPage = () => {
   const ton = useTon();
   const contracts = useContracts();
   const [confirmInfo, setConfirmInfo] = useState<ItemInfo[]>([]);
+  const [assetPrice, setAssetPrice] = useState<string>();
   const { state } = useLocation(); // state is any or unknown
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +61,7 @@ const SendPage = () => {
     try {
       Address.parse(event.target.value);
       setError(false);
-      setIsButtonEnabled(event.target.value != "");
+      setIsButtonEnabled(event.target.value !== "");
     } catch (err) {
       setError(true);
       setIsButtonEnabled(false);
@@ -65,6 +70,7 @@ const SendPage = () => {
 
   const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const amount = Number(event.target.value);
+
     if (step === 2 && !Number.isNaN(amount) && amount > 0 && asset && amount <= asset?.amount) {
       btn.init(
         t("continue", "button"),
@@ -134,6 +140,7 @@ const SendPage = () => {
     } else if (step === 2) {
       btn.setVisible(false);
     }
+
     setAmount(event.target.value);
   };
 
@@ -153,6 +160,7 @@ const SendPage = () => {
 
   const handleInfo = async () => {
     try {
+      page.setLoading(true);
       const result = await walletApiAssets(null).unwrap();
 
       setAssets(result);
@@ -165,12 +173,14 @@ const SendPage = () => {
 
   useEffect(() => {
     page.setTitle(t("choose-asset"));
+
     if (state) {
       setAddress(state);
     }
 
-    if (isReady) handleInfo();
-  }, [isReady]);
+    if (isReady && !assets.length) handleInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReady, assets]);
 
   useEffect(() => {
     if (step === 1) {
@@ -183,11 +193,22 @@ const SendPage = () => {
         isButtonEnabled,
       );
     }
+    if (step === 2) {
+      if (asset) {
+        const assetAddress = asset.type === AssetKind.Ton ? TON_JETTON : asset.meta?.address;
+
+        getStonFiAsset(assetAddress).then(({ data }) => {
+          const price = data?.asset.dex_price_usd || data?.asset.third_party_usd_price;
+
+          setAssetPrice(price);
+        });
+      }
+    }
     if (step === 4) {
       navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, isButtonEnabled, step]);
+  }, [address, isButtonEnabled, step, asset]);
 
   const setMaxAmount = () => {
     setAmount(`${asset?.amount}`);
@@ -205,17 +226,23 @@ const SendPage = () => {
       {step === 2 && (
         <>
           <Row>
-            <img src={iconPageSend} />
+            <img src={iconPageSend} alt="Send Page" />
             <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />
-          <TransferAsset asset={asset} value={amount} onChange={handleAmountInputChange} setMaxAmount={setMaxAmount} />
+          <TransferAsset
+            asset={asset}
+            value={amount}
+            onChange={handleAmountInputChange}
+            setMaxAmount={setMaxAmount}
+            assetPrice={assetPrice}
+          />
         </>
       )}
       {step === 3 && (
         <>
           <Row>
-            <img src={iconPageSend} />
+            <img src={iconPageSend} alt="Send Page" />
             <h2> Send to {shortenString(address)}</h2>
           </Row>
           <Delimiter />

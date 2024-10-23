@@ -1,5 +1,13 @@
 .title {
   margin: var(--spacing-12) 0;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--spacing-24);
+  line-height: var(--spacing-28);
+
+  color: var(--text-color);
 }
 
 .icon-start .tile-icon {

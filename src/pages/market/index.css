@@ -1,0 +1,85 @@
+.market-menu {
+  justify-content: space-around;
+  width: 100%;
+}
+
+.market-menu-item {
+  align-items: center;
+}
+
+.market-filter {
+  gap: var(--spacing-8);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.block-row-icon {
+  align-self: flex-start;
+}
+
+.ads-block-title {
+  margin-bottom: var(--spacing-4);
+}
+
+.ads-block-hint {
+  color: var(--text-secondary-color);
+  font-size: var(--font-size-small);
+}
+
+.icon-color-secondary {
+  filter: invert(0.7);
+}
+
+.secondary-content {
+  color: var(--text-secondary-color);
+}
+
+.text-sm {
+  font-size: var(--font-size-small);
+}
+
+.small-button {
+  padding: var(--spacing-4) var(--spacing-12);
+}
+
+.order-data-row {
+  justify-content: space-between;
+}
+
+.orders-filter {
+  align-items: stretch;
+}
+
+.amount-block .responsive-input {
+  height: var(--font-size-mlarge);
+}
+
+.amount-block .responsive-input-title {
+  padding: 0;
+}
+
+.amount-block .responsive-input input,
+.amount-block .responsive-input .asset-value {
+  font-size: var(--font-size-medium);
+  line-height: var(--font-size-mlarge);
+  height: var(--font-size-mlarge);
+  text-align: left;
+}
+
+.market-order-asset {
+  margin-bottom: var(--spacing-4);
+}
+
+.new-ad-btn {
+  color: var(--link-color);
+}
+
+.uppercase-text {
+  text-transform: uppercase;
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon-color-secondary {
+    filter: invert(0.5);
+  }
+}

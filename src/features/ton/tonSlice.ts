@@ -57,9 +57,12 @@ const tonSlice = createSlice({
     setExpiration(state) {
       state.expiration = new Date(new Date().getTime() + 30000).getTime();
     },
+    updatePrivateKey(state, action: PayloadAction<string>) {
+      state.privateKey = action.payload;
+    },
   },
 });
 
-export const { setAddress, setLoading, setSeqno, setExpiration } = tonSlice.actions;
+export const { setAddress, setLoading, setSeqno, setExpiration, updatePrivateKey } = tonSlice.actions;
 
 export default tonSlice.reducer;

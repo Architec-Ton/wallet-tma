@@ -13,6 +13,10 @@ export function useTonClient() {
     async (): Promise<TonClient> =>
       new TonClient({
         endpoint: await endpointPromise,
+        // endpoint:  TON_CLIENT_NETWORK === "mainnet"
+        //    ? "https://toncenter.com/api/v2/jsonRPC"
+        //    : "https://testnet.toncenter.com/api/v2/jsonRPC",
+        // await endpointPromise,
         // apiKey: TONAPI_KEY,
       }),
     [],

@@ -1,9 +1,11 @@
 import type { ChangeEvent } from "react";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import type { CoinDto } from "types/assest";
 
 import useLanguage from "hooks/useLanguage";
+
+import { usdPriceFormatter } from "utils/formatter";
 
 import Column from "../../containers/Column";
 import { SuffixInput } from "../../inputs/SuffixInput";
@@ -15,9 +17,10 @@ type OwnPropsType = {
   value: string;
   disabled?: boolean;
   setMaxAmount?: () => void;
+  assetPrice?: string;
 };
 
-const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPropsType) => {
+const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount, assetPrice }: OwnPropsType) => {
   // const [assetValue, setAssetValue] = useState<string>('');
   // const [error, setError] = useState<boolean>(false);
 
@@ -27,8 +30,18 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPr
     // setAssetValue(value || '');
   }, [value]);
 
+  const formatedPrice = useMemo(() => usdPriceFormatter(Number(assetPrice)), [assetPrice]);
+
+  const multipliedFormatedPrice = useMemo(() => {
+    if (!assetPrice || !value || Number.isNaN(Number(value))) return null;
+
+    const multipliedPrice = Number(assetPrice) * Number(value);
+
+    return usdPriceFormatter(multipliedPrice);
+  }, [assetPrice, value]);
+
   return (
-    <Column className="justify-between asset-row">
+    <Column className="justify-between asset-row send-asset-row">
       <div className="trans" />
       <SuffixInput
         suffix={asset?.meta?.symbol}
@@ -37,6 +50,15 @@ const TransferAsset = ({ asset, disabled, onChange, value, setMaxAmount }: OwnPr
         className="transfer-input"
         disabled={disabled}
       />
+
+      {assetPrice && (
+        <div className="asset-price">
+          {value && multipliedFormatedPrice
+            ? `≈ ${multipliedFormatedPrice}`
+            : `1 ${asset?.meta?.symbol} ≈ ${formatedPrice}`}
+        </div>
+      )}
+
       <button
         className="rounded-button control-button"
         style={{

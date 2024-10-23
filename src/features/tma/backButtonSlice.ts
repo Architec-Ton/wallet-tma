@@ -3,10 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface BackButtonState {
   isVisible: boolean;
+  isAppWasReloaded: boolean;
 }
 
 const initialState: BackButtonState = {
   isVisible: false,
+  isAppWasReloaded: false,
 };
 
 const backButtonSlice = createSlice({
@@ -16,9 +18,12 @@ const backButtonSlice = createSlice({
     setBackButtonVisible(state, action: PayloadAction<boolean>) {
       state.isVisible = action.payload;
     },
+    setIsAppWasReloaded(state, action: PayloadAction<boolean>) {
+      state.isAppWasReloaded = action.payload;
+    },
   },
 });
 
-export const { setBackButtonVisible } = backButtonSlice.actions;
+export const { setBackButtonVisible, setIsAppWasReloaded } = backButtonSlice.actions;
 
 export default backButtonSlice.reducer;

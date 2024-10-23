@@ -1,6 +1,12 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
+import Market from "pages/market";
+import ConfirmAction from "pages/market/confirmAction";
+import ConfirmOrder from "pages/market/confirmOrder";
+import CreateMarketOrder from "pages/market/createOrder";
+import MarketOrder from "pages/market/order";
+
 import BankStakingHistory from "./components/ui/bank/BankStakingHistory";
 import AccountDisconnect from "./pages/AccountDisconnect";
 import Main from "./pages/Main";
@@ -168,6 +174,26 @@ const router = createBrowserRouter(
     {
       path: "/bank/referal",
       element: <BankReferral />,
+    },
+    {
+      path: "/market",
+      element: <Market />,
+    },
+    {
+      path: "/market/order",
+      element: <MarketOrder />,
+    },
+    {
+      path: "/market/order/:id",
+      element: <ConfirmAction />,
+    },
+    {
+      path: "/market/create-order",
+      element: <CreateMarketOrder />,
+    },
+    {
+      path: "/market/create-order/confirm",
+      element: <ConfirmOrder />,
     },
   ],
   { basename: "/wallet" },
