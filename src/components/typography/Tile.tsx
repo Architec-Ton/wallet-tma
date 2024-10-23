@@ -8,6 +8,7 @@ import { LogoSVG } from "components/ui/listBlock/ListBlockItem";
 import Row from "../containers/Row";
 import Block from "./Block";
 import "./Tile.styles.css";
+import {lockIcon} from "assets/icons/buttons";
 
 interface OwnProps<T> extends HTMLAttributes<T> {
   icon?: string;
@@ -47,13 +48,14 @@ function Tile({
           {children}
         </div>
       </Row>
-        { info &&
+        { info !=='0' ? (
             <div style={{
                 justifySelf: "end",
             }}>
                 {info}
             </div>
-
+        ) :
+            <img src={lockIcon} alt="lock"/>
         }
       {iconAction && (
         <img
