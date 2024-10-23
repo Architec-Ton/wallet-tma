@@ -25,7 +25,7 @@ type OwnPropsType = {
     gameName: string;
     categories: [];
     voteValue: number;
-    setVoteValue: () => void;
+    setVoteValue: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const VoteModal = ({ modalHandler, voteHandler, gameName, categories, voteValue, setVoteValue }: OwnPropsType) => {
@@ -86,36 +86,36 @@ const VoteModal = ({ modalHandler, voteHandler, gameName, categories, voteValue,
                 </Row>
             ),
         },
-
-        categorySelector: {
-            image: selectCategoryImg,
-            title: t('title-select-category'),
-            description: t('description-select-category'),
-            mainButtonConf: {
-                titleMB: t('mainbutton-text-select-category'),
-                onClickMB: setStepVote,
-                visibleMB: true,
-            },
-            content: (
-                <ListBlock>
-                    {baseCategories.map(category => (
-                        <ListBaseItem className="vote-selector-categories-container">
-                            <Row key={category.name} onClick={() => setCategory(category)}>
-                                <div className="vote-selector-categories-switch">
-                                    {selectedCategory === category.name ? (
-                                        <img src={selectorSwitchCheck} alt="" />
-                                    ) : (
-                                        <img src={selectorSwitch} alt="" />
-                                    )}
-                                </div>
-                                <div className="vote-selector-categories-name">{category.name}</div>
-                                <div className="vote-selector-categories-description">— {category.description}</div>
-                            </Row>
-                        </ListBaseItem>
-                    ))}
-                </ListBlock>
-            ),
-        },
+        // todo раскоментить после MVP
+        // categorySelector: {
+        //     image: selectCategoryImg,
+        //     title: t('title-select-category'),
+        //     description: t('description-select-category'),
+        //     mainButtonConf: {
+        //         titleMB: t('mainbutton-text-select-category'),
+        //         onClickMB: setStepVote,
+        //         visibleMB: true,
+        //     },
+        //     content: (
+        //         <ListBlock>
+        //             {baseCategories.map(category => (
+        //                 <ListBaseItem className="vote-selector-categories-container">
+        //                     <Row key={category.name} onClick={() => setCategory(category)}>
+        //                         <div className="vote-selector-categories-switch">
+        //                             {selectedCategory === category.name ? (
+        //                                 <img src={selectorSwitchCheck} alt="" />
+        //                             ) : (
+        //                                 <img src={selectorSwitch} alt="" />
+        //                             )}
+        //                         </div>
+        //                         <div className="vote-selector-categories-name">{category.name}</div>
+        //                         <div className="vote-selector-categories-description">— {category.description}</div>
+        //                     </Row>
+        //                 </ListBaseItem>
+        //             ))}
+        //         </ListBlock>
+        //     ),
+        // },
 
         confirmVotes: {
             image: voteImage,

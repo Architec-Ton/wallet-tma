@@ -22,7 +22,7 @@ export const gamingApi = createApi({
 			},
 		}),
 		getGame: builder.query<IGame, string>({
-			query: id => `app/${id}`,
+			query: id => `https://dev-catalog.architecton.site/api/v2/catalog/app/${id}`,
 		}),
 		getGameLeaders: builder.query<TGameLeader[], { id: string; limit?: number }>({
 			query: ({ id, limit = 0 }) => `leaders/?gameId=${id}${limit ? `&_limit=${limit}` : ''}`,

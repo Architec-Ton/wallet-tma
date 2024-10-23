@@ -18,7 +18,7 @@ interface OwnProps<T> extends HTMLAttributes<T> {
   style?: CSSProperties;
   className?: string;
   isVerified?: boolean;
-  info?: string;
+  info?: string | number;
   children?: React.ReactNode;
   maxHeightIcon?: string;
 }
