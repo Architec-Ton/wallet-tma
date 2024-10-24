@@ -152,10 +152,10 @@ const VoteModal = ({ modalHandler, voteHandler, gameName, categories, voteValue,
                         <div>{t('confirm-amount')}</div>
                         <div>{voteValue} $ARC</div>
                     </ListBaseItem>
-                    <ListBaseItem>
-                        <div>{t('confirm-gas')}</div>
-                        <div>~ 0,0512 TON</div>
-                    </ListBaseItem>
+                    {/*<ListBaseItem>*/}
+                    {/*    <div>{t('confirm-gas')}</div>*/}
+                    {/*    <div>~ 0,0512 TON</div>*/}
+                    {/*</ListBaseItem>*/}
                 </ListBlock>
             ),
         },

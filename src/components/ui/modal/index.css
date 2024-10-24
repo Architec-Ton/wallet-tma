@@ -102,6 +102,7 @@
   flex-grow: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
+  max-height: 100%;
 }
 
 .modal__row {

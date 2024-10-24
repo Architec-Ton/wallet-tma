@@ -25,6 +25,8 @@ import Slider from 'components/ui/slider';
 
 import type { RootState } from '../../../store';
 import './index.css';
+import {Cell} from "@ton/core";
+import {useTon} from "hooks/useTon";
 
 const typedIcons = {
   website: iconGlobalButton,
@@ -34,6 +36,7 @@ const typedIcons = {
 
 const GamePage = () => {
   const t = useLanguage('game');
+  const ton = useTon();
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const isReady = useAppSelector(selectAuthIsReady);
@@ -53,28 +56,36 @@ const GamePage = () => {
     setReacMoreDescription(!readMoreDescription);
   };
 
-  const voteGameHandler = async () => {
-    try {
-      const result = await voteTxnMutation({
-        appId: id as string,
-        amount: voteValue as number,
-        comment: '',
-      })
-          .unwrap()
-          .then(() => console.log(result));
-      if (isSuccess) {
-        console.log('success');
-      }
-    } catch (error) {
-      console.error('Vote transaction failed', error);
-    } finally {
-      setIsVoteModal(false);
-    }
-  };
+    const voteGameHandler = async () => {
+        try {
+            const result = await voteTxnMutation({
+                appId: id as string,
+                amount: voteValue as number,
+                comment: '',
+            }).unwrap();
 
-  const modalHandler = () => {
-    setIsVoteModal(!isVoteModal);
-  };
+            if (isSuccess) {
+                console.log('success');
+
+                const body = Cell.fromBase64(result.body);
+                console.log(body)
+                await ton.sender.send({
+                    value: BigInt(result.value),
+                    to: result.to,
+                    body: body,
+                    sendMode: result.mode,
+                });
+                setIsVoteModal(false);
+            }
+        } catch (error) {
+            console.error('Vote transaction failed', error);
+        }
+    };
+
+
+    const modalHandler = () => {
+        setIsVoteModal(!isVoteModal);
+    };
 
   return (
       <Page>

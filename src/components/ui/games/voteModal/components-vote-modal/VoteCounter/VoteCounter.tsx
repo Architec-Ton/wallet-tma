@@ -20,7 +20,8 @@ const VoteCounter = ({ setVoteValue, voteValue }) => {
                 <button onClick={voteDecrement} disabled={voteValue === 0}>
                     -
                 </button>
-                <input type="number" value={voteValue} readOnly />
+                <div style={{display: 'flex', justifyContent: 'center', width: 'var(--spacing-32)' }}>{voteValue}</div>
+                {/*<input type="number" value={voteValue} readOnly />*/}
                 <button onClick={voteIncrement}>+</button>
             </Row>
         </Block>
