@@ -1,5 +1,5 @@
 import { bigNumberFormatter } from "utils/formatter";
-
+import React from 'react';
 import "./GameLeaderRow.styles.css";
 
 type OwnProps = {

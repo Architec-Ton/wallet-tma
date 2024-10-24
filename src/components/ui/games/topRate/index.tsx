@@ -15,7 +15,6 @@ const TopRate = ({ games }: TopRatePropsType) => {
   if (!games) {
     return null;
   }
-
   return <GameListSection title={t("top-rated-title")} list={games} />;
 };
 

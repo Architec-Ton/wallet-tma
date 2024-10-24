@@ -26,6 +26,4 @@ dist-ssr
 
 # env files
 .env
-.env.development
-.env.production
 .trunk/*

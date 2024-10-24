@@ -22,6 +22,7 @@ import tmaReducer from "../features/tma/tmaSlice";
 import tonReducer from "../features/ton/tonSlice";
 import { walletApi } from "../features/wallet/walletApi";
 import walletSlice from "../features/wallet/walletSlice";
+import ratingSlice from "features/rating/ratingSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -39,6 +40,7 @@ export const store = configureStore({
     trx: trxModalReducer,
     market: marketSlice,
     popup: popupSlice,
+    rating: ratingSlice,
     [trxApi.reducerPath]: trxApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,
