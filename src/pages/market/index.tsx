@@ -62,7 +62,6 @@ const Market = () => {
   const [ordersHistoryData, setOrdersHistoryData] = useState<MarketOrderDto[]>([]);
   const [ordersActiveData, setOrdersActiveData] = useState<MarketOrderDto[]>([]);
   const [pollingInterval, setPollingInterval] = useState<number>(0);
-  const [updateHistory, setUpdateHistory] = useState<boolean>(false);
 
   const t = useLanguage("market");
   const dispatch = useAppDispatch();
@@ -126,11 +125,6 @@ const Market = () => {
 
       setOrdersActiveData(myActiveOrders.items);
 
-      if (trxModal.isOpened) {
-        setTimeout(() => {
-          trxModal.confirm(undefined);
-        }, 10000);
-      }
       if (needHistoryUpdate) {
         getMyHistoryOrders({ status: "history" }).then((myOrders) => {
           setOrdersHistoryData(myOrders.data?.items || []);
