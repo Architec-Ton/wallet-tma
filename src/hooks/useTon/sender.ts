@@ -1,7 +1,5 @@
 import type { Sender, SenderArguments } from "@ton/core";
-import { Address, internal } from "@ton/core";
-import type { KeyPair } from "@ton/crypto";
-import { mnemonicToPrivateKey } from "@ton/crypto";
+import { beginCell, SendMode, storeMessageRelaxed, Address, internal } from "@ton/core";
 import { WalletContractV4 } from "@ton/ton";
 import { showWarningAlert } from "features/alert/alertSlice";
 import {
@@ -16,6 +14,8 @@ import { iconTon } from "assets/icons/jettons";
 
 import { decodePrivateKeyByPin } from "utils/pincode";
 
+import { mnemonicToPrivateKey, sign } from "@ton/crypto";
+import type { KeyPair} from "@ton/crypto";
 import type { RootState } from "../../store";
 import { useAppDispatch, useAppSelector } from "../useAppDispatch";
 import { useTmaMainButton } from "../useTma";
@@ -92,13 +92,10 @@ export const useSender = (): Sender => {
         } else {
           const contract = client?.open(wallet);
 
-          // Get balance
-          const balance: bigint = await contract.getBalance();
-
           // Create a transfer
-          const seqno_current: number = await contract.getSeqno();
+          const seqnoCurrent: number = await contract.getSeqno();
 
-          if (seqno === seqno_current) {
+          if (seqno === seqnoCurrent) {
             dispatch(
               showWarningAlert({
                 message:
@@ -108,23 +105,31 @@ export const useSender = (): Sender => {
             );
             return;
           }
-          dispatch(setSeqno(seqno_current));
+          dispatch(setSeqno(seqnoCurrent));
 
-          const transfer = await contract.createTransfer({
-            seqno: seqno_current,
-            secretKey: privateKey,
-            sendMode: args.sendMode,
-            messages: [
-              internal({
+          const singingMessage = beginCell().storeUint(contract.walletId, 32)
+            .storeUint(Math.floor(Date.now() / 1e3) + 60 * 60, 32)
+            .storeUint(seqnoCurrent, 32)
+            .storeUint(0, 8)
+            .storeUint(SendMode.IGNORE_ERRORS, 8)
+            .storeRef(
+              beginCell().store(storeMessageRelaxed(internal({
                 value: args.value,
                 to: args.to,
                 body: args.body,
-              }),
-            ],
-          });
+                init: contract.init,
+              }))).endCell()
+            );
+
+          const transfer = beginCell()
+            .storeSlice(beginCell()
+              .storeBuffer(sign(singingMessage.endCell().hash(), privateKey))
+              .storeBuilder(singingMessage)
+              .asSlice())
+            .endCell();
 
           try {
-            const trx = await contract.send(transfer);
+            await contract.send(transfer);
 
             const hash = Buffer.from(`${args.to.toString()}.${seqno}`, "utf-8").toString("hex");
 
