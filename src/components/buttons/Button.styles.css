@@ -30,3 +30,4 @@ button.button.primary {
 button.button.primary:hover {
   background-color: var(--selected-color);
 }
+

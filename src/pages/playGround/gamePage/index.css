@@ -78,16 +78,8 @@
 }
 
 .vote-button {
-  border-color: var(--primary-color);
-  background: var(--background-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.vote-button img {
-  margin-right: var(--spacing-4);
-  width: 1rem;
+  padding: var(--spacing-12) var(--spacing-4);
+  background-color: red;
 }
 
 .game-gallery-img {

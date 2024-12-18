@@ -1,5 +1,5 @@
 .vote-modal__content {
-  height: 66svh;
+  height: 60svh;
   align-items: center;
   justify-content: center;
   margin: 0 var(--spacing-16);
@@ -19,19 +19,23 @@
   font-weight: var(--font-medium);
 }
 
-.vote-description {
+.vote-description-container {
   margin: 0 var(--spacing-24);
   color: var(--text-secondary-color);
 }
 
-.vote-description img {
-  width: var(--font-size-medium);
-  height: var(--font-size-medium);
+.vote-description-part1 {
+
 }
 
+.vote-description-part2 {
+  padding: var(--spacing-12) 0;
+}
+
+
 .vote-form {
-  align-items: stretch;
-  width: 100%;
+  align-items: start;
+  width: 80%;
   justify-content: space-between;
 }
 
@@ -65,4 +69,20 @@
 
 .number-counter__container {
   gap: 0;
+}
+
+.vote-selector-categories-container {
+  display: flex;
+}
+
+.vote-selector-categories-switch {
+
+}
+
+.vote-selector-categories-name {
+
+}
+
+.vote-selector-categories-description {
+  color: var(--secondary-color);
 }
