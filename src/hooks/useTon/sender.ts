@@ -119,6 +119,7 @@ export const useSender = (): Sender => {
                 value: args.value,
                 to: args.to,
                 body: args.body,
+                bounce: false
               }),
             ],
           });
